@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gal Tidhar — Staff Software Engineer</title>
+  <meta name="description" content="Staff software engineer with 10+ years building backend systems at Shopify, Siemens, Novu, and Sedric. TypeScript, Java, distributed systems, platform engineering.">
+  <link rel="canonical" href="https://gal.tidhar.org.il/">
+  <meta property="og:title" content="Gal Tidhar — Staff Software Engineer">
+  <meta property="og:description" content="10+ years building backend systems at scale. Shopify · Siemens · Novu · Sedric.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gal.tidhar.org.il/">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230d0d1a'/><text x='5' y='24' font-size='20' font-weight='900' font-family='system-ui' fill='%237ac8ff'>G</text></svg>">
+  <style>
+    :root {
+      --bg:        #0b0b18;
+      --surface:   #111827;
+      --surface2:  #171d2e;
+      --surf-h:    #1e2540;
+      --border:    #1f2a3d;
+      --borderh:   #2e3d56;
+      --text:      #eef0f5;
+      --text2:     #8fa3be;
+      --text3:     #566880;
+      --blue:      #58b8f5;
+      --bluemid:   #2e7fd4;
+      --bluedeep:  #1a5db8;
+      --gold:      #d4a72a;
+      --goldmid:   #b8911e;
+      --green:     #3dd68c;
+      --navh: 58px;
+      --max:  960px;
+      --r:    12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--navh); }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg); color: var(--text);
+      font-size: 16px; line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+    .section    { padding: 5.5rem 0; }
+    .section-sm { padding: 3.5rem 0; }
+    .divider    { height: 1px; background: linear-gradient(to right, transparent, var(--borderh), transparent); }
+
+    .eyebrow { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--text3); margin-bottom: .6rem; }
+    .h2      { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.18; margin-bottom: .9rem; }
+    .lead    { font-size: 1rem; color: var(--text2); line-height: 1.72; max-width: 58ch; }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--navh); display: flex; align-items: center;
+      border-bottom: 1px solid transparent;
+      transition: background .3s, border-color .3s, backdrop-filter .3s;
+    }
+    .nav.scrolled {
+      background: rgba(13,13,26,.92); backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px); border-bottom-color: var(--border);
+    }
+    .nav .container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .nav-name { font-size: .95rem; font-weight: 800; letter-spacing: -.02em; color: var(--text); }
+    .nav-name span { color: var(--blue); }
+    .nav-links { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-links a { font-size: .8rem; color: var(--text2); transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-biz {
+      font-size: .75rem; font-weight: 700; letter-spacing: .04em;
+      color: var(--gold); border: 1px solid rgba(212,167,42,.28);
+      padding: .28rem .8rem; border-radius: 6px; transition: background .15s, border-color .15s;
+    }
+    .nav-biz:hover { background: rgba(212,167,42,.08); border-color: var(--gold); }
+    @media (max-width: 600px) {
+      .nav-links a:not(.nav-biz) { display: none; }
+    }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100svh; display: flex; flex-direction: column;
+      justify-content: center; padding: calc(var(--navh) + 3rem) 2rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 20% 40%, rgba(26,96,216,.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 70%, rgba(61,214,140,.04) 0%, transparent 60%);
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: var(--max); margin: 0 auto; padding: 0; width: 100%; }
+    .hero-tag  { display: inline-flex; align-items: center; gap: .5rem; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 1.75rem; }
+    .hero-tag::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+    h1.hero-name {
+      font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 900; letter-spacing: -.04em;
+      line-height: 1; margin-bottom: .5rem;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.7) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-title { font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 300; color: var(--text2); margin-bottom: 1.75rem; letter-spacing: -.01em; }
+    .hero-title strong { color: var(--blue); font-weight: 600; }
+    .hero-bio { font-size: 1rem; color: var(--text2); line-height: 1.75; max-width: 52ch; margin-bottom: 2.5rem; }
+    .hero-bio strong { color: var(--text); }
+    .hero-links { display: flex; flex-wrap: wrap; gap: .75rem; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .84rem; font-weight: 600; padding: .6rem 1.3rem;
+      border-radius: 8px; border: 1px solid var(--borderh);
+      color: var(--text2); background: rgba(255,255,255,.03);
+      transition: all .18s;
+    }
+    .hero-link:hover { border-color: rgba(88,184,245,.4); color: var(--blue); background: rgba(88,184,245,.05); }
+    .hero-link-primary {
+      background: linear-gradient(135deg, var(--bluemid), var(--bluedeep));
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 18px rgba(26,96,216,.35);
+    }
+    .hero-link-primary:hover { color: #fff; transform: translateY(-1px); box-shadow: 0 8px 26px rgba(26,96,216,.45); border-color: transparent; }
+
+    /* ── Currently ── */
+    .currently-card {
+      margin-top: 3rem; padding: 1.5rem 1.75rem;
+      border-radius: var(--r); border: 1px solid rgba(61,214,140,.2);
+      background: rgba(61,214,140,.03);
+      display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+    }
+    .curr-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex-shrink: 0; animation: pulse 2s ease-in-out infinite; }
+    .curr-body { flex: 1; }
+    .curr-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--green); margin-bottom: .2rem; }
+    .curr-company { font-size: 1rem; font-weight: 800; }
+    .curr-role { font-size: .82rem; color: var(--text2); margin-top: .15rem; }
+    .curr-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+    .curr-tag { font-size: .63rem; font-weight: 700; letter-spacing: .05em; padding: .18rem .55rem; border-radius: 4px; background: rgba(255,255,255,.05); color: var(--text3); text-transform: uppercase; }
+    .curr-stat { text-align: right; flex-shrink: 0; }
+    .curr-stat-val { font-size: 1.6rem; font-weight: 900; letter-spacing: -.03em; color: var(--green); line-height: 1; }
+    .curr-stat-label { font-size: .68rem; color: var(--text3); margin-top: .2rem; }
+    @media (max-width: 600px) { .curr-stat { display: none; } }
+
+    /* ── Career ── */
+    #career { background: var(--surface); }
+    .changelog { margin-top: 3rem; position: relative; }
+    .changelog::before {
+      content: ''; position: absolute; left: 118px; top: 0; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, transparent, var(--border) 5%, var(--border) 95%, transparent);
+    }
+    .cl-entry { display: grid; grid-template-columns: 110px 28px 1fr; gap: 0 1rem; padding: 1.75rem 0; border-top: 1px solid var(--border); }
+    .cl-entry:last-child { border-bottom: 1px solid var(--border); }
+    .cl-date  { font-size: .73rem; font-weight: 700; color: var(--text3); letter-spacing: .03em; padding-top: .2rem; font-variant-numeric: tabular-nums; }
+    .cl-dot-wrap { display: flex; justify-content: center; padding-top: .35rem; }
+    .cl-dot   { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; background: var(--blue); box-shadow: 0 0 0 3px rgba(88,184,245,.15); }
+    .cl-dot-g { background: var(--gold); box-shadow: 0 0 0 3px rgba(212,167,42,.15); }
+    .cl-dot-curr { background: var(--green); box-shadow: 0 0 0 3px rgba(61,214,140,.2); animation: pulse 2s ease-in-out infinite; }
+    .cl-company { font-size: 1rem; font-weight: 800; letter-spacing: -.01em; margin-bottom: .2rem; }
+    .cl-role    { font-size: .78rem; font-weight: 600; color: var(--blue); margin-bottom: .55rem; }
+    .cl-role-g  { color: var(--text2); }
+    .cl-role-curr { color: var(--green); }
+    .cl-desc    { font-size: .86rem; color: var(--text2); line-height: 1.65; }
+    .cl-desc strong { color: var(--text); }
+    .cl-tags    { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .65rem; }
+    .cl-tag     { font-size: .62rem; font-weight: 700; letter-spacing: .05em; padding: .18rem .55rem; border-radius: 4px; background: rgba(255,255,255,.05); color: var(--text3); text-transform: uppercase; }
+    @media (max-width: 640px) {
+      .changelog::before { display: none; }
+      .cl-entry { grid-template-columns: 90px 1fr; }
+      .cl-dot-wrap { display: none; }
+    }
+
+    /* ── Numbers ── */
+    .numbers-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 2px; margin-top: 3rem; border-radius: var(--r); overflow: hidden; }
+    .num-card { padding: 2rem 1.25rem; background: var(--surface); text-align: center; }
+    .num-val {
+      font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 900; letter-spacing: -.04em; line-height: 1; margin-bottom: .35rem;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.55) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .num-val-b { background: linear-gradient(135deg, var(--blue), var(--bluemid)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .num-val-g { background: linear-gradient(135deg, var(--gold), var(--goldmid)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .num-val-gr { background: linear-gradient(135deg, var(--green), #20a86e); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .num-label { font-size: .72rem; color: var(--text3); line-height: 1.45; }
+    @media (max-width: 700px) { .numbers-grid { grid-template-columns: repeat(3,1fr); } }
+    @media (max-width: 420px) { .numbers-grid { grid-template-columns: repeat(2,1fr); } }
+
+    /* ── Stack ── */
+    .stack-rows { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 3rem; }
+    .stack-row  { display: flex; align-items: flex-start; gap: 1.5rem; }
+    .stack-cat  { font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); width: 96px; flex-shrink: 0; padding-top: .38rem; }
+    .stack-pills{ display: flex; flex-wrap: wrap; gap: .4rem; }
+    .pill       { font-size: .78rem; font-weight: 600; padding: .3rem .78rem; border-radius: 6px; border: 1px solid var(--border); color: var(--text2); background: rgba(255,255,255,.02); transition: all .15s; cursor: default; }
+    .pill:hover { border-color: var(--borderh); color: var(--text); background: rgba(255,255,255,.05); }
+    .pill-b     { border-color: rgba(88,184,245,.22); color: var(--blue); background: rgba(88,184,245,.05); }
+    .pill-g     { border-color: rgba(212,167,42,.22); color: var(--gold); background: rgba(212,167,42,.05); }
+    .pill-gr    { border-color: rgba(61,214,140,.22); color: var(--green); background: rgba(61,214,140,.05); }
+
+    /* ── OSS ── */
+    #oss { background: var(--surface); }
+    .oss-card {
+      margin-top: 3rem; padding: 2rem 2.25rem; border-radius: var(--r);
+      border: 1px solid var(--borderh); background: var(--surface2);
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem;
+    }
+    .oss-name { font-size: 1.4rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: .35rem; }
+    .oss-desc { font-size: .88rem; color: var(--text2); max-width: 480px; line-height: 1.65; }
+    .oss-stats { display: flex; gap: 1.25rem; margin-top: 1.1rem; }
+    .oss-stat { font-size: .75rem; color: var(--text3); }
+    .oss-stat strong { color: var(--text2); font-weight: 700; }
+    .oss-link { display: inline-flex; align-items: center; gap: .4rem; font-size: .82rem; font-weight: 700; color: var(--blue); margin-top: 1rem; transition: gap .15s; }
+    .oss-link:hover { gap: .6rem; }
+    @media (max-width: 640px) { .oss-card { grid-template-columns: 1fr; } }
+
+    /* ── Projects ── */
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.1rem; margin-top: 3rem; }
+    .proj-card {
+      padding: 1.6rem; border-radius: var(--r); border: 1px solid var(--border);
+      background: var(--surface2); display: flex; flex-direction: column;
+      transition: border-color .2s, background .2s;
+    }
+    .proj-card:hover { border-color: var(--borderh); background: var(--surf-h); }
+    .proj-tag  { font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: .65rem; }
+    .proj-tag-g { color: var(--gold); }
+    .proj-name { font-size: 1rem; font-weight: 800; letter-spacing: -.01em; margin-bottom: .45rem; }
+    .proj-desc { font-size: .84rem; color: var(--text2); line-height: 1.62; flex: 1; }
+    .proj-desc strong { color: var(--text); }
+    .proj-meta { font-size: .68rem; color: var(--text3); margin-top: .75rem; }
+
+    /* ── Contact ── */
+    #contact { background: var(--surface2); }
+    .contact-inner { max-width: 560px; margin: 3rem auto 0; }
+    .contact-links { display: flex; flex-direction: column; gap: .65rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem; padding: .95rem 1.25rem;
+      border-radius: var(--r); border: 1px solid var(--border);
+      color: var(--text2); background: rgba(255,255,255,.02); transition: all .2s;
+    }
+    .contact-link:hover { border-color: rgba(88,184,245,.35); color: var(--blue); background: rgba(88,184,245,.05); }
+    .contact-link-gold:hover { border-color: rgba(212,167,42,.4); color: var(--gold); background: rgba(212,167,42,.05); }
+    .contact-link-icon { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,.05); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-link-label { font-size: .9rem; font-weight: 600; }
+    .contact-link-sub { font-size: .72rem; color: var(--text3); margin-top: .1rem; }
+    .contact-link-arr { margin-left: auto; color: var(--text3); font-size: .85rem; }
+
+    /* ── Footer ── */
+    footer { padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; }
+    footer p { font-size: .72rem; color: var(--text3); }
+    footer a { color: var(--text3); transition: color .15s; }
+    footer a:hover { color: var(--text2); }
+
+    /* ── Accessibility ── */
+    .skip-link {
+      position: absolute; top: -100px; left: 1rem; z-index: 9999;
+      background: var(--blue); color: #000; font-weight: 700; font-size: .88rem;
+      padding: .7rem 1.4rem; border-radius: 0 0 10px 10px; text-decoration: none;
+      transition: top .15s;
+    }
+    .skip-link:focus { top: 0; }
+    :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ══ NAV ══════════════════════════════════════════════ -->
+<nav class="nav" id="nav" aria-label="Main navigation">
+  <div class="container">
+    <a href="#hero" class="nav-name">Gal <span>Tidhar</span></a>
+    <div class="nav-links">
+      <a href="#career">Career</a>
+      <a href="#stack">Stack</a>
+      <a href="#oss">OSS</a>
+      <a href="#contact">Contact</a>
+      <a href="https://zazet-solutions.hr" target="_blank" rel="noopener" class="nav-biz">ZaZet Solutions ↗</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+
+<!-- ══ HERO ═════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <h1 class="hero-name">Gal Tidhar</h1>
+    <p class="hero-title"><strong>Senior / Staff Software Engineer</strong> · Backend &amp; Platform · Zagreb</p>
+
+    <p class="hero-bio">
+      10+ years building backend systems that have to work at scale — from Siemens enterprise PLM to
+      Shopify logistics infrastructure to open-source notification platforms.
+      I specialize in <strong>distributed systems, TypeScript/Java backends, platform engineering</strong>,
+      and cutting the waste out of engineering operations.
+    </p>
+
+    <div class="hero-links">
+      <a href="https://github.com/galtidhar" target="_blank" rel="noopener" class="hero-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/galtidhar/" target="_blank" rel="noopener" class="hero-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:gal@zazet-solutions.hr" class="hero-link hero-link-primary">
+        gal@zazet-solutions.hr →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CAREER ════════════════════════════════════════════ -->
+<section id="career" class="section">
+  <div class="container">
+    <div class="eyebrow">Experience</div>
+    <h2 class="h2">Career Changelog</h2>
+    <p class="lead">10 years. Seven companies. Same story every time: build systems that have to work — and do.</p>
+    <div class="changelog">
+
+      <div class="cl-entry">
+        <div class="cl-date">2025 — now</div>
+        <div class="cl-dot-wrap"><div class="cl-dot cl-dot-g"></div></div>
+        <div>
+          <div class="cl-company">Sedric.ai</div>
+          <div class="cl-role">Senior Software Engineer</div>
+          <div class="cl-desc">Building AI-assisted engineering workflows and developer tooling. Reduced CI build time by <strong>78%</strong> and dev overhead by <strong>90%</strong>. Architecting the platform layer for AI-native product delivery.</div>
+          <div class="cl-tags"><span class="cl-tag">TypeScript</span><span class="cl-tag">Node.js</span><span class="cl-tag">AWS</span><span class="cl-tag">AI</span><span class="cl-tag">Platform</span></div>
+        </div>
+      </div>
+
+      <div class="cl-entry">
+        <div class="cl-date">2024 — 2025</div>
+        <div class="cl-dot-wrap"><div class="cl-dot cl-dot-g"></div></div>
+        <div>
+          <div class="cl-company">Novu.co</div>
+          <div class="cl-role cl-role-g">Senior Software Engineer</div>
+          <div class="cl-desc">Open-source notification infrastructure platform (35k+ GitHub stars). Full-stack feature work across the notification engine, multi-step workflow builder, and provider integrations.</div>
+          <div class="cl-tags"><span class="cl-tag">TypeScript</span><span class="cl-tag">React</span><span class="cl-tag">NestJS</span><span class="cl-tag">MongoDB</span><span class="cl-tag">Open Source</span></div>
+        </div>
+      </div>
+
+      <div class="cl-entry">
+        <div class="cl-date">2022 — 2024</div>
+        <div class="cl-dot-wrap"><div class="cl-dot"></div></div>
+        <div>
+          <div class="cl-company">Shopify · Flexport</div>
+          <div class="cl-role">Staff Software Engineer</div>
+          <div class="cl-desc">Commerce logistics infrastructure at global scale. Reduced deployment delays by <strong>70%</strong>. Distributed systems for supply chain orchestration following Flexport's acquisition of Shopify Logistics.</div>
+          <div class="cl-tags"><span class="cl-tag">Java</span><span class="cl-tag">TypeScript</span><span class="cl-tag">Kubernetes</span><span class="cl-tag">Distributed Systems</span><span class="cl-tag">Microservices</span></div>
+        </div>
+      </div>
+
+      <div class="cl-entry">
+        <div class="cl-date">2022</div>
+        <div class="cl-dot-wrap"><div class="cl-dot cl-dot-g"></div></div>
+        <div>
+          <div class="cl-company">Deliverr</div>
+          <div class="cl-role cl-role-g">Senior Software Engineer</div>
+          <div class="cl-desc">Last-mile fulfilment platform acquired by Shopify. Built order routing and warehouse management integrations, then transitioned to the unified Shopify/Flexport engineering org.</div>
+          <div class="cl-tags"><span class="cl-tag">Java</span><span class="cl-tag">Node.js</span><span class="cl-tag">AWS</span><span class="cl-tag">Logistics</span></div>
+        </div>
+      </div>
+
+      <div class="cl-entry">
+        <div class="cl-date">2020 — 2022</div>
+        <div class="cl-dot-wrap"><div class="cl-dot"></div></div>
+        <div>
+          <div class="cl-company">Wochit</div>
+          <div class="cl-role">Lead Software Engineer</div>
+          <div class="cl-desc">Led engineering for the video creation and publishing platform. Full-stack from video processing pipeline to React editor. Reduced infrastructure cost by <strong>46%</strong> through caching and cloud optimisation.</div>
+          <div class="cl-tags"><span class="cl-tag">JavaScript</span><span class="cl-tag">React</span><span class="cl-tag">Node.js</span><span class="cl-tag">AWS</span><span class="cl-tag">Video Processing</span></div>
+        </div>
+      </div>
+
+      <div class="cl-entry">
+        <div class="cl-date">2018 — 2020</div>
+        <div class="cl-dot-wrap"><div class="cl-dot cl-dot-g"></div></div>
+        <div>
+          <div class="cl-company">Siemens PLM</div>
+          <div class="cl-role cl-role-g">Software Engineer</div>
+          <div class="cl-desc">Enterprise PLM software serving global manufacturing customers. Java backend and web frontend for manufacturing lifecycle tools. Introduced modern JavaScript tooling into legacy systems.</div>
+          <div class="cl-tags"><span class="cl-tag">Java</span><span class="cl-tag">JavaScript</span><span class="cl-tag">Spring Boot</span><span class="cl-tag">PLM</span><span class="cl-tag">Enterprise</span></div>
+        </div>
+      </div>
+
+      <div class="cl-entry">
+        <div class="cl-date">2014 — 2018</div>
+        <div class="cl-dot-wrap"><div class="cl-dot"></div></div>
+        <div>
+          <div class="cl-company">Jebo GMBH</div>
+          <div class="cl-role">Full-Stack Developer</div>
+          <div class="cl-desc">First engineering role — built full-stack web applications from scratch. Grew from junior to mid-level while shipping production systems used across Germany and Austria.</div>
+          <div class="cl-tags"><span class="cl-tag">PHP</span><span class="cl-tag">JavaScript</span><span class="cl-tag">MySQL</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ NUMBERS ════════════════════════════════════════════ -->
+<section id="numbers" class="section-sm">
+  <div class="container">
+    <div class="eyebrow">Impact</div>
+    <div class="numbers-grid">
+      <div class="num-card"><div class="num-val num-val-gr">78%</div><div class="num-label">CI build<br>time cut</div></div>
+      <div class="num-card"><div class="num-val num-val-gr">90%</div><div class="num-label">dev overhead<br>reduced</div></div>
+      <div class="num-card"><div class="num-val num-val-b">70%</div><div class="num-label">fewer deploy<br>delays</div></div>
+      <div class="num-card"><div class="num-val num-val-g">46%</div><div class="num-label">infra cost<br>reduction</div></div>
+      <div class="num-card"><div class="num-val">10</div><div class="num-label">years<br>experience</div></div>
+      <div class="num-card"><div class="num-val">7</div><div class="num-label">companies<br>shipped at</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ STACK ══════════════════════════════════════════════ -->
+<section id="stack" class="section">
+  <div class="container">
+    <div class="eyebrow">Skills</div>
+    <h2 class="h2">Tech Stack</h2>
+    <div class="stack-rows">
+      <div class="stack-row">
+        <div class="stack-cat">Languages</div>
+        <div class="stack-pills">
+          <span class="pill pill-b">TypeScript</span>
+          <span class="pill pill-b">JavaScript</span>
+          <span class="pill">Java</span>
+          <span class="pill">Python</span>
+          <span class="pill">PHP</span>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-cat">Backend</div>
+        <div class="stack-pills">
+          <span class="pill pill-b">Node.js</span>
+          <span class="pill pill-b">NestJS</span>
+          <span class="pill">Spring Boot</span>
+          <span class="pill">REST APIs</span>
+          <span class="pill">GraphQL</span>
+          <span class="pill">gRPC</span>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-cat">Frontend</div>
+        <div class="stack-pills">
+          <span class="pill pill-b">React</span>
+          <span class="pill">Next.js</span>
+          <span class="pill">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-cat">Cloud &amp; Infra</div>
+        <div class="stack-pills">
+          <span class="pill pill-g">AWS</span>
+          <span class="pill pill-g">Docker</span>
+          <span class="pill pill-g">Kubernetes</span>
+          <span class="pill">Terraform</span>
+          <span class="pill">CI/CD</span>
+          <span class="pill">GitHub Actions</span>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-cat">Databases</div>
+        <div class="stack-pills">
+          <span class="pill">PostgreSQL</span>
+          <span class="pill">MongoDB</span>
+          <span class="pill">MySQL</span>
+          <span class="pill">Redis</span>
+          <span class="pill">Elasticsearch</span>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-cat">Practices</div>
+        <div class="stack-pills">
+          <span class="pill pill-gr">Distributed Systems</span>
+          <span class="pill pill-gr">Platform Engineering</span>
+          <span class="pill pill-gr">DX Engineering</span>
+          <span class="pill">System Design</span>
+          <span class="pill">Code Review</span>
+          <span class="pill">Tech Writing</span>
+          <span class="pill">Mentorship</span>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-cat">AI / Tooling</div>
+        <div class="stack-pills">
+          <span class="pill pill-b">Claude Code</span>
+          <span class="pill pill-b">Base44</span>
+          <span class="pill">Make.com</span>
+          <span class="pill">LLM APIs</span>
+          <span class="pill">Agentic workflows</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ OSS ════════════════════════════════════════════════ -->
+<section id="oss" class="section">
+  <div class="container">
+    <div class="eyebrow">Open Source</div>
+    <h2 class="h2">What I've shipped publicly</h2>
+    <div class="oss-card">
+      <div>
+        <div class="oss-name">Novu</div>
+        <div class="oss-desc">Open-source notification infrastructure for developers — multi-channel (email, SMS, push, in-app), workflow-driven, with a growing ecosystem of provider integrations. Contributed full-stack features to the core engine, workflow builder, and integration layer.</div>
+        <div class="oss-stats">
+          <div class="oss-stat"><strong>35k+</strong> GitHub stars</div>
+          <div class="oss-stat"><strong>Production</strong> at scale</div>
+        </div>
+        <a href="https://github.com/novuhq/novu" target="_blank" rel="noopener" class="oss-link">
+          View on GitHub →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PROJECTS ════════════════════════════════════════════ -->
+<section id="projects" class="section">
+  <div class="container">
+    <div class="eyebrow">Freelance work</div>
+    <h2 class="h2">Selected projects</h2>
+    <p class="lead">A sample of what I build for clients outside my full-time role.</p>
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <div class="proj-tag">Small business · Croatia</div>
+        <div class="proj-name">Boat Taxi — Booking &amp; Marina System</div>
+        <div class="proj-desc">End-to-end booking system and marina berth management for a Croatian island operator. 4-language production system delivered in <strong>4 hours</strong> using AI-assisted development.</div>
+        <div class="proj-meta">2025 · Node.js · Base44 · AI</div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag proj-tag-g">Tech company · Germany</div>
+        <div class="proj-name">Payroll &amp; HR Backoffice</div>
+        <div class="proj-desc">Replaced manual spreadsheet workflows with a unified payroll and HR system for a 30-person company. Payroll processing time reduced <strong>from days to hours</strong>.</div>
+        <div class="proj-meta">Full-stack · PostgreSQL · Node.js</div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-tag proj-tag-g">Small business · Israel</div>
+        <div class="proj-name">Business Operating System</div>
+        <div class="proj-desc">Custom operational platform replacing cross-department spreadsheets. Every team works in a single system built around the company's actual process — not a generic SaaS.</div>
+        <div class="proj-meta">Full-stack · Custom build</div>
+      </div>
+
+    </div>
+    <p style="margin-top:2rem;font-size:.83rem;color:var(--text3);text-align:center;">
+      Business inquiries → <a href="https://zazet-solutions.hr" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600;">zazet-solutions.hr</a>
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CONTACT ════════════════════════════════════════════ -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="eyebrow">Get in touch</div>
+    <h2 class="h2">Let's talk engineering</h2>
+    <p class="lead" style="margin-bottom:0">Freelance contracts, consulting, open-source collaboration, or just a good technical conversation.</p>
+    <div class="contact-inner">
+      <div class="contact-links">
+        <a href="mailto:gal@zazet-solutions.hr" class="contact-link">
+          <div class="contact-link-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-sub">gal@zazet-solutions.hr</div>
+          </div>
+          <span class="contact-link-arr">↗</span>
+        </a>
+        <a href="https://github.com/galtidhar" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </div>
+          <div>
+            <div class="contact-link-label">GitHub</div>
+            <div class="contact-link-sub">@galtidhar</div>
+          </div>
+          <span class="contact-link-arr">↗</span>
+        </a>
+        <a href="https://www.linkedin.com/in/galtidhar/" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </div>
+          <div>
+            <div class="contact-link-label">LinkedIn</div>
+            <div class="contact-link-sub">linkedin.com/in/galtidhar</div>
+          </div>
+          <span class="contact-link-arr">↗</span>
+        </a>
+        <a href="https://zazet-solutions.hr" target="_blank" rel="noopener" class="contact-link contact-link-gold">
+          <div class="contact-link-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div>
+            <div class="contact-link-label">ZaZet Solutions</div>
+            <div class="contact-link-sub">Business inquiries, automation &amp; websites → zazet-solutions.hr</div>
+          </div>
+          <span class="contact-link-arr">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>Gal Tidhar · Zagreb, Croatia · <a href="mailto:gal@zazet-solutions.hr">gal@zazet-solutions.hr</a> · <a href="https://zazet-solutions.hr">zazet-solutions.hr</a></p>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), {passive:true});
+</script>
+
+</body>
+</html>
