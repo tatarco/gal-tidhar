@@ -1,0 +1,22 @@
+# Gal Tidhar — gal.tidhar.org.il
+
+> Staff Software Engineer (backend & platform). Zagreb, Croatia. EU remote. Part-time roles from June 2026.
+
+## About
+- Name: Gal Tidhar (GitHub: tatarco)
+- Role: Staff-level backend & platform engineering
+- Experience: Shopify/Flexport (Staff), Novu (Senior), Sedric (Senior), ZaZet Solutions (founder)
+- Consulting: AI-assisted development workflows, organizational developer experience (DX)
+- Email: gal@tidhar.org.il
+- CV: https://gal.tidhar.org.il/gal-tidhar-cv.pdf
+
+## Links
+- Portfolio: https://gal.tidhar.org.il/
+- LinkedIn: https://www.linkedin.com/in/galtidhar/
+- GitHub: https://github.com/tatarco
+- Business: https://zazet-solutions.hr
+
+## Key facts
+- Open to part-time Staff/Senior backend & platform roles (not full-time)
+- Available for consulting engagements (remote, part-time or fixed-scope)
+- Notable outcomes: 78% build time reduction (Novu), 97% on-time shipping (Shopify), org-wide AI delivery (Sedric)
