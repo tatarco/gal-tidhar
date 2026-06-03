@@ -4,769 +4,543 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gal Tidhar — Staff Software Engineer · Backend &amp; Platform</title>
-  <meta name="description" content="Staff-level backend engineer (ex-Shopify, Novu, Sedric). Platform engineering, TypeScript/Java, distributed systems. Founder of ZaZet Solutions — SMB automation. Open to roles from Jun 2026.">
+  <meta name="description" content="Staff-level backend engineer (ex-Shopify, Novu, Sedric). Platform engineering, TypeScript/Java. Founder of ZaZet Solutions. Open to roles from Jun 2026.">
   <link rel="canonical" href="https://gal.tidhar.org.il/">
   <meta property="og:title" content="Gal Tidhar — Staff Software Engineer">
-  <meta property="og:description" content="Staff-level backend · ex-Shopify, Novu, Sedric · platform &amp; distributed systems · ZaZet Solutions founder">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Gal Tidhar — Staff Software Engineer">
-  <meta name="twitter:description" content="Staff-level backend · ex-Shopify, Novu, Sedric · open to roles Jun 2026">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Gal Tidhar",
-    "jobTitle": "Staff Software Engineer",
-    "url": "https://gal.tidhar.org.il/",
-    "email": "gal@zazet-solutions.hr",
-    "address": { "@type": "PostalAddress", "addressLocality": "Zagreb", "addressCountry": "HR" },
-    "sameAs": [
-      "https://www.linkedin.com/in/galtidhar/",
-      "https://github.com/galtidhar",
-      "https://zazet-solutions.hr"
-    ],
-    "knowsAbout": ["distributed systems", "platform engineering", "TypeScript", "Java", "Kubernetes"],
-    "worksFor": { "@type": "Organization", "name": "ZaZet Solutions", "url": "https://zazet-solutions.hr" }
-  }
-  </script>
+  <meta property="og:description" content="Staff-level backend · ex-Shopify, Novu, Sedric · platform &amp; distributed systems">
+  <meta property="og:image" content="https://zazet-solutions.hr/gal-photo.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://gal.tidhar.org.il/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://zazet-solutions.hr/gal-photo.webp">
   <meta name="robots" content="index, follow">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230d0d1a'/><text x='5' y='24' font-size='20' font-weight='900' font-family='system-ui' fill='%237ac8ff'>G</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Gal Tidhar","jobTitle":"Staff Software Engineer","url":"https://gal.tidhar.org.il/","email":"gal@zazet-solutions.hr","sameAs":["https://www.linkedin.com/in/galtidhar/","https://github.com/galtidhar","https://zazet-solutions.hr"],"knowsAbout":["distributed systems","platform engineering","TypeScript","Java","Kubernetes"],"worksFor":{"@type":"Organization","name":"ZaZet Solutions","url":"https://zazet-solutions.hr"}}
+  </script>
   <style>
     :root {
-      --bg:        #0b0b18;
-      --surface:   #111827;
-      --surface2:  #171d2e;
-      --surf-h:    #1e2540;
-      --border:    #1f2a3d;
-      --borderh:   #2e3d56;
-      --text:      #eef0f5;
-      --text2:     #8fa3be;
-      --text3:     #566880;
-      --blue:      #58b8f5;
-      --bluemid:   #2e7fd4;
-      --bluedeep:  #1a5db8;
-      --gold:      #d4a72a;
-      --goldmid:   #b8911e;
-      --green:     #3dd68c;
-      --navh: 58px;
-      --max:  960px;
-      --r:    12px;
+      --bg: #0a1628;
+      --grid: rgba(125, 211, 252, 0.07);
+      --cyan: #7dd3fc;
+      --cyan-dim: #bae6fd;
+      --ink: #e0f2fe;
+      --muted: rgba(186, 230, 253, 0.55);
+      --yellow: #fef08a;
+      --gold: #fcd34d;
+      --pop-shadow: #38bdf8;
+      --card-a: #0f2847;
+      --card-b: #122d52;
+      --card-c: #0d2238;
+      --card-gold: #1a2f4a;
+      --border: #7dd3fc;
+      --navh: 56px;
+      --max: 980px;
+      --pop: 5px 5px 0 var(--yellow);
+      --pop-sm: 3px 3px 0 var(--pop-shadow);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; scroll-padding-top: var(--navh); }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg); color: var(--text);
-      font-size: 16px; line-height: 1.65;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      background: var(--bg);
+      color: var(--cyan);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px;
       -webkit-font-smoothing: antialiased;
     }
-    a { color: inherit; text-decoration: none; }
+    a { color: var(--yellow); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+    .sans { font-family: 'Space Grotesk', system-ui, sans-serif; }
 
-    .container { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
-    .section    { padding: 5.5rem 0; }
-    .section-sm { padding: 3.5rem 0; }
-    .divider    { height: 1px; background: linear-gradient(to right, transparent, var(--borderh), transparent); }
-
-    .eyebrow { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--text3); margin-bottom: .6rem; }
-    .h2      { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.18; margin-bottom: .9rem; }
-    .lead    { font-size: 1rem; color: var(--text2); line-height: 1.72; max-width: 58ch; }
-
-    /* ── Nav ── */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       height: var(--navh); display: flex; align-items: center;
-      border-bottom: 1px solid transparent;
-      transition: background .3s, border-color .3s, backdrop-filter .3s;
+      border-bottom: 2px solid var(--border);
+      background: rgba(10, 22, 40, 0.92);
+      backdrop-filter: blur(12px);
     }
-    .nav.scrolled {
-      background: rgba(13,13,26,.92); backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px); border-bottom-color: var(--border);
+    .nav .inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 1.5rem;
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
     }
-    .nav .container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-    .nav-name { font-size: .95rem; font-weight: 800; letter-spacing: -.02em; color: var(--text); }
-    .nav-name span { color: var(--blue); }
-    .nav-links { display: flex; align-items: center; gap: 1.5rem; }
-    .nav-links a { font-size: .8rem; color: var(--text2); transition: color .2s; }
-    .nav-links a:hover { color: var(--text); }
-    .nav-biz {
-      font-size: .75rem; font-weight: 700; letter-spacing: .04em;
-      color: var(--gold); border: 1px solid rgba(212,167,42,.28);
-      padding: .28rem .8rem; border-radius: 6px; transition: background .15s, border-color .15s;
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--ink); letter-spacing: -.02em; }
+    .nav-logo span { color: var(--cyan); }
+    .nav-links { display: flex; flex-wrap: wrap; gap: .35rem 1rem; align-items: center; }
+    .nav-links a { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+    .nav-links a:hover { color: var(--yellow); text-decoration: none; }
+    .nav-z { color: var(--gold) !important; border: 2px solid var(--gold); padding: .2rem .55rem; box-shadow: var(--pop-sm); }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    main { padding-top: calc(var(--navh) + 2rem); }
+
+    .sheet {
+      border: 2px solid var(--border);
+      padding: 2rem 1.75rem;
+      position: relative;
+      background: rgba(10, 22, 40, 0.6);
+      margin-bottom: 2rem;
     }
-    .nav-biz:hover { background: rgba(212,167,42,.08); border-color: var(--gold); }
+    .sheet-rev {
+      position: absolute; top: .65rem; right: 1rem;
+      font-size: .62rem; letter-spacing: .12em; color: var(--muted);
+    }
+    .drawing-id { font-size: .62rem; letter-spacing: .1em; color: var(--muted); margin-bottom: 1rem; }
+
+    .sticker {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .72rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase;
+      background: var(--yellow); color: #0a1628;
+      border: 3px solid var(--ink);
+      padding: .35rem .85rem;
+      box-shadow: var(--pop);
+      transform: rotate(-1.5deg);
+      margin-bottom: 1.25rem;
+    }
+
+    h1.title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -.03em;
+      line-height: 1.05;
+      text-transform: uppercase;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: .75rem;
+      margin-bottom: .75rem;
+    }
+    .meta-line { font-size: .72rem; color: var(--muted); letter-spacing: .06em; margin-bottom: 1.25rem; }
+    .meta-line strong { color: var(--cyan-dim); }
+
+    .spec { margin: 2rem 0; }
+    .spec-head {
+      font-size: .72rem; font-weight: 600; letter-spacing: .14em;
+      color: var(--cyan-dim); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .spec-head::after { content: ''; flex: 1; height: 1px; background: rgba(125, 211, 252, .35); }
+
+    .lead { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; color: var(--cyan-dim); line-height: 1.7; max-width: 58ch; font-weight: 400; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
+    .pill {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .78rem; font-weight: 700;
+      padding: .55rem 1.1rem;
+      border: 3px solid var(--border);
+      color: var(--ink);
+      background: var(--card-a);
+      box-shadow: var(--pop-sm);
+      transition: transform .12s;
+    }
+    .pill:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--yellow); text-decoration: none; color: var(--ink); }
+    .pill-primary { background: var(--yellow); color: #0a1628; border-color: var(--ink); box-shadow: var(--pop); }
+    .pill-primary:hover { color: #0a1628; }
+
+    .status-chip {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      padding: .3rem .7rem;
+      margin-bottom: 1rem;
+      box-shadow: 3px 3px 0 rgba(252, 211, 77, .35);
+    }
+
+    /* Neo-pop job cards inside blueprint */
+    .jobs { display: flex; flex-direction: column; gap: 1rem; }
+    .job {
+      border: 3px solid var(--border);
+      padding: 1.25rem 1.35rem;
+      box-shadow: var(--pop-sm);
+      background: var(--card-a);
+    }
+    .job:nth-child(3n+2) { background: var(--card-b); }
+    .job:nth-child(3n) { background: var(--card-c); }
+    .job-current { border-color: var(--gold); box-shadow: 5px 5px 0 rgba(252, 211, 77, .4); }
+    .job-staff { border-color: var(--yellow); }
+    .job-date { font-size: .68rem; letter-spacing: .08em; color: var(--muted); margin-bottom: .35rem; }
+    .job-co { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--ink); letter-spacing: -.02em; }
+    .job-role { font-family: 'Space Grotesk', sans-serif; font-size: .88rem; color: var(--cyan); margin: .2rem 0 .65rem; font-weight: 500; }
+    .job-desc { font-size: .82rem; color: var(--cyan-dim); line-height: 1.65; }
+    .job-desc strong { color: var(--ink); font-weight: 600; }
+    .tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; }
+    .tag {
+      font-size: .58rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: .2rem .5rem; border: 2px solid rgba(125, 211, 252, .4);
+      color: var(--muted); background: rgba(0,0,0,.2);
+    }
+    .tag-gold { border-color: var(--gold); color: var(--gold); }
+
+    .snap {
+      border: 2px dashed rgba(125, 211, 252, .45);
+      padding: 1rem 1.15rem;
+      margin-bottom: 1.25rem;
+      font-size: .8rem;
+      color: var(--cyan-dim);
+    }
+    .snap strong { color: var(--yellow); }
+
+    /* Metric bubbles — neopop on blueprint */
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
+    .met {
+      aspect-ratio: 1;
+      max-height: 140px;
+      border: 3px solid var(--border);
+      border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      background: var(--card-b);
+      box-shadow: var(--pop-sm);
+      padding: .5rem;
+    }
+    .met-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--yellow); line-height: 1; }
+    .met-lab { font-size: .58rem; letter-spacing: .05em; color: var(--muted); margin-top: .25rem; text-transform: uppercase; }
+    .met-src { font-size: .55rem; color: var(--cyan); margin-top: .15rem; }
+
+    .stack-grid { display: flex; flex-direction: column; gap: 1rem; }
+    .stack-row {
+      display: flex; flex-wrap: wrap; align-items: flex-start; gap: .75rem 1rem;
+      padding: .85rem 1rem; border: 2px solid rgba(125, 211, 252, .25);
+      background: rgba(15, 40, 71, .5);
+    }
+    .stack-cat { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); min-width: 88px; }
+
+    .oss-block {
+      border: 3px solid var(--border);
+      padding: 1.5rem;
+      background: var(--card-a);
+      box-shadow: var(--pop-sm);
+    }
+    .oss-block h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; color: var(--ink); margin-bottom: .5rem; }
+
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+    .proj {
+      border: 3px solid var(--border);
+      padding: 1.25rem;
+      background: var(--card-c);
+      box-shadow: var(--pop-sm);
+    }
+    .proj:nth-child(2) { background: var(--card-b); }
+    .proj-tag { font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: .5rem; }
+    .proj-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--ink); margin-bottom: .4rem; }
+    .proj-desc { font-size: .8rem; color: var(--cyan-dim); line-height: 1.6; }
+
+    .zazet-panel {
+      border: 3px solid var(--gold);
+      background: linear-gradient(135deg, rgba(252, 211, 77, .12), rgba(15, 40, 71, .9));
+      padding: 1.75rem;
+      box-shadow: 6px 6px 0 rgba(252, 211, 77, .25);
+    }
+    .zazet-panel h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; color: var(--yellow); margin-bottom: .5rem; }
+    .zazet-panel ul { margin: 1rem 0 1.25rem; padding-left: 1.1rem; font-size: .85rem; color: var(--cyan-dim); }
+    .zazet-panel li { margin-bottom: .35rem; }
+
+    .contact-grid { display: grid; gap: .75rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      border: 3px solid var(--border);
+      padding: 1rem 1.15rem;
+      background: var(--card-a);
+      box-shadow: var(--pop-sm);
+      color: var(--cyan-dim);
+      transition: transform .12s;
+    }
+    a.contact-item:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--pop-shadow); text-decoration: none; color: var(--ink); }
+    .contact-item-gold { border-color: var(--gold); }
+    .contact-label { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .92rem; color: var(--ink); }
+    .contact-sub { font-size: .72rem; color: var(--muted); margin-top: .15rem; }
+    .contact-arr { margin-left: auto; color: var(--yellow); font-size: 1rem; }
+
+    footer {
+      border-top: 2px solid rgba(125, 211, 252, .3);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: .68rem;
+      color: var(--muted);
+      letter-spacing: .05em;
+    }
+
     .mobile-jump {
-      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
-      background: rgba(13,13,26,.94); backdrop-filter: blur(14px);
-      border-top: 1px solid var(--border); padding: .45rem .75rem calc(.45rem + env(safe-area-inset-bottom));
-      justify-content: space-around; gap: .25rem;
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
+      background: rgba(10, 22, 40, .96);
+      border-top: 3px solid var(--border);
+      padding: .5rem .75rem calc(.5rem + env(safe-area-inset-bottom));
+      justify-content: space-around;
+      box-shadow: 0 -4px 0 var(--pop-shadow);
     }
-    .mobile-jump a {
-      font-size: .68rem; font-weight: 700; color: var(--text2); padding: .35rem .5rem;
-      border-radius: 6px; transition: color .15s, background .15s;
-    }
-    .mobile-jump a:hover { color: var(--text); background: rgba(255,255,255,.04); }
-    @media (max-width: 600px) {
-      .nav-links a:not(.nav-biz) { display: none; }
-      .mobile-jump { display: flex; }
-      body { padding-bottom: 3.25rem; }
-      #hero { min-height: auto; padding-bottom: 3rem; }
-      .stack-row { flex-direction: column; gap: .5rem; }
-      .stack-cat { width: auto; }
-      .section { padding: 4rem 0; }
-    }
+    .mobile-jump a { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan); padding: .35rem; }
 
-    /* ── Hero ── */
-    #hero {
-      min-height: 100svh; display: flex; flex-direction: column;
-      justify-content: center; padding: calc(var(--navh) + 3rem) 2rem 5rem;
-      position: relative; overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 70% 50% at 20% 40%, rgba(26,96,216,.07) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 30% at 80% 70%, rgba(61,214,140,.04) 0%, transparent 60%);
-    }
-    .hero-inner { position: relative; z-index: 1; max-width: var(--max); margin: 0 auto; padding: 0; width: 100%; }
-    .hero-tag  { display: inline-flex; align-items: center; gap: .5rem; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 1.75rem; }
-    .hero-tag::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
-    h1.hero-name {
-      font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 900; letter-spacing: -.04em;
-      line-height: 1; margin-bottom: .5rem;
-      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.7) 100%);
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .hero-title { font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 300; color: var(--text2); margin-bottom: 1.75rem; letter-spacing: -.01em; }
-    .hero-title strong { color: var(--blue); font-weight: 600; }
-    .hero-bio { font-size: 1rem; color: var(--text2); line-height: 1.75; max-width: 52ch; margin-bottom: 2.5rem; }
-    .hero-bio strong { color: var(--text); }
-    .hero-links { display: flex; flex-wrap: wrap; gap: .75rem; }
-    .hero-link {
-      display: inline-flex; align-items: center; gap: .5rem;
-      font-size: .84rem; font-weight: 600; padding: .6rem 1.3rem;
-      border-radius: 8px; border: 1px solid var(--borderh);
-      color: var(--text2); background: rgba(255,255,255,.03);
-      transition: all .18s;
-    }
-    .hero-link:hover { border-color: rgba(88,184,245,.4); color: var(--blue); background: rgba(88,184,245,.05); }
-    .hero-link-primary {
-      background: linear-gradient(135deg, var(--bluemid), var(--bluedeep));
-      color: #fff; border-color: transparent;
-      box-shadow: 0 4px 18px rgba(26,96,216,.35);
-    }
-    .hero-link-primary:hover { color: #fff; transform: translateY(-1px); box-shadow: 0 8px 26px rgba(26,96,216,.45); border-color: transparent; }
-
-    /* ── Currently ── */
-    .currently-card {
-      margin-top: 3rem; padding: 1.5rem 1.75rem;
-      border-radius: var(--r); border: 1px solid rgba(61,214,140,.2);
-      background: rgba(61,214,140,.03);
-      display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
-    }
-    .curr-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex-shrink: 0; animation: pulse 2s ease-in-out infinite; }
-    .curr-body { flex: 1; }
-    .curr-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--green); margin-bottom: .2rem; }
-    .curr-company { font-size: 1rem; font-weight: 800; }
-    .curr-role { font-size: .82rem; color: var(--text2); margin-top: .15rem; }
-    .curr-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
-    .curr-tag { font-size: .63rem; font-weight: 700; letter-spacing: .05em; padding: .18rem .55rem; border-radius: 4px; background: rgba(255,255,255,.05); color: var(--text3); text-transform: uppercase; }
-    .curr-stat { text-align: right; flex-shrink: 0; }
-    .curr-stat-val { font-size: 1.6rem; font-weight: 900; letter-spacing: -.03em; color: var(--green); line-height: 1; }
-    .curr-stat-label { font-size: .68rem; color: var(--text3); margin-top: .2rem; }
-    @media (max-width: 600px) { .curr-stat { display: none; } }
-    .currently-card-gold {
-      border-color: rgba(212,167,42,.25); background: rgba(212,167,42,.04);
-    }
-    .currently-card-gold .curr-label,
-    .currently-card-gold .curr-dot { color: var(--gold); background: var(--gold); }
-    .currently-card-gold .curr-stat-val { color: var(--gold); }
-    .hero-router { font-size: .88rem; color: var(--text2); line-height: 1.65; max-width: 56ch; margin-bottom: 1.5rem; }
-    .hero-router strong { color: var(--text); font-weight: 600; }
-    .hero-router a { color: var(--gold); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
-    .hero-avail { font-size: .82rem; color: var(--text3); margin: -.5rem 0 1.25rem; max-width: 52ch; }
-    .career-snap {
-      margin-top: 1.5rem; padding: 1.25rem 1.5rem; border-radius: var(--r);
-      border: 1px solid var(--borderh); background: rgba(88,184,245,.04);
-      font-size: .88rem; color: var(--text2); line-height: 1.6;
-    }
-    .career-snap strong { color: var(--text); }
-    .zazet-bridge {
-      margin-top: 2.5rem; padding: 2rem 2.25rem; border-radius: var(--r);
-      border: 1px solid rgba(212,167,42,.22); background: rgba(212,167,42,.04);
-    }
-    .zazet-bridge h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: .5rem; letter-spacing: -.02em; }
-    .zazet-bridge ul { margin: 1rem 0 1.25rem; padding-left: 1.2rem; color: var(--text2); font-size: .88rem; line-height: 1.7; }
-    .zazet-bridge li { margin-bottom: .35rem; }
-    .zazet-cta {
-      display: inline-flex; align-items: center; gap: .4rem; font-size: .84rem; font-weight: 700;
-      color: var(--gold); border: 1px solid rgba(212,167,42,.35); padding: .55rem 1.1rem;
-      border-radius: 8px; transition: background .15s, border-color .15s;
-    }
-    .zazet-cta:hover { background: rgba(212,167,42,.1); border-color: var(--gold); }
-    .num-source { font-size: .62rem; color: var(--text3); margin-top: .15rem; display: block; }
-
-    /* ── Career ── */
-    #career { background: var(--surface); }
-    .changelog { margin-top: 3rem; position: relative; }
-    .changelog::before {
-      content: ''; position: absolute; left: 118px; top: 0; bottom: 0;
-      width: 1px; background: linear-gradient(to bottom, transparent, var(--border) 5%, var(--border) 95%, transparent);
-    }
-    .cl-entry { display: grid; grid-template-columns: 110px 28px 1fr; gap: 0 1rem; padding: 1.75rem 0; border-top: 1px solid var(--border); }
-    .cl-entry:last-child { border-bottom: 1px solid var(--border); }
-    .cl-date  { font-size: .73rem; font-weight: 700; color: var(--text3); letter-spacing: .03em; padding-top: .2rem; font-variant-numeric: tabular-nums; }
-    .cl-dot-wrap { display: flex; justify-content: center; padding-top: .35rem; }
-    .cl-dot   { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; background: var(--blue); box-shadow: 0 0 0 3px rgba(88,184,245,.15); }
-    .cl-dot-g { background: var(--gold); box-shadow: 0 0 0 3px rgba(212,167,42,.15); }
-    .cl-dot-curr { background: var(--green); box-shadow: 0 0 0 3px rgba(61,214,140,.2); animation: pulse 2s ease-in-out infinite; }
-    .cl-company { font-size: 1rem; font-weight: 800; letter-spacing: -.01em; margin-bottom: .2rem; }
-    .cl-role    { font-size: .78rem; font-weight: 600; color: var(--blue); margin-bottom: .55rem; }
-    .cl-role-g  { color: var(--text2); }
-    .cl-role-curr { color: var(--green); }
-    .cl-desc    { font-size: .86rem; color: var(--text2); line-height: 1.65; }
-    .cl-desc strong { color: var(--text); }
-    .cl-tags    { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .65rem; }
-    .cl-tag     { font-size: .62rem; font-weight: 700; letter-spacing: .05em; padding: .18rem .55rem; border-radius: 4px; background: rgba(255,255,255,.05); color: var(--text3); text-transform: uppercase; }
-    .cl-tag-staff { color: var(--gold); background: rgba(212,167,42,.1); border: 1px solid rgba(212,167,42,.2); }
     @media (max-width: 640px) {
-      .changelog::before { display: none; }
-      .cl-entry { grid-template-columns: 90px 1fr; }
-      .cl-dot-wrap { display: none; }
+      .nav-links a:not(.nav-z) { display: none; }
+      .mobile-jump { display: flex; }
+      body { padding-bottom: 3.5rem; }
+      .sheet { padding: 1.5rem 1.15rem; }
+      .met { max-height: 120px; }
     }
 
-    /* ── Numbers ── */
-    .numbers-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 2px; margin-top: 3rem; border-radius: var(--r); overflow: hidden; }
-    .num-card { padding: 2rem 1.25rem; background: var(--surface); text-align: center; }
-    .num-val {
-      font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 900; letter-spacing: -.04em; line-height: 1; margin-bottom: .35rem;
-      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.55) 100%);
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .num-val-b { background: linear-gradient(135deg, var(--blue), var(--bluemid)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .num-val-g { background: linear-gradient(135deg, var(--gold), var(--goldmid)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .num-val-gr { background: linear-gradient(135deg, var(--green), #20a86e); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .num-label { font-size: .72rem; color: var(--text3); line-height: 1.45; }
-    @media (max-width: 700px) { .numbers-grid { grid-template-columns: repeat(3,1fr); } }
-    @media (max-width: 420px) { .numbers-grid { grid-template-columns: repeat(2,1fr); } }
-
-    /* ── Stack ── */
-    .stack-rows { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 3rem; }
-    .stack-row  { display: flex; align-items: flex-start; gap: 1.5rem; }
-    .stack-cat  { font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); width: 96px; flex-shrink: 0; padding-top: .38rem; }
-    .stack-pills{ display: flex; flex-wrap: wrap; gap: .4rem; }
-    .pill       { font-size: .78rem; font-weight: 600; padding: .3rem .78rem; border-radius: 6px; border: 1px solid var(--border); color: var(--text2); background: rgba(255,255,255,.02); transition: all .15s; cursor: default; }
-    .pill:hover { border-color: var(--borderh); color: var(--text); background: rgba(255,255,255,.05); }
-    .pill-b     { border-color: rgba(88,184,245,.22); color: var(--blue); background: rgba(88,184,245,.05); }
-    .pill-g     { border-color: rgba(212,167,42,.22); color: var(--gold); background: rgba(212,167,42,.05); }
-    .pill-gr    { border-color: rgba(61,214,140,.22); color: var(--green); background: rgba(61,214,140,.05); }
-
-    /* ── OSS ── */
-    #oss { background: var(--surface); }
-    .oss-card {
-      margin-top: 3rem; padding: 2rem 2.25rem; border-radius: var(--r);
-      border: 1px solid var(--borderh); background: var(--surface2);
-      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem;
-    }
-    .oss-name { font-size: 1.4rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: .35rem; }
-    .oss-desc { font-size: .88rem; color: var(--text2); max-width: 480px; line-height: 1.65; }
-    .oss-stats { display: flex; gap: 1.25rem; margin-top: 1.1rem; }
-    .oss-stat { font-size: .75rem; color: var(--text3); }
-    .oss-stat strong { color: var(--text2); font-weight: 700; }
-    .oss-link { display: inline-flex; align-items: center; gap: .4rem; font-size: .82rem; font-weight: 700; color: var(--blue); margin-top: 1rem; transition: gap .15s; }
-    .oss-link:hover { gap: .6rem; }
-    @media (max-width: 640px) { .oss-card { grid-template-columns: 1fr; } }
-
-    /* ── Projects ── */
-    .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.1rem; margin-top: 3rem; }
-    .proj-card {
-      padding: 1.6rem; border-radius: var(--r); border: 1px solid var(--border);
-      background: var(--surface2); display: flex; flex-direction: column;
-      transition: border-color .2s, background .2s;
-    }
-    .proj-card:hover { border-color: var(--borderh); background: var(--surf-h); }
-    .proj-tag  { font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: .65rem; }
-    .proj-tag-g { color: var(--gold); }
-    .proj-name { font-size: 1rem; font-weight: 800; letter-spacing: -.01em; margin-bottom: .45rem; }
-    .proj-desc { font-size: .84rem; color: var(--text2); line-height: 1.62; flex: 1; }
-    .proj-desc strong { color: var(--text); }
-    .proj-meta { font-size: .68rem; color: var(--text3); margin-top: .75rem; }
-
-    /* ── Contact ── */
-    #contact { background: var(--surface2); }
-    .contact-inner { max-width: 560px; margin: 3rem auto 0; }
-    .contact-links { display: flex; flex-direction: column; gap: .65rem; }
-    .contact-link {
-      display: flex; align-items: center; gap: 1rem; padding: .95rem 1.25rem;
-      border-radius: var(--r); border: 1px solid var(--border);
-      color: var(--text2); background: rgba(255,255,255,.02); transition: all .2s;
-    }
-    .contact-link:hover { border-color: rgba(88,184,245,.35); color: var(--blue); background: rgba(88,184,245,.05); }
-    .contact-link-gold:hover { border-color: rgba(212,167,42,.4); color: var(--gold); background: rgba(212,167,42,.05); }
-    .contact-link-icon { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,.05); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .contact-link-label { font-size: .9rem; font-weight: 600; }
-    .contact-link-sub { font-size: .72rem; color: var(--text3); margin-top: .1rem; }
-    .contact-link-arr { margin-left: auto; color: var(--text3); font-size: .85rem; }
-
-    /* ── Footer ── */
-    footer { padding: 2rem 0; border-top: 1px solid var(--border); text-align: center; }
-    footer p { font-size: .72rem; color: var(--text3); }
-    footer a { color: var(--text3); transition: color .15s; }
-    footer a:hover { color: var(--text2); }
-
-    /* ── Accessibility ── */
-    .skip-link {
-      position: absolute; top: -100px; left: 1rem; z-index: 9999;
-      background: var(--blue); color: #000; font-weight: 700; font-size: .88rem;
-      padding: .7rem 1.4rem; border-radius: 0 0 10px 10px; text-decoration: none;
-      transition: top .15s;
-    }
-    .skip-link:focus { top: 0; }
-    :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+    .skip { position: absolute; top: -100px; left: 1rem; z-index: 200; background: var(--yellow); color: #0a1628; padding: .5rem 1rem; font-weight: 700; }
+    .skip:focus { top: .5rem; }
   </style>
 </head>
 <body>
 
-<a href="#main-content" class="skip-link">Skip to main content</a>
+<a href="#main" class="skip">Skip to content</a>
 
-<!-- ══ NAV ══════════════════════════════════════════════ -->
-<nav class="nav" id="nav" aria-label="Main navigation">
-  <div class="container">
-    <a href="#hero" class="nav-name">Gal <span>Tidhar</span></a>
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="inner">
+    <a href="#hero" class="nav-logo">Gal <span>Tidhar</span></a>
     <div class="nav-links">
-      <a href="#career">Career</a>
-      <a href="#numbers">Impact</a>
-      <a href="#projects">Work</a>
-      <a href="#stack">Stack</a>
-      <a href="#contact">Contact</a>
-      <a href="https://zazet-solutions.hr" target="_blank" rel="noopener" class="nav-biz">ZaZet Solutions ↗</a>
+      <a href="#career">§02 Experience</a>
+      <a href="#numbers">§03 Impact</a>
+      <a href="#stack">§04 Stack</a>
+      <a href="#projects">§06 Work</a>
+      <a href="#contact">§08 Contact</a>
+      <a href="https://zazet-solutions.hr" target="_blank" rel="noopener" class="nav-z">ZaZet ↗</a>
+      <a href="/designs/" style="opacity:.5">designs</a>
     </div>
   </div>
 </nav>
 
-<main id="main-content">
+<main id="main">
+  <div class="wrap">
 
-<!-- ══ HERO ═════════════════════════════════════════════ -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-inner">
-    <div class="hero-tag">Available</div>
-    <h1 class="hero-name">Gal Tidhar</h1>
-    <p class="hero-title"><strong>Staff Software Engineer</strong> · Backend &amp; Platform · Zagreb</p>
-    <p class="hero-avail">Open to Staff/Senior backend &amp; platform roles · EU remote/hybrid · from June 2026</p>
+    <!-- §01 HERO -->
+    <section id="hero" class="sheet">
+      <span class="sheet-rev">REV 2026.06 · HYBRID BP+NP</span>
+      <p class="drawing-id">DRAWING GT-PORTFOLIO-001 · gal.tidhar.org.il</p>
 
-    <p class="hero-router">
-      <strong>Hiring?</strong> Staff-level platform work — Shopify logistics, Novu (employed), Sedric DX.
-      <strong>Need business automation?</strong>
-      <a href="https://zazet-solutions.hr" target="_blank" rel="noopener">ZaZet Solutions</a> — custom systems for SMBs (HR, EN, HE).
-    </p>
+      <div class="sticker">Staff Software Engineer</div>
+      <div class="status-chip">◇ OPEN_FROM 2026-06 · EU REMOTE</div>
 
-    <div class="currently-card currently-card-gold">
-      <div class="curr-dot" aria-hidden="true"></div>
-      <div class="curr-body">
-        <div class="curr-label">Now</div>
-        <div class="curr-company">ZaZet Solutions · Independent</div>
-        <div class="curr-role">Founder — SMB automation &amp; staff-level engineering consulting</div>
-        <div class="curr-tags">
-          <span class="curr-tag">ex-Staff @ Shopify</span>
-          <span class="curr-tag">ex-Sedric Apr 2026</span>
+      <h1 class="title sans">Gal Tidhar</h1>
+      <p class="meta-line"><strong>ROLE</strong> Backend &amp; Platform · <strong>LOC</strong> Zagreb · <strong>AVAIL</strong> Staff/Senior IC</p>
+
+      <div class="spec" style="margin-top:0">
+        <div class="spec-head">§01 GENERAL NOTES</div>
+        <p class="lead">
+          <strong>Hiring?</strong> 10+ years on systems that must work in production — Shopify logistics (Staff), Novu (employed), Sedric platform/DX.
+          <strong>Business?</strong> Founder of <a href="https://zazet-solutions.hr">ZaZet Solutions</a> — SMB automation in HR, EN, HE.
+        </p>
+        <div class="pill-row">
+          <a href="#career" class="pill pill-primary">§02 Experience →</a>
+          <a href="/gal-tidhar-cv.pdf" class="pill" download>CV PDF</a>
+          <a href="https://www.linkedin.com/in/galtidhar/" class="pill" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/galtidhar" class="pill" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://zazet-solutions.hr" class="pill" target="_blank" rel="noopener">ZaZet ↗</a>
         </div>
       </div>
-      <div class="curr-stat">
-        <div class="curr-stat-val">2026</div>
-        <div class="curr-stat-label">present</div>
+    </section>
+
+    <!-- §02 EXPERIENCE -->
+    <section id="career" class="spec">
+      <div class="spec-head">§02 EMPLOYMENT SCHEDULE</div>
+      <div class="snap"><strong>AT A GLANCE</strong> — Staff @ Shopify/Flexport · Senior @ Novu &amp; Sedric · Founder @ ZaZet · 10+ yrs backend/platform</div>
+      <div class="jobs">
+
+        <article class="job job-current">
+          <div class="job-date">2026 — PRESENT</div>
+          <div class="job-co">ZaZet Solutions · Independent</div>
+          <div class="job-role">Founder · Staff-level engineering &amp; consulting</div>
+          <p class="job-desc">SMB automation and custom operational systems (booking, payroll, internal tools). Same platform discipline as full-time roles — teams of 5–50. Open to Staff/Senior backend roles in parallel.</p>
+          <div class="tags"><span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">Platform</span><span class="tag">SMB</span></div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">JUN 2025 — APR 2026</div>
+          <div class="job-co">Sedric.ai</div>
+          <div class="job-role">Senior Software Engineer · Remote</div>
+          <p class="job-desc">Unified developer data platform (React, TypeScript) consolidating <strong>AWS + MongoDB Atlas</strong> for CSM and engineering. Org-wide <strong>AI-assisted delivery</strong> with Claude Code — CI overhauls, tooling, workshops.</p>
+          <div class="tags"><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">NestJS</span><span class="tag">AWS</span><span class="tag">DX</span></div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">APR 2024 — JUN 2025</div>
+          <div class="job-co">Novu.co</div>
+          <div class="job-role">Senior Software Engineer · Remote · Employed</div>
+          <p class="job-desc">Full-time on OSS notification platform (35k+ repo stars). Cut build time <strong>78%</strong>; redesigned <strong>Novu V2 API</strong>; OpenAPI in CI/CD; channel CLI generators.</p>
+          <div class="tags"><span class="tag tag-gold">Employed</span><span class="tag">TypeScript</span><span class="tag">NestJS</span><span class="tag">OpenAPI</span></div>
+        </article>
+
+        <article class="job job-staff">
+          <div class="job-date">JUN 2022 — FEB 2024</div>
+          <div class="job-co">Shopify · Flexport</div>
+          <div class="job-role">Staff Software Engineer · Remote</div>
+          <p class="job-desc">Commerce logistics post-acquisition. Cut operational delays <strong>70%</strong>; shipment events + audit log → <strong>97% on-time shipping</strong>; cross-team integration on Java/TypeScript microservices.</p>
+          <div class="tags"><span class="tag tag-gold">Staff level</span><span class="tag">Java</span><span class="tag">Kubernetes</span><span class="tag">Distributed Systems</span></div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">JAN 2022 — JUN 2022</div>
+          <div class="job-co">Deliverr</div>
+          <div class="job-role">Senior Software Engineer</div>
+          <p class="job-desc">B2B product 0→1 before Shopify acquisition. OpenAPI adoption across <strong>8 teams / 14 services</strong> — API overhead <strong>↓90%</strong>. Warehouse back-office chatbot tooling.</p>
+          <div class="tags"><span class="tag">TypeScript</span><span class="tag">OpenAPI</span><span class="tag">AWS</span></div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">APR 2020 — JAN 2022</div>
+          <div class="job-co">Wochit</div>
+          <div class="job-role">Senior Backend Developer</div>
+          <p class="job-desc">Vaadin back-office adopted day-one by CSM. Zero-downtime Elasticsearch migration — <strong>46% cost ↓</strong>. Release turnaround <strong>↓50%</strong> via E2E practice.</p>
+          <div class="tags"><span class="tag">Java</span><span class="tag">Elasticsearch</span><span class="tag">Kubernetes</span></div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">2018 — 2020</div>
+          <div class="job-co">Siemens PLM</div>
+          <div class="job-role">Software Engineer</div>
+          <p class="job-desc">Enterprise PLM — Java backend, manufacturing lifecycle tools, modern JS in legacy systems.</p>
+          <div class="tags"><span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">PLM</span></div>
+        </article>
+
+        <article class="job">
+          <div class="job-date">2014 — 2018</div>
+          <div class="job-co">Jebo GMBH</div>
+          <div class="job-role">Full-Stack Developer</div>
+          <p class="job-desc">First engineering role — production web apps across Germany and Austria.</p>
+          <div class="tags"><span class="tag">PHP</span><span class="tag">JavaScript</span><span class="tag">MySQL</span></div>
+        </article>
+
       </div>
-    </div>
+    </section>
 
-    <p class="hero-bio" style="margin-top:2rem">
-      10+ years building backend and platform systems at Shopify-scale logistics, Siemens PLM, and open-source infra (Novu).
-      I design <strong>distributed services, CI/platform layers, and measurable DX outcomes</strong> — not slide decks.
-    </p>
+    <!-- §03 IMPACT -->
+    <section id="numbers" class="spec">
+      <div class="spec-head">§03 PERFORMANCE SPECS</div>
+      <p class="lead" style="margin-bottom:1.25rem;font-size:.88rem">Verified outcomes — see §02 for context.</p>
+      <div class="metrics">
+        <div class="met"><div class="met-val">78%</div><div class="met-lab">Build time ↓</div><div class="met-src">Novu</div></div>
+        <div class="met"><div class="met-val">97%</div><div class="met-lab">On-time ship</div><div class="met-src">Shopify</div></div>
+        <div class="met"><div class="met-val">90%</div><div class="met-lab">API overhead ↓</div><div class="met-src">Deliverr</div></div>
+        <div class="met"><div class="met-val">70%</div><div class="met-lab">Ops delays ↓</div><div class="met-src">Shopify</div></div>
+        <div class="met"><div class="met-val">46%</div><div class="met-lab">Infra cost ↓</div><div class="met-src">Wochit</div></div>
+        <div class="met"><div class="met-val">10+</div><div class="met-lab">Years</div><div class="met-src">Backend</div></div>
+      </div>
+    </section>
 
-    <div class="hero-links">
-      <a href="#career" class="hero-link hero-link-primary">Experience &amp; impact →</a>
-      <a href="https://github.com/galtidhar" target="_blank" rel="noopener" class="hero-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-        GitHub
-      </a>
-      <a href="https://www.linkedin.com/in/galtidhar/" target="_blank" rel="noopener" class="hero-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-      <a href="https://zazet-solutions.hr" target="_blank" rel="noopener" class="hero-link" style="border-color:rgba(212,167,42,.35);color:var(--gold)">ZaZet Solutions ↗</a>
-      <a href="/gal-tidhar-cv.pdf" class="hero-link" download>Download CV (PDF)</a>
-      <a href="mailto:gal@zazet-solutions.hr?subject=Recruiting" class="hero-link">gal@zazet-solutions.hr</a>
-    </div>
+    <!-- §04 STACK -->
+    <section id="stack" class="spec">
+      <div class="spec-head">§04 TECHNICAL SPECIFICATION</div>
+      <div class="stack-grid">
+        <div class="stack-row"><span class="stack-cat">Languages</span><span class="tag">TypeScript</span><span class="tag">JavaScript</span><span class="tag">Java</span><span class="tag">Python</span><span class="tag">PHP</span></div>
+        <div class="stack-row"><span class="stack-cat">Backend</span><span class="tag">Node.js</span><span class="tag">NestJS</span><span class="tag">Spring Boot</span><span class="tag">REST</span><span class="tag">GraphQL</span><span class="tag">gRPC</span></div>
+        <div class="stack-row"><span class="stack-cat">Frontend</span><span class="tag">React</span><span class="tag">Next.js</span></div>
+        <div class="stack-row"><span class="stack-cat">Cloud</span><span class="tag tag-gold">AWS</span><span class="tag tag-gold">Kubernetes</span><span class="tag">Docker</span><span class="tag">Terraform</span><span class="tag">CI/CD</span></div>
+        <div class="stack-row"><span class="stack-cat">Data</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">Redis</span><span class="tag">Elasticsearch</span></div>
+        <div class="stack-row"><span class="stack-cat">Practice</span><span class="tag tag-gold">Distributed Systems</span><span class="tag tag-gold">Platform Eng</span><span class="tag">DX</span><span class="tag">System Design</span><span class="tag">Mentorship</span></div>
+        <div class="stack-row"><span class="stack-cat">AI/Tooling</span><span class="tag">Claude Code</span><span class="tag">OpenAPI</span><span class="tag">LLM APIs</span></div>
+      </div>
+    </section>
 
-  </div>
-</section>
+    <!-- §05 NOVU -->
+    <section id="oss" class="spec">
+      <div class="spec-head">§05 NOVU SUBSYSTEM</div>
+      <div class="oss-block">
+        <h3 class="sans">Novu.co — Senior engineer (employed)</h3>
+        <p class="job-desc" style="margin-top:.5rem">Apr 2024 – Jun 2025 on the notification infrastructure platform (35k+ repo stars). V2 API architecture, OpenAPI-driven CI/CD, channel CLI generators, build-system optimizations.</p>
+        <div class="tags" style="margin-top:1rem">
+          <span class="tag tag-gold">35k+ ★</span><span class="tag tag-gold">78% builds</span><span class="tag">TypeScript</span><span class="tag">NestJS</span>
+        </div>
+        <p style="margin-top:1rem"><a href="https://github.com/novuhq/novu" target="_blank" rel="noopener">View Novu on GitHub →</a></p>
+      </div>
+    </section>
 
-<div class="divider"></div>
-
-<!-- ══ CAREER ════════════════════════════════════════════ -->
-<section id="career" class="section">
-  <div class="container">
-    <div class="eyebrow">Experience</div>
-    <h2 class="h2">Career Changelog</h2>
-    <p class="lead">10 years across enterprise PLM, logistics scale, open source, and platform/DX — systems that have to work in production.</p>
-    <div class="career-snap">
-      <strong>At a glance:</strong> Staff @ Shopify/Flexport (logistics, distributed systems) · Senior @ Novu &amp; Sedric ·
-      Founder @ ZaZet Solutions · Siemens PLM · 10+ yrs backend/platform.
-    </div>
-    <div class="changelog">
-
-      <div class="cl-entry">
-        <div class="cl-date">2026 — now</div>
-        <div class="cl-dot-wrap"><div class="cl-dot cl-dot-curr"></div></div>
-        <div>
-          <div class="cl-company">ZaZet Solutions · Independent</div>
-          <div class="cl-role cl-role-curr">Founder · Staff-level engineering &amp; consulting</div>
-          <div class="cl-desc">SMB automation and custom operational systems (booking, payroll, internal tools). Same platform discipline as full-time roles — scoped for teams of 5–50. Open to Staff/Senior backend roles in parallel.</div>
-          <div class="cl-tags"><span class="cl-tag">TypeScript</span><span class="cl-tag">Node.js</span><span class="cl-tag">Platform</span><span class="cl-tag">SMB</span><span class="cl-tag">Consulting</span></div>
+    <!-- §06 PROJECTS -->
+    <section id="projects" class="spec">
+      <div class="spec-head">§06 CLIENT DEPLOYMENTS · ZAZET</div>
+      <p class="lead" style="margin-bottom:1.25rem;font-size:.88rem">Production systems for SMB operators.</p>
+      <div class="proj-grid">
+        <div class="proj">
+          <div class="proj-tag">Croatia · SMB</div>
+          <div class="proj-name">Island operator: booking + marina</div>
+          <p class="proj-desc">4-language production system. Replaced phone/spreadsheet booking.</p>
+        </div>
+        <div class="proj">
+          <div class="proj-tag">Germany · Tech</div>
+          <div class="proj-name">Payroll &amp; HR backoffice</div>
+          <p class="proj-desc">30-person company — payroll <strong>days → hours</strong>.</p>
+        </div>
+        <div class="proj">
+          <div class="proj-tag">Israel · SMB</div>
+          <div class="proj-name">Business operating system</div>
+          <p class="proj-desc">One custom ops system replacing department spreadsheets.</p>
         </div>
       </div>
+    </section>
 
-      <div class="cl-entry">
-        <div class="cl-date">Jun 2025 — Apr 2026</div>
-        <div class="cl-dot-wrap"><div class="cl-dot"></div></div>
-        <div>
-          <div class="cl-company">Sedric.ai</div>
-          <div class="cl-role">Senior Software Engineer · Remote</div>
-          <div class="cl-desc">Built a full-stack internal developer data platform (React, TypeScript) consolidating AWS and MongoDB Atlas into one back-office UI for CSM and engineering. Drove org-wide AI-assisted delivery with Claude Code — CI overhauls, developer tooling, and hands-on workshops that improved engineering velocity.</div>
-          <div class="cl-tags"><span class="cl-tag">TypeScript</span><span class="cl-tag">React</span><span class="cl-tag">NestJS</span><span class="cl-tag">AWS</span><span class="cl-tag">Platform</span><span class="cl-tag">DX</span></div>
-        </div>
+    <!-- §07 ZAZET -->
+    <section id="zazet" class="spec">
+      <div class="spec-head">§07 EXTERNAL SYSTEM</div>
+      <div class="zazet-panel">
+        <h3>ZaZet Solutions</h3>
+        <p class="lead" style="font-size:.9rem">Platform thinking from Sedric and Shopify, applied to teams of 5–50 — booking, payroll, ops without generic SaaS bloat.</p>
+        <ul>
+          <li>Custom web apps &amp; internal tools (HR, EN, HE)</li>
+          <li>Replace spreadsheets with one system your team uses</li>
+        </ul>
+        <a href="https://zazet-solutions.hr" class="pill pill-primary" target="_blank" rel="noopener" style="display:inline-block">Book intro → zazet-solutions.hr</a>
       </div>
+    </section>
 
-      <div class="cl-entry">
-        <div class="cl-date">Apr 2024 — Jun 2025</div>
-        <div class="cl-dot-wrap"><div class="cl-dot cl-dot-g"></div></div>
-        <div>
-          <div class="cl-company">Novu.co</div>
-          <div class="cl-role cl-role-g">Senior Software Engineer · Remote</div>
-          <div class="cl-desc">Employed on the open-source notification platform (35k+ GitHub stars). Cut build time <strong>78%</strong> via module consolidation and tree shaking; redesigned Novu V2 API architecture; integrated OpenAPI into CI/CD; shipped CLI generators for new notification channels.</div>
-          <div class="cl-tags"><span class="cl-tag">TypeScript</span><span class="cl-tag">React</span><span class="cl-tag">NestJS</span><span class="cl-tag">OpenAPI</span><span class="cl-tag">Open Source</span></div>
-        </div>
-      </div>
-
-      <div class="cl-entry">
-        <div class="cl-date">Jun 2022 — Feb 2024</div>
-        <div class="cl-dot-wrap"><div class="cl-dot"></div></div>
-        <div>
-          <div class="cl-company">Shopify · Flexport</div>
-          <div class="cl-role">Staff Software Engineer</div>
-          <div class="cl-desc">Staff engineer on commerce logistics post-acquisition. Cut operational delays <strong>70%</strong> via a conversational ops bot; led shipment events and audit log work tied to <strong>97%</strong> on-time shipping; owned cross-team integration design on Java/TypeScript microservices.</div>
-          <div class="cl-tags"><span class="cl-tag cl-tag-staff">Staff level</span><span class="cl-tag">Java</span><span class="cl-tag">TypeScript</span><span class="cl-tag">Kubernetes</span><span class="cl-tag">Distributed Systems</span></div>
-        </div>
-      </div>
-
-      <div class="cl-entry">
-        <div class="cl-date">Jan 2022 — Jun 2022</div>
-        <div class="cl-dot-wrap"><div class="cl-dot cl-dot-g"></div></div>
-        <div>
-          <div class="cl-company">Deliverr</div>
-          <div class="cl-role cl-role-g">Senior Software Engineer</div>
-          <div class="cl-desc">Led B2B product line 0→1 before Shopify acquisition. Drove OpenAPI contract adoption across <strong>8 teams / 14 services</strong>, cutting API overhead <strong>90%</strong>. Built warehouse back-office tooling with extensible chatbot commands.</div>
-          <div class="cl-tags"><span class="cl-tag">TypeScript</span><span class="cl-tag">Node.js</span><span class="cl-tag">OpenAPI</span><span class="cl-tag">AWS</span></div>
-        </div>
-      </div>
-
-      <div class="cl-entry">
-        <div class="cl-date">Apr 2020 — Jan 2022</div>
-        <div class="cl-dot-wrap"><div class="cl-dot"></div></div>
-        <div>
-          <div class="cl-company">Wochit</div>
-          <div class="cl-role">Senior Backend Developer</div>
-          <div class="cl-desc">Built Vaadin back-office adopted day-one by CSM; led zero-downtime Elasticsearch migration with <strong>46%</strong> cost reduction. Cut release turnaround <strong>50%</strong> via E2E testing practice.</div>
-          <div class="cl-tags"><span class="cl-tag">JavaScript</span><span class="cl-tag">React</span><span class="cl-tag">Node.js</span><span class="cl-tag">AWS</span><span class="cl-tag">Video Processing</span></div>
-        </div>
-      </div>
-
-      <div class="cl-entry">
-        <div class="cl-date">2018 — 2020</div>
-        <div class="cl-dot-wrap"><div class="cl-dot cl-dot-g"></div></div>
-        <div>
-          <div class="cl-company">Siemens PLM</div>
-          <div class="cl-role cl-role-g">Software Engineer</div>
-          <div class="cl-desc">Enterprise PLM software serving global manufacturing customers. Java backend and web frontend for manufacturing lifecycle tools. Introduced modern JavaScript tooling into legacy systems.</div>
-          <div class="cl-tags"><span class="cl-tag">Java</span><span class="cl-tag">JavaScript</span><span class="cl-tag">Spring Boot</span><span class="cl-tag">PLM</span><span class="cl-tag">Enterprise</span></div>
-        </div>
-      </div>
-
-      <div class="cl-entry">
-        <div class="cl-date">2014 — 2018</div>
-        <div class="cl-dot-wrap"><div class="cl-dot"></div></div>
-        <div>
-          <div class="cl-company">Jebo GMBH</div>
-          <div class="cl-role">Full-Stack Developer</div>
-          <div class="cl-desc">First engineering role — built full-stack web applications from scratch. Grew from junior to mid-level while shipping production systems used across Germany and Austria.</div>
-          <div class="cl-tags"><span class="cl-tag">PHP</span><span class="cl-tag">JavaScript</span><span class="cl-tag">MySQL</span></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══ NUMBERS ════════════════════════════════════════════ -->
-<section id="numbers" class="section-sm">
-  <div class="container">
-    <div class="eyebrow">Impact</div>
-    <h2 class="h2">Outcomes I can point to</h2>
-    <p class="lead">Selected metrics from recent roles — full context in the timeline above.</p>
-    <div class="numbers-grid">
-      <div class="num-card"><div class="num-val num-val-gr">78%</div><div class="num-label">Build time ↓<span class="num-source">Novu</span></div></div>
-      <div class="num-card"><div class="num-val num-val-gr">90%</div><div class="num-label">API overhead ↓<span class="num-source">Deliverr</span></div></div>
-      <div class="num-card"><div class="num-val num-val-b">70%</div><div class="num-label">Deploy delays ↓<span class="num-source">Shopify</span></div></div>
-      <div class="num-card"><div class="num-val num-val-g">46%</div><div class="num-label">Infra cost ↓<span class="num-source">Wochit</span></div></div>
-      <div class="num-card"><div class="num-val">10</div><div class="num-label">years<br>experience</div></div>
-      <div class="num-card"><div class="num-val">7</div><div class="num-label">companies<br>shipped at</div></div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══ ZAZET BRIDGE ═══════════════════════════════════════ -->
-<section id="zazet" class="section-sm">
-  <div class="container">
-    <div class="eyebrow">Also building for small business</div>
-    <div class="zazet-bridge">
-      <h3>ZaZet Solutions — automation that fits how you work</h3>
-      <p class="lead" style="margin-bottom:0">The same platform thinking from Sedric and Shopify, applied to teams of 5–50: booking, payroll, ops — without generic SaaS bloat.</p>
-      <ul>
-        <li>Custom web apps &amp; internal tools (HR, EN, HE)</li>
-        <li>Replace spreadsheets with one system your team actually uses</li>
-        <li>Fast delivery — see client work below</li>
-      </ul>
-      <a href="https://zazet-solutions.hr" target="_blank" rel="noopener" class="zazet-cta">Book a free intro call → zazet-solutions.hr</a>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══ STACK ══════════════════════════════════════════════ -->
-<section id="stack" class="section">
-  <div class="container">
-    <div class="eyebrow">Skills</div>
-    <h2 class="h2">Tech Stack</h2>
-    <div class="stack-rows">
-      <div class="stack-row">
-        <div class="stack-cat">Languages</div>
-        <div class="stack-pills">
-          <span class="pill pill-b">TypeScript</span>
-          <span class="pill pill-b">JavaScript</span>
-          <span class="pill">Java</span>
-          <span class="pill">Python</span>
-          <span class="pill">PHP</span>
-        </div>
-      </div>
-      <div class="stack-row">
-        <div class="stack-cat">Backend</div>
-        <div class="stack-pills">
-          <span class="pill pill-b">Node.js</span>
-          <span class="pill pill-b">NestJS</span>
-          <span class="pill">Spring Boot</span>
-          <span class="pill">REST APIs</span>
-          <span class="pill">GraphQL</span>
-          <span class="pill">gRPC</span>
-        </div>
-      </div>
-      <div class="stack-row">
-        <div class="stack-cat">Frontend</div>
-        <div class="stack-pills">
-          <span class="pill pill-b">React</span>
-          <span class="pill">Next.js</span>
-          <span class="pill">HTML/CSS</span>
-        </div>
-      </div>
-      <div class="stack-row">
-        <div class="stack-cat">Cloud &amp; Infra</div>
-        <div class="stack-pills">
-          <span class="pill pill-g">AWS</span>
-          <span class="pill pill-g">Docker</span>
-          <span class="pill pill-g">Kubernetes</span>
-          <span class="pill">Terraform</span>
-          <span class="pill">CI/CD</span>
-          <span class="pill">GitHub Actions</span>
-        </div>
-      </div>
-      <div class="stack-row">
-        <div class="stack-cat">Databases</div>
-        <div class="stack-pills">
-          <span class="pill">PostgreSQL</span>
-          <span class="pill">MongoDB</span>
-          <span class="pill">MySQL</span>
-          <span class="pill">Redis</span>
-          <span class="pill">Elasticsearch</span>
-        </div>
-      </div>
-      <div class="stack-row">
-        <div class="stack-cat">Practices</div>
-        <div class="stack-pills">
-          <span class="pill pill-gr">Distributed Systems</span>
-          <span class="pill pill-gr">Platform Engineering</span>
-          <span class="pill pill-gr">DX Engineering</span>
-          <span class="pill">System Design</span>
-          <span class="pill">Code Review</span>
-          <span class="pill">Tech Writing</span>
-          <span class="pill">Mentorship</span>
-        </div>
-      </div>
-      <div class="stack-row">
-        <div class="stack-cat">AI / Tooling</div>
-        <div class="stack-pills">
-          <span class="pill pill-b">Claude Code</span>
-          <span class="pill pill-b">Base44</span>
-          <span class="pill">Make.com</span>
-          <span class="pill">LLM APIs</span>
-          <span class="pill">Agentic workflows</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══ OSS ════════════════════════════════════════════════ -->
-<section id="oss" class="section">
-  <div class="container">
-    <div class="eyebrow">Novu · Open Source</div>
-    <h2 class="h2">Senior engineer on Novu</h2>
-    <div class="oss-card">
-      <div>
-        <div class="oss-name">Novu.co</div>
-        <div class="oss-desc"><strong>Senior Software Engineer (Apr 2024 – Jun 2025)</strong> — full-time on the notification infrastructure platform developers use in production (35k+ repo stars). Shipped V2 API architecture, OpenAPI-driven CI/CD, channel CLI generators, and build-system optimizations. TypeScript · NestJS · React.</div>
-        <div class="oss-stats">
-          <div class="oss-stat"><strong>35k+</strong> repo stars</div>
-          <div class="oss-stat"><strong>78%</strong> faster builds</div>
-          <div class="oss-stat"><strong>Employed</strong> role, not volunteer OSS</div>
-        </div>
-        <a href="https://github.com/novuhq/novu" target="_blank" rel="noopener" class="oss-link">
-          View Novu on GitHub →
+    <!-- §08 CONTACT -->
+    <section id="contact" class="spec">
+      <div class="spec-head">§08 INTERFACE POINTS</div>
+      <p class="lead" style="margin-bottom:1.25rem;font-size:.88rem">Pick your path — recruiting, engineering, or business.</p>
+      <div class="contact-grid">
+        <a href="/gal-tidhar-cv.pdf" class="contact-item" download>
+          <div><div class="contact-label">Download CV (PDF)</div><div class="contact-sub">Staff backend &amp; platform · updated Jun 2026</div></div>
+          <span class="contact-arr">↓</span>
+        </a>
+        <a href="https://www.linkedin.com/in/galtidhar/" class="contact-item" target="_blank" rel="noopener">
+          <div><div class="contact-label">Recruiting / full-time</div><div class="contact-sub">LinkedIn — fastest for hiring · EU remote</div></div>
+          <span class="contact-arr">↗</span>
+        </a>
+        <a href="mailto:gal@zazet-solutions.hr?subject=Recruiting" class="contact-item">
+          <div><div class="contact-label">Email</div><div class="contact-sub">gal@zazet-solutions.hr · subject: Recruiting or ZaZet</div></div>
+          <span class="contact-arr">↗</span>
+        </a>
+        <a href="https://github.com/galtidhar" class="contact-item" target="_blank" rel="noopener">
+          <div><div class="contact-label">GitHub</div><div class="contact-sub">@galtidhar</div></div>
+          <span class="contact-arr">↗</span>
+        </a>
+        <a href="https://zazet-solutions.hr" class="contact-item contact-item-gold" target="_blank" rel="noopener">
+          <div><div class="contact-label">Business &amp; automation</div><div class="contact-sub">ZaZet Solutions · Zagreb + remote</div></div>
+          <span class="contact-arr">↗</span>
         </a>
       </div>
-    </div>
+    </section>
+
   </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══ PROJECTS ════════════════════════════════════════════ -->
-<section id="projects" class="section">
-  <div class="container">
-    <div class="eyebrow">Client work · ZaZet</div>
-    <h2 class="h2">Selected projects</h2>
-    <p class="lead">Production systems for SMB operators — delivered via ZaZet Solutions.</p>
-    <div class="proj-grid">
-
-      <div class="proj-card">
-        <div class="proj-tag">Small business · Croatia</div>
-        <div class="proj-name">Island operator: booking + marina in 4 languages</div>
-        <div class="proj-desc">End-to-end booking and marina berth management for a Croatian island operator. Replaced phone/spreadsheet booking with a production system (HR, EN, DE, IT).</div>
-        <div class="proj-meta">2025 · Node.js · Base44 · AI</div>
-      </div>
-
-      <div class="proj-card">
-        <div class="proj-tag proj-tag-g">Tech company · Germany</div>
-        <div class="proj-name">Payroll &amp; HR Backoffice</div>
-        <div class="proj-desc">Replaced manual spreadsheet workflows with a unified payroll and HR system for a 30-person company. Payroll processing time reduced <strong>from days to hours</strong>.</div>
-        <div class="proj-meta">Full-stack · PostgreSQL · Node.js</div>
-      </div>
-
-      <div class="proj-card">
-        <div class="proj-tag proj-tag-g">Small business · Israel</div>
-        <div class="proj-name">Business Operating System</div>
-        <div class="proj-desc">Custom operational platform replacing cross-department spreadsheets. Every team works in a single system built around the company's actual process — not a generic SaaS.</div>
-        <div class="proj-meta">Full-stack · Custom build</div>
-      </div>
-
-    </div>
-    <p style="margin-top:2rem;text-align:center;">
-      <a href="https://zazet-solutions.hr" target="_blank" rel="noopener" class="zazet-cta">Need something like this? → ZaZet Solutions</a>
-    </p>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══ CONTACT ════════════════════════════════════════════ -->
-<section id="contact" class="section">
-  <div class="container">
-    <div class="eyebrow">Get in touch</div>
-    <h2 class="h2">Get in touch</h2>
-    <p class="lead" style="margin-bottom:0">Pick what you're here for — I'll route you to the right place.</p>
-    <div class="contact-inner">
-      <div class="contact-links">
-        <a href="https://www.linkedin.com/in/galtidhar/" target="_blank" rel="noopener" class="contact-link">
-          <div class="contact-link-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </div>
-          <div>
-            <div class="contact-link-label">Recruiting / full-time</div>
-            <div class="contact-link-sub">LinkedIn — fastest for hiring teams · Staff/Senior backend &amp; platform · EU remote</div>
-          </div>
-          <span class="contact-link-arr">↗</span>
-        </a>
-        <a href="mailto:gal@zazet-solutions.hr?subject=Recruiting" class="contact-link">
-          <div class="contact-link-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <div class="contact-link-label">Email</div>
-            <div class="contact-link-sub">gal@zazet-solutions.hr · add “Recruiting” or “ZaZet project” in subject</div>
-          </div>
-          <span class="contact-link-arr">↗</span>
-        </a>
-        <a href="https://github.com/galtidhar" target="_blank" rel="noopener" class="contact-link">
-          <div class="contact-link-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          </div>
-          <div>
-            <div class="contact-link-label">GitHub</div>
-            <div class="contact-link-sub">@galtidhar</div>
-          </div>
-          <span class="contact-link-arr">↗</span>
-        </a>
-        <a href="https://zazet-solutions.hr" target="_blank" rel="noopener" class="contact-link contact-link-gold">
-          <div class="contact-link-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-          </div>
-          <div>
-            <div class="contact-link-label">Business &amp; automation</div>
-            <div class="contact-link-sub">ZaZet Solutions — websites, workflows, custom ops · Zagreb + remote</div>
-          </div>
-          <span class="contact-link-arr">↗</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
 </main>
 
-<nav class="mobile-jump" aria-label="Page sections">
-  <a href="#career">Experience</a>
-  <a href="#numbers">Impact</a>
-  <a href="#projects">Work</a>
-  <a href="#contact">Contact</a>
+<nav class="mobile-jump" aria-label="Sections">
+  <a href="#career">§02</a>
+  <a href="#numbers">§03</a>
+  <a href="#projects">§06</a>
+  <a href="#contact">§08</a>
 </nav>
 
 <footer>
-  <div class="container">
-    <p>Gal Tidhar · Zagreb, Croatia · <a href="mailto:gal@zazet-solutions.hr">gal@zazet-solutions.hr</a> · <a href="https://zazet-solutions.hr">zazet-solutions.hr</a></p>
-  </div>
+  <p>Gal Tidhar · DRAWING GT-001 · <a href="mailto:gal@zazet-solutions.hr">gal@zazet-solutions.hr</a> · <a href="https://zazet-solutions.hr">zazet-solutions.hr</a> · <a href="/designs/">other designs</a></p>
 </footer>
 
 <script>
-  const nav = document.getElementById('nav');
-  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), {passive:true});
+  document.getElementById('nav').classList.add('scrolled');
 </script>
-
 </body>
 </html>
