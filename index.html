@@ -17,39 +17,32 @@
   <meta name="twitter:image" content="https://zazet-solutions.hr/gal-photo.webp">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Person","name":"Gal Tidhar","jobTitle":"Staff Software Engineer","url":"https://gal.tidhar.org.il/","email":"gal@zazet-solutions.hr","sameAs":["https://www.linkedin.com/in/galtidhar/","https://github.com/galtidhar","https://zazet-solutions.hr"],"knowsAbout":["distributed systems","platform engineering","TypeScript","Java","Kubernetes"],"worksFor":{"@type":"Organization","name":"ZaZet Solutions","url":"https://zazet-solutions.hr"}}
+  {"@context":"https://schema.org","@type":"Person","name":"Gal Tidhar","jobTitle":"Staff Software Engineer","url":"https://gal.tidhar.org.il/","email":"gal@tidhar.org.il","sameAs":["https://www.linkedin.com/in/galtidhar/","https://github.com/galtidhar","https://zazet-solutions.hr"],"knowsAbout":["distributed systems","platform engineering","TypeScript","Java","Kubernetes"],"worksFor":{"@type":"Organization","name":"ZaZet Solutions","url":"https://zazet-solutions.hr"}}
   </script>
   <style>
     :root {
       --bg: #0a1628;
-      --grid: rgba(125, 211, 252, 0.07);
+      --grid: rgba(125, 211, 252, 0.06);
       --cyan: #7dd3fc;
-      --cyan-dim: #bae6fd;
+      --text: #bae6fd;
       --ink: #e0f2fe;
-      --muted: rgba(186, 230, 253, 0.55);
-      --yellow: #fef08a;
-      --gold: #fcd34d;
-      --pop-shadow: #38bdf8;
-      --card-a: #0f2847;
-      --card-b: #122d52;
-      --card-c: #0d2238;
-      --card-gold: #1a2f4a;
-      --border: #7dd3fc;
-      --navh: 56px;
-      --max: 980px;
-      --pop: 5px 5px 0 var(--yellow);
-      --pop-sm: 3px 3px 0 var(--pop-shadow);
+      --muted: rgba(186, 230, 253, 0.5);
+      --accent: #fef08a;
+      --border: rgba(125, 211, 252, 0.45);
+      --panel: rgba(15, 40, 71, 0.55);
+      --navh: 52px;
+      --max: 920px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
     body {
       font-family: 'IBM Plex Mono', 'Courier New', monospace;
       background: var(--bg);
-      color: var(--cyan);
-      font-size: 14px;
-      line-height: 1.6;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.72;
       min-height: 100vh;
       background-image:
         linear-gradient(var(--grid) 1px, transparent 1px),
@@ -57,243 +50,186 @@
       background-size: 24px 24px;
       -webkit-font-smoothing: antialiased;
     }
-    a { color: var(--yellow); text-decoration: none; font-weight: 600; }
-    a:hover { text-decoration: underline; }
-    .sans { font-family: 'Space Grotesk', system-ui, sans-serif; }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
 
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       height: var(--navh); display: flex; align-items: center;
-      border-bottom: 2px solid var(--border);
-      background: rgba(10, 22, 40, 0.92);
-      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 22, 40, 0.94);
     }
     .nav .inner {
       max-width: var(--max); margin: 0 auto; padding: 0 1.5rem;
       width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
     }
-    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--ink); letter-spacing: -.02em; }
-    .nav-logo span { color: var(--cyan); }
-    .nav-links { display: flex; flex-wrap: wrap; gap: .35rem 1rem; align-items: center; }
-    .nav-links a { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-    .nav-links a:hover { color: var(--yellow); text-decoration: none; }
-    .nav-z { color: var(--gold) !important; border: 2px solid var(--gold); padding: .2rem .55rem; box-shadow: var(--pop-sm); }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; align-items: center; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
 
     .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
     main { padding-top: calc(var(--navh) + 2rem); }
 
     .sheet {
-      border: 2px solid var(--border);
+      border: 1px solid var(--border);
       padding: 2rem 1.75rem;
       position: relative;
-      background: rgba(10, 22, 40, 0.6);
-      margin-bottom: 2rem;
+      background: var(--panel);
+      margin-bottom: 2.5rem;
     }
     .sheet-rev {
-      position: absolute; top: .65rem; right: 1rem;
-      font-size: .62rem; letter-spacing: .12em; color: var(--muted);
+      position: absolute; top: .75rem; right: 1rem;
+      font-size: .65rem; letter-spacing: .1em; color: var(--muted);
     }
-    .drawing-id { font-size: .62rem; letter-spacing: .1em; color: var(--muted); margin-bottom: 1rem; }
-
-    .sticker {
-      display: inline-block;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: .72rem; font-weight: 700; letter-spacing: .12em;
-      text-transform: uppercase;
-      background: var(--yellow); color: #0a1628;
-      border: 3px solid var(--ink);
-      padding: .35rem .85rem;
-      box-shadow: var(--pop);
-      transform: rotate(-1.5deg);
-      margin-bottom: 1.25rem;
-    }
+    .drawing-id { font-size: .65rem; letter-spacing: .08em; color: var(--muted); margin-bottom: 1.25rem; }
 
     h1.title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2rem, 7vw, 3.2rem);
-      font-weight: 700;
+      font-size: clamp(1.75rem, 5vw, 2.4rem);
+      font-weight: 600;
       color: var(--ink);
-      letter-spacing: -.03em;
-      line-height: 1.05;
+      letter-spacing: .12em;
+      line-height: 1.2;
       text-transform: uppercase;
       border-bottom: 1px dashed var(--border);
-      padding-bottom: .75rem;
-      margin-bottom: .75rem;
+      padding-bottom: .85rem;
+      margin-bottom: .65rem;
     }
-    .meta-line { font-size: .72rem; color: var(--muted); letter-spacing: .06em; margin-bottom: 1.25rem; }
-    .meta-line strong { color: var(--cyan-dim); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .5rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; margin-bottom: 1.5rem; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
 
-    .spec { margin: 2rem 0; }
+    .spec { margin: 2.5rem 0; }
     .spec-head {
-      font-size: .72rem; font-weight: 600; letter-spacing: .14em;
-      color: var(--cyan-dim); margin-bottom: 1rem;
+      font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+      color: var(--cyan); margin-bottom: 1.1rem;
       display: flex; align-items: center; gap: .75rem;
     }
-    .spec-head::after { content: ''; flex: 1; height: 1px; background: rgba(125, 211, 252, .35); }
+    .spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    .lead { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; color: var(--cyan-dim); line-height: 1.7; max-width: 58ch; font-weight: 400; }
+    .lead { font-size: .95rem; color: var(--text); line-height: 1.75; max-width: 62ch; }
     .lead strong { color: var(--ink); font-weight: 600; }
 
-    .pill-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
-    .pill {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: .78rem; font-weight: 700;
-      padding: .55rem 1.1rem;
-      border: 3px solid var(--border);
-      color: var(--ink);
-      background: var(--card-a);
-      box-shadow: var(--pop-sm);
-      transition: transform .12s;
-    }
-    .pill:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--yellow); text-decoration: none; color: var(--ink); }
-    .pill-primary { background: var(--yellow); color: #0a1628; border-color: var(--ink); box-shadow: var(--pop); }
-    .pill-primary:hover { color: #0a1628; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1.35rem; font-size: .8rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); user-select: none; }
 
-    .status-chip {
-      display: inline-flex; align-items: center; gap: .45rem;
-      font-size: .68rem; font-weight: 600; letter-spacing: .1em;
-      text-transform: uppercase;
-      border: 2px solid var(--gold);
-      color: var(--gold);
-      padding: .3rem .7rem;
-      margin-bottom: 1rem;
-      box-shadow: 3px 3px 0 rgba(252, 211, 77, .35);
-    }
-
-    /* Neo-pop job cards inside blueprint */
-    .jobs { display: flex; flex-direction: column; gap: 1rem; }
+    .jobs { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
     .job {
-      border: 3px solid var(--border);
-      padding: 1.25rem 1.35rem;
-      box-shadow: var(--pop-sm);
-      background: var(--card-a);
+      padding: 1.15rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
     }
-    .job:nth-child(3n+2) { background: var(--card-b); }
-    .job:nth-child(3n) { background: var(--card-c); }
-    .job-current { border-color: var(--gold); box-shadow: 5px 5px 0 rgba(252, 211, 77, .4); }
-    .job-staff { border-color: var(--yellow); }
-    .job-date { font-size: .68rem; letter-spacing: .08em; color: var(--muted); margin-bottom: .35rem; }
-    .job-co { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--ink); letter-spacing: -.02em; }
-    .job-role { font-family: 'Space Grotesk', sans-serif; font-size: .88rem; color: var(--cyan); margin: .2rem 0 .65rem; font-weight: 500; }
-    .job-desc { font-size: .82rem; color: var(--cyan-dim); line-height: 1.65; }
+    .job:last-child { border-bottom: none; }
+    .job-current { background: rgba(125, 211, 252, 0.04); }
+    .job-date { font-size: .7rem; letter-spacing: .06em; color: var(--muted); margin-bottom: .4rem; }
+    .job-co { font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: .15rem; }
+    .job-role { font-size: .82rem; color: var(--cyan); margin-bottom: .55rem; }
+    .job-desc { font-size: .88rem; color: var(--text); line-height: 1.7; }
     .job-desc strong { color: var(--ink); font-weight: 600; }
-    .tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .65rem; }
     .tag {
-      font-size: .58rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-      padding: .2rem .5rem; border: 2px solid rgba(125, 211, 252, .4);
-      color: var(--muted); background: rgba(0,0,0,.2);
+      font-size: .62rem; letter-spacing: .05em; text-transform: uppercase;
+      color: var(--muted); padding: 0;
     }
-    .tag-gold { border-color: var(--gold); color: var(--gold); }
+    .tag::before { content: '['; }
+    .tag::after { content: ']'; margin-right: .25rem; }
+    .tag-hi { color: var(--accent); }
 
     .snap {
-      border: 2px dashed rgba(125, 211, 252, .45);
-      padding: 1rem 1.15rem;
-      margin-bottom: 1.25rem;
-      font-size: .8rem;
-      color: var(--cyan-dim);
+      border: 1px dashed var(--border);
+      padding: .9rem 1rem;
+      margin-bottom: 1.15rem;
+      font-size: .82rem;
+      color: var(--text);
     }
-    .snap strong { color: var(--yellow); }
+    .snap strong { color: var(--cyan); font-weight: 600; }
 
-    /* Metric bubbles — neopop on blueprint */
-    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
-    .met {
-      aspect-ratio: 1;
-      max-height: 140px;
-      border: 3px solid var(--border);
-      border-radius: 50%;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center;
-      background: var(--card-b);
-      box-shadow: var(--pop-sm);
-      padding: .5rem;
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin-top: .5rem; }
+    .spec-table th, .spec-table td {
+      border: 1px solid var(--border);
+      padding: .65rem .85rem;
+      text-align: left;
+      vertical-align: top;
     }
-    .met-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--yellow); line-height: 1; }
-    .met-lab { font-size: .58rem; letter-spacing: .05em; color: var(--muted); margin-top: .25rem; text-transform: uppercase; }
-    .met-src { font-size: .55rem; color: var(--cyan); margin-top: .15rem; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .spec-table td.val { color: var(--ink); font-weight: 600; white-space: nowrap; width: 4rem; }
 
-    .stack-grid { display: flex; flex-direction: column; gap: 1rem; }
+    .stack-grid { border: 1px solid var(--border); }
     .stack-row {
-      display: flex; flex-wrap: wrap; align-items: flex-start; gap: .75rem 1rem;
-      padding: .85rem 1rem; border: 2px solid rgba(125, 211, 252, .25);
-      background: rgba(15, 40, 71, .5);
+      display: grid; grid-template-columns: 100px 1fr; gap: 1rem;
+      padding: .75rem 1rem; border-bottom: 1px solid var(--border);
+      font-size: .84rem; align-items: start;
     }
-    .stack-cat { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); min-width: 88px; }
+    .stack-row:last-child { border-bottom: none; }
+    .stack-cat { font-size: .68rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 
-    .oss-block {
-      border: 3px solid var(--border);
-      padding: 1.5rem;
-      background: var(--card-a);
-      box-shadow: var(--pop-sm);
+    .panel {
+      border: 1px solid var(--border);
+      padding: 1.35rem 1.5rem;
+      background: var(--panel);
     }
-    .oss-block h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; color: var(--ink); margin-bottom: .5rem; }
+    .panel h3 { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: .5rem; letter-spacing: .04em; }
 
-    .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
-    .proj {
-      border: 3px solid var(--border);
-      padding: 1.25rem;
-      background: var(--card-c);
-      box-shadow: var(--pop-sm);
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; border: 1px solid var(--border); }
+    .proj { padding: 1.15rem 1.25rem; border-right: 1px solid var(--border); }
+    .proj:last-child { border-right: none; }
+    @media (max-width: 720px) {
+      .proj { border-right: none; border-bottom: 1px solid var(--border); }
+      .proj:last-child { border-bottom: none; }
     }
-    .proj:nth-child(2) { background: var(--card-b); }
-    .proj-tag { font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: .5rem; }
-    .proj-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--ink); margin-bottom: .4rem; }
-    .proj-desc { font-size: .8rem; color: var(--cyan-dim); line-height: 1.6; }
+    .proj-tag { font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+    .proj-name { font-weight: 600; font-size: .92rem; color: var(--ink); margin-bottom: .35rem; }
+    .proj-desc { font-size: .84rem; color: var(--text); line-height: 1.65; }
 
-    .zazet-panel {
-      border: 3px solid var(--gold);
-      background: linear-gradient(135deg, rgba(252, 211, 77, .12), rgba(15, 40, 71, .9));
-      padding: 1.75rem;
-      box-shadow: 6px 6px 0 rgba(252, 211, 77, .25);
-    }
-    .zazet-panel h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; color: var(--yellow); margin-bottom: .5rem; }
-    .zazet-panel ul { margin: 1rem 0 1.25rem; padding-left: 1.1rem; font-size: .85rem; color: var(--cyan-dim); }
-    .zazet-panel li { margin-bottom: .35rem; }
+    .zazet-panel { border-style: dashed; }
+    .zazet-panel ul { margin: .85rem 0 1rem; padding-left: 1.2rem; font-size: .88rem; color: var(--text); }
+    .zazet-panel li { margin-bottom: .3rem; }
 
-    .contact-grid { display: grid; gap: .75rem; }
+    .contact-list { border: 1px solid var(--border); }
     .contact-item {
-      display: flex; align-items: center; gap: 1rem;
-      border: 3px solid var(--border);
-      padding: 1rem 1.15rem;
-      background: var(--card-a);
-      box-shadow: var(--pop-sm);
-      color: var(--cyan-dim);
-      transition: transform .12s;
+      display: grid; grid-template-columns: 1fr auto; gap: .5rem;
+      padding: .9rem 1.15rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
     }
-    a.contact-item:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--pop-shadow); text-decoration: none; color: var(--ink); }
-    .contact-item-gold { border-color: var(--gold); }
-    .contact-label { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .92rem; color: var(--ink); }
-    .contact-sub { font-size: .72rem; color: var(--muted); margin-top: .15rem; }
-    .contact-arr { margin-left: auto; color: var(--yellow); font-size: 1rem; }
+    .contact-item:last-child { border-bottom: none; }
+    a.contact-item:hover { background: rgba(125, 211, 252, 0.05); color: var(--ink); }
+    .contact-label { font-weight: 600; font-size: .88rem; color: var(--ink); }
+    .contact-sub { font-size: .78rem; color: var(--muted); margin-top: .2rem; grid-column: 1; }
+    .contact-arr { color: var(--muted); font-size: .85rem; align-self: center; }
 
     footer {
-      border-top: 2px solid rgba(125, 211, 252, .3);
+      border-top: 1px solid var(--border);
       padding: 2rem 1.5rem;
       text-align: center;
-      font-size: .68rem;
+      font-size: .72rem;
       color: var(--muted);
-      letter-spacing: .05em;
     }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
 
     .mobile-jump {
       display: none;
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
-      background: rgba(10, 22, 40, .96);
-      border-top: 3px solid var(--border);
+      background: rgba(10, 22, 40, .97);
+      border-top: 1px solid var(--border);
       padding: .5rem .75rem calc(.5rem + env(safe-area-inset-bottom));
       justify-content: space-around;
-      box-shadow: 0 -4px 0 var(--pop-shadow);
     }
-    .mobile-jump a { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan); padding: .35rem; }
+    .mobile-jump a { font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: .35rem; }
 
     @media (max-width: 640px) {
       .nav-links a:not(.nav-z) { display: none; }
       .mobile-jump { display: flex; }
-      body { padding-bottom: 3.5rem; }
-      .sheet { padding: 1.5rem 1.15rem; }
-      .met { max-height: 120px; }
+      body { padding-bottom: 3.25rem; }
+      .sheet { padding: 1.5rem 1.1rem; }
+      .stack-row { grid-template-columns: 1fr; gap: .35rem; }
     }
 
-    .skip { position: absolute; top: -100px; left: 1rem; z-index: 200; background: var(--yellow); color: #0a1628; padding: .5rem 1rem; font-weight: 700; }
+    .skip { position: absolute; top: -100px; left: 1rem; z-index: 200; background: var(--cyan); color: var(--bg); padding: .5rem 1rem; font-weight: 600; text-decoration: none; }
     .skip:focus { top: .5rem; }
   </style>
 </head>
@@ -310,8 +246,7 @@
       <a href="#stack">§04 Stack</a>
       <a href="#projects">§06 Work</a>
       <a href="#contact">§08 Contact</a>
-      <a href="https://zazet-solutions.hr" target="_blank" rel="noopener" class="nav-z">ZaZet ↗</a>
-      <a href="/designs/" style="opacity:.5">designs</a>
+      <a href="https://zazet-solutions.hr" target="_blank" rel="noopener">ZaZet ↗</a>
     </div>
   </div>
 </nav>
@@ -321,27 +256,26 @@
 
     <!-- §01 HERO -->
     <section id="hero" class="sheet">
-      <span class="sheet-rev">REV 2026.06 · HYBRID BP+NP</span>
+      <span class="sheet-rev">REV 2026.06</span>
       <p class="drawing-id">DRAWING GT-PORTFOLIO-001 · gal.tidhar.org.il</p>
 
-      <div class="sticker">Staff Software Engineer</div>
-      <div class="status-chip">◇ OPEN_FROM 2026-06 · EU REMOTE</div>
-
-      <h1 class="title sans">Gal Tidhar</h1>
-      <p class="meta-line"><strong>ROLE</strong> Backend &amp; Platform · <strong>LOC</strong> Zagreb · <strong>AVAIL</strong> Staff/Senior IC</p>
+      <p class="role-line">Staff Software Engineer · Backend &amp; Platform</p>
+      <h1 class="title">Gal Tidhar</h1>
+      <p class="meta-line"><strong>LOC</strong> Zagreb · <strong>STATUS</strong> OPEN_FROM 2026-06 · EU remote/hybrid · <strong>EMAIL</strong> <a href="mailto:gal@tidhar.org.il">gal@tidhar.org.il</a></p>
 
       <div class="spec" style="margin-top:0">
         <div class="spec-head">§01 GENERAL NOTES</div>
         <p class="lead">
-          <strong>Hiring?</strong> 10+ years on systems that must work in production — Shopify logistics (Staff), Novu (employed), Sedric platform/DX.
-          <strong>Business?</strong> Founder of <a href="https://zazet-solutions.hr">ZaZet Solutions</a> — SMB automation in HR, EN, HE.
+          10+ years on systems that must work in production — Shopify logistics (Staff), Novu (employed), Sedric platform/DX.
+          Founder of <a href="https://zazet-solutions.hr">ZaZet Solutions</a> (SMB automation, HR / EN / HE).
+          Open to Staff/Senior backend &amp; platform roles.
         </p>
-        <div class="pill-row">
-          <a href="#career" class="pill pill-primary">§02 Experience →</a>
-          <a href="/gal-tidhar-cv.pdf" class="pill" download>CV PDF</a>
-          <a href="https://www.linkedin.com/in/galtidhar/" class="pill" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://github.com/galtidhar" class="pill" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://zazet-solutions.hr" class="pill" target="_blank" rel="noopener">ZaZet ↗</a>
+        <div class="link-row">
+          <a href="#career">§02 Experience</a><span class="sep">·</span>
+          <a href="/gal-tidhar-cv.pdf" download>CV PDF</a><span class="sep">·</span>
+          <a href="https://www.linkedin.com/in/galtidhar/" target="_blank" rel="noopener">LinkedIn</a><span class="sep">·</span>
+          <a href="https://github.com/galtidhar" target="_blank" rel="noopener">GitHub</a><span class="sep">·</span>
+          <a href="https://zazet-solutions.hr" target="_blank" rel="noopener">ZaZet</a>
         </div>
       </div>
     </section>
@@ -373,15 +307,15 @@
           <div class="job-co">Novu.co</div>
           <div class="job-role">Senior Software Engineer · Remote · Employed</div>
           <p class="job-desc">Full-time on OSS notification platform (35k+ repo stars). Cut build time <strong>78%</strong>; redesigned <strong>Novu V2 API</strong>; OpenAPI in CI/CD; channel CLI generators.</p>
-          <div class="tags"><span class="tag tag-gold">Employed</span><span class="tag">TypeScript</span><span class="tag">NestJS</span><span class="tag">OpenAPI</span></div>
+          <div class="tags"><span class="tag tag-hi">Employed</span><span class="tag">TypeScript</span><span class="tag">NestJS</span><span class="tag">OpenAPI</span></div>
         </article>
 
-        <article class="job job-staff">
+        <article class="job">
           <div class="job-date">JUN 2022 — FEB 2024</div>
           <div class="job-co">Shopify · Flexport</div>
           <div class="job-role">Staff Software Engineer · Remote</div>
           <p class="job-desc">Commerce logistics post-acquisition. Cut operational delays <strong>70%</strong>; shipment events + audit log → <strong>97% on-time shipping</strong>; cross-team integration on Java/TypeScript microservices.</p>
-          <div class="tags"><span class="tag tag-gold">Staff level</span><span class="tag">Java</span><span class="tag">Kubernetes</span><span class="tag">Distributed Systems</span></div>
+          <div class="tags"><span class="tag tag-hi">Staff</span><span class="tag">Java</span><span class="tag">Kubernetes</span><span class="tag">Distributed Systems</span></div>
         </article>
 
         <article class="job">
@@ -422,41 +356,41 @@
     <!-- §03 IMPACT -->
     <section id="numbers" class="spec">
       <div class="spec-head">§03 PERFORMANCE SPECS</div>
-      <p class="lead" style="margin-bottom:1.25rem;font-size:.88rem">Verified outcomes — see §02 for context.</p>
-      <div class="metrics">
-        <div class="met"><div class="met-val">78%</div><div class="met-lab">Build time ↓</div><div class="met-src">Novu</div></div>
-        <div class="met"><div class="met-val">97%</div><div class="met-lab">On-time ship</div><div class="met-src">Shopify</div></div>
-        <div class="met"><div class="met-val">90%</div><div class="met-lab">API overhead ↓</div><div class="met-src">Deliverr</div></div>
-        <div class="met"><div class="met-val">70%</div><div class="met-lab">Ops delays ↓</div><div class="met-src">Shopify</div></div>
-        <div class="met"><div class="met-val">46%</div><div class="met-lab">Infra cost ↓</div><div class="met-src">Wochit</div></div>
-        <div class="met"><div class="met-val">10+</div><div class="met-lab">Years</div><div class="met-src">Backend</div></div>
-      </div>
+      <p class="lead" style="margin-bottom:1rem;font-size:.88rem">Verified outcomes — see §02 for context.</p>
+      <table class="spec-table">
+        <thead><tr><th>Value</th><th>Metric</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td class="val">78%</td><td>Build time reduction</td><td>Novu</td></tr>
+          <tr><td class="val">97%</td><td>On-time shipping</td><td>Shopify</td></tr>
+          <tr><td class="val">90%</td><td>API overhead reduction</td><td>Deliverr</td></tr>
+          <tr><td class="val">70%</td><td>Operational delays reduction</td><td>Shopify</td></tr>
+          <tr><td class="val">46%</td><td>Infrastructure cost reduction</td><td>Wochit</td></tr>
+          <tr><td class="val">10+</td><td>Years backend/platform</td><td>—</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <!-- §04 STACK -->
     <section id="stack" class="spec">
       <div class="spec-head">§04 TECHNICAL SPECIFICATION</div>
       <div class="stack-grid">
-        <div class="stack-row"><span class="stack-cat">Languages</span><span class="tag">TypeScript</span><span class="tag">JavaScript</span><span class="tag">Java</span><span class="tag">Python</span><span class="tag">PHP</span></div>
-        <div class="stack-row"><span class="stack-cat">Backend</span><span class="tag">Node.js</span><span class="tag">NestJS</span><span class="tag">Spring Boot</span><span class="tag">REST</span><span class="tag">GraphQL</span><span class="tag">gRPC</span></div>
-        <div class="stack-row"><span class="stack-cat">Frontend</span><span class="tag">React</span><span class="tag">Next.js</span></div>
-        <div class="stack-row"><span class="stack-cat">Cloud</span><span class="tag tag-gold">AWS</span><span class="tag tag-gold">Kubernetes</span><span class="tag">Docker</span><span class="tag">Terraform</span><span class="tag">CI/CD</span></div>
-        <div class="stack-row"><span class="stack-cat">Data</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">Redis</span><span class="tag">Elasticsearch</span></div>
-        <div class="stack-row"><span class="stack-cat">Practice</span><span class="tag tag-gold">Distributed Systems</span><span class="tag tag-gold">Platform Eng</span><span class="tag">DX</span><span class="tag">System Design</span><span class="tag">Mentorship</span></div>
-        <div class="stack-row"><span class="stack-cat">AI/Tooling</span><span class="tag">Claude Code</span><span class="tag">OpenAPI</span><span class="tag">LLM APIs</span></div>
+        <div class="stack-row"><span class="stack-cat">Languages</span><span>TypeScript · JavaScript · Java · Python · PHP</span></div>
+        <div class="stack-row"><span class="stack-cat">Backend</span><span>Node.js · NestJS · Spring Boot · REST · GraphQL · gRPC</span></div>
+        <div class="stack-row"><span class="stack-cat">Frontend</span><span>React · Next.js</span></div>
+        <div class="stack-row"><span class="stack-cat">Cloud</span><span>AWS · Kubernetes · Docker · Terraform · CI/CD</span></div>
+        <div class="stack-row"><span class="stack-cat">Data</span><span>PostgreSQL · MongoDB · Redis · Elasticsearch</span></div>
+        <div class="stack-row"><span class="stack-cat">Practice</span><span>Distributed Systems · Platform Engineering · DX · System Design · Mentorship</span></div>
+        <div class="stack-row"><span class="stack-cat">AI/Tooling</span><span>Claude Code · OpenAPI · LLM APIs</span></div>
       </div>
     </section>
 
     <!-- §05 NOVU -->
     <section id="oss" class="spec">
       <div class="spec-head">§05 NOVU SUBSYSTEM</div>
-      <div class="oss-block">
-        <h3 class="sans">Novu.co — Senior engineer (employed)</h3>
+      <div class="panel">
+        <h3>Novu.co — Senior engineer (employed)</h3>
         <p class="job-desc" style="margin-top:.5rem">Apr 2024 – Jun 2025 on the notification infrastructure platform (35k+ repo stars). V2 API architecture, OpenAPI-driven CI/CD, channel CLI generators, build-system optimizations.</p>
-        <div class="tags" style="margin-top:1rem">
-          <span class="tag tag-gold">35k+ ★</span><span class="tag tag-gold">78% builds</span><span class="tag">TypeScript</span><span class="tag">NestJS</span>
-        </div>
-        <p style="margin-top:1rem"><a href="https://github.com/novuhq/novu" target="_blank" rel="noopener">View Novu on GitHub →</a></p>
+        <p style="margin-top:1rem;font-size:.84rem"><a href="https://github.com/novuhq/novu" target="_blank" rel="noopener">github.com/novuhq/novu</a></p>
       </div>
     </section>
 
@@ -493,7 +427,7 @@
           <li>Custom web apps &amp; internal tools (HR, EN, HE)</li>
           <li>Replace spreadsheets with one system your team uses</li>
         </ul>
-        <a href="https://zazet-solutions.hr" class="pill pill-primary" target="_blank" rel="noopener" style="display:inline-block">Book intro → zazet-solutions.hr</a>
+        <p style="margin-top:1rem;font-size:.84rem"><a href="https://zazet-solutions.hr" target="_blank" rel="noopener">zazet-solutions.hr</a> — book intro call</p>
       </div>
     </section>
 
@@ -501,25 +435,25 @@
     <section id="contact" class="spec">
       <div class="spec-head">§08 INTERFACE POINTS</div>
       <p class="lead" style="margin-bottom:1.25rem;font-size:.88rem">Pick your path — recruiting, engineering, or business.</p>
-      <div class="contact-grid">
+      <div class="contact-list">
+        <a href="mailto:gal@tidhar.org.il?subject=Recruiting" class="contact-item">
+          <div><div class="contact-label">Email</div><div class="contact-sub">gal@tidhar.org.il · recruiting or engineering</div></div>
+          <span class="contact-arr">↗</span>
+        </a>
         <a href="/gal-tidhar-cv.pdf" class="contact-item" download>
-          <div><div class="contact-label">Download CV (PDF)</div><div class="contact-sub">Staff backend &amp; platform · updated Jun 2026</div></div>
+          <div><div class="contact-label">CV (PDF)</div><div class="contact-sub">Staff backend &amp; platform · Jun 2026</div></div>
           <span class="contact-arr">↓</span>
         </a>
         <a href="https://www.linkedin.com/in/galtidhar/" class="contact-item" target="_blank" rel="noopener">
-          <div><div class="contact-label">Recruiting / full-time</div><div class="contact-sub">LinkedIn — fastest for hiring · EU remote</div></div>
-          <span class="contact-arr">↗</span>
-        </a>
-        <a href="mailto:gal@zazet-solutions.hr?subject=Recruiting" class="contact-item">
-          <div><div class="contact-label">Email</div><div class="contact-sub">gal@zazet-solutions.hr · subject: Recruiting or ZaZet</div></div>
+          <div><div class="contact-label">LinkedIn</div><div class="contact-sub">Recruiting / full-time · EU remote</div></div>
           <span class="contact-arr">↗</span>
         </a>
         <a href="https://github.com/galtidhar" class="contact-item" target="_blank" rel="noopener">
-          <div><div class="contact-label">GitHub</div><div class="contact-sub">@galtidhar</div></div>
+          <div><div class="contact-label">GitHub</div><div class="contact-sub">github.com/galtidhar</div></div>
           <span class="contact-arr">↗</span>
         </a>
-        <a href="https://zazet-solutions.hr" class="contact-item contact-item-gold" target="_blank" rel="noopener">
-          <div><div class="contact-label">Business &amp; automation</div><div class="contact-sub">ZaZet Solutions · Zagreb + remote</div></div>
+        <a href="https://zazet-solutions.hr" class="contact-item" target="_blank" rel="noopener">
+          <div><div class="contact-label">ZaZet Solutions</div><div class="contact-sub">Business automation · zazet-solutions.hr</div></div>
           <span class="contact-arr">↗</span>
         </a>
       </div>
@@ -536,7 +470,7 @@
 </nav>
 
 <footer>
-  <p>Gal Tidhar · DRAWING GT-001 · <a href="mailto:gal@zazet-solutions.hr">gal@zazet-solutions.hr</a> · <a href="https://zazet-solutions.hr">zazet-solutions.hr</a> · <a href="/designs/">other designs</a></p>
+  <p>Gal Tidhar · DRAWING GT-001 · <a href="mailto:gal@tidhar.org.il">gal@tidhar.org.il</a> · <a href="https://zazet-solutions.hr">zazet-solutions.hr</a></p>
 </footer>
 
 <script>
