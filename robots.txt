@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gal.tidhar.org.il/sitemap.xml
