@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gal Tidhar — Staff Software Engineer · Backend &amp; Platform</title>
-  <meta name="description" content="Staff-level backend engineer (ex-Shopify, Novu, Sedric). Platform engineering, TypeScript/Java. Founder of ZaZet Solutions. Open to roles from Jun 2026.">
+  <meta name="description" content="Staff-level backend engineer (ex-Shopify, Novu, Sedric). Consulting: AI-assisted dev workflows &amp; organizational DX. Part-time roles from Jun 2026.">
   <link rel="canonical" href="https://gal.tidhar.org.il/">
   <meta property="og:title" content="Gal Tidhar — Staff Software Engineer">
   <meta property="og:description" content="Staff-level backend · ex-Shopify, Novu, Sedric · platform &amp; distributed systems">
@@ -187,6 +187,22 @@
     .zazet-panel ul { margin: .85rem 0 1rem; padding-left: 1.2rem; font-size: .88rem; color: var(--text); }
     .zazet-panel li { margin-bottom: .3rem; }
 
+    .consult-panel { border: 1px solid var(--border); background: rgba(125, 211, 252, 0.04); padding: 1.5rem 1.6rem; }
+    .consult-panel h3 { font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: .65rem; letter-spacing: .06em; text-transform: uppercase; }
+    .consult-intro { font-size: .92rem; color: var(--text); line-height: 1.75; max-width: 62ch; margin-bottom: 1.25rem; }
+    .consult-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0; border: 1px solid var(--border); margin-top: 1.15rem; }
+    .consult-col { padding: 1.1rem 1.2rem; border-right: 1px solid var(--border); }
+    .consult-col:last-child { border-right: none; }
+    @media (max-width: 640px) {
+      .consult-col { border-right: none; border-bottom: 1px solid var(--border); }
+      .consult-col:last-child { border-bottom: none; }
+    }
+    .consult-col h4 { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--cyan); margin-bottom: .55rem; }
+    .consult-col ul { padding-left: 1rem; font-size: .84rem; color: var(--text); line-height: 1.65; }
+    .consult-col li { margin-bottom: .4rem; }
+    .consult-proof { margin-top: 1.15rem; padding-top: 1rem; border-top: 1px dashed var(--border); font-size: .8rem; color: var(--muted); }
+    .consult-proof strong { color: var(--cyan); font-weight: 600; }
+
     .contact-list { border: 1px solid var(--border); }
     .contact-item {
       display: grid; grid-template-columns: 1fr auto; gap: .5rem;
@@ -244,8 +260,8 @@
       <a href="#career">§02 Experience</a>
       <a href="#numbers">§03 Impact</a>
       <a href="#stack">§04 Stack</a>
-      <a href="#projects">§06 Work</a>
-      <a href="#contact">§08 Contact</a>
+      <a href="#consulting">§06 Consulting</a>
+      <a href="#contact">§09 Contact</a>
       <a href="https://zazet-solutions.hr" target="_blank" rel="noopener">ZaZet ↗</a>
     </div>
   </div>
@@ -269,8 +285,10 @@
           10+ years on systems that must work in production — Shopify logistics (Staff), Novu (employed), Sedric platform/DX.
           Founder of <a href="https://zazet-solutions.hr">ZaZet Solutions</a> (SMB automation, HR / EN / HE).
           Open to part-time Staff/Senior backend &amp; platform roles.
+          Available for consulting on <a href="#consulting">AI-assisted dev workflows</a> and organizational DX.
         </p>
         <div class="link-row">
+          <a href="#consulting">§06 Consulting</a><span class="sep">·</span>
           <a href="#career">§02 Experience</a><span class="sep">·</span>
           <a href="/gal-tidhar-cv.pdf" download>CV PDF</a><span class="sep">·</span>
           <a href="https://www.linkedin.com/in/galtidhar/" target="_blank" rel="noopener">LinkedIn</a><span class="sep">·</span>
@@ -394,9 +412,50 @@
       </div>
     </section>
 
-    <!-- §06 PROJECTS -->
+    <!-- §06 CONSULTING -->
+    <section id="consulting" class="spec">
+      <div class="spec-head">§06 CONSULTING ENGAGEMENTS</div>
+      <div class="consult-panel">
+        <h3>AI-assisted engineering &amp; organizational DX</h3>
+        <p class="consult-intro">
+          I help engineering leaders move from “everyone experiments with AI in isolation” to a
+          <strong>repeatable delivery system</strong> — the same work I drove at Sedric: platform tooling,
+          CI modernization, hands-on enablement, and measurable velocity gains without sacrificing quality.
+        </p>
+        <div class="consult-grid">
+          <div class="consult-col">
+            <h4>AI workflow migration</h4>
+            <ul>
+              <li>Assess current SDLC, CI, and review practices</li>
+              <li>Design AI-assisted workflows (Claude Code, agents, guardrails)</li>
+              <li>Pilot with one team, then scale adoption org-wide</li>
+              <li>Documentation, prompts, and internal standards that stick</li>
+            </ul>
+          </div>
+          <div class="consult-col">
+            <h4>Organizational DX</h4>
+            <ul>
+              <li>Developer platform &amp; internal tooling strategy</li>
+              <li>Back-office / data surfaces for CSM and engineering</li>
+              <li>CI/CD and build-system optimization</li>
+              <li>Workshops and mentorship for Staff+ platform habits</li>
+            </ul>
+          </div>
+        </div>
+        <p class="consult-proof">
+          <strong>Reference implementation:</strong> Sedric.ai — org-wide AI-assisted delivery, unified dev data platform (AWS + MongoDB Atlas), CI overhauls, workshop-led rollout.
+          Engagements are <strong>remote-friendly</strong>, typically part-time or fixed-scope.
+        </p>
+        <p style="margin-top:1.1rem;font-size:.84rem">
+          <a href="mailto:gal@tidhar.org.il?subject=Consulting%20%E2%80%94%20AI%20workflows%20%26%20DX">gal@tidhar.org.il</a>
+          — subject: <em>Consulting — AI workflows &amp; DX</em>
+        </p>
+      </div>
+    </section>
+
+    <!-- §07 PROJECTS -->
     <section id="projects" class="spec">
-      <div class="spec-head">§06 CLIENT DEPLOYMENTS · ZAZET</div>
+      <div class="spec-head">§07 CLIENT DEPLOYMENTS · ZAZET</div>
       <p class="lead" style="margin-bottom:1.25rem;font-size:.88rem">Production systems for SMB operators.</p>
       <div class="proj-grid">
         <div class="proj">
@@ -417,9 +476,9 @@
       </div>
     </section>
 
-    <!-- §07 ZAZET -->
+    <!-- §08 ZAZET -->
     <section id="zazet" class="spec">
-      <div class="spec-head">§07 EXTERNAL SYSTEM</div>
+      <div class="spec-head">§08 EXTERNAL SYSTEM</div>
       <div class="zazet-panel">
         <h3>ZaZet Solutions</h3>
         <p class="lead" style="font-size:.9rem">Platform thinking from Sedric and Shopify, applied to teams of 5–50 — booking, payroll, ops without generic SaaS bloat.</p>
@@ -431,13 +490,17 @@
       </div>
     </section>
 
-    <!-- §08 CONTACT -->
+    <!-- §09 CONTACT -->
     <section id="contact" class="spec">
-      <div class="spec-head">§08 INTERFACE POINTS</div>
-      <p class="lead" style="margin-bottom:1.25rem;font-size:.88rem">Pick your path — recruiting, engineering, or business.</p>
+      <div class="spec-head">§09 INTERFACE POINTS</div>
+      <p class="lead" style="margin-bottom:1.25rem;font-size:.88rem">Pick your path — recruiting, consulting, engineering, or business.</p>
       <div class="contact-list">
+        <a href="mailto:gal@tidhar.org.il?subject=Consulting%20%E2%80%94%20AI%20workflows%20%26%20DX" class="contact-item">
+          <div><div class="contact-label">Consulting · AI &amp; DX</div><div class="contact-sub">Workflow migration, platform/DX, workshops · gal@tidhar.org.il</div></div>
+          <span class="contact-arr">↗</span>
+        </a>
         <a href="mailto:gal@tidhar.org.il?subject=Recruiting" class="contact-item">
-          <div><div class="contact-label">Email</div><div class="contact-sub">gal@tidhar.org.il · recruiting or engineering</div></div>
+          <div><div class="contact-label">Email</div><div class="contact-sub">gal@tidhar.org.il · part-time recruiting</div></div>
           <span class="contact-arr">↗</span>
         </a>
         <a href="/gal-tidhar-cv.pdf" class="contact-item" download>
@@ -465,8 +528,8 @@
 <nav class="mobile-jump" aria-label="Sections">
   <a href="#career">§02</a>
   <a href="#numbers">§03</a>
-  <a href="#projects">§06</a>
-  <a href="#contact">§08</a>
+  <a href="#consulting">§06</a>
+  <a href="#contact">§09</a>
 </nav>
 
 <footer>
