@@ -1,0 +1,3 @@
+Contact: mailto:gal@tidhar.org.il
+Preferred-Languages: en, he, hr
+Canonical: https://gal.tidhar.org.il/.well-known/security.txt
