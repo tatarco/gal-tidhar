@@ -36,9 +36,8 @@
   <meta name="twitter:image:alt" content="Gal Tidhar — Staff Software Engineer">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -149,6 +148,30 @@
   }
   </script>
   <style>
+    @font-face {
+      font-family: 'IBM Plex Mono';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'IBM Plex Mono';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url('/fonts/ibm-plex-mono-500.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'IBM Plex Mono';
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
     :root {
       --bg: #0a1628;
       --grid: rgba(125, 211, 252, 0.06);
