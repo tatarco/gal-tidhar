@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AwakeBar — a 90-line menu-bar app to keep my Mac awake · Gal Tidhar</title>
+  <meta name="description" content="caffeinate keeps the screen on but ignores a closed lid. So I had Claude Code build me a menu-bar toggle with three honest states — ~90 lines of Swift, no dependencies, open source.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/awakebar/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AwakeBar — a 90-line menu-bar app to keep my Mac awake">
+  <meta property="og:description" content="caffeinate keeps the screen on but ignores a closed lid. So I had Claude Code build me a menu-bar toggle with three honest states — ~90 lines of Swift, no dependencies.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/awakebar/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/awakebar/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AwakeBar menu open in the macOS menu bar showing three sleep states">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AwakeBar — a 90-line menu-bar app to keep my Mac awake">
+  <meta name="twitter:description" content="caffeinate ignores a closed lid. So I had Claude Code build me a menu-bar toggle — ~90 lines of Swift, no dependencies, open source.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/awakebar/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "AwakeBar — a 90-line menu-bar app to keep my Mac awake",
+    "description": "caffeinate keeps the screen on but ignores a closed lid. So I had Claude Code build me a menu-bar toggle with three honest states — ~90 lines of Swift, no dependencies.",
+    "image": "https://gal.tidhar.org.il/blog/awakebar/og.png",
+    "datePublished": "2026-07-16",
+    "dateModified": "2026-07-16",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/awakebar/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "macOS, menu bar, Swift, caffeinate, pmset, IOPMAssertion, Claude Code, open source"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="https://github.com/tatarco/awakebar">Repo ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / TOOLS</span>
+          <p class="role-line">macOS · Swift · Claude Code</p>
+          <h1 class="title">AwakeBar — a 90-line menu-bar app to keep my Mac awake</h1>
+          <p class="meta-line"><strong>2026-07-16</strong> &nbsp;·&nbsp; ~4 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">My Mac kept falling asleep the moment I closed the lid — right in the middle of long agent runs. <code>caffeinate</code> keeps the screen on but <strong>ignores a closed lid</strong>, and toggling clamshell sleep means memorizing <code>pmset</code> flags. So I described the annoyance to Claude Code and, one session later, had a menu-bar toggle with three honest states.</p>
+        </header>
+
+        <figure>
+          <img src="menu.png" alt="AwakeBar menu open in the macOS menu bar showing three states" loading="lazy">
+          <figcaption>One click in the menu bar. The icon tells you which state you're in — 🌙 sleeping, ☕ awake.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The annoyance</h2>
+        <p class="prose">There are two different "keep awake" behaviors and macOS makes you pick them separately. <code>caffeinate -dimsu</code> stops the display and system from idling — but the second you shut the lid, the Mac sleeps anyway. Surviving a closed lid is a <em>different</em> setting, <code>pmset disablesleep</code>, which is root-only and easy to leave on by accident. I wanted one control that made the distinction obvious and was honest about which mode I was in.</p>
+
+        <h2 class="spec-head">Three honest states</h2>
+        <table class="spec-table">
+          <thead><tr><th>State</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>🌙&nbsp; Normal</td><td>Default macOS behavior. Let it sleep.</td></tr>
+            <tr><td>☕&nbsp; Keep screen on</td><td>Display never sleeps. Closing the lid still sleeps.</td></tr>
+            <tr><td>☕•&nbsp; + Ignore lid</td><td>Also survives closing the laptop — clamshell mode.</td></tr>
+          </tbody>
+        </table>
+        <p class="prose">It's a radio group, so the checkmark always shows the current mode. No guessing whether "keep awake" is on, and no separate off switch to forget.</p>
+
+        <h2 class="spec-head">How it works</h2>
+        <ul class="prose">
+          <li><strong>Screen-on</strong> holds an <code>IOPMAssertion</code> (<code>PreventUserIdleDisplaySleep</code>) — the same mechanism <code>caffeinate</code> uses, but <em>in-process</em>. There's no background process to leak; quit the app and normal sleep returns instantly.</li>
+          <li><strong>Ignore-lid</strong> runs <code>pmset -a disablesleep 1</code>. Because that's root-only, the installer writes a sudoers rule scoped to <em>exactly</em> those two commands and nothing else — validated with <code>visudo -cf</code> — so you're never prompted for a password after setup.</li>
+          <li><strong>It's a real app bundle</strong> with <code>LSUIElement</code> set: menu-bar only, no Dock icon, launches at login via a LaunchAgent.</li>
+        </ul>
+        <p class="prose">The whole thing is about 90 lines of Swift with zero dependencies — <code>swiftc</code> from the Xcode Command Line Tools compiles it, no Xcode project, no package manager.</p>
+
+        <h2 class="spec-head">The one gotcha: an invisible icon</h2>
+        <p class="prose">First run, the app was clearly running but I couldn't see it. Not a bug: on Macs with a notch, or when the menu bar is full, macOS <strong>silently hides overflow status items</strong> and offers no built-in way to pin them. The fix is a free menu-bar manager — <a href="https://github.com/jordanbaird/Ice">Ice</a> — which reveals hidden items so you can drag AwakeBar to the always-visible side:</p>
+        <pre><code>brew install --cask jordanbaird-ice</code></pre>
+        <p class="prose">Worth knowing for <em>any</em> menu-bar app you build, not just this one.</p>
+
+        <h2 class="spec-head">The meta part: I didn't write a line</h2>
+        <p class="prose">I never opened an editor. I described the annoyance, tested each build live in my own menu bar, and we iterated — until the icon showed up, the lid toggle stopped asking for a password, and it survived a reboot. The interesting shift isn't "AI wrote Swift for me"; it's that a <strong>five-minute annoyance is now worth fixing</strong>, because the cost of a proper, installable, open-source tool dropped to one conversation.</p>
+
+        <div class="cta">
+          <h3>Try it</h3>
+          <p class="prose" style="margin-bottom:.4rem">Open source (MIT), macOS, needs only the Xcode Command Line Tools:</p>
+          <pre style="margin-bottom:0"><code>git clone https://github.com/tatarco/awakebar
+cd awakebar && ./install.sh</code></pre>
+          <div class="link-row">
+            <a href="https://github.com/tatarco/awakebar">GitHub repo ↗</a><span class="sep">·</span>
+            <a href="https://tatarco.github.io/awakebar">Landing page ↗</a><span class="sep">·</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
