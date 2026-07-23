@@ -3,23 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I gave my agent my inbox — then it checked my parents in for their flight · Gal Tidhar</title>
-  <meta name="description" content="A 260-line Gmail API CLI instead of browser automation, plus the Chrome extension for everything that isn't email. Together they ran a real online flight check-in — and caught three things a human would have missed.">
+  <title>I gave my agent my inbox, then it checked my parents in for their flight · Gal Tidhar</title>
+  <meta name="description" content="A 260-line Gmail API CLI instead of browser automation, plus the Chrome extension for everything that isn't email. Together they ran a real online flight check-in - and caught three things a human would have missed.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/gmail-skill/">
   <meta name="theme-color" content="#0a1628">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="I gave my agent my inbox — then it checked my parents in for their flight">
-  <meta property="og:description" content="A 260-line Gmail API CLI instead of browser automation, plus the Chrome extension for everything that isn't email. Together they ran a real check-in — and caught three things a human would have missed.">
+  <meta property="og:title" content="I gave my agent my inbox, then it checked my parents in for their flight">
+  <meta property="og:description" content="A 260-line Gmail API CLI instead of browser automation, plus the Chrome extension for everything that isn't email. Together they ran a real check-in - and caught three things a human would have missed.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/gmail-skill/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/gmail-skill/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Flow diagram: the Gmail API skill and the Chrome extension handing off to each other through an online flight check-in">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="I gave my agent my inbox — then it checked my parents in for their flight">
+  <meta name="twitter:title" content="I gave my agent my inbox, then it checked my parents in for their flight">
   <meta name="twitter:description" content="A Gmail API CLI instead of browser automation, plus the browser for everything that isn't email. One real check-in, three catches.">
   <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/gmail-skill/og.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
@@ -29,7 +29,7 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "I gave my agent my inbox — then it checked my parents in for their flight",
+    "headline": "I gave my agent my inbox, then it checked my parents in for their flight",
     "description": "A 260-line Gmail API CLI instead of browser automation, plus the Chrome extension for everything that isn't email. Together they ran a real online flight check-in and caught three things a human would have missed.",
     "image": "https://gal.tidhar.org.il/blog/gmail-skill/og.png",
     "datePublished": "2026-07-23",
@@ -119,9 +119,9 @@
         <header class="sheet">
           <span class="sheet-rev">FIELD NOTE / AGENTS</span>
           <p class="role-line">Gmail API · Claude Code skills · browser handoff</p>
-          <h1 class="title">I gave my agent my inbox — then it checked my parents in for their flight</h1>
+          <h1 class="title">I gave my agent my inbox, then it checked my parents in for their flight</h1>
           <p class="meta-line"><strong>2026-07-23</strong> &nbsp;·&nbsp; ~7 min read &nbsp;·&nbsp; by Gal Tidhar</p>
-          <p class="lead">Everyone building agents eventually tries to automate email through the browser, and everyone eventually regrets it. I replaced it with <strong>260 lines of Python over the official Gmail API</strong>. Then I pointed it at a real errand — checking two elderly relatives in for a flight — and let the browser do only the part email can't. It worked, and it caught three things I would have missed.</p>
+          <p class="lead">Everyone building agents eventually tries to automate email through the browser, and everyone eventually regrets it. I replaced it with <strong>260 lines of Python over the official Gmail API</strong>. Then I pointed it at a real errand - checking two elderly relatives in for a flight - and let the browser do only the part email can't. It worked, and it caught three things I would have missed.</p>
         </header>
 
         <figure>
@@ -130,7 +130,7 @@
         </figure>
 
         <h2 class="spec-head">The thing that was actually broken</h2>
-        <p class="prose">I already had a Chrome extension my agent could drive — clicks, forms, screenshots, the lot. So the obvious move was to let it drive Gmail too. That works right up until it doesn't: the DOM shifts, a message renders lazily, an attachment lands in <code>~/Downloads</code> under a name nobody predicted, and replying <em>inside</em> a thread means clicking three things in the correct order. Each of those is a flaky step dropped into the middle of an otherwise deterministic task, and flaky steps compound.</p>
+        <p class="prose">I already had a Chrome extension my agent could drive - clicks, forms, screenshots, the lot. So the obvious move was to let it drive Gmail too. That works right up until it doesn't: the DOM shifts, a message renders lazily, an attachment lands in <code>~/Downloads</code> under a name nobody predicted, and replying <em>inside</em> a thread means clicking three things in the correct order. Each of those is a flaky step dropped into the middle of an otherwise deterministic task, and flaky steps compound.</p>
         <p class="prose">Meanwhile Google has shipped a perfectly good API for this since forever. The whole skill is one file:</p>
         <pre><code>python3 gmail_cli.py search "from:airline.com subject:booking newer_than:7d"
 python3 gmail_cli.py read 198f2c0a1b3d4e5f
@@ -152,7 +152,7 @@ python3 gmail_cli.py send --draft r-88213...</code></pre>
         <p class="prose"><code>token.json</code> is written beside the script at mode 600 and refreshes itself from then on. Full walkthrough, including the TLS-interception gotcha if you're behind a corporate proxy, is in <a href="https://github.com/tatarco/gmail-skill/blob/main/SETUP.md">SETUP.md</a>.</p>
 
         <h3>The two lines that make this safe to leave switched on</h3>
-        <p class="prose">First: the scopes are <code>gmail.modify</code> and <code>gmail.send</code>. <strong>There is deliberately no permanent-delete scope.</strong> The worst a badly-worded instruction can do is archive something. Revoking is one click in your Google account plus deleting <code>token.json</code> — that's the entire kill switch.</p>
+        <p class="prose">First: the scopes are <code>gmail.modify</code> and <code>gmail.send</code>. <strong>There is deliberately no permanent-delete scope.</strong> The worst a badly-worded instruction can do is archive something. Revoking is one click in your Google account plus deleting <code>token.json</code> - that's the entire kill switch.</p>
         <p class="prose">Second, and this one matters more: the skill's own convention is <strong>default to <code>draft</code>, never <code>send</code></strong>. The agent composes the email; a human reads it and hits send. That's a one-line rule in a Markdown file, and it's the reason I'm comfortable leaving mailbox access on permanently. Autonomy where it's cheap to be wrong, a human where it isn't.</p>
 
         <h2 class="spec-head">The errand: an actual flight check-in</h2>
@@ -166,28 +166,28 @@ python3 gmail_cli.py send --draft r-88213...</code></pre>
 5. search   "from:WebCheckin@… newer_than:1h"          → the boarding-pass email
 6. download &lt;msgId&gt; --out ~/Desktop                    → boarding passes, as PDFs
 7. draft    --reply-to-msg &lt;msgId&gt; …                   → note to the assistance desk</code></pre>
-        <p class="prose">Steps 1, 2, 5, 6 and 7 are the CLI. Steps 3 and 4 are the browser. The handoff between them is nothing more exotic than a few strings the agent carried across — and that boring handoff is the entire trick.</p>
+        <p class="prose">Steps 1, 2, 5, 6 and 7 are the CLI. Steps 3 and 4 are the browser. The handoff between them is nothing more exotic than a few strings the agent carried across - and that boring handoff is the entire trick.</p>
 
         <h2 class="spec-head">The part I didn't expect</h2>
         <p class="prose">The check-in itself is the least interesting outcome. Here's what the run surfaced along the way:</p>
         <div class="snap"><strong>1 · Departure time mismatch.</strong> The booking email said 23:30. The check-in system said 23:50. Two sources, read in the same breath, diffed without being asked.</div>
         <div class="snap"><strong>2 · A blank seat field.</strong> One passenger's boarding pass came back with a seat assigned. The other's seat field was empty. Same booking.</div>
-        <div class="snap"><strong>3 · No wheelchair flag on the pass.</strong> Assistance had been booked. It did not appear on the boarding pass at all — which is a thing you want to find out the day before, not at the gate. Hence step 7: a threaded reply to the airport's assistance desk, drafted, waiting for me to read and send.</div>
-        <p class="prose">A person doing this by hand does not diff two departure times, and does not scan a PDF for a missing special-service code. Not because they're careless — because reading carefully is boring, and humans are correctly optimised not to do boring things. Software doesn't get bored. <strong>That asymmetry, not speed, is where the value was.</strong></p>
+        <div class="snap"><strong>3 · No wheelchair flag on the pass.</strong> Assistance had been booked. It did not appear on the boarding pass at all - which is a thing you want to find out the day before, not at the gate. Hence step 7: a threaded reply to the airport's assistance desk, drafted, waiting for me to read and send.</div>
+        <p class="prose">A person doing this by hand does not diff two departure times, and does not scan a PDF for a missing special-service code. Not because they're careless - because reading carefully is boring, and humans are correctly optimised not to do boring things. Software doesn't get bored. <strong>That asymmetry, not speed, is where the value was.</strong></p>
 
         <h2 class="spec-head">Everything else the same seven commands do</h2>
         <p class="prose">The command set stayed small on purpose. Nearly every real request decomposes into <code>search → read → (download | draft)</code>. Things this has genuinely been used for since:</p>
         <ul class="prose">
-          <li><strong>Pay a bill from the PDF that arrived.</strong> Find the e-invoice, read it, pull IBAN + amount + payment reference out of the body, generate the payment barcode, draft the reply — in the recipient's language, via <code>--body-file</code>, so no shell quoting mangles the UTF-8.</li>
+          <li><strong>Pay a bill from the PDF that arrived.</strong> Find the e-invoice, read it, pull IBAN + amount + payment reference out of the body, generate the payment barcode, draft the reply - in the recipient's language, via <code>--body-file</code>, so no shell quoting mangles the UTF-8.</li>
           <li><strong>File a supplier invoice.</strong> <code>search has:attachment from:…</code> → <code>download</code> → straight into the expense ledger. The PDF lands where I asked, not wherever the browser felt like putting it.</li>
           <li><strong>Chase a claim until it moves.</strong> A refund claim with a support desk that answers when it answers: a search on a loop, <code>label --add</code> on everything already seen so nothing gets handled twice, and a phone notification only when the status actually changes.</li>
           <li><strong>"Did they ever answer?"</strong> Search the thread, read the last message, draft the chase in-thread.</li>
           <li><strong>Inbox triage.</strong> <code>label --remove INBOX</code> on the noise, <code>--add STARRED</code> on what needs a human.</li>
         </ul>
-        <p class="prose">The pattern underneath all of it: <strong>the mailbox stops being a place you visit and becomes a data source other tools can join against.</strong> Once that's true, the interesting work is never inside one tool — it's in the handoff, like the arrow crossing lanes in the diagram above.</p>
+        <p class="prose">The pattern underneath all of it: <strong>the mailbox stops being a place you visit and becomes a data source other tools can join against.</strong> Once that's true, the interesting work is never inside one tool - it's in the handoff, like the arrow crossing lanes in the diagram above.</p>
 
         <h2 class="spec-head">The general lesson, if you want one</h2>
-        <p class="prose">When something an agent does keeps breaking, check whether you've handed it a UI where an API exists. UIs are built for eyes and change without warning; APIs are contracts. The rule I'd write on a wall: <strong>drive the API where there is one, drive the browser where there isn't, and let the agent be the thing that carries state between them.</strong> Then put the human at the one step that's expensive to get wrong — for email, that's the send button.</p>
+        <p class="prose">When something an agent does keeps breaking, check whether you've handed it a UI where an API exists. UIs are built for eyes and change without warning; APIs are contracts. The rule I'd write on a wall: <strong>drive the API where there is one, drive the browser where there isn't, and let the agent be the thing that carries state between them.</strong> Then put the human at the one step that's expensive to get wrong - for email, that's the send button.</p>
 
         <div class="cta">
           <h3>Take it</h3>
