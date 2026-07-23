@@ -41,6 +41,22 @@
     "keywords": "HDR, Rec.2020, PQ, SMPTE 2084, cICP, superwhite, LinkedIn, Wiz, Port.io, logo, attention, Claude skill"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do you make a logo glow on LinkedIn?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Tag the image with an HDR colour profile - BT.2020 primaries and a PQ (SMPTE ST 2084) transfer curve, written as a PNG cICP chunk - so its white pixels decode at thousands of nits and outshine the feed. Upload it as a company or brand-page logo, since personal profile photos get re-encoded and lose the effect. An open-source one-command tool is at github.com/tatarco/hdr-glow-logo." } },
+      { "@type": "Question", "name": "Why does the Wiz logo look brighter than the whole screen?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Its white pixels are encoded on the PQ HDR curve to around 4,000 nits, while your screen shows normal white at roughly 200 nits. On an HDR display the logo literally emits more light than the surrounding interface." } },
+      { "@type": "Question", "name": "Why does the glowing logo look broken or smeared on my monitor?",
+        "acceptedAnswer": { "@type": "Answer", "text": "On non-HDR screens such as many Windows and Dell monitors, the same file can render smeared or low-resolution, like a malfunction. The effect only works on HDR hardware such as modern iPhones and MacBooks; everyone else may see the inverse." } },
+      { "@type": "Question", "name": "Does the trick work in a screenshot or on any screen?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. It only appears live on HDR hardware. In a screenshot or on an SDR monitor it looks like a flat, dull image, and platforms patch it over time - Slack already has." } }
+    ]
+  }
+  </script>
   <style>
     @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
     @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
@@ -163,6 +179,16 @@ ffprobe -show_entries stream=color_transfer,color_primaries your-logo-hdr.png
         <h2 class="spec-head">The catch — read this before you ship it</h2>
         <div class="snap warn"><strong>It's a trade-off, not a free win.</strong> On screens that <strong>don't</strong> support HDR — many Windows and Dell monitors — the exact same file can look <em>broken</em>: smeared, dirty, low-resolution, like a malfunction. One designer in the comments estimated up to half a typical feed is on non-HDR screens and would see this inverse effect. And platforms close the gap over time — Slack already did. If your audience sits on Windows work monitors, you might be broadcasting "malfunction" to exactly the people you most wanted to impress.</div>
         <p class="prose">Which is the real lesson: the "genius" move bets on the viewer's hardware. Half the feed gets a glow; the other half gets a bug. Use it knowing that.</p>
+
+        <h2 class="spec-head">FAQ</h2>
+        <h3>How do you make a logo glow on LinkedIn?</h3>
+        <p class="prose">Tag the image with an HDR colour profile - BT.2020 primaries and a PQ (SMPTE ST 2084) transfer curve, written as a PNG <code>cICP</code> chunk - so its white pixels decode at thousands of nits and outshine the feed. Upload it as a <strong>company / brand-page logo</strong> (personal profile photos get re-encoded and lose it). Open-source one-command tool: <a href="https://github.com/tatarco/hdr-glow-logo">github.com/tatarco/hdr-glow-logo</a>.</p>
+        <h3>Why does the Wiz logo look brighter than the whole screen?</h3>
+        <p class="prose">Its white pixels are encoded on the PQ HDR curve to around 4,000 nits, while your screen shows normal white at roughly 200 nits. On an HDR display the logo literally emits more light than the surrounding interface.</p>
+        <h3>Why does the glowing logo look broken or smeared on my monitor?</h3>
+        <p class="prose">On non-HDR screens - many Windows and Dell monitors - the same file can render smeared or low-resolution, like a malfunction. The effect only works on HDR hardware such as modern iPhones and MacBooks; everyone else may see the inverse.</p>
+        <h3>Does the trick work in a screenshot or on any screen?</h3>
+        <p class="prose">No. It only appears live on HDR hardware. In a screenshot or on an SDR monitor it looks like a flat, dull image, and platforms patch it over time - Slack already has.</p>
 
         <div class="cta">
           <h3>Get the code + skill</h3>
