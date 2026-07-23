@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The logo that burned a hole in my feed · Gal Tidhar</title>
+  <meta name="description" content="A LinkedIn logo that emitted more light than the screen around it. I spent an hour reverse-engineering the HDR trick behind it (Rec.2020 + PQ), rebuilt it, and packaged it as a one-command tool and Claude skill — including the half of the story nobody tells.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/hdr-glow-logo/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The logo that burned a hole in my feed">
+  <meta property="og:description" content="The HDR trick behind that glowing Wiz logo on LinkedIn — reverse-engineered, rebuilt, and packaged as a one-command tool and Claude skill.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/hdr-glow-logo/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/hdr-glow-logo/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Port + Wiz + Claude = ZaZet, white logos glowing on a dark background">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The logo that burned a hole in my feed">
+  <meta name="twitter:description" content="The HDR trick behind that glowing Wiz logo on LinkedIn — reverse-engineered and packaged as a one-command tool + Claude skill.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/hdr-glow-logo/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The logo that burned a hole in my feed",
+    "description": "The HDR trick behind that glowing Wiz logo on LinkedIn (Rec.2020 + PQ), reverse-engineered and packaged as a one-command tool and Claude skill.",
+    "image": "https://gal.tidhar.org.il/blog/hdr-glow-logo/og.png",
+    "datePublished": "2026-07-23",
+    "dateModified": "2026-07-23",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/hdr-glow-logo/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "HDR, Rec.2020, PQ, SMPTE 2084, cICP, superwhite, LinkedIn, Wiz, Port.io, logo, attention, Claude skill"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .warn { border-color: rgba(254,240,138,0.6); background: rgba(254,240,138,0.05); }
+    .warn strong { color: var(--accent); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="https://github.com/tatarco/hdr-glow-logo">Repo ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / DESIGN</span>
+          <p class="role-line">HDR · Attention · Reverse-engineering</p>
+          <h1 class="title">The logo that burned a hole in my feed</h1>
+          <p class="meta-line"><strong>2026-07-23</strong> &nbsp;·&nbsp; ~5 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">I scrolled past a logo that was physically <strong>brighter than the screen around it</strong>. Not "bright" — emitting light, like a bulb behind the glass. I sat down for an hour to figure out how, rebuilt it, and packaged it into one command and a Claude skill. This is the how — and the half of the story nobody tells.</p>
+        </header>
+
+        <figure>
+          <img src="og.png" alt="Port + Wiz + Claude = ZaZet — white logos on a dark background" loading="lazy">
+          <figcaption>On an HDR screen (any modern iPhone or Mac), a version of this is <strong>glowing</strong>. In a screenshot or on an SDR monitor, it's just flat white. That gap <em>is</em> the trick.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">What I saw</h2>
+        <p class="prose">I was scrolling LinkedIn when the Wiz logo lit up. Everything else in the feed looked normal, and it was burning. I genuinely thought my screen was broken. So I downloaded the logo file and pulled it apart. No filter, no glow, no animation — a completely flat image. But buried inside was one unusual thing: a colour profile named <strong>“Rec2020 Gamut with PQ Transfer.”</strong></p>
+        <p class="prose">That's an HDR profile — the same PQ (SMPTE&nbsp;ST&nbsp;2084) curve used by Dolby Vision films, which can encode brightness up to 10,000 nits. And that's the whole trick.</p>
+
+        <h2 class="spec-head">The physics of the trick</h2>
+        <p class="prose">By my read of the file, the background is encoded at roughly <strong>60 nits</strong> — so it stays dark and muted. But the white letters? They decode to <strong>4,000 nits and up</strong> — around <strong>20×</strong> the ~200-nit white your screen renders for everything else. So the letters simply burn above the rest of the interface.</p>
+        <p class="prose">On any HDR screen — every modern iPhone and MacBook — the logo emits more light than LinkedIn's own white UI. Your eye cannot <em>not</em> go there. It even hurts a little, and that's exactly why you can't ignore it. The best part: in a screenshot, or on a normal screen, it looks like a dull, boring purple. The magic only exists live, on the right hardware — so almost nobody notices <em>what</em> is happening. They just feel the logo grabbing them.</p>
+        <blockquote>Engineers think about performance. Designers think about aesthetics. Someone at Wiz thought about the physics of light — and went around both.</blockquote>
+
+        <h2 class="spec-head">I rebuilt it</h2>
+        <p class="prose">It took an hour, but I reproduced it — then turned it into a tiny tool and an installable skill, so you don't need the hour. The mechanism, in code, is small: tag a PNG with a <code>cICP</code> chunk declaring BT.2020 primaries + PQ transfer, strip the colour tags that would contradict it, and rescale the pixel values so white lands on a brightness you choose (the calibration knob — 10,000 nits clips and sears the eye, so the default is a saner 1,000).</p>
+        <pre><code># make any logo glow — one command
+python3 hdr_glow.py your-logo.png your-logo-hdr.png --nits 4000
+
+# verify the HDR tag actually landed
+ffprobe -show_entries stream=color_transfer,color_primaries your-logo-hdr.png
+# -> color_transfer=smpte2084   color_primaries=bt2020</code></pre>
+        <p class="prose">Upload the output as a <strong>company / brand-page logo</strong> — personal profile photos get re-encoded by LinkedIn and lose the effect; page logos pass through untouched. The image at the top of this post is my own reproduction: <code>Port + Wiz + Claude = ZaZet</code>, every mark in white so the whole equation burns together. <a href="equation-hdr.png">Open the HDR file on an iPhone or Mac</a> and watch it light up.</p>
+
+        <h2 class="spec-head">Credit where it's due</h2>
+        <p class="prose">I didn't invent this — I reverse-engineered it. The comments on my post were quick and right to point out the lineage, and they deserve the credit:</p>
+        <ul class="prose">
+          <li><strong>Port.io</strong> shipped it before Wiz, and it circulated on Reddit for months. <strong>Slack</strong> had it too — and has already patched theirs.</li>
+          <li><a href="https://github.com/dtinth/superwhite">dtinth/superwhite</a> — the reference implementation, built to degrade gracefully across screens.</li>
+          <li><a href="https://hdr-shnitz.vercel.app/">hdr-shnitz.vercel.app</a> — a browser tool by Nitzan Yogev that does the conversion with no code.</li>
+        </ul>
+        <p class="prose">My repo is just a dependency-light CLI plus a Claude skill, so it drops into an automated workflow. Same idea, different packaging.</p>
+
+        <h2 class="spec-head">The catch — read this before you ship it</h2>
+        <div class="snap warn"><strong>It's a trade-off, not a free win.</strong> On screens that <strong>don't</strong> support HDR — many Windows and Dell monitors — the exact same file can look <em>broken</em>: smeared, dirty, low-resolution, like a malfunction. One designer in the comments estimated up to half a typical feed is on non-HDR screens and would see this inverse effect. And platforms close the gap over time — Slack already did. If your audience sits on Windows work monitors, you might be broadcasting "malfunction" to exactly the people you most wanted to impress.</div>
+        <p class="prose">Which is the real lesson: the "genius" move bets on the viewer's hardware. Half the feed gets a glow; the other half gets a bug. Use it knowing that.</p>
+
+        <div class="cta">
+          <h3>Get the code + skill</h3>
+          <p class="prose" style="margin-bottom:.4rem">Open source (MIT), Python + one dependency. One command:</p>
+          <pre style="margin-bottom:0"><code>git clone https://github.com/tatarco/hdr-glow-logo
+cd hdr-glow-logo && pip install pillow
+python3 hdr_glow.py your-logo.png your-logo-hdr.png --nits 4000</code></pre>
+          <div class="link-row">
+            <a href="https://github.com/tatarco/hdr-glow-logo">GitHub repo ↗</a><span class="sep">·</span>
+            <a href="https://github.com/tatarco/hdr-glow-logo/blob/main/SKILL.md">The Claude skill ↗</a><span class="sep">·</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
