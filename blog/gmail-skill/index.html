@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I gave my agent my inbox — then it checked my parents in for their flight · Gal Tidhar</title>
+  <meta name="description" content="A 260-line Gmail API CLI instead of browser automation, plus the Chrome extension for everything that isn't email. Together they ran a real online flight check-in — and caught three things a human would have missed.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/gmail-skill/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="I gave my agent my inbox — then it checked my parents in for their flight">
+  <meta property="og:description" content="A 260-line Gmail API CLI instead of browser automation, plus the Chrome extension for everything that isn't email. Together they ran a real check-in — and caught three things a human would have missed.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/gmail-skill/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/gmail-skill/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Flow diagram: the Gmail API skill and the Chrome extension handing off to each other through an online flight check-in">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="I gave my agent my inbox — then it checked my parents in for their flight">
+  <meta name="twitter:description" content="A Gmail API CLI instead of browser automation, plus the browser for everything that isn't email. One real check-in, three catches.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/gmail-skill/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "I gave my agent my inbox — then it checked my parents in for their flight",
+    "description": "A 260-line Gmail API CLI instead of browser automation, plus the Chrome extension for everything that isn't email. Together they ran a real online flight check-in and caught three things a human would have missed.",
+    "image": "https://gal.tidhar.org.il/blog/gmail-skill/og.png",
+    "datePublished": "2026-07-23",
+    "dateModified": "2026-07-23",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/gmail-skill/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "Gmail API, Claude Code, agent skills, browser automation, OAuth, automation, AI agents"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="https://github.com/tatarco/gmail-skill">Repo ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / AGENTS</span>
+          <p class="role-line">Gmail API · Claude Code skills · browser handoff</p>
+          <h1 class="title">I gave my agent my inbox — then it checked my parents in for their flight</h1>
+          <p class="meta-line"><strong>2026-07-23</strong> &nbsp;·&nbsp; ~7 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">Everyone building agents eventually tries to automate email through the browser, and everyone eventually regrets it. I replaced it with <strong>260 lines of Python over the official Gmail API</strong>. Then I pointed it at a real errand — checking two elderly relatives in for a flight — and let the browser do only the part email can't. It worked, and it caught three things I would have missed.</p>
+        </header>
+
+        <figure>
+          <img src="flow.png" alt="Flow diagram: the Gmail API skill searches and reads the booking email, hands the PNR to the Chrome extension which drives the check-in form, then the skill fetches the boarding passes and drafts a reply" loading="lazy">
+          <figcaption>Two tools, one errand. The arrow crossing between the lanes is the whole idea.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The thing that was actually broken</h2>
+        <p class="prose">I already had a Chrome extension my agent could drive — clicks, forms, screenshots, the lot. So the obvious move was to let it drive Gmail too. That works right up until it doesn't: the DOM shifts, a message renders lazily, an attachment lands in <code>~/Downloads</code> under a name nobody predicted, and replying <em>inside</em> a thread means clicking three things in the correct order. Each of those is a flaky step dropped into the middle of an otherwise deterministic task, and flaky steps compound.</p>
+        <p class="prose">Meanwhile Google has shipped a perfectly good API for this since forever. The whole skill is one file:</p>
+        <pre><code>python3 gmail_cli.py search "from:airline.com subject:booking newer_than:7d"
+python3 gmail_cli.py read 198f2c0a1b3d4e5f
+python3 gmail_cli.py download 198f2c0a1b3d4e5f --out ./attachments
+python3 gmail_cli.py draft --reply-to-msg 198f2c0a1b3d4e5f --body-file reply.txt
+python3 gmail_cli.py send --draft r-88213...</code></pre>
+        <p class="prose">Seven commands. <code>search</code> takes the exact query syntax you already type into the Gmail box, so the agent doesn't need a new mental model. <code>read</code> returns headers plus a decoded plain-text body. <code>download</code> writes attachment bytes to a path <em>you</em> chose. And <code>draft --reply-to-msg &lt;id&gt;</code> sets <code>In-Reply-To</code>, <code>References</code>, the <code>Re:</code> subject and the <code>threadId</code>, so the reply lands in the thread rather than starting a lonely new one.</p>
+        <p class="prose">The browser didn't get deleted. It got <em>demoted</em> to what it's good at: everything that isn't email.</p>
+
+        <h2 class="spec-head">What it takes to set up</h2>
+        <p class="prose">Less than you'd think, and nothing you have to pay for. In Google Cloud Console, on the account you want to drive:</p>
+        <ol class="prose">
+          <li>Create (or reuse) a project.</li>
+          <li>Enable the <strong>Gmail API</strong>.</li>
+          <li>OAuth consent screen → <strong>External</strong>, then add <strong>your own address as a Test user</strong>. Test mode never expires for your own account, so there is no app-verification review to sit through.</li>
+          <li>Credentials → OAuth client ID → <strong>Desktop app</strong> → download the JSON as <code>credentials.json</code> next to the script.</li>
+          <li><code>python3 gmail_cli.py auth</code> → one consent screen, once.</li>
+        </ol>
+        <p class="prose"><code>token.json</code> is written beside the script at mode 600 and refreshes itself from then on. Full walkthrough, including the TLS-interception gotcha if you're behind a corporate proxy, is in <a href="https://github.com/tatarco/gmail-skill/blob/main/SETUP.md">SETUP.md</a>.</p>
+
+        <h3>The two lines that make this safe to leave switched on</h3>
+        <p class="prose">First: the scopes are <code>gmail.modify</code> and <code>gmail.send</code>. <strong>There is deliberately no permanent-delete scope.</strong> The worst a badly-worded instruction can do is archive something. Revoking is one click in your Google account plus deleting <code>token.json</code> — that's the entire kill switch.</p>
+        <p class="prose">Second, and this one matters more: the skill's own convention is <strong>default to <code>draft</code>, never <code>send</code></strong>. The agent composes the email; a human reads it and hits send. That's a one-line rule in a Markdown file, and it's the reason I'm comfortable leaving mailbox access on permanently. Autonomy where it's cheap to be wrong, a human where it isn't.</p>
+
+        <h2 class="spec-head">The errand: an actual flight check-in</h2>
+        <p class="prose">My parents were flying El Al, Zagreb → Tel Aviv, one of them with wheelchair assistance booked. Check-in opened, and the booking confirmation was somewhere in a very full mailbox.</p>
+        <p class="prose">Neither tool can do this alone, and that's exactly why it's a good example. <strong>Gmail holds the booking reference and cannot open a check-in form. The browser can drive the form and has no idea what the booking reference is.</strong> The agent is the thing in between.</p>
+        <pre><code>1. search   "El Al OR elal OR אל על newer_than:30d"    → the confirmation email
+2. read     &lt;msgId&gt;                                    → PNR, ticket no., flight no.,
+                                                         route, scheduled departure
+3. browser  → check-in page, PNR + surname, both passengers
+4. browser  → verify details, baggage, seats, submit
+5. search   "from:WebCheckin@… newer_than:1h"          → the boarding-pass email
+6. download &lt;msgId&gt; --out ~/Desktop                    → boarding passes, as PDFs
+7. draft    --reply-to-msg &lt;msgId&gt; …                   → note to the assistance desk</code></pre>
+        <p class="prose">Steps 1, 2, 5, 6 and 7 are the CLI. Steps 3 and 4 are the browser. The handoff between them is nothing more exotic than a few strings the agent carried across — and that boring handoff is the entire trick.</p>
+
+        <h2 class="spec-head">The part I didn't expect</h2>
+        <p class="prose">The check-in itself is the least interesting outcome. Here's what the run surfaced along the way:</p>
+        <div class="snap"><strong>1 · Departure time mismatch.</strong> The booking email said 23:30. The check-in system said 23:50. Two sources, read in the same breath, diffed without being asked.</div>
+        <div class="snap"><strong>2 · A blank seat field.</strong> One passenger's boarding pass came back with a seat assigned. The other's seat field was empty. Same booking.</div>
+        <div class="snap"><strong>3 · No wheelchair flag on the pass.</strong> Assistance had been booked. It did not appear on the boarding pass at all — which is a thing you want to find out the day before, not at the gate. Hence step 7: a threaded reply to the airport's assistance desk, drafted, waiting for me to read and send.</div>
+        <p class="prose">A person doing this by hand does not diff two departure times, and does not scan a PDF for a missing special-service code. Not because they're careless — because reading carefully is boring, and humans are correctly optimised not to do boring things. Software doesn't get bored. <strong>That asymmetry, not speed, is where the value was.</strong></p>
+
+        <h2 class="spec-head">Everything else the same seven commands do</h2>
+        <p class="prose">The command set stayed small on purpose. Nearly every real request decomposes into <code>search → read → (download | draft)</code>. Things this has genuinely been used for since:</p>
+        <ul class="prose">
+          <li><strong>Pay a bill from the PDF that arrived.</strong> Find the e-invoice, read it, pull IBAN + amount + payment reference out of the body, generate the payment barcode, draft the reply — in the recipient's language, via <code>--body-file</code>, so no shell quoting mangles the UTF-8.</li>
+          <li><strong>File a supplier invoice.</strong> <code>search has:attachment from:…</code> → <code>download</code> → straight into the expense ledger. The PDF lands where I asked, not wherever the browser felt like putting it.</li>
+          <li><strong>Chase a claim until it moves.</strong> A refund claim with a support desk that answers when it answers: a search on a loop, <code>label --add</code> on everything already seen so nothing gets handled twice, and a phone notification only when the status actually changes.</li>
+          <li><strong>"Did they ever answer?"</strong> Search the thread, read the last message, draft the chase in-thread.</li>
+          <li><strong>Inbox triage.</strong> <code>label --remove INBOX</code> on the noise, <code>--add STARRED</code> on what needs a human.</li>
+        </ul>
+        <p class="prose">The pattern underneath all of it: <strong>the mailbox stops being a place you visit and becomes a data source other tools can join against.</strong> Once that's true, the interesting work is never inside one tool — it's in the handoff, like the arrow crossing lanes in the diagram above.</p>
+
+        <h2 class="spec-head">The general lesson, if you want one</h2>
+        <p class="prose">When something an agent does keeps breaking, check whether you've handed it a UI where an API exists. UIs are built for eyes and change without warning; APIs are contracts. The rule I'd write on a wall: <strong>drive the API where there is one, drive the browser where there isn't, and let the agent be the thing that carries state between them.</strong> Then put the human at the one step that's expensive to get wrong — for email, that's the send button.</p>
+
+        <div class="cta">
+          <h3>Take it</h3>
+          <p class="prose" style="margin-bottom:.4rem">MIT, one Python file, works as a Claude Code skill or as a plain CLI for any agent:</p>
+          <pre style="margin-bottom:0"><code>git clone https://github.com/tatarco/gmail-skill.git ~/.claude/skills/gmail
+cd ~/.claude/skills/gmail && pip3 install -r requirements.txt
+# add credentials.json (see SETUP.md), then:
+python3 gmail_cli.py auth</code></pre>
+          <div class="link-row">
+            <a href="https://github.com/tatarco/gmail-skill">GitHub repo ↗</a><span class="sep">·</span>
+            <a href="https://github.com/tatarco/gmail-skill/blob/main/SETUP.md">OAuth setup ↗</a><span class="sep">·</span>
+            <a href="https://github.com/tatarco/gmail-skill/blob/main/SKILL.md">The skill file ↗</a><span class="sep">·</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
