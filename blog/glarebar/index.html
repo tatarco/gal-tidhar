@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The off switch for the logo that burned your eyes · Gal Tidhar</title>
-  <meta name="description" content="Last post I rebuilt the HDR trick that makes a logo glow on LinkedIn. Then someone said the brightness physically hurts. So I reverse-engineered macOS's private display APIs and built GlareBar — a menu-bar app that kills the HDR burn and dims below the hardware floor.">
+  <meta name="description" content="Last post I exposed the HDR trick that makes a logo glow on LinkedIn. Then someone said the brightness physically hurts. So I reverse-engineered macOS's private display APIs and built GlareBar — a menu-bar app that kills the HDR burn and dims below the hardware floor.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/glarebar/">
   <meta name="theme-color" content="#0a1628">
@@ -12,7 +12,7 @@
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
   <meta property="og:title" content="The off switch for the logo that burned your eyes">
-  <meta property="og:description" content="I built the HDR glow. Then someone said it hurts their eyes. So I built the off switch: GlareBar, a menu-bar app that kills the burn and keeps brightness adjustable.">
+  <meta property="og:description" content="I exposed the HDR glow. Then someone said it hurts their eyes. So I built the off switch: GlareBar, a menu-bar app that kills the burn and keeps brightness adjustable.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/glarebar/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/glarebar/og.png">
   <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
   <meta property="og:image:alt" content="GlareBar — a macOS menu-bar switch that turns HDR glare off">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The off switch for the logo that burned your eyes">
-  <meta name="twitter:description" content="I built the HDR glow. Then someone said it hurts their eyes. So I built the off switch.">
+  <meta name="twitter:description" content="I exposed the HDR glow. Then someone said it hurts their eyes. So I built the off switch.">
   <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/glarebar/og.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
   <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -186,7 +186,7 @@ cd glarebar
         <div class="snap"><strong>The honest limit.</strong> This fixes <em>your</em> screen, not the internet. The glowing logos are still out there burning on every other XDR panel that hasn't turned HDR off. The real fix is upstream — platforms clamping superwhite in feeds (Slack already did). Until then, GlareBar is a personal off switch, not a cure.</p></div>
 
         <h2 class="spec-head">The two halves of the story</h2>
-        <p class="prose">One post to build the glow, one to turn it off. The first was about noticing a clever exploit of human attention; this one is about the person on the other end of that exploit who just wanted it to stop. Both took about a day. The tools are open source so neither of us has to spend that day again.</p>
+        <p class="prose">One post to expose the glow, one to turn it off. The first was about noticing a clever exploit of human attention — not inventing it, just pulling it apart; this one is about the person on the other end of that exploit who just wanted it to stop. Both took about a day. The tools are open source so neither of us has to spend that day again.</p>
 
         <div class="cta">
           <h3>Get GlareBar</h3>
