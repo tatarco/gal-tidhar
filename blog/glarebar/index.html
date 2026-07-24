@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The off switch for the logo that burned your eyes · Gal Tidhar</title>
+  <meta name="description" content="Last post I rebuilt the HDR trick that makes a logo glow on LinkedIn. Then someone said the brightness physically hurts. So I reverse-engineered macOS's private display APIs and built GlareBar — a menu-bar app that kills the HDR burn and dims below the hardware floor.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/glarebar/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The off switch for the logo that burned your eyes">
+  <meta property="og:description" content="I built the HDR glow. Then someone said it hurts their eyes. So I built the off switch: GlareBar, a menu-bar app that kills the burn and keeps brightness adjustable.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/glarebar/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/glarebar/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="GlareBar — a macOS menu-bar switch that turns HDR glare off">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The off switch for the logo that burned your eyes">
+  <meta name="twitter:description" content="I built the HDR glow. Then someone said it hurts their eyes. So I built the off switch.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/glarebar/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The off switch for the logo that burned your eyes",
+    "description": "Reverse-engineering macOS's private CoreDisplay APIs to kill HDR superwhite glare while keeping the brightness slider working — packaged as GlareBar, a menu-bar app.",
+    "image": "https://gal.tidhar.org.il/blog/glarebar/og.png",
+    "datePublished": "2026-07-24",
+    "dateModified": "2026-07-24",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/glarebar/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "HDR, EDR, superwhite, XDR, CoreDisplay, DisplayServices, brightness, accessibility, light sensitivity, macOS, menu bar, GlareBar"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I stop HDR content from being too bright on a MacBook XDR display?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Switch the built-in display to a non-HDR preset such as Apple Display (P3-600 nits), which removes the EDR headroom that lets HDR/superwhite content out-shine the interface. Unlike the Internet & Web (sRGB) reference preset, P3-600 keeps the brightness slider adjustable. GlareBar automates this and adds a software gamma dim that goes below the hardware minimum: github.com/tatarco/glarebar." } },
+      { "@type": "Question", "name": "Why does the brightness slider get locked when I pick sRGB on my Mac?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Reference/calibrated presets pin the display to a fixed nit level, so macOS disables the brightness slider. This is enforced at a low level — even the private DisplayServicesSetBrightness API is pinned at maximum under a reference preset and will not move the backlight. Non-reference presets like Apple Display (P3-600) stay adjustable." } },
+      { "@type": "Question", "name": "Can you dim a Mac screen below its minimum brightness?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, with a software gamma dim. The public CoreGraphics call CGSetDisplayTransferByFormula scales the display's transfer function down uniformly, taking the screen below the backlight's hardware floor. GlareBar uses this for its Glare slider so light-sensitive users can go darker than macOS normally allows." } }
+    ]
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    blockquote .who { display: block; margin-top: .5rem; font-size: .76rem; color: var(--muted); letter-spacing: .04em; }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .warn { border-color: rgba(254,240,138,0.6); background: rgba(254,240,138,0.05); }
+    .warn strong { color: var(--accent); }
+    table { width: 100%; border-collapse: collapse; margin: 0 0 1.3rem; font-size: .82rem; }
+    th, td { border: 1px solid var(--border); padding: .5rem .7rem; text-align: left; vertical-align: top; }
+    th { color: var(--cyan); font-weight: 600; }
+    .tbl-wrap { overflow-x: auto; }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="https://github.com/tatarco/glarebar">Repo ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / ACCESSIBILITY</span>
+          <p class="role-line">HDR · Private APIs · Making it stop</p>
+          <h1 class="title">The off switch for the logo that burned your eyes</h1>
+          <p class="meta-line"><strong>2026-07-24</strong> &nbsp;·&nbsp; ~6 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">Last time I <a href="/blog/hdr-glow-logo/">reverse-engineered the HDR trick</a> that makes a logo burn brighter than your whole screen, and shipped a tool to reproduce it. It was a fun party trick. Then a comment stopped me: for some people that "fun" brightness isn't fun at all — it dazzles and hurts. So I spent a day going the other way, into macOS's private display APIs, and built the <strong>off switch</strong>.</p>
+        </header>
+
+        <h2 class="spec-head">The comment that flipped it</h2>
+        <p class="prose">The glowing-logo post did numbers, and most of the replies were "cool, how." But one wasn't admiring the trick at all — it was about what the trick <em>does</em> to someone who can't filter that much light:</p>
+        <blockquote>"Personally, this just irritates and blinds me."<span class="who">— Aviram Avidan, in the comments · <span dir="rtl">אותי אישית זה מעצבן ומסנוור</span></span></blockquote>
+        <p class="prose">That reframed the whole thing. A logo that "grabs your attention" by emitting more light than the UI around it is, for a light-sensitive person, a small assault you can't opt out of. The trick bets on the viewer's hardware — and some of those viewers are wincing. macOS <em>can</em> turn HDR off. It just makes you give something up to do it.</p>
+
+        <h2 class="spec-head">Why macOS makes you choose</h2>
+        <p class="prose">On a Liquid Retina XDR MacBook, the burn comes from <strong>EDR headroom</strong> — extra brightness range above normal "white" that HDR content is allowed to use. You can remove it in <strong>Settings → Displays → Preset</strong>. But here's the trap I hit live:</p>
+        <div class="tbl-wrap"><table>
+          <tr><th>Preset</th><th>Kills the burn?</th><th>Brightness slider</th></tr>
+          <tr><td>Apple XDR Display (P3-1600)</td><td>No — full HDR</td><td>Works</td></tr>
+          <tr><td>Apple Display (P3-600)</td><td>Yes — no EDR headroom</td><td><strong>Works</strong></td></tr>
+          <tr><td>Internet &amp; Web (sRGB)</td><td>Yes</td><td><strong>Locked</strong></td></tr>
+        </table></div>
+        <p class="prose">The obvious "safe" choice — sRGB — is a <em>reference</em> preset: it pins the panel to a fixed calibrated nit level and <strong>greys out the brightness slider entirely</strong>. So your choices look like "burns" or "bright and stuck." For someone who needs it <em>dark</em>, both are wrong.</p>
+
+        <h2 class="spec-head">Into the private APIs</h2>
+        <p class="prose">I wanted to know what actually controls this, so I pulled the display frameworks apart. On Apple Silicon the symbols live inside the dyld shared cache, not on disk:</p>
+        <pre><code>dyld_info -exports /System/Library/Frameworks/CoreDisplay.framework/CoreDisplay \
+  | grep -iE 'HDR|Bright|Preset|Headroom'</code></pre>
+        <p class="prose">That surfaced the whole hidden control surface — <code>CoreDisplay_Display_SetActivePresetIndex</code>, <code>CoreDisplay_Display_SetHDRModeEnabled</code>, <code>DisplayServicesSetBrightness</code>, <code>GetCurrentHeadroom</code>. I wrote tiny C probes and tested each one on my own panel. Two findings decided the design:</p>
+        <ul class="prose">
+          <li><strong>Brightness works — until it doesn't.</strong> <code>DisplayServicesSetBrightness</code> happily drove my backlight 42% → 20% on the P3-600 preset. Switch to the <em>sRGB reference</em> preset and the same call is pinned at 1.0 — it won't move. So the slider lock isn't a UI nicety; it's enforced deep enough that even the private API can't bypass it.</li>
+          <li><strong>Gamma is the escape hatch.</strong> The <em>public</em> <code>CGSetDisplayTransferByFormula</code> scales the display's transfer function directly — it dims uniformly, on any preset, and keeps going <em>below</em> the backlight's hardware floor. No private symbol, nothing to break on an OS update.</li>
+        </ul>
+        <p class="prose">So the recipe wrote itself: kill the burn by switching to a <em>non-reference</em> non-HDR preset (P3-600, which stays adjustable), and handle "darker than macOS allows" with a gamma dim on top.</p>
+
+        <h2 class="spec-head">GlareBar</h2>
+        <p class="prose">I packaged it the same way as <a href="/blog/awakebar/">AwakeBar</a> — a ~150-line Swift menu-bar app, no dependencies, one <code>install.sh</code>. Two controls that map exactly to the two findings:</p>
+        <ul class="prose">
+          <li><strong>Kill the burn</strong> — flips the built-in display to the non-HDR P3-600 preset. Chosen by the preset's real flags (<code>PresetST2084Capable</code>, <code>PresetUIReferencePreset</code>), not a hard-coded index, so it's right on any machine. HDR/superwhite content can no longer out-shine the UI.</li>
+          <li><strong>Glare slider</strong> — a software gamma dim from 100% down to 15%, taking the whole screen below its hardware minimum. This is the part macOS refuses to give you under a burn-free preset.</li>
+          <li><strong>Full HDR</strong> — puts the XDR preset back when you actually want the range.</li>
+        </ul>
+        <p class="prose">It ships ad-hoc signed, launches at login, and leaves no daemon or root privileges behind. The whole thing is auditable in a couple of minutes.</p>
+
+        <h2 class="spec-head">Install</h2>
+        <pre><code>git clone https://github.com/tatarco/glarebar.git
+cd glarebar
+./install.sh    # builds, installs to ~/Applications, launch-at-login</code></pre>
+        <p class="prose">Requires the Xcode Command Line Tools (<code>xcode-select --install</code>) — no Xcode, no package manager. A sun icon appears in your menu bar; click it, kill the burn, drag the glare down to whatever your eyes can take.</p>
+
+        <div class="snap"><strong>The honest limit.</strong> This fixes <em>your</em> screen, not the internet. The glowing logos are still out there burning on every other XDR panel that hasn't turned HDR off. The real fix is upstream — platforms clamping superwhite in feeds (Slack already did). Until then, GlareBar is a personal off switch, not a cure.</p></div>
+
+        <h2 class="spec-head">The two halves of the story</h2>
+        <p class="prose">One post to build the glow, one to turn it off. The first was about noticing a clever exploit of human attention; this one is about the person on the other end of that exploit who just wanted it to stop. Both took about a day. The tools are open source so neither of us has to spend that day again.</p>
+
+        <div class="cta">
+          <h3>Get GlareBar</h3>
+          <p class="prose" style="margin-bottom:.4rem">Open source (MIT), Swift, zero dependencies. One command:</p>
+          <pre style="margin-bottom:0"><code>git clone https://github.com/tatarco/glarebar.git
+cd glarebar && ./install.sh</code></pre>
+          <div class="link-row">
+            <a href="https://github.com/tatarco/glarebar">GitHub repo ↗</a><span class="sep">·</span>
+            <a href="/blog/hdr-glow-logo/">Part 1 — how the glow works</a><span class="sep">·</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
