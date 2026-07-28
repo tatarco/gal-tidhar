@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I almost paid to talk to my own laptop · Gal Tidhar</title>
+  <meta name="description" content="I was told 'Whisper is expensive' and nearly bought a dictation app. The transcription was free the whole time - running on my own machine. A field note on on-device speech-to-text, the open-source-that-isn't-free trap, and the free tool I actually kept.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/free-dictation/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="I almost paid to talk to my own laptop">
+  <meta property="og:description" content="I was told 'Whisper is expensive' and nearly bought a dictation app. The model was free the whole time, running on my own machine. You were about to rent the wrapper.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/free-dictation/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/free-dictation/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A microphone waveform resolving into text, with the price falling from $15 a month to $0 a month, on a dark terminal grid">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="I almost paid to talk to my own laptop">
+  <meta name="twitter:description" content="Told 'Whisper is expensive', nearly bought a dictation app. The model was free the whole time. You were about to rent the wrapper.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/free-dictation/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "I almost paid to talk to my own laptop",
+    "description": "I was told 'Whisper is expensive' and nearly bought a dictation app. The transcription was free the whole time, running on my own machine. A field note on on-device speech-to-text and the open-source-that-isn't-free trap.",
+    "image": "https://gal.tidhar.org.il/blog/free-dictation/og.png",
+    "datePublished": "2026-07-28",
+    "dateModified": "2026-07-28",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/free-dictation/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "speech to text, dictation, Whisper, Handy, on-device AI, local models, open source, Parakeet, macOS"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="https://github.com/cjpais/Handy">Handy ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / TOOLS</span>
+          <p class="role-line">on-device speech-to-text · Handy · Whisper</p>
+          <h1 class="title">I almost paid to talk to my own laptop</h1>
+          <p class="meta-line"><strong>2026-07-28</strong> &nbsp;·&nbsp; ~5 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">Someone told me <strong>"Whisper is expensive"</strong>, and I nearly did the obvious thing: go buy a dictation app. I got one keystroke away from a subscription before I noticed the trick I'd fallen for. The transcription was <strong>free the whole time</strong> - it had been running on my own machine for months. What I almost paid for was the wrapper around it.</p>
+        </header>
+
+        <figure>
+          <img src="og.png" alt="A microphone waveform resolving into typed text, with the monthly price dropping from fifteen dollars to zero, on a dark terminal grid" loading="lazy">
+          <figcaption>The whole post in one image: the model was never the meter. The subscription was.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The sentence that almost cost me a subscription</h2>
+        <p class="prose">"Whisper is expensive." It's the kind of line that sounds true, so you act on it. And the reflex - mine, anyway - is to reach for a nicely-packaged app with a hotkey and a menu-bar icon that turns speech into text. There are good ones. Most of them cost <strong>twelve to fifteen dollars a month</strong>, forever, to do a thing your computer can already do.</p>
+        <p class="prose">Here's the part I'd forgotten while nodding along: there are <strong>three different "Whispers"</strong>, and only some of them cost anything.</p>
+        <ul class="prose">
+          <li>The <strong>OpenAI Whisper API</strong> - cloud, about <code>$0.006/min</code>. Real money at volume.</li>
+          <li>A <strong>paid dictation app</strong> (Wispr Flow, superwhisper, and friends) - a monthly subscription for the convenience layer.</li>
+          <li><strong>whisper.cpp</strong> running locally - <code>$0</code>. Just your CPU.</li>
+        </ul>
+        <p class="prose">I was already running the third one. My Instagram-to-ideas pipeline transcribes reels with a local <code>whisper-cli</code> and a model file sitting on disk - no API, no bill, it's been humming along for weeks. "Whisper is expensive" was never about Whisper. It was about the app.</p>
+
+        <h2 class="spec-head">The bait: "open source" that isn't free</h2>
+        <p class="prose">So I went looking for a free one, and walked straight into the second trap. I installed a well-known, <strong>"open-source"</strong> dictation app - 5,700 stars, GPLv3, the works. Felt safe. Then it opened onto a <strong>"Buy License"</strong> screen: activate a key, or start a 7-day trial.</p>
+        <p class="prose">Both things are true at once, and that's the sleight of hand. The <em>source</em> is open - you're free to clone it and build it yourself with Xcode. The <em>compiled app you actually download</em> is a paid product. "Open source" told me nothing about whether the thing in my Applications folder was free. It wasn't.</p>
+        <div class="snap"><strong>The lesson, filed:</strong> open-source ≠ free-to-use. Check whether the <em>compiled build</em> is paywalled, not just the licence on the repo.</div>
+
+        <h2 class="spec-head">The part everyone gets backwards</h2>
+        <p class="prose">Step back and the whole category looks strange. Speech-to-text has two pieces: <strong>the model</strong> that turns sound into words, and <strong>the plumbing</strong> - a global hotkey, capturing the mic, typing the result into whatever app has focus. The model is the hard, magical part. The plumbing is a weekend project.</p>
+        <p class="prose">And the model is exactly the part that quietly went free. On-device speech models crossed the "good enough, and fast" line a while ago and nobody sent a memo. So the subscriptions are, increasingly, charging rent on the <em>easy</em> half - the hotkey and the polish - while the hard half runs for nothing on the laptop you already own.</p>
+        <blockquote>You were never paying for the intelligence. You were paying for the wrapper around it.</blockquote>
+
+        <h2 class="spec-head">What I actually kept</h2>
+        <p class="prose">The tool that ended the search is <strong>Handy</strong> - <code>cjpais/Handy</code>, 27,000+ stars, <strong>MIT</strong>, and free in the way that actually matters: the app you install costs nothing, forever. Its own homepage says the quiet part out loud - <em>"accessibility tooling belongs in everyone's hands, not behind a paywall."</em> It runs <strong>100% offline</strong>: your voice never leaves the machine.</p>
+        <pre><code>brew install --cask handy</code></pre>
+        <p class="prose">On first launch it asks which transcription model to download. There's a menu of them; for English dictation the pick is easy:</p>
+        <div class="spec-table-wrap"><table class="spec-table">
+          <tr><th>Model</th><th>Why</th><th>Size</th></tr>
+          <tr><td><strong>Parakeet EN 0.6B</strong></td><td>Fast + accurate + streaming. The daily driver for English.</td><td>697 MB</td></tr>
+          <tr><td>Whisper Medium</td><td>99 languages (incl. Hebrew), but slower - add it only if you need it.</td><td>793 MB</td></tr>
+          <tr><td>Canary 180M</td><td>Tiny and instant, lower accuracy - for weak hardware.</td><td>208 MB</td></tr>
+        </table></div>
+        <p class="prose">Grant it <strong>Microphone</strong> and <strong>Accessibility</strong> (that second one is what lets it type into any app), bind a hotkey, and that's the whole setup. Hold the key, talk, release - text appears where your cursor is. No account, no key, no cloud, no meter.</p>
+
+        <h2 class="spec-head">The general lesson, if you want one</h2>
+        <p class="prose">Every so often a capability that used to be a product quietly becomes a <em>feature of your hardware</em> - and the market keeps selling it for a while out of momentum. Transcription is there now. The tell is simple: when a subscription's core magic runs perfectly well offline, on your own silicon, you're not paying for the magic anymore. You're paying for someone else's hotkey.</p>
+        <p class="prose">So before you subscribe to something that turns your voice into text, your face into a login, your notes into a summary - ask which half you're actually renting. Often the expensive-sounding half is already sitting on your disk, free, waiting for a nine-line hotkey. <strong>Drive the model you own; pay only for the parts you genuinely can't run yourself.</strong></p>
+        <p class="prose">I deleted the paid one. I'm dictating this sentence into the free one.</p>
+
+        <div class="cta">
+          <h3>Take it</h3>
+          <p class="prose" style="margin-bottom:.4rem">MIT, 100% offline, free-to-use for real. One command:</p>
+          <pre style="margin-bottom:0"><code>brew install --cask handy
+# open it, download Parakeet EN 0.6B, grant Mic + Accessibility, set a hotkey.</code></pre>
+          <div class="link-row">
+            <a href="https://github.com/cjpais/Handy">Handy on GitHub ↗</a><span class="sep">·</span>
+            <a href="https://handy.computer/">handy.computer ↗</a><span class="sep">·</span>
+            <a href="/blog/gmail-skill/">Another field note</a><span class="sep">·</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
