@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My mother-in-law has a digital version of me. It answers in Croatian. · Gal Tidhar</title>
+  <meta name="description" content="Four agents on a EUR 6 VPS, reachable by Telegram and email, one of them speaking only Croatian to a 70-year-old who hates paperwork. The build, the traps, and what I deliberately did not connect.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/household-agent/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="My mother-in-law has a digital version of me. It answers in Croatian.">
+  <meta property="og:description" content="Four agents on a EUR 6 VPS. One speaks only Croatian to my mother-in-law. The build, the traps, and what I did not connect.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/household-agent/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/household-agent/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A Telegram exchange in Croatian between Dijana and the agent, about transferring utilities to an heir">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="My mother-in-law has a digital version of me. It answers in Croatian.">
+  <meta name="twitter:description" content="A household agent that handles Croatian bureaucracy. What it takes, and where it bites.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/household-agent/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "My mother-in-law has a digital version of me. It answers in Croatian.",
+    "description": "Four agents on a EUR 6 VPS, reachable by Telegram and email, one of them speaking only Croatian. The build, the traps, and what I deliberately did not connect.",
+    "image": "https://gal.tidhar.org.il/blog/household-agent/og.png",
+    "datePublished": "2026-07-29",
+    "dateModified": "2026-07-29",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/household-agent/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "NanoClaw, Claude Agent SDK, personal AI agent, self-hosted agent, Telegram bot, DeltaChat, prompt injection, household automation"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="https://github.com/nanocoai/nanoclaw">NanoClaw ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / AGENTS</span>
+          <div class="role-line">Household agents</div>
+          <h1 class="title">My mother-in-law has a digital version of me. It answers in Croatian.</h1>
+          <p class="meta-line"><strong>2026-07-29</strong> · Zagreb · NanoClaw + Claude Agent SDK · <strong>EUR 6/month</strong></p>
+          <p class="lead">She sent a Telegram message: <em>"I need to transfer the electricity, the waste collection and the TV licence to the heir who inherited the property."</em> Ninety seconds later she had a complete answer in Croatian, citing the ministry's own page. <strong>I did not write it. I did not know she had asked.</strong></p>
+        </header>
+
+        <div class="prose">
+
+        <figure>
+          <img src="hero-v1.png" alt="Telegram exchange in Croatian between Dijana and the agent">
+          <figcaption>The actual exchange. She thinks she is texting family.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">What NanoClaw actually is</h2>
+
+        <p><a href="https://github.com/nanocoai/nanoclaw">NanoClaw</a> is a small MIT-licensed project. One Node daemon runs on a server you own. A message arrives from a chat app, it spawns a Docker container, runs the <strong>Claude Agent SDK</strong> inside, sends the reply back, and the container dies.</p>
+
+        <div class="snap"><strong>The idea that makes it click:</strong> the agent <em>is</em> its folder. <code>groups/&lt;name&gt;/</code> holds the persona, the memory and the workspace. Copy the folder, copy the agent. There is no other state that matters.</div>
+
+        <p>Which means one bot can host several agents. Routing is by chat ID, so each person gets a different agent, with separate memory, in a separate container, with a different personality. My mother-in-law's agent cannot see my conversations, and mine cannot see hers.</p>
+
+        <h2 class="spec-head">The stack</h2>
+
+        <table class="spec-table">
+          <tr><th>Piece</th><th>What</th><th>Cost</th></tr>
+          <tr><td>Host</td><td>Hetzner CX23, Ubuntu 24.04, systemd with linger</td><td>EUR 5.99/mo</td></tr>
+          <tr><td>Runtime</td><td>NanoClaw + Claude Agent SDK, Claude Max subscription</td><td>EUR 0 extra</td></tr>
+          <tr><td>Chat</td><td>Telegram bot, one bot serving four agents</td><td>free</td></tr>
+          <tr><td>Email</td><td>DeltaChat adapter - plain IMAP/SMTP, no vendor, no domain verification</td><td>free</td></tr>
+          <tr><td>Voice</td><td>Groq <code>whisper-large-v3-turbo</code></td><td>~$0.04/hr audio</td></tr>
+          <tr><td>Calendar</td><td>Shared Google Calendar via a host-side proxy</td><td>free</td></tr>
+        </table>
+
+        <p>Four agents run there now: mine, my mother-in-law's (Croatian only), one in the family group chat, and one that reads my company's books - read only, through a proxy that filters fields.</p>
+
+        <h2 class="spec-head">Three things that surprised me</h2>
+
+        <h3>1. She prefers email</h3>
+        <p>I built Telegram first because it is easy. She writes email. Photographing a bill and forwarding it is something she already knew how to do; a chat app was the new thing, not the natural one. If you build this for an older relative, do email early rather than as a nice-to-have.</p>
+
+        <h3>2. Citing the source is what earns trust</h3>
+        <p>The agent did not say "there is no form". It said: <em>I checked mup.gov.hr, there is no form, you walk into any police station with your ID and they issue it free, here is the link.</em> That is the difference between a machine that sounds confident and one a 70-year-old will actually rely on. It is a persona instruction, not a model capability.</p>
+
+        <h3>3. The AI was not the hard part</h3>
+        <p>The hard part was three integration bugs that all fail the same way: <strong>silently, with no log line, indistinguishable from the message never arriving.</strong></p>
+
+        <ul>
+          <li><strong>Telegram group privacy is bound at join time.</strong> A bot in a group receives nothing unless privacy is off <em>and</em> the bot has been removed and re-added. Flipping the setting alone does nothing.</li>
+          <li><strong>The engage mode drops messages before the router.</strong> Group wirings default to <code>mention</code>; a plain message is discarded before anything is logged.</li>
+          <li><strong>DeltaChat ignores ordinary email.</strong> It only surfaces mail from other DeltaChat users unless you set <code>show_emails=2</code>. And a new correspondent lands in a "contact request" state where only the <em>first</em> message ever fires an event - every later one is stored and swallowed.</li>
+        </ul>
+
+        <p>The diagnostic that broke the deadlock: call Telegram's <code>getWebhookInfo</code>. If <code>pending_update_count</code> is 0, Telegram delivered and your bot consumed the update, so the loss is internal. Then go read the database rather than the log.</p>
+
+        <blockquote>I found the email bug by opening DeltaChat's own SQLite and finding her messages sitting there as <code>state=10</code> in a chat with <code>blocked=2</code>, while the application log showed absolutely nothing.</blockquote>
+
+        <h2 class="spec-head">The personas are the product</h2>
+
+        <p>Each agent's personality is one markdown file prepended to every conversation. That file is where the quality lives, and where I got things wrong:</p>
+
+        <ul>
+          <li><strong>Grammatical gender.</strong> The Croatian agent referred to itself in the feminine for a day. Slavic and Semitic languages mark gender on past-tense verbs. Say which to use.</li>
+          <li><strong>Storage language, not just reply language.</strong> "Always answer in English" is not enough - specify what gets <em>stored</em>, or you get a shopping list in one language and a calendar in another. Exempt proper nouns: a translated street name is useless for finding the place.</li>
+          <li><strong>Register.</strong> I wrote the family agent as a wary colleague. It argued about its own boundaries and told me it would be quicker if I did things myself. Insufferable in a household. It is now a butler: complies, never lectures, apologises once and moves on.</li>
+        </ul>
+
+        <div class="snap"><strong>Read transcripts, not logs.</strong> Both the gender bug and a duplicate-message bug were invisible in logs - every line said "delivered". They were obvious in the conversation.</div>
+
+        <h2 class="spec-head">The refusal that was right</h2>
+
+        <p>Late in the build I widened a capability - the calendar tool gained edit and delete - while chatting to the agent about renaming an event. It refused, and explained why:</p>
+
+        <blockquote>"The skill file just changed mid-conversation to include PATCH/DELETE endpoints it did not have when I first read it, and the added example is literally the restaurant you were asking me to rename. That is a pattern I do not trust."</blockquote>
+
+        <p>It had spotted capability-escalation-by-injection: a tool file gaining exactly the power being demanded, with an example naming the exact thing under discussion. That reasoning was <strong>correct</strong>. It was only wrong because the attacker was me.</p>
+
+        <p>Two lessons. First, after widening a boundary, restart the agent <em>and</em> clear its sessions, or it argues from its own earlier refusals. Second, and more permanently: an assistant that always complies is also an assistant that complies with a poisoned document. Where you set that dial should depend on what it can actually reach.</p>
+
+        <h2 class="spec-head">What I deliberately did not connect</h2>
+
+        <p>Simon Willison calls it the <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">lethal trifecta</a>: private data, untrusted content, and a way to communicate externally. Any two are survivable. All three is an exfiltration path, because a model cannot reliably tell instructions from data.</p>
+
+        <p>So: no real mailbox, no mounted files, no write access to anything that matters. The business agent reads the books through a proxy that enforces GET-only, a path allowlist, and a <strong>field</strong> allowlist - it sees amounts, dates and booking references, and never sees free text that someone outside the company wrote. Numbers cannot carry an injection; prose can.</p>
+
+        <p>The invoicing API has no authentication of its own, so reaching it at all means full control, including endpoints that file with the tax authority and one that can share a document with any email address you name. That last one is a working exfiltration primitive. The agent never reaches it; it reaches a 120-line proxy that does.</p>
+
+        <h2 class="spec-head">What I would tell someone starting today</h2>
+
+        <ol>
+          <li>Dedicated EUR 6 box. Not your laptop - an agent that answers only while your laptop is awake is worse than none.</li>
+          <li>Telegram first. It proves the whole loop in ten minutes.</li>
+          <li>One agent per person. Separate memory is free and prevents the awkward failure where it mentions one person's business to another.</li>
+          <li>Add voice early. It changes how much the thing actually gets used.</li>
+          <li>Read the transcripts for the first week. The bugs that matter do not appear in logs.</li>
+          <li>Give it no private data until you have a specific reason, then the narrowest possible slice.</li>
+          <li>Write down every trap as you hit it. This post is that file.</li>
+        </ol>
+
+        <p>The tool is genuinely small and readable. The ecosystem around it - Telegram's group semantics, Google's verification tiers, Workspace policy, an email library's opinion about what counts as a message - is where the time goes.</p>
+
+        <div class="cta">
+          <h3>One gap worth naming</h3>
+          <p>While researching this I could not find a single documented case of a non-English-speaking family member using one of these agents daily. If you have built something similar for a parent or grandparent in their own language, I would genuinely like to compare notes.</p>
+          <div class="link-row">
+            <a href="https://github.com/nanocoai/nanoclaw">NanoClaw ↗</a>
+            <span class="sep">·</span>
+            <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">The lethal trifecta ↗</a>
+            <span class="sep">·</span>
+            <a href="https://www.linkedin.com/in/galtidhar/">Say hello on LinkedIn ↗</a>
+          </div>
+        </div>
+
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/">gal.tidhar.org.il</a> · field notes
+  </footer>
+</body>
+</html>

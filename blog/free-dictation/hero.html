@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+  @font-face{font-family:'Plex';src:url('/fonts/ibm-plex-mono-600.woff2') format('woff2');font-weight:600;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{
+    background:#0a1628; color:#bae6fd;
+    font-family:'Plex','SF Mono',Menlo,monospace;
+    background-image:linear-gradient(rgba(125,211,252,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(125,211,252,.07) 1px,transparent 1px);
+    background-size:32px 32px;
+    display:flex;flex-direction:column;justify-content:center;padding:64px 72px;position:relative;
+  }
+  .rev{position:absolute;top:40px;right:56px;font-size:15px;letter-spacing:.28em;color:rgba(186,230,253,.45);text-transform:uppercase}
+  .top{position:absolute;top:38px;left:60px;font-size:16px;letter-spacing:.22em;color:#7dd3fc;text-transform:uppercase}
+  /* waveform */
+  .wave{display:flex;align-items:center;gap:7px;height:64px;margin-bottom:26px}
+  .wave i{width:8px;background:#7dd3fc;border-radius:4px;display:block;box-shadow:0 0 14px rgba(125,211,252,.55)}
+  .arrow{color:#fef08a;font-size:34px;margin:0 20px}
+  .totext{font-size:34px;color:#e0f2fe;letter-spacing:.02em;border-bottom:2px solid #7dd3fc;padding-bottom:2px}
+  .headline{font-size:62px;line-height:1.06;color:#e0f2fe;font-weight:600;letter-spacing:.01em;margin:6px 0 30px;max-width:16ch}
+  .headline b{color:#7dd3fc}
+  .price{display:flex;align-items:baseline;gap:30px}
+  .was{font-size:56px;color:rgba(186,230,253,.42);text-decoration:line-through;text-decoration-color:#f87171;text-decoration-thickness:5px}
+  .to{font-size:34px;color:#fef08a}
+  .now{font-size:104px;font-weight:600;color:#7dd3fc;line-height:1;text-shadow:0 0 30px rgba(125,211,252,.45)}
+  .now span{font-size:30px;color:#e0f2fe;white-space:nowrap}
+  .price{white-space:nowrap}
+  .foot{position:absolute;bottom:40px;left:72px;right:72px;display:flex;justify-content:space-between;align-items:center;font-size:20px;color:rgba(186,230,253,.6);letter-spacing:.04em}
+  .foot b{color:#e0f2fe}
+  .tag{border:1px solid rgba(125,211,252,.45);padding:6px 14px;color:#7dd3fc;font-size:16px;letter-spacing:.08em}
+</style></head><body>
+  <div class="top">Field note · on-device speech-to-text</div>
+  <div class="rev">gal.tidhar.org.il</div>
+
+  <div class="wave" id="wave"></div>
+  <div class="headline">I almost paid to <b>talk to my own laptop</b>.</div>
+
+  <div class="price">
+    <span class="was">$15/mo</span>
+    <span class="to">→</span>
+    <span class="now">$0<span> /mo · offline · open source</span></span>
+  </div>
+
+  <div class="foot">
+    <span>speak <span style="color:#fef08a">→</span> type · runs on your machine · <b>Handy · MIT</b></span>
+    <span class="tag">whisper, for free</span>
+  </div>
+
+  <script>
+    // build a mic waveform that then "flattens into a text line" on the right
+    var w=document.getElementById('wave'); var hs=[18,34,50,28,60,40,22,54,36,64,30,46,20,38,58,26,44,32];
+    hs.forEach(function(h){var i=document.createElement('i');i.style.height=h+'px';w.appendChild(i);});
+    var a=document.createElement('span');a.className='arrow';a.textContent='→';w.appendChild(a);
+    var t=document.createElement('span');t.className='totext';t.textContent='"…and it just types."';w.appendChild(t);
+  </script>
+</body></html>
