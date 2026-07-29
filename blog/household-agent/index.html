@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My mother-in-law has a digital version of me. It answers in Croatian. · Gal Tidhar</title>
-  <meta name="description" content="Four agents on a EUR 6 VPS, reachable by Telegram and email, one of them speaking only Croatian to a 70-year-old who hates paperwork. The build, the traps, and what I deliberately did not connect.">
+  <meta name="description" content="Four agents on a EUR 6 VPS, reachable by Telegram and email, one of them speaking only Croatian for a relative who would rather not deal with paperwork. The build, the traps, and what I deliberately did not connect.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/household-agent/">
   <meta name="theme-color" content="#0a1628">
@@ -12,12 +12,12 @@
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
   <meta property="og:title" content="My mother-in-law has a digital version of me. It answers in Croatian.">
-  <meta property="og:description" content="Four agents on a EUR 6 VPS. One speaks only Croatian to my mother-in-law. The build, the traps, and what I did not connect.">
+  <meta property="og:description" content="Four agents on a EUR 6 VPS. One speaks only Croatian. The build, the traps, and what I did not connect.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/household-agent/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/household-agent/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="A Telegram exchange in Croatian between Dijana and the agent, about transferring utilities to an heir">
+  <meta property="og:image:alt" content="A Telegram exchange in Croatian: a question about a civic document, answered with a cited source">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="My mother-in-law has a digital version of me. It answers in Croatian.">
   <meta name="twitter:description" content="A household agent that handles Croatian bureaucracy. What it takes, and where it bites.">
@@ -121,14 +121,14 @@
           <div class="role-line">Household agents</div>
           <h1 class="title">My mother-in-law has a digital version of me. It answers in Croatian.</h1>
           <p class="meta-line"><strong>2026-07-29</strong> · Zagreb · NanoClaw + Claude Agent SDK · <strong>EUR 6/month</strong></p>
-          <p class="lead">She sent a Telegram message: <em>"I need to transfer the electricity, the waste collection and the TV licence to the heir who inherited the property."</em> Ninety seconds later she had a complete answer in Croatian, citing the ministry's own page. <strong>I did not write it. I did not know she had asked.</strong></p>
+          <p class="lead">She sent a Telegram message asking how to get a document she needed from a government office. Ninety seconds later she had a complete answer in Croatian, citing the ministry's own page - including the fact that no form exists and it costs nothing. <strong>I did not write it. I did not know she had asked.</strong></p>
         </header>
 
         <div class="prose">
 
         <figure>
-          <img src="hero-v1.png" alt="Telegram exchange in Croatian between Dijana and the agent">
-          <figcaption>The actual exchange. She thinks she is texting family.</figcaption>
+          <img src="hero-v1.png" alt="Telegram exchange in Croatian: a question about a civic document, answered with a cited source">
+          <figcaption>A typical exchange. Question in Croatian, answer in Croatian, source cited.</figcaption>
         </figure>
 
         <h2 class="spec-head">What NanoClaw actually is</h2>
@@ -159,7 +159,7 @@
         <p>I built Telegram first because it is easy. She writes email. Photographing a bill and forwarding it is something she already knew how to do; a chat app was the new thing, not the natural one. If you build this for an older relative, do email early rather than as a nice-to-have.</p>
 
         <h3>2. Citing the source is what earns trust</h3>
-        <p>The agent did not say "there is no form". It said: <em>I checked mup.gov.hr, there is no form, you walk into any police station with your ID and they issue it free, here is the link.</em> That is the difference between a machine that sounds confident and one a 70-year-old will actually rely on. It is a persona instruction, not a model capability.</p>
+        <p>The agent did not say "there is no form". It said: <em>I checked mup.gov.hr, there is no form, you walk into any police station with your ID and they issue it free, here is the link.</em> That is the difference between a machine that sounds confident and one someone will actually rely on. It is a persona instruction, not a model capability.</p>
 
         <h3>3. The AI was not the hard part</h3>
         <p>The hard part was three integration bugs that all fail the same way: <strong>silently, with no log line, indistinguishable from the message never arriving.</strong></p>
