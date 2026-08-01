@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I stopped giving my agent my browser · Gal Tidhar</title>
+  <meta name="description" content="Browser automation gives you two bad options: an extension that steals your Chrome, or a headless browser with no logins. ego lite gives the agent its own isolated task space that inherits your login state - plus a control model where the user always wins.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/agent-browser/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="I stopped giving my agent my browser">
+  <meta property="og:description" content="An extension that steals your Chrome, or a headless browser with no logins. There is a third option: give the agent its own task space that inherits your logins - and a control model where the user always wins.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/agent-browser/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/agent-browser/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Chrome + extension versus an isolated agent task space">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="I stopped giving my agent my browser">
+  <meta name="twitter:description" content="Give the agent its own task space that inherits your logins - and a control model where the user always wins.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/agent-browser/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "I stopped giving my agent my browser",
+    "description": "Browser automation gives you two bad options: an extension that steals your Chrome, or a headless browser with no logins. ego lite gives the agent its own isolated task space that inherits your login state.",
+    "image": "https://gal.tidhar.org.il/blog/agent-browser/og.png",
+    "datePublished": "2026-08-02",
+    "dateModified": "2026-08-02",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/agent-browser/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "ego lite, browser automation, AI agents, Playwright, Chrome extension, Claude Code, task space, CDP"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="https://lite.ego.app/">ego lite ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / AGENTS</span>
+          <p class="role-line">Browser automation · Agents · DX</p>
+          <h1 class="title">I stopped giving my agent my browser</h1>
+          <p class="meta-line"><strong>2026-08-02</strong> &nbsp;·&nbsp; ~7 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">Every browser-automation setup I tried made me pick between two bad options: an extension that <strong>takes over my Chrome</strong> while I sit and watch, or a headless browser that is <strong>logged into nothing</strong>. ego lite takes a third path - the agent gets its own isolated task space that inherits my login state, and a control model where the user always wins the fight over the wheel.</p>
+        </header>
+
+        <figure>
+          <img src="og.png" alt="Chrome plus extension versus an isolated agent task space" loading="lazy">
+          <figcaption>The trade you normally make - and the one you do not have to.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The two bad options</h2>
+        <p class="prose"><strong>Option A - the extension.</strong> You install a browser extension, the agent drives your actual Chrome window. It works, and it is miserable: the agent has your mouse, so you have your hands off the keyboard for the whole run. It is your daily-driver browser, with your tabs, your session, your half-written email. If it misclicks, it misclicks in your real account. And you cannot do anything else in the browser while it runs, which is exactly the ten minutes you wanted back.</p>
+        <p class="prose"><strong>Option B - headless Playwright/Puppeteer.</strong> Clean, scriptable, fast, and signed into absolutely nothing. Every useful task starts behind a login, so you spend the first half hour of every automation project shipping cookies into a throwaway profile, wiring a storage-state file, or figuring out how to get a 2FA code into a browser that has no human attached to it. The automation is easy. The <em>authentication</em> is the project.</p>
+        <p class="prose">Both problems are the same problem stated twice: <strong>browsers were designed for exactly one driver.</strong> Either the agent gets it or you do.</p>
+
+        <h2 class="spec-head">The idea: a task space</h2>
+        <p class="prose"><a href="https://lite.ego.app/">ego lite</a> (Citro Labs) is a Chromium browser built for two drivers. The primitive is a <strong>task space</strong>: an isolated browsing context with its own set of tabs, that <strong>inherits the current user's login state</strong> by default.</p>
+        <p class="prose">That one sentence does most of the work:</p>
+        <ul class="prose">
+          <li><strong>Own tabs</strong> - the agent's pages never appear in, or disturb, your windows. You keep browsing while it works.</li>
+          <li><strong>Inherited login</strong> - it opens Gmail, GitHub, a client's admin panel, already signed in. You hand over no password and copy no cookie jar.</li>
+          <li><strong>Named and resumable</strong> - a task space has a name and an id, so a task that takes ten rounds of scripting keeps the same tabs and the same state across all of them.</li>
+        </ul>
+        <p class="prose">It also imports multiple browser profiles, each with its own cookies - useful, and the first sharp edge (see the traps below).</p>
+
+        <h2 class="spec-head">The interface is a Node runtime, not a tool call per click</h2>
+        <p class="prose">This is the part I underestimated. Most agent-browser integrations expose one tool call per action: click, screenshot, read, type. Each one is a full model round-trip. Twenty interactions is twenty round-trips, and the transcript fills with screenshots.</p>
+        <p class="prose">ego lite gives the agent a <strong>CLI-accessible Node runtime</strong> instead. The agent writes a real script - loops, conditionals, extraction logic - and runs it in one shot:</p>
+        <pre><code>ego-browser nodejs &lt;&lt;'EOF'
+const task = await useOrCreateTaskSpace('collect open issues')
+await openOrReuseTab('https://github.com/org/repo/issues', { wait: true })
+
+// one browser-side pass, one return value
+const issues = await js(String.raw`(() =&gt; {
+  return [...document.querySelectorAll('[data-testid=issue-row]')]
+    .map(el =&gt; ({ title: el.innerText, href: el.querySelector('a').href }))
+})()`)
+
+cliLog(JSON.stringify(issues, null, 2))
+EOF</code></pre>
+        <p class="prose">One round-trip instead of twenty. Dramatically fewer tokens, dramatically faster, and - the underrated part - <strong>you can read exactly what it did</strong>, because it is a script, not a sequence of opaque clicks.</p>
+        <p class="prose">The helper surface is what you would want: <code>snapshotText()</code> for a semantic tree with stable refs, <code>click</code> / <code>fillInput</code> / <code>pressKey</code>, <code>captureScreenshot()</code> for canvas-like apps where the DOM lies (Google Docs, Figma, spreadsheets), and raw <code>cdp()</code> when nothing else fits.</p>
+
+        <h2 class="spec-head">The part that actually surprised me: the control model</h2>
+        <p class="prose">Every task space has an owner, and <strong>only one side holds the wheel at a time</strong>. That sounds like bookkeeping. It is the whole trust story.</p>
+        <p class="prose">When the agent hits something only a human can pass - a captcha, a 2FA prompt, a payment confirmation - it does not flail or guess. It calls <code>handOffTaskSpace()</code>, control moves to me, and it tells me exactly what to do. I solve it, I say "continue", and it calls <code>takeOverTaskSpace()</code> and picks up where it stopped, in the same tabs.</p>
+        <p class="prose">The inverse is the important half. If I decide mid-run that it is going the wrong way and grab control back through the GUI, <strong>every agent operation fails with "user is controlling"</strong> - and it is not allowed to take control back on its own. In the skill's own words, that error is a hard stop on the whole task, not an obstacle to route around:</p>
+        <blockquote>It means the user has deliberately taken the browser back, often because your current approach is going wrong. Honoring it <em>is</em> the correct outcome here; pushing the goal forward anyway is the failure.</blockquote>
+        <p class="prose">A normal extension has no such boundary: the agent can always click again. This is the first browser-automation setup where the stop button is part of the protocol rather than a hope, and it is the only reason I am comfortable pointing an agent at things that matter.</p>
+
+        <h2 class="spec-head">It learns sites</h2>
+        <p class="prose">The skill keeps a <code>learnings/</code> directory - a folder per site, with notes on page structure and selectors, plus reusable scripts. Mine has picked up GitHub, Google and X so far. A note is unglamorous and exactly right:</p>
+        <pre><code># X (Twitter) Overview
+- Tweet items: [data-testid="tweet"]
+- Tweet text:  [data-testid="tweetText"]
+- Timeline is virtualized: DOM renders visible articles + buffer
+- Pinned post is the first [data-testid="tweet"] - skip it only at top</code></pre>
+        <p class="prose">The second time it visits a site it stops probing and just acts. Over weeks, the automation gets cheaper on sites you use often - which are, of course, exactly the ones you automate.</p>
+
+        <h2 class="spec-head">The traps</h2>
+        <ol class="prose">
+          <li><strong>Profile roulette.</strong> If you imported several browser profiles, the default connection does <em>not</em> reliably pick the one you meant - and a wrong profile means wrong logins and a whole run wasted. Verify identity first (open a signed-in account page and read the email back) before doing anything real. <code>ego-browser import list</code> prints the profile↔email map.</li>
+          <li><strong>Rich editors lie in the DOM.</strong> Google Docs, Sheets, Notion, Figma expose toolbars, hidden textareas and offscreen iframes that are not the document. Do a tiny write probe and verify with a screenshot before writing anything substantial; if the probe lands in the title bar, switch to screenshot-guided mouse and keyboard.</li>
+          <li><strong>Refs expire.</strong> The <code>@N</code> refs from <code>snapshotText()</code> are only valid for the most recent snapshot. For anything long-lived use the stable <code>loc=</code> value or a plain CSS selector.</li>
+          <li><strong>Seconds, not milliseconds.</strong> Every timeout and wait is in seconds unless the parameter name ends in <code>Ms</code>. Guess wrong and you wait 20 minutes or 20 milliseconds.</li>
+          <li><strong>Do not trigger native dialogs.</strong> An <code>alert()</code> / <code>confirm()</code> blocks page JavaScript, which blocks the agent. <code>pageInfo()</code> resolves to <code>{ dialog: ... }</code> when this happens; dismiss it via CDP before continuing.</li>
+          <li><strong>Close your task spaces.</strong> Tabs accumulate across rounds. Finish with <code>completeTaskSpace(name, { keep: false })</code> unless there is a live page the human genuinely needs.</li>
+        </ol>
+
+        <h2 class="spec-head">What I would not do</h2>
+        <p class="prose">I would not point this at a genuinely destructive flow and walk away - "the user always wins the wheel" protects you from a runaway agent, not from a correct-looking wrong click that happens in one second. Anything that spends money or deletes data still gets a handoff and my eyes.</p>
+        <p class="prose">And I would not throw away Playwright. For deterministic CI tests against your own app, headless-with-fixtures is still right. ego lite wins on the other axis: <strong>ad-hoc work against real, logged-in services</strong>, where the auth is the hard part and a human is nearby.</p>
+
+        <div class="cta">
+          <h3>Try it</h3>
+          <p class="prose" style="margin-bottom:.4rem">Free, macOS only for now (there is a Windows waitlist). Install, complete the one-time onboarding - it imports your browser data and puts <code>ego-browser</code> on your PATH - then verify:</p>
+          <pre style="margin-bottom:0"><code>command -v ego-browser   # usually ~/.local/bin
+
+ego-browser nodejs &lt;&lt;'EOF'
+cliLog('ego-browser ready')
+EOF</code></pre>
+          <div class="link-row">
+            <a href="https://lite.ego.app/">ego lite ↗</a><span class="sep">·</span>
+            <a href="/blog/hebrew-terminal/">More agent tooling</a><span class="sep">·</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
