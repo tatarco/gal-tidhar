@@ -4,56 +4,60 @@ const fs = require('fs'), path = require('path'), OUT = __dirname
 const S = {
   en: {
     dir: 'ltr', eyebrow: 'FIELD NOTE / AGENTS',
-    claim: 'Claude clicked the button.<br>The button was not clicked.<br>Claude said it went fine.',
-    claimSub: 'Five ways an agent action silently does nothing - and the one line that catches all of them.',
-    rHead: 'WHAT THE TOOL SAID vs WHAT THE PAGE SAW',
+    arc: ['One comment asked the right question.', 'I found ghost clicks.', 'So I measured ego lite properly.'],
+    arcSub: 'The agent clicks. The page receives nothing. The tool reports success.',
+    claim: 'Ghost clicks.',
+    claimSub: 'Claude clicked the button. The button was not clicked. The tool said everything went fine.',
+    rHead: 'What the tool reported vs what the page actually got',
     rows: [
-      ['click, covered by a transparent overlay', 'ok', '0'],
-      ['click, pointer-events: none', 'ok', '0'],
-      ['click on empty coordinates', 'ok', '0'],
-      ['type into a disabled field', 'ok', 'empty'],
-      ['selector that does not exist', 'THREW', '-'],
+      ['click under a transparent overlay', 'fine', '0'],
+      ['click on pointer-events: none', 'fine', '0'],
+      ['click on empty coordinates', 'fine', '0'],
+      ['type into a locked field', 'fine', 'empty'],
+      ['selector that does not exist', 'ERROR', '-'],
     ],
-    rCol: ['ACTION', 'RETURNED', 'LANDED'],
-    verdict: 'ego lite\'s click is<br>Playwright\'s force: true,<br>always on.',
-    verdictSub: 'Playwright checks attached, visible, stable, enabled, receives events. force skips all five. That is the default here.',
-    lineHead: 'THE LINE THAT MATTERS',
-    lineA: 'It verifies it FOUND the target.',
-    lineB: 'It does not verify anything HAPPENED.',
-    lineC: '"cannot find the button"  ->  error\n"found it, clicked, nothing"  ->  ok',
-    phantomHead: 'THE PHANTOM EDIT',
-    phantomBody: 'Typing into a disabled field left the value empty - but the page still received synthetic input and change events. The app can react to a change that never happened. The agent is told nothing.',
-    fixHead: 'THE FIX IS ONE LINE',
-    fixCode: 'const before = await js(`window.__clicks`)\nawait click(\'#target\')\nconst after  = await js(`window.__clicks`)\n// after === before  ->  it did not land',
-    fixSub: 'Do not assert the action succeeded. Assert something changed.',
-    foot: 'gal.tidhar.org.il - measured, not assumed',
+    rCol: ['ACTION', 'TOOL SAID', 'ACTUALLY'],
+    verdict: 'An agent browser\'s click is<br>Playwright\'s force: true.<br>Always on.',
+    verdictSub: 'Playwright checks that the element is attached, visible, stable, enabled, and really receives the click. force skips all of it.',
+    lineHead: 'THE BOUNDARY',
+    lineA: 'Found the button? Yes.',
+    lineB: 'Did anything happen? No.',
+    lineC: '"cannot find the button"  ->  error\n"found it, clicked, nothing"  ->  fine',
+    phantomHead: 'AN EDIT THAT NEVER HAPPENED',
+    phantomBody: 'I typed into a locked field. The value stayed empty - but the page still got input and change events. An app listening for those will light up its Save button over an edit that never happened.',
+    fixHead: 'THE FIX: ONE LINE',
+    fixCode: 'const before = await js(`window.__clicks`)\nawait click(\'#target\')\nconst after  = await js(`window.__clicks`)\n// after === before  ->  it never landed',
+    fixSub: 'Do not ask whether the action succeeded. Ask whether anything changed.',
+    foot: 'github.com/tatarco/ego-browser-skill',
   },
   he: {
     dir: 'rtl', eyebrow: 'הערת שטח / אייג׳נטים',
-    claim: 'קלוד לחץ על הכפתור.<br>הכפתור לא נלחץ.<br>קלוד אמר שהכל בסדר.',
-    claimSub: 'חמש דרכים שבהן פעולה של אייג׳נט לא עושה כלום בשקט - ושורה אחת שתופסת את כולן.',
-    rHead: 'מה הכלי דיווח מול מה שהדף באמת ראה',
+    arc: ['תגובה אחת שאלה בדיוק את השאלה הנכונה.', 'מצאתי לחיצות רפאים.', 'אז מדדתי את ego lite ברצינות.'],
+    arcSub: 'האייג׳נט לוחץ, הדף לא מקבל כלום, והכלי מדווח שהכל עבר בהצלחה.',
+    claim: 'לחיצות רפאים.',
+    claimSub: 'קלוד לחץ על הכפתור. הכפתור לא נלחץ. הכלי אמר שהכל תקין.',
+    rHead: 'מה הכלי דיווח מול מה שהדף באמת קיבל',
     rows: [
-      ['לחיצה מתחת ל-overlay שקוף', 'בסדר', '0'],
-      ['לחיצה על pointer-events: none', 'בסדר', '0'],
-      ['לחיצה על קואורדינטות ריקות', 'בסדר', '0'],
-      ['כתיבה לשדה disabled', 'בסדר', 'ריק'],
-      ['סלקטור שלא קיים', 'זרק שגיאה', '-'],
+      ['לחיצה מתחת ל-overlay שקוף', 'תקין', '0'],
+      ['לחיצה על pointer-events: none', 'תקין', '0'],
+      ['לחיצה על קואורדינטות ריקות', 'תקין', '0'],
+      ['כתיבה לשדה נעול', 'תקין', 'ריק'],
+      ['סלקטור שלא קיים', 'שגיאה', '-'],
     ],
-    rCol: ['פעולה', 'הוחזר', 'נחת'],
-    verdict: 'הקליק של ego lite<br>הוא force: true<br>של Playwright, תמיד דלוק.',
-    verdictSub: 'Playwright בודק מחובר, נראה, יציב, מאופשר, ומקבל אירועים. force מדלג על כל החמישה. פה זו ברירת המחדל.',
-    lineHead: 'הגבול האמיתי',
-    lineA: 'הוא מאמת שהוא מצא את המטרה.',
-    lineB: 'הוא לא מאמת שקרה משהו.',
-    lineC: '"לא מצאתי את הכפתור"  ->  שגיאה\n"מצאתי, לחצתי, כלום"  ->  בסדר',
-    phantomHead: 'העריכה שלא קרתה',
-    phantomBody: 'כתיבה לשדה disabled השאירה אותו ריק - אבל הדף כן קיבל אירועי input ו-change סינתטיים. האפליקציה יכולה להגיב לשינוי שמעולם לא קרה. האייג׳נט לא יודע כלום.',
-    fixHead: 'התיקון הוא שורה אחת',
+    rCol: ['פעולה', 'הכלי אמר', 'בפועל'],
+    verdict: 'הקליק של דפדפן אייג׳נטי<br>הוא force: true של Playwright.<br>תמיד דלוק.',
+    verdictSub: 'Playwright בודק לפני כל פעולה שהאלמנט מחובר, נראה, יציב, מאופשר, ושהוא באמת מקבל את הלחיצה. force מדלג על הכל.',
+    lineHead: 'איפה עובר הגבול',
+    lineA: 'מצא את הכפתור? כן.',
+    lineB: 'קרה משהו? לא.',
+    lineC: '"לא מצאתי את הכפתור"  ->  שגיאה\n"מצאתי, לחצתי, כלום"  ->  תקין',
+    phantomHead: 'עריכה שלא קרתה',
+    phantomBody: 'כתבתי לשדה נעול. הערך נשאר ריק, אבל הדף בכל זאת קיבל אירועי input ו-change. אפליקציה שמאזינה להם תדליק כפתור שמירה על עריכה שלא היתה.',
+    fixHead: 'התיקון: שורה אחת',
     fixCode: 'const before = await js(`window.__clicks`)\nawait click(\'#target\')\nconst after  = await js(`window.__clicks`)\n// after === before  ->  זה לא נחת',
-    fixSub: 'לא לבדוק שהפעולה הצליחה. לבדוק שמשהו השתנה.',
-    foot: 'gal.tidhar.org.il - נמדד, לא הונח',
-  },
+    fixSub: 'לא לשאול אם הפעולה הצליחה. לשאול אם משהו השתנה.',
+    foot: 'github.com/tatarco/ego-browser-skill',
+  }
 }
 
 const BASE = `
@@ -73,12 +77,13 @@ const page = (lang, body, extra='') =>
 
 const designs = {
   1: t => `<div class="frame"><div class="eyebrow">${t.eyebrow}</div>
-    <div class="cw"><div class="claim">${t.claim}</div><div class="csub">${t.claimSub}</div></div>
+    <div class="cw"><div class="arc">${t.arc.map((l,i)=>`<div class="arcl a${i}">${l}</div>`).join('')}</div>
+    <div class="csub">${t.arcSub}</div></div>
     <div class="foot">${t.foot}</div></div>`,
   2: t => `<div class="frame"><div class="eyebrow">${t.eyebrow}</div>
     <div class="rh">${t.rHead}</div>
     <table class="tbl"><thead><tr>${t.rCol.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>
-    ${t.rows.map(([a,b,c])=>`<tr><td class="act">${a}</td><td class="${b.match(/THREW|זרק/)?'thr':'ok'}">${b}</td><td class="land">${c}</td></tr>`).join('')}
+    ${t.rows.map(([a,b,c])=>`<tr><td class="act">${a}</td><td class="${b.match(/ERROR|שגיאה/)?'thr':'ok'}">${b}</td><td class="land">${c}</td></tr>`).join('')}
     </tbody></table>
     <div class="foot">${t.foot}</div></div>`,
   3: t => `<div class="frame"><div class="eyebrow">${t.eyebrow}</div>
@@ -95,6 +100,9 @@ const designs = {
     <div class="phev">input <span class="syn">synthetic</span> &nbsp; change <span class="syn">synthetic</span></div>
     <div class="phb">${t.phantomBody}</div></div>
     <div class="foot">${t.foot}</div></div>`,
+  7: t => `<div class="frame"><div class="eyebrow">${t.eyebrow}</div>
+    <div class="gw"><div class="gclaim">${t.claim}</div><div class="gsub">${t.claimSub}</div></div>
+    <div class="foot">${t.foot}</div></div>`,
   6: t => `<div class="frame"><div class="eyebrow">${t.eyebrow}</div>
     <div class="fh">${t.fixHead}</div>
     <pre class="code">${t.fixCode}</pre>
@@ -104,8 +112,9 @@ const designs = {
 
 const CSS = {
   1:`.cw{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:36px}
-     .claim{font-size:52px;line-height:1.32;font-weight:600;color:#e0f2fe}
-     .csub{margin-top:28px;font-size:22px;color:#7dd3fc;line-height:1.6;max-width:26em}`,
+     .arcl{font-size:42px;line-height:1.42;font-weight:600}
+     .a0{color:#7dd3fc} .a1{color:#f87171} .a2{color:#e0f2fe}
+     .csub{margin-top:30px;font-size:21px;color:rgba(186,230,253,.7);line-height:1.6;max-width:30em}`,
   2:`.rh{margin-top:20px;font-size:19px;color:#e0f2fe;letter-spacing:.02em}
      .tbl{flex:1;width:100%;border-collapse:collapse;margin:20px 0 46px;font-size:20px}
      .tbl th{font-size:13px;letter-spacing:.12em;color:rgba(186,230,253,.55);text-transform:uppercase;
@@ -134,6 +143,9 @@ const CSS = {
        border:1px solid rgba(125,211,252,.35);background:rgba(0,0,0,.28);padding:22px 26px;
        direction:ltr;unicode-bidi:isolate;text-align:start;white-space:pre}
      .fsub{font-size:21px;color:#fef08a;margin-bottom:38px}`,
+  7:`.gw{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:36px}
+     .gclaim{font-size:96px;line-height:1.1;font-weight:600;color:#f87171;letter-spacing:.01em}
+     .gsub{margin-top:34px;font-size:26px;color:#e0f2fe;line-height:1.55;max-width:24em}`,
 }
 
 for (const n of Object.keys(designs))
