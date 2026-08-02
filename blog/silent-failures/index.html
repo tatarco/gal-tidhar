@@ -110,7 +110,7 @@
   <nav class="nav">
     <div class="inner">
       <a href="/" class="nav-logo">GAL TIDHAR</a>
-      <div class="nav-links"><a href="/">← Home</a> <a href="/blog/agent-browser/">Part 1 ↗</a></div>
+      <div class="nav-links"><a href="/">← Home</a> <a href="https://github.com/tatarco/did-it-land">Repo ↗</a> <a href="/blog/agent-browser/">Part 1</a></div>
     </div>
   </nav>
 
@@ -221,8 +221,10 @@ const after  = await js(`window.__clicks`)
 
         <div class="cta">
           <h3>Run it yourself</h3>
-          <p class="prose" style="margin-bottom:.4rem">The probe page is 30 lines and the harness is 10. Point it at whatever agent browser you use - Playwright MCP, Chrome DevTools MCP, the Claude extension - and compare. I'd genuinely like to know which ones report honestly.</p>
+          <p class="prose" style="margin-bottom:.4rem">Everything here is open source at <a href="https://github.com/tatarco/did-it-land">github.com/tatarco/did-it-land</a> (MIT): the probe page, the harness, and <code>verify.js</code> with drop-in <code>clickAndVerify</code> / <code>fillAndVerify</code> wrappers. It also ships a companion <code>SKILL.md</code> - the hardening rules this experiment produced, meant to sit alongside whatever skill your browser vendor gives you.</p>
+          <p class="prose" style="margin-bottom:.4rem">Point it at whatever agent browser you use - Playwright MCP, Chrome DevTools MCP, the Claude extension - and compare. <strong>I'd genuinely like to know which ones report honestly</strong>; open an issue with your results.</p>
           <div class="link-row">
+            <a href="https://github.com/tatarco/did-it-land">github.com/tatarco/did-it-land ↗</a><span class="sep">·</span>
             <a href="/blog/agent-browser/">Part 1: I stopped giving my agent my browser</a><span class="sep">·</span>
             <a href="https://lite.ego.app/">ego lite ↗</a><span class="sep">·</span>
             <a href="/">More about me</a>
