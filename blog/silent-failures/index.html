@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude clicked the button. The button was not clicked. · Gal Tidhar</title>
+  <meta name="description" content="I measured what an agent browser reports versus what the page actually received. Four out of five impossible actions returned success. Here is the exact boundary, the phantom edit that is worse than a no-op, and the one line that catches all of it.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/silent-failures/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Claude clicked the button. The button was not clicked.">
+  <meta property="og:description" content="Four out of five impossible browser actions returned success. The measured boundary between an error and a silent no-op - and the one line that closes it.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/silent-failures/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/silent-failures/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="What the tool reported versus what the page actually saw">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude clicked the button. The button was not clicked.">
+  <meta name="twitter:description" content="Four out of five impossible browser actions returned success. The measured boundary - and the one line that closes it.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/silent-failures/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Claude clicked the button. The button was not clicked.",
+    "description": "Measuring what an agent browser reports versus what the page actually received, across five impossible actions.",
+    "image": "https://gal.tidhar.org.il/blog/silent-failures/og.png",
+    "datePublished": "2026-08-02",
+    "dateModified": "2026-08-02",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/silent-failures/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "ego lite, browser automation, AI agents, Playwright, actionability, CDP, silent failure, agent reliability"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+      --green: #4ade80; --red: #f87171;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    blockquote cite { display: block; margin-top: .6rem; font-size: .78rem; color: var(--muted); font-style: normal; }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .ok { color: var(--green); } .bad { color: var(--red); font-weight: 600; } .warn { color: var(--accent); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="/blog/agent-browser/">Part 1 ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / AGENTS</span>
+          <p class="role-line">Browser automation · Reliability · Measurement</p>
+          <h1 class="title">Claude clicked the button. The button was not clicked.</h1>
+          <p class="meta-line"><strong>2026-08-02</strong> &nbsp;·&nbsp; ~8 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">In <a href="/blog/agent-browser/">part one</a> I said the control model in ego lite was "a protocol, not a hope". Someone replied with the one question I couldn't answer: <strong>what happens when an action silently doesn't land?</strong> No captcha, no 2FA, nobody to hand off to - the agent just works confidently on nothing for ten minutes. So I measured it. Four out of five impossible actions came back as success.</p>
+        </header>
+
+        <figure>
+          <img src="og.png" alt="What the tool reported versus what the page actually saw" loading="lazy">
+          <figcaption>Five actions that could not possibly land, and what the tool said about them.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The question</h2>
+        <blockquote>The handoff part is the most important thing there, but it assumes the agent knows the wheel was taken from it. The failure I hit is much quieter. The browser stops responding, every action comes back successful, the coordinates look right, and simply nothing lands on the page. There's no captcha and no 2FA, so there's nobody to call. The agent keeps working in full confidence for ten minutes on nothing. So what I'd want to know about the task space is whether an action that didn't land comes back as an error or as ok. That's the difference between a protocol and a hope.
+          <cite>- Omri Pitaru, in the comments on part one</cite></blockquote>
+        <p class="prose">That is a better question than the post it was answering. "Did it work?" is not the same as "did the call return". Every agent framework blurs those two, and the blur is invisible precisely when it matters.</p>
+
+        <h2 class="spec-head">The method</h2>
+        <p class="prose">You cannot measure this by asking the tool. You need an independent source of truth inside the page, incremented only by a real event handler, and then you compare what the tool <em>reported</em> against what the page <em>observed</em>.</p>
+        <pre><code>&lt;button id="target"&gt;CLICK TARGET&lt;/button&gt;
+&lt;input id="field"&gt;
+&lt;div id="overlay"&gt;&lt;/div&gt;   &lt;!-- transparent, position:fixed, inset:0, z-index:9999 --&gt;
+
+&lt;script&gt;
+  window.__clicks = 0
+  // ONLY a real, dispatched click can increment this
+  document.getElementById('target')
+    .addEventListener('click', () =&gt; { window.__clicks++ })
+&lt;/script&gt;</code></pre>
+        <p class="prose">Then each scenario runs the same shape: reset, read truth, perform the action, read truth again, and record both the return value and the delta.</p>
+        <pre><code>const run = async (name, fn) =&gt; {
+  await js(`window.__reset()`)
+  const before = await js(`window.__clicks`)
+  let ret, err = null
+  try { ret = await fn() } catch (e) { err = e.message }
+  await wait(0.6)
+  const after = await js(`window.__clicks`)
+  cliLog({ name, returned: ret, threw: err, landed: after - before })
+}</code></pre>
+
+        <h2 class="spec-head">The results</h2>
+        <table class="spec-table">
+          <thead><tr><th>Action</th><th>Tool returned</th><th>Page observed</th></tr></thead>
+          <tbody>
+            <tr><td>click <code>#target</code> (baseline)</td><td class="ok">ok</td><td class="ok">1 click</td></tr>
+            <tr><td>click <code>#target</code>, transparent overlay on top</td><td class="ok">ok</td><td class="bad">0 clicks</td></tr>
+            <tr><td>click <code>#target</code> with <code>pointer-events: none</code></td><td class="ok">ok</td><td class="bad">0 clicks</td></tr>
+            <tr><td>click at <code>[1000, 700]</code> - empty space</td><td class="ok">ok</td><td class="bad">0 clicks</td></tr>
+            <tr><td>fillInput into a <code>disabled</code> field</td><td class="ok">ok</td><td class="bad">value stayed empty</td></tr>
+            <tr><td>fillInput into a <code>readonly</code> field</td><td class="ok">ok</td><td class="bad">value stayed empty</td></tr>
+            <tr><td>click <code>#ghost</code> - selector matches nothing</td><td class="warn">THREW "Element not found"</td><td>-</td></tr>
+          </tbody>
+        </table>
+        <p class="prose">So the boundary is sharp, and it is not where you would want it:</p>
+        <blockquote><strong>It verifies that it found the target. It does not verify that anything happened.</strong><br>
+        "I can't find the button" is an error. "I found it, I clicked it, and nothing happened" is a success.</blockquote>
+
+        <h2 class="spec-head">The phantom edit - worse than a no-op</h2>
+        <p class="prose">The disabled-field case turned out to be the nastiest of the set. I armed listeners to record every event the field received, then typed into it while disabled:</p>
+        <pre><code>{ value: "", seen: ["input/synthetic", "input/synthetic", "change/synthetic"] }</code></pre>
+        <p class="prose">The value never changed - but the page <strong>did</strong> receive <code>input</code> and <code>change</code> events. A React or Vue app listening for <code>change</code> can happily react to an edit that never happened, fire a save, flip a dirty flag, enable a submit button. The field is empty, the app thinks it isn't, and the agent was told everything went fine. That is a data-integrity bug with three parties and no error anywhere in the chain.</p>
+
+        <h2 class="spec-head">The surprise: the frozen renderer is honest</h2>
+        <p class="prose">Omri's literal scenario is a browser that stops responding. So I froze the main thread for six seconds and clicked during the freeze:</p>
+        <pre><code>click during freeze -&gt; returned ok after 5707ms
+after thaw, clicks landed = 1</code></pre>
+        <p class="prose">It did not fire into the void. It <strong>blocked for 5.7 seconds</strong>, waited for the main thread, and the click genuinely landed once the page thawed. So at this layer a frozen renderer produces <em>latency, not a lie</em> - and latency is something you can notice and time out on.</p>
+        <p class="prose">Which flips the intuition. The dangerous cases aren't the dramatic ones. A hung browser is loud. The lies come from the boring stuff: a transparent overlay, a cookie banner you didn't notice, a field that's disabled for half a second while a form validates.</p>
+
+        <h2 class="spec-head">Observation doesn't save you either</h2>
+        <p class="prose">My next assumption was that a careful agent would catch this by looking rather than by trusting the return value. It doesn't. With the blocking overlay in place, <code>snapshotText()</code> reports the button exactly as before:</p>
+        <pre><code>button [ref=3, loc=unstable]
+  text "CLICK TARGET"
+
+snapshot mentions the overlay at all: false</code></pre>
+        <p class="prose">And a screenshot is pixel-identical, because the overlay is transparent. Both of the agent's senses report a perfectly clickable button. The accessibility tree describes structure, not reachability - it has no concept of "something else will receive this click".</p>
+
+        <h2 class="spec-head">The fix is one line</h2>
+        <p class="prose">Stop asserting that the action succeeded. Assert that something changed:</p>
+        <pre><code>const before = await js(`window.__clicks`)
+await click('#target')
+const after  = await js(`window.__clicks`)
+// after === before  ->  it did not land</code></pre>
+        <p class="prose">It caught every case in the table. In real life the counter is whatever the page gives you: a URL change, a row count, a toast, a disabled button becoming enabled, an element that should now exist. The principle is that <strong>the assertion has to read from the page, not from the tool</strong> - because the tool is the thing whose honesty you're testing.</p>
+        <p class="prose">This is also why the scriptable-runtime interface from part one matters more than I realised. A tool-call-per-click agent physically cannot do a before/after read cheaply - that's three round-trips per interaction. In a script it's three lines and no extra latency.</p>
+
+        <h2 class="spec-head">The honest comparison</h2>
+        <p class="prose">Here is where I have to give ground. Playwright runs <strong>actionability checks</strong> before every action: the element must be attached, visible, stable, enabled, and must actually <em>receive events</em> - it hit-tests to confirm nothing is on top of it. Those checks would have caught four of the five failures above, by design, with a real error message naming the intercepting element.</p>
+        <p class="prose">Playwright also has an escape hatch, <code>force: true</code>, which skips all of them - and the docs warn that it "may mask underlying test design or app issues".</p>
+        <blockquote>An agent browser's click is, in effect, Playwright's <code>force: true</code> - always on.</blockquote>
+        <p class="prose">That is the trade nobody states out loud. The thing that makes Playwright annoying in interactive use - the waiting, the strictness, the timeouts that fire when an element is <em>almost</em> ready - is exactly the thing that turns a silent no-op into a loud error. Agent browsers optimise for "just do the thing", and pay for it in unverified actions.</p>
+
+        <h2 class="spec-head">So what do I actually recommend</h2>
+        <ul class="prose">
+          <li><strong>Session and control</strong> - the isolated task space with your logins, and a handoff protocol where the user always wins - is still the thing ego lite has that nothing else does. Part one stands.</li>
+          <li><strong>Action verification</strong> is Playwright's, clearly, and it is not close.</li>
+          <li><strong>You can have both</strong> for the price of one before/after read per meaningful action. Do it for anything that writes: submits, payments, deletes, saves. Skip it for navigation and reads, where the next observation catches you anyway.</li>
+          <li><strong>Never trust a screenshot as proof an action landed.</strong> It is proof of what was painted, which is a different claim.</li>
+        </ul>
+        <p class="prose">And the meta-lesson, which is the one I'll actually keep: I published a claim about a protocol, a stranger asked the one question that would falsify it, and the answer was partly no. That is a better outcome than being right.</p>
+
+        <div class="cta">
+          <h3>Run it yourself</h3>
+          <p class="prose" style="margin-bottom:.4rem">The probe page is 30 lines and the harness is 10. Point it at whatever agent browser you use - Playwright MCP, Chrome DevTools MCP, the Claude extension - and compare. I'd genuinely like to know which ones report honestly.</p>
+          <div class="link-row">
+            <a href="/blog/agent-browser/">Part 1: I stopped giving my agent my browser</a><span class="sep">·</span>
+            <a href="https://lite.ego.app/">ego lite ↗</a><span class="sep">·</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
