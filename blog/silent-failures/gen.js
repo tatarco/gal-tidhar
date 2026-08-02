@@ -3,7 +3,7 @@ const fs = require('fs'), path = require('path'), OUT = __dirname
 
 const S = {
   en: {
-    dir: 'ltr', eyebrow: 'FIELD NOTE / AGENTS',
+    dir: 'ltr', eyebrow: 'RESEARCH FINDINGS / EGO LITE BROWSER',
     arc: ['One comment asked the right question.', 'I found ghost clicks.', 'So I measured ego lite properly.'],
     arcSub: 'The agent clicks. The page receives nothing. The tool reports success.',
     claim: 'Ghost clicks.',
@@ -28,10 +28,10 @@ const S = {
     fixHead: 'THE FIX: ONE LINE',
     fixCode: 'const before = await js(`window.__clicks`)\nawait click(\'#target\')\nconst after  = await js(`window.__clicks`)\n// after === before  ->  it never landed',
     fixSub: 'Do not ask whether the action succeeded. Ask whether anything changed.',
-    foot: 'github.com/tatarco/ego-browser-skill',
+    foot: 'gal.tidhar.org.il',
   },
   he: {
-    dir: 'rtl', eyebrow: 'הערת שטח / אייג׳נטים',
+    dir: 'rtl', eyebrow: 'תוצאות מחקר / דפדפן ego lite',
     arc: ['תגובה אחת שאלה בדיוק את השאלה הנכונה.', 'מצאתי לחיצות רפאים.', 'אז מדדתי את ego lite ברצינות.'],
     arcSub: 'האייג׳נט לוחץ, הדף לא מקבל כלום, והכלי מדווח שהכל עבר בהצלחה.',
     claim: 'לחיצות רפאים.',
@@ -56,7 +56,7 @@ const S = {
     fixHead: 'התיקון: שורה אחת',
     fixCode: 'const before = await js(`window.__clicks`)\nawait click(\'#target\')\nconst after  = await js(`window.__clicks`)\n// after === before  ->  זה לא נחת',
     fixSub: 'לא לשאול אם הפעולה הצליחה. לשאול אם משהו השתנה.',
-    foot: 'github.com/tatarco/ego-browser-skill',
+    foot: 'gal.tidhar.org.il',
   }
 }
 
