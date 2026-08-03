@@ -14,6 +14,7 @@
   .foot{position:absolute;bottom:44px;inset-inline-start:74px;font-size:13px;color:rgba(186,230,253,.5);direction:ltr;letter-spacing:.04em}
   .cyan{color:#7dd3fc} .ink{color:#e0f2fe} .amber{color:#fef08a}
   .muted{color:rgba(186,230,253,.55)}
+  .cmd{direction:ltr;unicode-bidi:isolate;display:inline-block}
 
     .cols{flex:1;display:flex;align-items:center;gap:26px;margin-top:8px}
     .col{flex:1;border:1px solid rgba(125,211,252,.28);padding:26px 24px;min-height:300px}
@@ -31,12 +32,12 @@
     <div class="cols">
       <div class="col old">
         <div class="col-label">כל סשן</div>
-        <div class="li x">להקליד /remote-control ידנית</div><div class="li x">שכחת פעם אחת = תקוע במחשב</div><div class="li x">לא ליד המקלדת = עיוור</div>
+        <div class="li x">להקליד <span class="cmd">/remote-control</span> ידנית</div><div class="li x">שכחת פעם אחת = תקוע במחשב</div><div class="li x">לא ליד המקלדת = עיוור</div>
       </div>
       <div class="mid">&larr;</div>
       <div class="col new">
         <div class="col-label new-label">הגדרה אחת</div>
-        <div class="li ok">כל סשן מתחבר אוטומטית</div><div class="li ok">לאשר הרשאות מהנייד</div><div class="li ok">לצאת מהבית ולהמשיך לשלוט</div>
+        <div class="li ok">תמיד דלוק, כל סשן</div><div class="li ok">אין מה להקליד, אף פעם</div><div class="li ok">יוצאים - נשאר מחובר</div>
       </div>
     </div>
     <div class="foot">Claude Code - remoteControlAtStartup: true - gal.tidhar.org.il</div>
