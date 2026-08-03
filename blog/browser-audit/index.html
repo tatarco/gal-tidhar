@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You recommended 8 agentic browsers. I audited all of them. · Gal Tidhar</title>
+  <meta name="description" content="The comments on my ego-lite post recommended 8 alternatives: Chrome DevTools MCP, Comet, Atlas, Anchor, Lightpanda, agent-browser, Firecrawl. I sent 5 parallel research agents with one fixed six-question sheet. One dies in 6 days, one was steered into a 1Password vault, and only three even play the same game.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/browser-audit/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="You recommended 8 agentic browsers. I audited all of them.">
+  <meta property="og:description" content="5 parallel research agents, one fixed six-question sheet, 8 tools from the comments. One dies in 6 days, one was steered into a 1Password vault, and only three even play the same game.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/browser-audit/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/browser-audit/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="You sent 8 alternatives. I sent 5 agents.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="You recommended 8 agentic browsers. I audited all of them.">
+  <meta name="twitter:description" content="5 parallel agents, one fixed question sheet, 8 tools. Only three even play the same game.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/browser-audit/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "You recommended 8 agentic browsers. I audited all of them.",
+    "description": "5 parallel research agents, one fixed six-question sheet, 8 tools from the comments. Only three even play the same game.",
+    "image": "https://gal.tidhar.org.il/blog/browser-audit/og.png",
+    "datePublished": "2026-08-03",
+    "dateModified": "2026-08-03",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/browser-audit/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "agentic browsers, ego lite, agent-browser, Anchor Browser, Chrome DevTools MCP, Comet, Atlas, Lightpanda, Firecrawl, prompt injection, Claude Code"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol, ul.prose, ol.prose { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li, ul.prose li, ol.prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .tbl-scroll { overflow-x: auto; margin: 0 0 1.3rem; }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .55rem .7rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="/blog/agent-browser/">part one ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / AGENTS</span>
+          <p class="role-line">Browser automation · Agents · Research</p>
+          <h1 class="title">You recommended 8 agentic browsers. I audited all of them.</h1>
+          <p class="meta-line"><strong>2026-08-03</strong> &nbsp;·&nbsp; ~9 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">The comments on <a href="/blog/agent-browser/">the ego-lite post</a> turned into a shopping list: Chrome DevTools MCP, Comet, Atlas, Anchor, Lightpanda, agent-browser, Firecrawl. Instead of answering from the hip, I sent <strong>five research agents in parallel, every one with the same fixed six-question sheet</strong>. One tool dies in six days. One was steered into a 1Password vault. Only three even play the game the post was about.</p>
+        </header>
+
+        <figure>
+          <img src="og.png" alt="You sent 8 alternatives. I sent 5 agents." loading="lazy">
+          <figcaption>Eight recommendations in, three still standing.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The method</h2>
+        <p class="prose">This is repeatable for any "the comments recommended X, Y and Z" situation, and the whole thing is about five minutes of wall-clock because everything runs concurrently:</p>
+        <ol class="prose">
+          <li><strong>Scrape the thread.</strong> One cheap agent opened the post, expanded every comment, returned raw text. The Hebrew OCR came back partly garbled - it did not matter, because tool names survive garbling, and names are the payload.</li>
+          <li><strong>Extract the entities.</strong> ~30 comments, eight distinct tools, plus the two baselines (ego lite, Claude-in-Chrome).</li>
+          <li><strong>Fan out with a fixed question sheet.</strong> Five research agents in parallel, one per tool family, all answering the <em>same</em> six questions. The fixed sheet is the entire trick: it forces comparable answers instead of five marketing summaries, and it stops each agent from grading its tool on the dimension it happens to be good at.</li>
+          <li><strong>Verify the load-bearing claims.</strong> A separate agent re-checked the three boldest facts against primary sources. All three held (one nuance corrected).</li>
+          <li><strong>Compile.</strong> The verdict falls out of the grid, not out of any single agent's opinion.</li>
+        </ol>
+
+        <h2 class="spec-head">The six-question sheet</h2>
+        <p class="prose">Price and speed are the questions people ask. These are the ones that separate:</p>
+        <ol class="prose">
+          <li><strong>Does the agent inherit my logins?</strong> The point of "act as me" is arriving at Gmail, GitHub, a client's admin panel already signed in. A tool that starts from a clean profile is a scraper, whatever it calls itself.</li>
+          <li><strong>What happens at a captcha or 2FA wall?</strong> Three possible answers: the agent gets stuck (most tools), a defined handoff to a human (ego, Anchor's live view), or the vendor sells captcha bypass - which is an anti-bot arms race, not a protocol.</li>
+          <li><strong>Who wins when both hands are on the wheel?</strong> The under-asked one. If the human grabs control, can the agent grab it back? A runtime-enforced boundary is a different product from a polite convention.</li>
+          <li><strong>Can it run many isolated tasks at once?</strong> Isolation is not just politeness - it is fan-out. Ten agents, each in its own context, each with your logins.</li>
+          <li><strong>What does one interaction cost?</strong> One tool call per click burns a model round-trip per action. A script per round - twenty actions inside - is an order of magnitude cheaper and legible afterwards.</li>
+          <li><strong>What is the blast radius when it is fooled?</strong> Prompt injection is unsolved everywhere. What differs is what a hijacked agent can reach: an isolated task-space, a cloud sandbox, or your live session with your password manager one tab away.</li>
+        </ol>
+
+        <h2 class="spec-head">Category one: not playing the same game</h2>
+        <p class="prose"><strong>Firecrawl</strong> is a scraping and crawling API, not a browser you drive. It renders pages on its own cloud infrastructure, anonymously - no documented way to bring your cookies or sessions, no captcha story beyond paid stealth proxies, and its <code>interact</code> tool is for shallow single-session clicks. Excellent at public-web extraction at scale (credit-priced, $16-$599/mo tiers). Wrong tool for "act on my accounts".</p>
+        <p class="prose"><strong>Lightpanda</strong> is the most interesting wrong answer: a from-scratch browser engine written in Zig - not a Chromium fork - that skips visual rendering entirely. No layout, no paint, <strong>no screenshots</strong>. That is why it benchmarks ~9x faster and ~16x lighter than headless Chrome, and also why it segfaults on script-heavy pages, gets fingerprinted and blocked by Google, and cannot do anything that requires seeing the page. Beta, AGPL, self-hosted, has an MCP server. A scraping accelerator with real promise - not an agentic browser.</p>
+        <p class="prose"><strong>Atlas</strong> (OpenAI's browser) is being shut down on <strong>August 9, 2026</strong> - six days from this post - with browser-agent capability folded back into ChatGPT itself (<a href="https://help.openai.com/en/articles/20001371-evolving-atlas-into-chatgpt-for-browser-based-agentic-work">OpenAI's own notice</a>). It also never had an external API: Claude could not drive it. Moot.</p>
+        <p class="prose"><strong>Comet</strong> (Perplexity) is the cautionary tale worth actually studying. It runs its agent inside your real session, with full user privileges, and no boundary between "instruction from the user" and "content from the page". The consequence is the worst disclosed security record in the category: hidden-text prompt injection (<a href="https://brave.com/blog/comet-prompt-injection/">Brave, Aug 2025</a>), one-click exfiltration via crafted URLs ("CometJacking", LayerX), injections hidden inside screenshots, and Zenity's <a href="https://labs.zenity.io/p/perplexedbrowser-how-attackers-can-weaponize-comet-to-takeover-your-1password-vault">"PerplexedBrowser"</a> - steering Comet through an authenticated 1Password session and extracting vault secrets in under four minutes. Trail of Bits <a href="https://blog.trailofbits.com/2026/02/20/using-threat-modeling-and-prompt-injection-to-audit-comet/">audited it in Feb 2026</a> and concluded the weakness is architectural.</p>
+        <div class="snap"><strong>The lesson from Comet:</strong> "agent inherits your logins" without "hard user/agent boundary" is not a feature set - it is an attack surface. Question 1 needs question 3.</div>
+
+        <h2 class="spec-head">Category two: the real contenders</h2>
+        <p class="prose"><strong>Chrome DevTools MCP</strong> (Google, open source) - the recommendation was half right. It really does run a fully separate Chrome that never touches your daily browser, and its profile persists between runs. But it does <em>not</em> inherit your real logins: since Chrome 136, <a href="https://developer.chrome.com/blog/remote-debugging-port">Google blocks debugger attachment to your default profile</a>, so the tool keeps its own lookalike profile you log into once, per site. A clean profile with no history also looks like a bot, so it trips <em>more</em> captchas - and it has no handoff mechanism when it does; the agent is simply stuck. Parallelism is officially unsupported (one server, one Chrome). Where it genuinely wins: debugging, performance tracing and network inspection of your own apps - the entire DevTools surface exposed as tools. That is its actual job.</p>
+        <p class="prose"><strong>agent-browser</strong> (Vercel Labs, open source) - architecturally the closest thing to ego lite that runs everywhere. Rust CLI over CDP, drives real Chrome. It genuinely acts as you: <code>--profile</code> reuses your actual Chrome profile, named sessions restore cookies and storage (optionally encrypted), and an auth vault keeps credentials out of the model's sight. Token-efficient by design: accessibility-tree snapshots of ~200-400 tokens per page instead of screenshots, plus a batch mode. What it lacks is exactly ego's two headline features - no handoff protocol for captcha/2FA (a plugin hook exists; you bring the solver) and no user-override boundary at all. One design tension worth knowing: its security allowlist mode disables the profile-reuse that makes it useful.</p>
+        <p class="prose">And a live data point, from the comments of the original post while I was writing this one: Roy Weisfeld reports running agent-browser in production against Google Workspace purchase automation and fighting exactly the session-keeping gap the sheet predicted. The grid said "sessions are its strength, durability around walls is DIY"; production said the same thing louder.</p>
+        <p class="prose"><strong>Anchor Browser</strong> - the same idea, in the cloud, for money. Managed Chromium instances driven by MCP, SDK or raw CDP. Persistent browser profiles hold auth state; 2FA is handled by a genuinely good mechanism - an embeddable live view where a human takes over the running cloud session, completes the login, and automation resumes with state carried over. Captcha bypass is a paid feature. Parallelism is its strong suit (isolated cloud instances, 5 free / 200+ paid). Priced like infrastructure: $0.05 per browser-hour, $0.01 per AI step, plans $0-$2,000/mo. Right answer for production agent fleets; wrong answer for a personal Mac workflow - it charges monthly for what ego does free, with your sessions on their machines.</p>
+
+        <h2 class="spec-head">The grid</h2>
+        <div class="tbl-scroll">
+        <table class="spec-table">
+          <tr><th></th><th>Your logins</th><th>Captcha/2FA handoff</th><th>User-override boundary</th><th>Parallel contexts</th><th>Interaction cost</th><th>Price / platform</th></tr>
+          <tr><td><strong>ego lite</strong></td><td>Yes - imports profile, spaces inherit sessions</td><td>Formal protocol (handOff → resume)</td><td>Hard - runtime-enforced</td><td>Yes, spaces</td><td>Batched Node scripts</td><td>Free · Mac only</td></tr>
+          <tr><td><strong>agent-browser</strong></td><td>Yes - real profile reuse, auth vault</td><td>DIY (plugin hook)</td><td>None</td><td>Named sessions</td><td>Batched CLI, ~300-token snapshots</td><td>Free OSS · cross-platform</td></tr>
+          <tr><td><strong>Anchor</strong></td><td>Yes - cloud profiles</td><td>Live-view human takeover; paid captcha bypass</td><td>Live-view takeover</td><td>Strong (cloud instances)</td><td>Tool calls or compiled NL steps</td><td>$0-2,000/mo · cloud</td></tr>
+          <tr><td><strong>Claude-in-Chrome</strong></td><td>Yes - it is your Chrome</td><td>Pause, human solves in-tab</td><td>Soft (tab groups)</td><td>Per-session tab groups</td><td>One tool call per action</td><td>Pro/Max plan</td></tr>
+          <tr><td><strong>DevTools MCP</strong></td><td>No - separate lookalike profile</td><td>None - gets stuck</td><td>N/A (separate browser)</td><td>Weak, unsupported</td><td>Tool calls, some batching</td><td>Free OSS</td></tr>
+          <tr><td><strong>Lightpanda</strong></td><td>No - DIY cookies</td><td>None</td><td>N/A headless</td><td>Recent, unstable</td><td>CDP scripts, very fast</td><td>Free AGPL · self-host</td></tr>
+          <tr><td><strong>Comet</strong></td><td>Yes - full user privileges (the problem)</td><td>None</td><td>None</td><td>Paid background assistants</td><td>No external API</td><td>Free-$200/mo</td></tr>
+          <tr><td><strong>Firecrawl</strong></td><td>No - anonymous cloud renders</td><td>None</td><td>N/A</td><td>Plan-gated</td><td>Credit API, 1/page</td><td>Free-$599/mo</td></tr>
+        </table>
+        </div>
+        <p class="prose">Only three rows answer "yes" to question 1 without failing question 6: ego lite, agent-browser, Anchor. Only one of those is free with both a handoff protocol and a hard user-wins boundary.</p>
+
+        <h2 class="spec-head">What I keep</h2>
+        <ul class="prose">
+          <li><strong>The six-question sheet is the durable asset.</strong> New agentic browser next month? Same grid, thirty seconds to a category.</li>
+          <li><strong>"Inherits my logins" and "hard user boundary" must come together.</strong> Comet has the first without the second and became the security case study of the category. Any tool offering session inheritance without a runtime-enforced stop deserves suspicion - including Claude's own extension.</li>
+          <li><strong>Batched scripting beats per-click tool calls</strong> on cost, speed and auditability. ego and agent-browser both landed on it independently; it is becoming the pattern.</li>
+          <li><strong>Watchlist:</strong> agent-browser (one handoff protocol away from parity, and cross-platform), Anchor's compiled-plan caching, and Lightpanda's maturity curve for pure scraping.</li>
+        </ul>
+
+        <div class="cta">
+          <h3>Sources</h3>
+          <p class="prose" style="margin-bottom:0">All claims collected 3 Aug 2026 from: <a href="https://github.com/ChromeDevTools/chrome-devtools-mcp">ChromeDevTools/chrome-devtools-mcp</a>, <a href="https://github.com/vercel-labs/agent-browser">vercel-labs/agent-browser</a>, <a href="https://docs.anchorbrowser.io">docs.anchorbrowser.io</a>, <a href="https://github.com/lightpanda-io/browser">lightpanda-io/browser</a> (issues #1854, #2176), <a href="https://brave.com/blog/comet-prompt-injection/">Brave Security</a>, <a href="https://labs.zenity.io/p/perplexedbrowser-how-attackers-can-weaponize-comet-to-takeover-your-1password-vault">Zenity Labs</a>, <a href="https://blog.trailofbits.com/2026/02/20/using-threat-modeling-and-prompt-injection-to-audit-comet/">Trail of Bits</a>, <a href="https://help.openai.com/en/articles/20001371-evolving-atlas-into-chatgpt-for-browser-based-agentic-work">OpenAI help center</a>, <a href="https://code.claude.com/docs/en/chrome">Claude in Chrome docs</a>, and <a href="/blog/agent-browser/">part one of this series</a>. The three boldest claims (Atlas shutdown, the 1Password PoC, the Chrome 136 block) were independently re-verified against those primary sources before publishing.</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/">gal.tidhar.org.il</a> · field notes from the agent trenches
+  </footer>
+</body>
+</html>

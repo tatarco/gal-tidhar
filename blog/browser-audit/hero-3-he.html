@@ -1,0 +1,63 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1200px;height:630px}
+  body{
+    font-family:"IBM Plex Mono","Arial Hebrew","Arial Unicode MS",monospace;
+    background:#0a1628;color:#bae6fd;overflow:hidden;position:relative;
+    background-image:linear-gradient(rgba(125,211,252,.06) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(125,211,252,.06) 1px,transparent 1px);
+    background-size:24px 24px;-webkit-font-smoothing:antialiased;
+  }
+  .frame{position:absolute;inset:28px;border:1px solid rgba(125,211,252,.45);padding:38px 44px;display:flex;flex-direction:column}
+  .eyebrow{font-size:14px;letter-spacing:.16em;color:#7dd3fc;text-transform:uppercase}
+  .foot{position:absolute;bottom:44px;inset-inline-start:74px;font-size:13px;color:rgba(186,230,253,.5);direction:ltr;letter-spacing:.04em}
+
+    .list-title{margin-top:14px;font-size:26px;color:#e0f2fe;letter-spacing:.06em}
+    .rows{flex:1;display:flex;flex-direction:column;justify-content:center;gap:9px;margin-bottom:34px}
+    .row{display:flex;align-items:baseline;gap:18px;font-size:22px}
+    .mark{width:22px;text-align:center;flex:none}
+    .row.x .mark{color:#f87171}.row.ok .mark{color:#7dd3fc}.row.win .mark{color:#fef08a}
+    .name{color:#e0f2fe;font-weight:600;min-width:250px;unicode-bidi:isolate;text-align:start}
+    .row.x .name{color:rgba(224,242,254,.55);text-decoration:line-through;text-decoration-color:rgba(248,113,113,.6)}
+    .verdict{color:#bae6fd}
+    .row.win .name,.row.win .verdict{color:#fef08a}
+  </style></head><body><div class="frame">
+    <div class="eyebrow">הערת שטח / אייג׳נטים</div>
+    <div class="list-title">השורה התחתונה</div>
+    <div class="rows">
+      <div class="row x">
+        <span class="mark">x</span>
+        <span class="name" dir="ltr">Atlas</span>
+        <span class="verdict">נסגרת ב-9 באוגוסט</span>
+      </div><div class="row x">
+        <span class="mark">x</span>
+        <span class="name" dir="ltr">Comet</span>
+        <span class="verdict">נפרצה לכספת 1Password</span>
+      </div><div class="row x">
+        <span class="mark">x</span>
+        <span class="name" dir="ltr">Firecrawl</span>
+        <span class="verdict">סקרייפר, משחק אחר</span>
+      </div><div class="row x">
+        <span class="mark">x</span>
+        <span class="name" dir="ltr">Lightpanda</span>
+        <span class="verdict">בלי רינדור בכלל</span>
+      </div><div class="row x">
+        <span class="mark">x</span>
+        <span class="name" dir="ltr">DevTools MCP</span>
+        <span class="verdict">לא יורש התחברויות</span>
+      </div><div class="row ok">
+        <span class="mark">~</span>
+        <span class="name" dir="ltr">Anchor</span>
+        <span class="verdict">מתחרה - ענן, בתשלום</span>
+      </div><div class="row ok">
+        <span class="mark">~</span>
+        <span class="name" dir="ltr">agent-browser</span>
+        <span class="verdict">מתחרה - בלי מסירה</span>
+      </div><div class="row win">
+        <span class="mark">+</span>
+        <span class="name" dir="ltr">ego lite</span>
+        <span class="verdict">מסירה + המשתמש מנצח</span>
+      </div>
+    </div>
+    <div class="foot">the full audit - gal.tidhar.org.il/blog/browser-audit</div>
+  </div></body></html>
