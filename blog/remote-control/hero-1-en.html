@@ -1,0 +1,43 @@
+<!doctype html><html lang="en" dir="ltr"><head><meta charset="utf-8"><style>
+  @font-face { font-family:'IBM Plex Mono'; src:local('IBM Plex Mono'); }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1200px;height:630px}
+  body{
+    font-family:"IBM Plex Mono","Arial Hebrew","Arial Unicode MS",monospace;
+    background:#0a1628;color:#bae6fd;overflow:hidden;position:relative;
+    background-image:linear-gradient(rgba(125,211,252,.06) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(125,211,252,.06) 1px,transparent 1px);
+    background-size:24px 24px;-webkit-font-smoothing:antialiased;
+  }
+  .frame{position:absolute;inset:28px;border:1px solid rgba(125,211,252,.45);padding:38px 44px;display:flex;flex-direction:column}
+  .eyebrow{font-size:14px;letter-spacing:.16em;color:#7dd3fc;text-transform:uppercase}
+  .foot{position:absolute;bottom:44px;inset-inline-start:74px;font-size:13px;color:rgba(186,230,253,.5);direction:ltr;letter-spacing:.04em}
+  .cyan{color:#7dd3fc} .ink{color:#e0f2fe} .amber{color:#fef08a}
+  .muted{color:rgba(186,230,253,.55)}
+
+    .cols{flex:1;display:flex;align-items:center;gap:26px;margin-top:8px}
+    .col{flex:1;border:1px solid rgba(125,211,252,.28);padding:26px 24px;min-height:300px}
+    .col.new{border-color:#7dd3fc;background:rgba(125,211,252,.06)}
+    .col-label{font-size:16px;letter-spacing:.12em;color:rgba(186,230,253,.55);margin-bottom:20px;text-transform:uppercase}
+    .new-label{color:#fef08a}
+    .li{font-size:22px;line-height:1.6;margin-bottom:14px;padding-inline-start:26px;position:relative;color:#bae6fd}
+    .li::before{position:absolute;inset-inline-start:0}
+    .li.x::before{content:'x';color:#f87171}
+    .li.ok::before{content:'+';color:#7dd3fc}
+    .col.new .li{color:#e0f2fe}
+    .mid{font-size:40px;color:#fef08a}
+  </style></head><body><div class="frame">
+    <div class="eyebrow">FIELD NOTE / CLAUDE CODE</div>
+    <div class="cols">
+      <div class="col old">
+        <div class="col-label">EVERY SESSION</div>
+        <div class="li x">type /remote-control by hand</div><div class="li x">forget once = stuck at the desk</div><div class="li x">away from keys = blind</div>
+      </div>
+      <div class="mid">&rarr;</div>
+      <div class="col new">
+        <div class="col-label new-label">ONE SETTING</div>
+        <div class="li ok">every session auto-connects</div><div class="li ok">approve from your phone</div><div class="li ok">leave the house, keep control</div>
+      </div>
+    </div>
+    <div class="foot">Claude Code - remoteControlAtStartup: true - gal.tidhar.org.il</div>
+  </div></body></html>

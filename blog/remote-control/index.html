@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One line and I drive Claude Code from my phone · Gal Tidhar</title>
+  <meta name="description" content="Claude Code's Remote Control lets you approve prompts and watch a session from claude.ai or the mobile app. By default you type /remote-control every session. One setting - remoteControlAtStartup: true - makes every session boot already connected.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/remote-control/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="One line and I drive Claude Code from my phone">
+  <meta property="og:description" content="By default you type /remote-control at the start of every session. One line in settings.json makes every session boot already connected to your phone.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/remote-control/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/remote-control/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="One line and I drive Claude Code from my phone">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="One line and I drive Claude Code from my phone">
+  <meta name="twitter:description" content="Remote Control, on by default. Every session boots connected to your phone - approve prompts and watch it work from anywhere.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/remote-control/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "One line and I drive Claude Code from my phone",
+    "description": "Claude Code's Remote Control lets you approve prompts and watch a session from claude.ai or the mobile app. One setting makes every session boot already connected.",
+    "image": "https://gal.tidhar.org.il/blog/remote-control/og.png",
+    "datePublished": "2026-08-03",
+    "dateModified": "2026-08-03",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/remote-control/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "Claude Code, Remote Control, settings.json, mobile, agent, DX, remoteControlAtStartup"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="https://code.claude.com/docs/en/remote-control">Docs ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / CLAUDE CODE</span>
+          <p class="role-line">Claude Code · Remote Control · DX</p>
+          <h1 class="title">One line and I drive Claude Code from my phone</h1>
+          <p class="meta-line"><strong>2026-08-03</strong> &nbsp;·&nbsp; ~4 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">For weeks I ran the same little ritual: open a terminal, start Claude Code, then type <code>/remote-control</code> so I could keep an eye on the session from my phone. Great feature, dumb ritual - because the one time you forget is the time you leave the house and the session sits there, stuck on a permission prompt, with nobody near the keyboard to press <em>allow</em>. Turns out there is one line that makes it the default.</p>
+        </header>
+
+        <figure>
+          <img src="og.png" alt="One line and I drive Claude Code from my phone" loading="lazy">
+          <figcaption>The whole change, in one settings key.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">What Remote Control actually is</h2>
+        <p class="prose"><strong>Remote Control</strong> links a terminal Claude Code session to <a href="https://claude.ai/code">claude.ai</a> and the mobile app. Once a session is registered, you can watch every tool call live on your phone, answer Claude's questions, approve or deny permission prompts, and stop it - from the elevator, the car, the beach. The Mac stays the <em>runner</em>; the phone becomes the <em>remote</em>.</p>
+        <p class="prose">By default it is off. You turn it on per session with the <code>/remote-control</code> command (or by launching with <code>claude --remote-control</code>). Which is fine, until it is the fifth time today and you forgot on the sixth.</p>
+
+        <h2 class="spec-head">The one line</h2>
+        <p class="prose">There is a setting that arms the bridge automatically for every interactive session. In <code>~/.claude/settings.json</code>:</p>
+        <pre><code>{
+  "remoteControlAtStartup": true
+}</code></pre>
+        <p class="prose">That is it. Every new session now boots already connected - nothing to type, nothing to remember. If you prefer clicking to editing JSON, the same switch lives in <code>/config</code> as <strong>"Enable Remote Control for all sessions"</strong>, and in the desktop app under <strong>Settings → Claude Code → Enable remote control by default</strong>.</p>
+        <div class="snap"><strong>Note:</strong> this arms the bridge; your session still shows up on claude.ai and the app under the same account you are logged into. If you ever want a one-off session <em>without</em> it, you can still opt out for that run - the setting just flips the default from off to on.</div>
+
+        <h2 class="spec-head">Why it changed more than my convenience</h2>
+        <p class="prose">I expected "one less command to type". What I did not expect was that it changed <strong>when</strong> I start work. Now I kick off a heavy refactor or a long code review <em>on purpose</em> right before I leave, knowing I can babysit it from my pocket - approve the file writes, answer the one ambiguous question, kill it if it wanders. The machine is the runner, the phone is the remote, and I stopped being chained to the chair just to see whether something got stuck.</p>
+        <p class="prose">The failure mode it kills is specific and annoying: an agent that is <em>done thinking</em> and just waiting on a yes/no, while you are three kilometres away. With the bridge always on, that prompt follows you instead of freezing the run.</p>
+
+        <h2 class="spec-head">A couple of honest caveats</h2>
+        <ol class="prose">
+          <li><strong>It is your account's session, on the network.</strong> Remote Control mirrors the session to claude.ai. That is the whole point, but it means a shared or sensitive machine is a deliberate choice, not a default you forgot you flipped. Admins can hard-disable the whole feature with <code>disableRemoteControl</code>.</li>
+          <li><strong>Approving from a phone is easy - too easy.</strong> The same one-tap <em>allow</em> that unblocks you from the road will also wave through a command you would have paused on at the desk. The remote does not make you read more carefully; keep the risky stuff for when you are actually looking.</li>
+          <li><strong>It is per interactive session, not background jobs.</strong> This arms normal sessions you start yourself. It is not a scheduler - if you want unattended runs, that is a different mechanism.</li>
+        </ol>
+
+        <div class="cta">
+          <h3>Try it</h3>
+          <p class="prose" style="margin-bottom:.4rem">Add the key to <code>~/.claude/settings.json</code> and start a fresh session - it comes up connected. Then open the app and watch it work:</p>
+          <pre style="margin-bottom:0"><code># ~/.claude/settings.json
+{
+  "remoteControlAtStartup": true
+}</code></pre>
+          <div class="link-row">
+            <a href="https://code.claude.com/docs/en/remote-control">Remote Control docs ↗</a><span class="sep">·</span>
+            <a href="/blog/hebrew-terminal/">More Claude Code tooling</a><span class="sep">·</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
