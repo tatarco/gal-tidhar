@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I cannot hit my Claude Code limit, and the logs explain why · Gal Tidhar</title>
+  <meta name="description" content="13.9 billion tokens in 59 days on a $200 plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/cache-economics/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="I cannot hit my Claude Code limit, and the logs explain why">
+  <meta property="og:description" content="13.9 billion tokens in 59 days on a $200 plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/cache-economics/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/cache-economics/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="96.3 percent of every token sent is the model re-reading context it already saw">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="I cannot hit my Claude Code limit, and the logs explain why">
+  <meta name="twitter:description" content="13.9 billion tokens in 59 days on a $200 plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/cache-economics/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "I cannot hit my Claude Code limit, and the logs explain why",
+    "description": "13.9 billion tokens in 59 days on a $200 plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.",
+    "image": "https://gal.tidhar.org.il/blog/cache-economics/og.png",
+    "datePublished": "2026-08-08",
+    "dateModified": "2026-08-08",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/cache-economics/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" }
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="https://github.com/tatarco/claude-code-starter">Repo &nearr;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / COST</span>
+          <p class="role-line">Claude Code · prompt caching · 59 days of logs</p>
+          <h1 class="title">I cannot hit my Claude Code limit, and the logs explain why</h1>
+          <p class="meta-line"><strong>2026-08-08</strong> &nbsp;·&nbsp; ~8 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">Every week I see someone burn through a <strong>$200 plan</strong> and buy a second one. I use Claude Code harder than most of them and it does not happen to me, which bothered me enough to open two months of my own logs. One number explains the whole thing: <strong>96.3% of my tokens are cache reads</strong>. This is what that means, and the five decisions that follow from it.</p>
+        </header>
+
+        <figure>
+          <img src="hero.png" alt="96.3% of every token sent is the model re-reading context it already saw - 13.9 billion tokens, 59 days, one $200 plan" loading="lazy">
+          <figcaption>The number that made everything else make sense.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The receipts</h2>
+        <p>These are my real numbers, read out of local session logs with <code>ccusage</code>, over 59 days (2026-06-11 to 2026-08-08):</p>
+        <table class="spec-table">
+          <tr><th>Metric</th><th>Value</th></tr>
+          <tr><td>Total tokens</td><td>13,932M (13.9 billion)</td></tr>
+          <tr><td>Cache reads</td><td>13,418M &mdash; <strong>96.3%</strong> of all tokens</td></tr>
+          <tr><td>List-price equivalent</td><td>~$9,800</td></tr>
+          <tr><td>What I actually pay</td><td>$200/month</td></tr>
+          <tr><td>Busiest single day</td><td>$1,148 list price, 1,655M tokens</td></tr>
+        </table>
+        <p>The dollar figures are list-price reconstructions from token counts, not an invoice. Read them as throughput, not spend. The ratio is the point.</p>
+
+        <h2 class="spec-head">Why the ratio is 96%</h2>
+        <p>Claude does not remember your conversation. The API is stateless, so on <em>every single turn</em> Claude Code re-sends the entire conversation from the beginning. Your typing and the model's replies are a rounding error next to that.</p>
+        <p>Prompt caching is what makes it survivable, and it works as a <strong>prefix match</strong>. If the beginning of the request is byte-identical to the previous turn's, that span is served from cache at roughly a tenth of the input price. If anything upstream changed, the prefix is rewritten at up to 2x input price.</p>
+        <blockquote>Any byte change anywhere in the prefix invalidates everything after it. Render order is <code>tools</code> &rarr; <code>system</code> &rarr; <code>messages</code>, so a change near the front is the most expensive kind.</blockquote>
+        <p>So in a long session, the overwhelming majority of your tokens are cache reads: the model re-reading context in order to work. That inverts the obvious instinct. Sending fewer messages barely helps. What helps is keeping the prefix stable, keeping the context small, and never paying a cache rebuild you did not have to.</p>
+
+        <h2 class="spec-head">What caching is actually worth</h2>
+        <p>I ran the counterfactual on my own token counts: the same work, priced as if every cached token had been billed at full input rate.</p>
+        <table class="spec-table">
+          <tr><th>Scenario</th><th>Cost</th></tr>
+          <tr><td>Without prompt caching</td><td>$65,628</td></tr>
+          <tr><td>What it actually came to</td><td>$9,778</td></tr>
+          <tr><td>Difference</td><td><strong>$55,850 &mdash; 85% of the bill</strong></td></tr>
+        </table>
+        <p>Caching is not a tuning tip you get around to later. It is most of the bill. Everything below is a way of not breaking it.</p>
+
+        <h2 class="spec-head">The five levers</h2>
+
+        <h3>1. Never switch models mid-session</h3>
+        <p>Caches are model-scoped. Switching the main model mid-conversation invalidates the entire prefix and rebuilds it from scratch, at write prices. Pick at session start and stay. Routing work to a cheaper model inside a <em>subagent</em> is free of this problem, because the subagent has its own context.</p>
+
+        <h3>2. Push research into subagents, on the cheapest model that can do it</h3>
+        <p>A subagent begins with a clean, small context and discards it afterwards. Pages fetched from the web never enter your main context, so they never get re-read by it on every subsequent turn. Only the conclusion comes back. The saving is not mainly the per-token price of the cheaper model, it is the context that never grows.</p>
+        <p>My own split makes the point:</p>
+        <table class="spec-table">
+          <tr><th>Model</th><th>Tokens</th><th>List cost</th></tr>
+          <tr><td>Opus 4.8</td><td>9,751M</td><td>$8,332</td></tr>
+          <tr><td>Opus 5</td><td>2,565M</td><td>$2,032</td></tr>
+          <tr><td>Haiku 4.5</td><td>957M</td><td>$172</td></tr>
+          <tr><td>Sonnet 5</td><td>529M</td><td>$217</td></tr>
+        </table>
+        <p>Haiku did nearly a billion tokens of reading, searching and browser-driving for $172. That work does not need a frontier model, and more importantly it stayed out of my main window.</p>
+
+        <h3>3. Compact early</h3>
+        <p>A window that has drifted to 85% full is re-read at 85% full on <em>every subsequent turn</em> for the rest of the session. Compacting early makes every later turn cheaper; it pays for itself within a few turns and keeps paying. I set <code>CLAUDE_AUTOCOMPACT_PCT_OVERRIDE</code> to compact well before the default.</p>
+        <div class="snap"><strong>Two caveats</strong> that are easy to get wrong: the variable can only <em>lower</em> the threshold (values above the default are ignored), and it only applies in sessions that compact before the model's context limit &mdash; so pair it with an explicit auto-compact window.</div>
+
+        <h3>4. Never wake a huge stale session with a one-line question</h3>
+        <p>This is the expensive failure the whole setup exists to prevent. Leave a large session idle past the cache TTL, come back, type one line: that line pays to re-upload the entire conversation from scratch. On a session that has grown near a million tokens, a single sentence can cost several dollars. Start a new session instead.</p>
+
+        <h3>5. Audit your skill shelf</h3>
+        <p>Every installed skill's name and description sits in <em>every</em> session's system prompt and is re-read on every turn. Mine, measured:</p>
+        <table class="spec-table">
+          <tr><th>Component</th><th>Tokens</th></tr>
+          <tr><td>Skills (frontmatter only, 164 skills)</td><td>16,513</td></tr>
+          <tr><td>Core system</td><td>12,900</td></tr>
+          <tr><td>CLAUDE.md + memory index</td><td>2,074</td></tr>
+          <tr><td>Real measured session baseline</td><td><strong>51,013</strong></td></tr>
+        </table>
+        <p>51k tokens before I type a word, re-read every turn. A large shelf is a permanent per-turn tax. Install what you will actually use.</p>
+
+        <h2 class="spec-head">Two things that are not settings</h2>
+
+        <h3>Keep sessions alive instead of restarting them</h3>
+        <p>I run <a href="https://cmux.io/" target="_blank" rel="noopener">cmux</a> with seven workspaces open at once, each holding its own live context. I switch between them rather than closing and reopening sessions, so the context stays warm and the cache stays valid. The alternative &mdash; one terminal, serially reopened &mdash; pays a cold rebuild every time you come back to a thread.</p>
+
+        <h3>Put the number on screen</h3>
+        <p>You cannot fix a cost you cannot see. My status line shows context fill, session cost, and the 5-hour and 7-day plan windows, always. There is one non-obvious detail worth knowing if you want to build on it:</p>
+        <blockquote><code>rate_limits</code> is delivered to the status line and to no hook payload. If you want a hook that reacts to how much of your plan you have burned, the status line has to write that data down for it.</blockquote>
+        <p>So my status line tees its stdin to a file, and a <code>Stop</code> hook reads it and warns me once per session when the 5-hour window passes 80%. Getting cut off mid-refactor costs more than the tokens do.</p>
+
+        <h2 class="spec-head">Four things I had wrong</h2>
+        <p>Writing this up meant checking my own settings against the current docs, and four of them did not survive:</p>
+        <table class="spec-table">
+          <tr><th>What I had</th><th>What is actually true</th></tr>
+          <tr><td><code>BASH_MAX_OUTPUT_LENGTH: 50000</code>, described as insurance against unbounded output</td><td>The default is <strong>30,000</strong>, so I had <em>raised</em> the limit, not capped it. It also sets the read-back window rather than what reaches context: output over ~30,000 characters arrives as a file path plus preview either way.</td></tr>
+          <tr><td><code>MAX_MCP_OUTPUT_TOKENS: 25000</code></td><td>25,000 <strong>is</strong> the default. The setting did nothing.</td></tr>
+          <tr><td>Auto-compact override as a simple "compact earlier" knob</td><td>It can only lower the threshold, and only applies when the session compacts before the model's context limit.</td></tr>
+          <tr><td>A note to go enable deferred MCP tool loading</td><td>MCP tool search is <strong>on by default</strong> now. Nothing to do.</td></tr>
+        </table>
+        <p>Three of the four were settings that felt productive and did nothing. That is the normal state of a config file nobody re-reads.</p>
+
+        <h2 class="spec-head">Measuring your own</h2>
+        <pre><code>npx ccusage@latest daily --breakdown   # your real history, split by model
+npx ccusage@latest blocks --live       # the live 5-hour window
+/usage                                 # plan limits and reset windows
+/cost                                  # the current session</code></pre>
+        <p><code>ccusage</code> is third-party and reads only local session logs; nothing is uploaded. Its dollar figures are list-price reconstructions, so they will not match a subscription invoice.</p>
+        <p>The single number to look for is your cache-read share. If it is not in the 90s, something in your prefix is churning, and that is where your plan is going.</p>
+
+        <div class="cta">
+          <h3>The config, as a repo</h3>
+          <p>My settings, the status line, and the usage-guard hook are public and generic &mdash; no personal skills, no bespoke scripts. It ships a self-test and refuses to install if the test fails.</p>
+          <div class="link-row">
+            <a href="https://github.com/tatarco/claude-code-starter">github.com/tatarco/claude-code-starter</a>
+            <span class="sep">·</span>
+            <a href="https://code.claude.com/docs/en/statusline" target="_blank" rel="noopener">status line docs &nearr;</a>
+            <span class="sep">·</span>
+            <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching" target="_blank" rel="noopener">prompt caching docs &nearr;</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/">gal.tidhar.org.il</a> &nbsp;·&nbsp; field notes on agents, cost, and the boring parts that decide both
+  </footer>
+</body>
+</html>
