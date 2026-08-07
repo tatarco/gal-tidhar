@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>I cannot hit my Claude Code limit, and the logs explain why · Gal Tidhar</title>
-  <meta name="description" content="13.9 billion tokens in 59 days on a $200 plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
+  <meta name="description" content="13.9 billion tokens in 59 days on a Max 20x plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/cache-economics/">
   <meta name="theme-color" content="#0a1628">
@@ -12,7 +12,7 @@
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
   <meta property="og:title" content="I cannot hit my Claude Code limit, and the logs explain why">
-  <meta property="og:description" content="13.9 billion tokens in 59 days on a $200 plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
+  <meta property="og:description" content="13.9 billion tokens in 59 days on a Max 20x plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/cache-economics/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/cache-economics/og.png">
   <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
   <meta property="og:image:alt" content="96.3 percent of every token sent is the model re-reading context it already saw">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="I cannot hit my Claude Code limit, and the logs explain why">
-  <meta name="twitter:description" content="13.9 billion tokens in 59 days on a $200 plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
+  <meta name="twitter:description" content="13.9 billion tokens in 59 days on a Max 20x plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
   <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/cache-economics/og.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
   <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -30,7 +30,7 @@
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "I cannot hit my Claude Code limit, and the logs explain why",
-    "description": "13.9 billion tokens in 59 days on a $200 plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.",
+    "description": "13.9 billion tokens in 59 days on a Max 20x plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.",
     "image": "https://gal.tidhar.org.il/blog/cache-economics/og.png",
     "datePublished": "2026-08-08",
     "dateModified": "2026-08-08",
@@ -120,13 +120,20 @@
           <p class="role-line">Claude Code · prompt caching · 59 days of logs</p>
           <h1 class="title">I cannot hit my Claude Code limit, and the logs explain why</h1>
           <p class="meta-line"><strong>2026-08-08</strong> &nbsp;·&nbsp; ~8 min read &nbsp;·&nbsp; by Gal Tidhar</p>
-          <p class="lead">Every week I see someone burn through a <strong>$200 plan</strong> and buy a second one. I use Claude Code harder than most of them and it does not happen to me, which bothered me enough to open two months of my own logs. One number explains the whole thing: <strong>96.3% of my tokens are cache reads</strong>. This is what that means, and the five decisions that follow from it.</p>
+          <p class="lead">Every week I see someone burn through their plan and buy a second one. I use Claude Code harder than most of them and it does not happen to me, which bothered me enough to open two months of my own logs. One number explains the whole thing: <strong>96.3% of my tokens are cache reads</strong>. This is what that means, and the five decisions that follow from it.</p>
         </header>
 
         <figure>
-          <img src="hero.png" alt="96.3% of every token sent is the model re-reading context it already saw - 13.9 billion tokens, 59 days, one $200 plan" loading="lazy">
+          <img src="hero.png" alt="96.3% of every token sent is the model re-reading context it already saw - 13.9 billion tokens, 59 days, one Max 20x plan" loading="lazy">
           <figcaption>The number that made everything else make sense.</figcaption>
         </figure>
+
+        <h2 class="spec-head">Before the numbers: what I actually pay</h2>
+        <div class="snap"><strong>Every dollar figure on this page is hypothetical.</strong> They are my
+        real token counts priced at Anthropic's public API list rates, which is the only way to express
+        volume in a unit people recognise. <strong>I did not spend that money.</strong> I pay
+        <strong>&euro;180 a month for a Max 20x plan</strong> and that is the entire bill. The plan
+        sponsors all of it. Read the dollars as throughput, and the ratios as the actual finding.</div>
 
         <h2 class="spec-head">The receipts</h2>
         <p>These are my real numbers, read out of local session logs with <code>ccusage</code>, over 59 days (2026-06-11 to 2026-08-08):</p>
@@ -134,11 +141,11 @@
           <tr><th>Metric</th><th>Value</th></tr>
           <tr><td>Total tokens</td><td>13,932M (13.9 billion)</td></tr>
           <tr><td>Cache reads</td><td>13,418M &mdash; <strong>96.3%</strong> of all tokens</td></tr>
-          <tr><td>List-price equivalent</td><td>~$9,800</td></tr>
-          <tr><td>What I actually pay</td><td>$200/month</td></tr>
-          <tr><td>Busiest single day</td><td>$1,148 list price, 1,655M tokens</td></tr>
+          <tr><td>Same tokens at API list price</td><td>~$9,800 <em>(hypothetical)</em></td></tr>
+          <tr><td>What I actually pay</td><td>&euro;180/month, Max 20x</td></tr>
+          <tr><td>Busiest single day</td><td>1,655M tokens (~$1,148 at list price)</td></tr>
         </table>
-        <p>The dollar figures are list-price reconstructions from token counts, not an invoice. Read them as throughput, not spend. The ratio is the point.</p>
+        <p>The ratio is the point. It is the one number here that does not depend on any pricing assumption.</p>
 
         <h2 class="spec-head">Why the ratio is 96%</h2>
         <p>Claude does not remember your conversation. The API is stateless, so on <em>every single turn</em> Claude Code re-sends the entire conversation from the beginning. Your typing and the model's replies are a rounding error next to that.</p>
@@ -147,14 +154,14 @@
         <p>So in a long session, the overwhelming majority of your tokens are cache reads: the model re-reading context in order to work. That inverts the obvious instinct. Sending fewer messages barely helps. What helps is keeping the prefix stable, keeping the context small, and never paying a cache rebuild you did not have to.</p>
 
         <h2 class="spec-head">What caching is actually worth</h2>
-        <p>I ran the counterfactual on my own token counts: the same work, priced as if every cached token had been billed at full input rate.</p>
+        <p>I ran the counterfactual on my own token counts: the same work, priced as if every cached token had been billed at full input rate. Both rows below are hypothetical; the gap between them is not.</p>
         <table class="spec-table">
           <tr><th>Scenario</th><th>Cost</th></tr>
-          <tr><td>Without prompt caching</td><td>$65,628</td></tr>
-          <tr><td>What it actually came to</td><td>$9,778</td></tr>
+          <tr><td>At list price, without caching</td><td>$65,628</td></tr>
+          <tr><td>At list price, with caching</td><td>$9,778</td></tr>
           <tr><td>Difference</td><td><strong>$55,850 &mdash; 85% of the bill</strong></td></tr>
         </table>
-        <p>Caching is not a tuning tip you get around to later. It is most of the bill. Everything below is a way of not breaking it.</p>
+        <p>Caching absorbs 85% of the difference. On a subscription you never see that as money, which is exactly why it is invisible until you hit a limit and cannot work out why. Everything below is a way of not breaking it.</p>
 
         <h2 class="spec-head">The five levers</h2>
 
@@ -171,7 +178,7 @@
           <tr><td>Haiku 4.5</td><td>957M</td><td>$172</td></tr>
           <tr><td>Sonnet 5</td><td>529M</td><td>$217</td></tr>
         </table>
-        <p>Haiku did nearly a billion tokens of reading, searching and browser-driving for $172. That work does not need a frontier model, and more importantly it stayed out of my main window.</p>
+        <p>Haiku did nearly a billion tokens of reading, searching and browser-driving at roughly a forty-eighth of Opus 4.8's cost per token. That work does not need a frontier model, and more importantly it stayed out of my main window.</p>
 
         <h3>3. Compact early</h3>
         <p>A window that has drifted to 85% full is re-read at 85% full on <em>every subsequent turn</em> for the rest of the session. Compacting early makes every later turn cheaper; it pays for itself within a few turns and keeps paying. I set <code>CLAUDE_AUTOCOMPACT_PCT_OVERRIDE</code> to compact well before the default.</p>
@@ -217,7 +224,7 @@
 npx ccusage@latest blocks --live       # the live 5-hour window
 /usage                                 # plan limits and reset windows
 /cost                                  # the current session</code></pre>
-        <p><code>ccusage</code> is third-party and reads only local session logs; nothing is uploaded. Its dollar figures are list-price reconstructions, so they will not match a subscription invoice.</p>
+        <p><code>ccusage</code> is third-party and reads only local session logs; nothing is uploaded. Its dollar figures are list-price reconstructions and will not match a subscription invoice &mdash; on a Max plan there is no per-token invoice to match.</p>
         <p>The single number to look for is your cache-read share. If it is not in the 90s, something in your prefix is churning, and that is where your plan is going.</p>
 
         <div class="cta">
