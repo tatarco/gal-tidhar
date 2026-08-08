@@ -145,10 +145,8 @@ first, then paste this as your own first comment. The post body already ends on 
 the pointer line one paragraph above it.</p>
 <div class="copybar"><button class="copybtn" data-copy="comment-text">Copy first comment</button></div>
 <pre id="comment-text" class="term">{html.escape(COMMENT)}</pre>
-<div class="note"><b>The URL is not live yet.</b> <code>gal.tidhar.org.il/blog/cmux/</code> is written
-and committed locally but not pushed - it goes live the moment I push, which I am holding until you
-pick a hero (the push also sets <code>og.png</code>). Do not post the comment before that or the link
-404s.</div>
+<div class="note"><b>The link is live</b> - <code>gal.tidhar.org.il/blog/cmux/</code> returns 200,
+verified just now. Safe to paste the moment you have posted.</div>
 
 <h2>02 &middot; Pick the hero</h2>
 <p class="why">Six designs, each in English and Hebrew. The post is Hebrew, so the Hebrew version is
