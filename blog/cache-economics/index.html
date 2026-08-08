@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>I cannot hit my Claude Code limit, and the logs explain why · Gal Tidhar</title>
-  <meta name="description" content="13.9 billion tokens in 59 days on a Max 20x plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
+  <meta name="description" content="People burn a Max plan in days. I ran 13.9 billion tokens through mine in two months and still cannot hit the limit. 96.3% of my tokens are cache reads, and cached tokens draw your plan limit at the cached rate.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/cache-economics/">
   <meta name="theme-color" content="#0a1628">
@@ -12,7 +12,7 @@
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
   <meta property="og:title" content="I cannot hit my Claude Code limit, and the logs explain why">
-  <meta property="og:description" content="13.9 billion tokens in 59 days on a Max 20x plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
+  <meta property="og:description" content="People burn a Max plan in days. I ran 13.9 billion tokens through mine in two months and still cannot hit the limit. 96.3% of my tokens are cache reads, and cached tokens draw your plan limit at the cached rate.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/cache-economics/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/cache-economics/og.png">
   <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
   <meta property="og:image:alt" content="96.3 percent of every token sent is the model re-reading context it already saw">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="I cannot hit my Claude Code limit, and the logs explain why">
-  <meta name="twitter:description" content="13.9 billion tokens in 59 days on a Max 20x plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.">
+  <meta name="twitter:description" content="People burn a Max plan in days. I ran 13.9 billion tokens through mine in two months and still cannot hit the limit. 96.3% of my tokens are cache reads, and cached tokens draw your plan limit at the cached rate.">
   <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/cache-economics/og.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
   <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -30,7 +30,7 @@
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "I cannot hit my Claude Code limit, and the logs explain why",
-    "description": "13.9 billion tokens in 59 days on a Max 20x plan. 96.3% of them were cache reads. The prompt cache is a prefix match, and once you see that, every cost decision changes.",
+    "description": "People burn a Max plan in days. I ran 13.9 billion tokens through mine in two months and still cannot hit the limit. 96.3% of my tokens are cache reads, and cached tokens draw your plan limit at the cached rate.",
     "image": "https://gal.tidhar.org.il/blog/cache-economics/og.png",
     "datePublished": "2026-08-08",
     "dateModified": "2026-08-08",
@@ -116,73 +116,49 @@
     <div class="wrap">
       <article>
         <header class="sheet">
-          <span class="sheet-rev">FIELD NOTE / COST</span>
+          <span class="sheet-rev">FIELD NOTE / LIMITS</span>
           <p class="role-line">Claude Code · prompt caching · 59 days of logs</p>
           <h1 class="title">I cannot hit my Claude Code limit, and the logs explain why</h1>
           <p class="meta-line"><strong>2026-08-08</strong> &nbsp;·&nbsp; ~8 min read &nbsp;·&nbsp; by Gal Tidhar</p>
-          <p class="lead">Every week I see someone burn through their plan and buy a second one. I use Claude Code harder than most of them and it does not happen to me, which bothered me enough to open two months of my own logs. One number explains the whole thing: <strong>96.3% of my tokens are cache reads</strong>. This is what that means, and the five decisions that follow from it.</p>
+          <p class="lead">Every week I see someone burn through their plan in days and buy a second one. I am a heavier user than most of them &mdash; <strong>13.9 billion tokens in two months</strong> &mdash; and I almost never touch my limit. That gap bothered me enough to open my own logs. One number explains it: <strong>96.3% of my tokens are cache reads</strong>, and cache reads draw your plan limit at the cached rate.</p>
         </header>
 
         <figure>
-          <img src="hero.png" alt="96.3% of every token sent is the model re-reading context it already saw - 13.9 billion tokens, 59 days, one Max 20x plan" loading="lazy">
+          <img src="hero.png" alt="96.3% of every token sent is the model re-reading context it already saw, at the cached rate" loading="lazy">
           <figcaption>The number that made everything else make sense.</figcaption>
         </figure>
 
-        <h2 class="spec-head">Before the numbers: what I actually pay</h2>
-        <div class="snap"><strong>Every dollar figure on this page is hypothetical.</strong> They are my
-        real token counts priced at Anthropic's public API list rates, which is the only way to express
-        volume in a unit people recognise. <strong>I did not spend that money.</strong> I pay
-        <strong>&euro;180 a month for a Max 20x plan</strong> and that is the entire bill. The plan
-        sponsors all of it. Read the dollars as throughput, and the ratios as the actual finding.</div>
-
         <h2 class="spec-head">The receipts</h2>
-        <p>These are my real numbers, read out of local session logs with <code>ccusage</code>, over 59 days (2026-06-11 to 2026-08-08):</p>
+        <p>Read out of local session logs with <code>ccusage</code>, over 59 days (2026-06-11 to 2026-08-08):</p>
         <table class="spec-table">
           <tr><th>Metric</th><th>Value</th></tr>
           <tr><td>Total tokens</td><td>13,932M (13.9 billion)</td></tr>
           <tr><td>Cache reads</td><td>13,418M &mdash; <strong>96.3%</strong> of all tokens</td></tr>
-          <tr><td>Same tokens at API list price</td><td>~$9,800 <em>(hypothetical)</em></td></tr>
-          <tr><td>What I actually pay</td><td>&euro;180/month, Max 20x</td></tr>
-          <tr><td>Busiest single day</td><td>1,655M tokens (~$1,148 at list price)</td></tr>
+          <tr><td>Busiest single day</td><td>1,655M tokens</td></tr>
+          <tr><td>Plan</td><td>Max 20x</td></tr>
+          <tr><td>7-day window, typical</td><td>around a third consumed</td></tr>
         </table>
-        <p>The ratio is the point. It is the one number here that does not depend on any pricing assumption.</p>
+        <div class="snap">For scale, once and then I will drop it: that volume priced at public API list rates would be somewhere around <strong>$10,000</strong>. I did not spend that. It is a subscription, the plan covers it, and dollars are the wrong unit for this story anyway. <strong>The unit that matters is your limit.</strong></div>
 
-        <h2 class="spec-head">Why the ratio is 96%</h2>
+        <h2 class="spec-head">Why the ratio decides everything</h2>
         <p>Claude does not remember your conversation. The API is stateless, so on <em>every single turn</em> Claude Code re-sends the entire conversation from the beginning. Your typing and the model's replies are a rounding error next to that.</p>
-        <p>Prompt caching is what makes it survivable, and it works as a <strong>prefix match</strong>. If the beginning of the request is byte-identical to the previous turn's, that span is served from cache at roughly a tenth of the input price. If anything upstream changed, the prefix is rewritten at up to 2x input price.</p>
-        <blockquote>Any byte change anywhere in the prefix invalidates everything after it. Render order is <code>tools</code> &rarr; <code>system</code> &rarr; <code>messages</code>, so a change near the front is the most expensive kind.</blockquote>
-        <p>So in a long session, the overwhelming majority of your tokens are cache reads: the model re-reading context in order to work. That inverts the obvious instinct. Sending fewer messages barely helps. What helps is keeping the prefix stable, keeping the context small, and never paying a cache rebuild you did not have to.</p>
+        <p>Prompt caching is what makes that survivable, and it works as a <strong>prefix match</strong>. If the beginning of the request is byte-identical to the previous turn's, that span is re-read at the cached rate instead of being reprocessed.</p>
+        <p>Here is the part that took me a while to internalise, and it is the whole article:</p>
+        <blockquote>Your plan limit is consumed by tokens processed, and <strong>the cached rate applies to the limit too</strong>. A cache read is not just cheaper, it eats less of your allowance. The same work, cached, moves you toward the ceiling far more slowly.</blockquote>
+        <p>Which means I am not doing less work than the people who run out. I am doing the same work without breaking the cache. The official docs put it plainly: with prompt caching, Claude Code re-reads history at the cached token rate, so a one-line question in a session that has been open all day still draws usage for the whole conversation.</p>
 
-        <h2 class="spec-head">What caching is actually worth</h2>
-        <p>I ran the counterfactual on my own token counts: the same work, priced as if every cached token had been billed at full input rate. Both rows below are hypothetical; the gap between them is not.</p>
-        <table class="spec-table">
-          <tr><th>Scenario</th><th>Cost</th></tr>
-          <tr><td>At list price, without caching</td><td>$65,628</td></tr>
-          <tr><td>At list price, with caching</td><td>$9,778</td></tr>
-          <tr><td>Difference</td><td><strong>$55,850 &mdash; 85% of the bill</strong></td></tr>
-        </table>
-        <p>Caching absorbs 85% of the difference. On a subscription you never see that as money, which is exactly why it is invisible until you hit a limit and cannot work out why. Everything below is a way of not breaking it.</p>
+        <h2 class="spec-head">The trap: the most expensive turn of your day</h2>
+        <p>What breaks it is a <strong>cache miss</strong>. On a subscription the cache lifetime is <strong>one hour</strong>. Come back to a large session after two hours, type one line, and that line reprocesses the entire conversation at full rate.</p>
+        <p>It is the single worst turn you will take all day, and it is disguised as a small question. Multiply it by a few abandoned sessions and that is a plan burned in days, with nothing on screen to explain it.</p>
 
         <h2 class="spec-head">One rule, five ways to keep it</h2>
-        <p>These are not five separate tips. They are five ways of not breaking the same thing. <strong>Keep the prefix stable and keep it small</strong> &mdash; everything below follows from that.</p>
+        <p>These are not five separate tips. They are five ways of not breaking the same thing. <strong>Keep the prefix stable and keep it small.</strong></p>
 
         <h3>1. Never switch models mid-session</h3>
-        <p>Caches are model-scoped. Switching the main model mid-conversation invalidates the entire prefix and rebuilds it from scratch, at write prices. Pick at session start and stay. Routing work to a cheaper model inside a <em>subagent</em> is free of this problem, because the subagent has its own context.</p>
+        <p>Caches are model-scoped. Switching the main model mid-conversation invalidates the whole prefix and rebuilds it. Pick at session start and stay. Routing work to a cheaper model inside a <em>subagent</em> is free of this problem, because the subagent has its own context.</p>
 
-        <h3>2. Push research into subagents, on the cheapest model that can do it</h3>
-        <p>A subagent begins with a clean, small context and discards it afterwards. Pages fetched from the web never enter your main context, so they never get re-read by it on every subsequent turn. Only the conclusion comes back. The saving is not mainly the per-token price of the cheaper model, it is the context that never grows.</p>
-        <p>My own split makes the point:</p>
-        <table class="spec-table">
-          <tr><th>Model</th><th>Tokens</th><th>List cost</th></tr>
-          <tr><td>Opus 4.8</td><td>9,751M</td><td>$8,332</td></tr>
-          <tr><td>Opus 5</td><td>2,565M</td><td>$2,032</td></tr>
-          <tr><td>Haiku 4.5</td><td>957M</td><td>$172</td></tr>
-          <tr><td>Sonnet 5</td><td>529M</td><td>$217</td></tr>
-        </table>
-        <p>That is three deliberate tiers: Opus in the main loop, Sonnet for agents, Haiku for anything touching a browser. <strong>1,558M tokens ran off Opus, 63% cheaper on that slice than if Opus had done it.</strong></p>
-
-        <h3>Make it a default, not a decision</h3>
-        <p>The part I would actually copy is not the tiering itself, it is that one block in <code>CLAUDE.md</code> turns it into the default so I never choose per dispatch:</p>
+        <h3>2. Make the cheap model a default, not a decision</h3>
+        <p>My tiers are Opus in the main loop, Sonnet for agents, Haiku for anything touching a browser. The part worth copying is not the tiering, it is the block in <code>CLAUDE.md</code> that makes it automatic:</p>
         <pre><code>## Agent model selection
 
 **Default is haiku. You must explicitly justify sonnet or opus.**
@@ -196,7 +172,7 @@
 
 Rule: if you are about to write model="sonnet" for a read/search/count/
 browser task, change it to haiku.</code></pre>
-        <p>I counted what that actually produces. Over the last 30 days, across 375 session files:</p>
+        <p>I counted what that produces. Over the last 30 days, across 375 session files:</p>
         <table class="spec-table">
           <tr><th>Subagent dispatches</th><th>Count</th><th>Share</th></tr>
           <tr><td>Explicitly <code>haiku</code></td><td>629</td><td><strong>58.0%</strong></td></tr>
@@ -205,43 +181,69 @@ browser task, change it to haiku.</code></pre>
           <tr><td>No model set (inherits)</td><td>23</td><td>2.1%</td></tr>
           <tr><td><strong>Total</strong></td><td><strong>1,085</strong></td><td></td></tr>
         </table>
-        <p>About <strong>21 Haiku subagents a day</strong>, 827 of them plain <code>general-purpose</code> one-offs, moving <strong>843M tokens</strong> of reading that never touched my main window. The number I find most telling is the last row: only 2% fall through without a model. The policy is doing the choosing.</p>
-        <p>That is the difference between a habit and a default. A habit survives a calm Tuesday; a default survives a bad week. If you copy one thing from this post, copy the block above rather than the intention behind it.</p>
-        <p>Worth being precise about the size of this lever, though: it is real but third-order. Caching is worth $55,850 on the same period and tiering is worth $952. The reason to push work into subagents is not mainly the model price &mdash; it is that a subagent's context is discarded when it finishes, so the thousand pages it read never enter your window and never get re-read by it.</p>
+        <p>About <strong>21 Haiku subagents a day</strong>, 827 of them plain <code>general-purpose</code> one-offs. The telling row is the last one: only 2% fall through without a model. The policy is doing the choosing, not me. That is the difference between a habit and a default &mdash; a habit survives a calm Tuesday, a default survives a bad week.</p>
+        <p>You can set the model on a subagent definition or on a skill:</p>
+        <pre><code># ~/.claude/agents/researcher.md
+---
+name: researcher
+description: Reads and searches; returns conclusions only.
+model: haiku
+---
 
-        <h3>3. Compact early</h3>
-        <p>A window that has drifted to 85% full is re-read at 85% full on <em>every subsequent turn</em> for the rest of the session. Compacting early makes every later turn cheaper; it pays for itself within a few turns and keeps paying. I set <code>CLAUDE_AUTOCOMPACT_PCT_OVERRIDE</code> to compact well before the default.</p>
+# ~/.claude/skills/validate-mock/SKILL.md
+---
+name: validate-mock
+model: haiku       # applies for the rest of the turn
+effort: low
+context: fork      # runs in its own forked context...
+---                # ...and with fork, `model` sets the forked agent's model</code></pre>
+
+        <h3>3. Push every noisy job into a subagent</h3>
+        <p>A subagent starts with a clean context, reads what it needs, and throws all of it away. Only the conclusion comes back. In the last 30 days <strong>843M tokens</strong> of reading went through subagents without entering my main window &mdash; and therefore without being re-read on every subsequent turn for the rest of the day.</p>
+        <p>Where the tokens ran overall:</p>
+        <table class="spec-table">
+          <tr><th>Model</th><th>Tokens</th><th>Share</th></tr>
+          <tr><td>Opus 4.8</td><td>9,751M</td><td>70.0%</td></tr>
+          <tr><td>Opus 5</td><td>2,565M</td><td>18.4%</td></tr>
+          <tr><td>Haiku 4.5</td><td>957M</td><td>6.9%</td></tr>
+          <tr><td>Sonnet 5</td><td>529M</td><td>3.8%</td></tr>
+        </table>
+
+        <h3>4. Compact early</h3>
+        <p>A window that has drifted to 85% full is re-read at 85% full on <em>every subsequent turn</em> for the rest of the session. Compacting early makes every later turn lighter; it pays for itself within a few turns and keeps paying. I set <code>CLAUDE_AUTOCOMPACT_PCT_OVERRIDE</code> to compact well before the default.</p>
         <div class="snap"><strong>Two caveats</strong> that are easy to get wrong: the variable can only <em>lower</em> the threshold (values above the default are ignored), and it only applies in sessions that compact before the model's context limit &mdash; so pair it with an explicit auto-compact window.</div>
 
-        <h3>4. Never wake a huge stale session with a one-line question</h3>
-        <p>This is the expensive failure the whole setup exists to prevent. Leave a large session idle past the cache TTL, come back, type one line: that line pays to re-upload the entire conversation from scratch. On a session that has grown near a million tokens, a single sentence can cost several dollars. Start a new session instead.</p>
-
-        <h3>5. Keep the shelf deep, but frozen</h3>
-        <p>Every installed skill's name and description sits in <em>every</em> session's system prompt and is re-read on every turn. Mine, measured:</p>
+        <h3>5. A deep shelf is fine. A shelf that moves is not.</h3>
+        <p>Every installed skill's name and description sits in every session's system prompt and is re-read on every turn. Mine:</p>
         <table class="spec-table">
           <tr><th>Component</th><th>Tokens</th></tr>
           <tr><td>Skills (frontmatter only, 164 skills)</td><td>16,513</td></tr>
           <tr><td>Core system</td><td>12,900</td></tr>
           <tr><td>CLAUDE.md + memory index</td><td>2,074</td></tr>
-          <tr><td>Real measured session baseline</td><td><strong>51,013</strong></td></tr>
+          <tr><td>Measured session baseline</td><td><strong>51,013</strong></td></tr>
         </table>
-        <p>51k tokens before I type a word, re-read every turn. That sounds like a permanent tax, and I assumed it was one until I priced it.</p>
-        <p>It is not. Those descriptions <strong>never change</strong>, so they sit in exactly the part of the prefix that caches, and get served at a tenth of price on every turn after the first. 16,513 tokens comes to about <strong>1,650 effective tokens per turn</strong> &mdash; roughly <strong>$16 across two thousand turns</strong>. A deep shelf is nearly free.</p>
-        <p>Which is the whole thesis in one example: <strong>size is not what bills you, movement is.</strong> A large static block is the cheapest context you can own. A small volatile one at the front of the prompt is the most expensive. The costs a deep shelf really does carry are window space (5% of mine) and selection noise &mdash; more descriptions mean more chances of reaching for the wrong one. Neither is a dollar.</p>
+        <p>51k tokens before I type a word. That sounds like a permanent tax and I assumed it was one, until I looked at where it sits. Those descriptions <strong>never change</strong>, so they land in exactly the part of the prefix that caches, and after the first turn they are re-read at the cached rate forever.</p>
+        <p>Which is the thesis in one example: <strong>size is not what costs you, movement is.</strong> A large static block is the cheapest context you can own; a small volatile one at the front of the prompt is the most expensive. What a deep shelf really costs is window space and selection noise &mdash; more descriptions mean more chances of reaching for the wrong one.</p>
 
         <h2 class="spec-head">Two things that are not settings</h2>
 
-        <h3>Keep sessions alive instead of restarting them</h3>
-        <p>I run <a href="https://cmux.io/" target="_blank" rel="noopener">cmux</a> with seven workspaces open at once, each holding its own context. Being careful here, because it is easy to state this wrong: <strong>an open terminal does not keep a cache warm.</strong> The cache lives server-side and expires on its TTL whether or not your window is open. Claude Code runs a one-hour TTL, so cycling through several workspaces inside an hour does keep them all valid &mdash; but that is the TTL doing the work, not the terminal.</p>
-        <p>The bigger effect is structural. Seven medium contexts are cheaper than one giant one, because cost scales with how much gets re-read on every turn, and each workspace only re-reads its own thread. One session that absorbs every project drifts toward the top of the window and then re-reads all of it, forever. Splitting the work splits the re-read.</p>
+        <h3>One workspace per task, because it is easier</h3>
+        <p>I run <a href="https://cmux.io/" target="_blank" rel="noopener">cmux</a> with seven workspaces open, and every task gets its own. This sounds like tidiness. It is really about friction.</p>
+        <p>The default failure mode is one window that slowly absorbs everything: the migration you started Monday, the bug from this morning, the unrelated question you had at lunch. Not because that is a good idea, but because opening a fresh session and re-establishing context is a small chore, and dumping one more thing into the window that is already open is not. So the window grows, and every turn re-reads all of it.</p>
+        <p>When a new workspace is one keystroke away, you actually open one. Each workspace re-reads only its own thread, so seven medium contexts cost far less per turn than one that contains all seven. The win is not discipline, it is that the cheap thing became the convenient thing.</p>
+        <p>One correction worth making, because it is easy to state wrong: <strong>an open terminal does not keep a cache warm.</strong> The cache lives server-side and expires on its lifetime whether or not your window is open. On a subscription that lifetime is an hour, so cycling through a handful of workspaces within an hour does keep them all valid &mdash; but that is the lifetime doing the work, not the terminal.</p>
 
         <h3>Put the number on screen</h3>
-        <p>You cannot fix a cost you cannot see. My status line shows context fill, session cost, and the 5-hour and 7-day plan windows, always. There is one non-obvious detail worth knowing if you want to build on it:</p>
+        <p>You cannot fix what you cannot see. My status line shows context fill and both plan windows, always. One non-obvious detail if you want to build on it:</p>
         <blockquote><code>rate_limits</code> is delivered to the status line and to no hook payload. If you want a hook that reacts to how much of your plan you have burned, the status line has to write that data down for it.</blockquote>
-        <p>So my status line tees its stdin to a file, and a <code>Stop</code> hook reads it and warns me once per session when the 5-hour window passes 80%. Getting cut off mid-refactor costs more than the tokens do.</p>
+        <p>So my status line tees its stdin to a file, and a <code>Stop</code> hook reads it and warns me once per session when the 5-hour window passes 80%. Getting cut off mid-refactor is worse than the tokens.</p>
+
+        <h2 class="spec-head">The fastest thing you can check right now</h2>
+        <p>Run <code>/usage</code>. On a subscription it shows a plan-usage breakdown with <strong>behavior flags</strong>: it names any behavior accounting for 10% or more of your recent usage, including <em>cache misses</em> and <em>long context</em>. It also attributes usage to skills, subagents, plugins and individual MCP servers.</p>
+        <p>If you are burning a plan and cannot work out why, the answer is usually sitting in that panel. Press <code>d</code> or <code>w</code> to switch between 24 hours and 7 days.</p>
 
         <h2 class="spec-head">Four things I had wrong</h2>
-        <p>Writing this up meant checking my own settings against the current docs, and four of them did not survive:</p>
+        <p>Writing this up meant checking my own settings against the current docs, and four did not survive:</p>
         <table class="spec-table">
           <tr><th>What I had</th><th>What is actually true</th></tr>
           <tr><td><code>BASH_MAX_OUTPUT_LENGTH: 50000</code>, described as insurance against unbounded output</td><td>The default is <strong>30,000</strong>, so I had <em>raised</em> the limit, not capped it. It also sets the read-back window rather than what reaches context: output over ~30,000 characters arrives as a file path plus preview either way.</td></tr>
@@ -249,14 +251,14 @@ browser task, change it to haiku.</code></pre>
           <tr><td>Auto-compact override as a simple "compact earlier" knob</td><td>It can only lower the threshold, and only applies when the session compacts before the model's context limit.</td></tr>
           <tr><td>A note to go enable deferred MCP tool loading</td><td>MCP tool search is <strong>on by default</strong> now. Nothing to do.</td></tr>
         </table>
-        <p>Three of the four were settings that felt productive and did nothing. That is the normal state of a config file nobody re-reads.</p>
+        <p>Three of the four felt productive and did nothing. That is the normal state of a config file nobody re-reads.</p>
 
         <h2 class="spec-head">Measuring your own</h2>
-        <pre><code>npx ccusage@latest daily --breakdown   # your real history, split by model
-npx ccusage@latest blocks --live       # the live 5-hour window
-/usage                                 # plan limits and reset windows
-/cost                                  # the current session</code></pre>
-        <p><code>ccusage</code> is third-party and reads only local session logs; nothing is uploaded. Its dollar figures are list-price reconstructions and will not match a subscription invoice &mdash; on a Max plan there is no per-token invoice to match.</p>
+        <pre><code>/usage                                 # plan windows + behavior flags
+/context                               # what is eating your window right now
+npx ccusage@latest daily --breakdown   # local history, split by model
+npx ccusage@latest blocks --live       # the live 5-hour window</code></pre>
+        <p><code>ccusage</code> is third-party and reads only local session logs; nothing is uploaded.</p>
         <p>The single number to look for is your cache-read share. If it is not in the 90s, something in your prefix is churning, and that is where your plan is going.</p>
 
         <div class="cta">
@@ -265,9 +267,9 @@ npx ccusage@latest blocks --live       # the live 5-hour window
           <div class="link-row">
             <a href="https://github.com/tatarco/claude-code-starter">github.com/tatarco/claude-code-starter</a>
             <span class="sep">·</span>
-            <a href="https://code.claude.com/docs/en/statusline" target="_blank" rel="noopener">status line docs &nearr;</a>
+            <a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">managing usage &nearr;</a>
             <span class="sep">·</span>
-            <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching" target="_blank" rel="noopener">prompt caching docs &nearr;</a>
+            <a href="https://code.claude.com/docs/en/prompt-caching" target="_blank" rel="noopener">prompt caching &nearr;</a>
           </div>
         </div>
       </article>

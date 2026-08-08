@@ -14,14 +14,14 @@ S = {
         "top": "Claude Code · cost",
         "d1_kicker": "of every token I send",
         "d1_big": "96.3%",
-        "d1_sub": "is the model <b>re-reading</b> context it already saw.",
-        "d1_chips": ["13.9B tokens", "59 days", "Max 20x plan"],
-        "d2": "I ran 13.9 billion tokens through Claude Code in two months.<br>I still have not hit the limit on a <b>Max 20x</b> plan.",
-        "d2_kicker": "the thing nobody measures",
-        "d3_kicker": "same work, two worlds",
-        "d3_a_label": "list price without caching", "d3_a": "65,628",
-        "d3_b_label": "list price with caching", "d3_b": "9,778",
-        "d3_foot": "Neither is my bill. Caching is <b>85%</b> of the difference.",
+        "d1_sub": "is the model <b>re-reading</b> context it already saw - at the cached rate.",
+        "d1_chips": ["13.9B tokens", "59 days", "still not at the limit"],
+        "d2": "People burn a Max plan in days.<br>I ran 13.9 billion tokens in two months and <b>still cannot hit the limit</b>.",
+        "d2_kicker": "same plan, different outcome",
+        "d3_kicker": "the most expensive turn of your day",
+        "d3_a_label": "back within the hour", "d3_a": "cached",
+        "d3_b_label": "back after the hour", "d3_b": "full reprocess",
+        "d3_foot": "One line typed into a stale session reprocesses <b>the entire conversation</b>.",
         "d4_kicker": "why it works",
         "d4_title": "The cache is a <b>prefix match</b>",
         "d4_stable": "stable prefix", "d4_stable_note": "served at 0.1x price",
@@ -30,29 +30,29 @@ S = {
         "d5_kicker": "one rule, five ways to keep it",
         "d5": [("Never switch model mid-session", "a model swap invalidates the entire cache"),
                ("Make cheap models the default", "629 of 1,085 dispatches ran haiku - policy, not discipline"),
-               ("Compact early, around 40%", "an 85%-full window is re-read at 85% every turn"),
+               ("Compact early", "an 85%-full window is re-read at 85% every turn"),
                ("Never wake a huge stale session", "one line pays to re-upload the whole conversation"),
                ("Keep the shelf deep, but frozen", "164 skills, 16,500 tokens - free, because they never move")],
-        "d6_kicker": "where the tokens actually went",
-        "d6_head": ["model", "tokens", "at API list price"],
-        "d6": [("Opus 4.8", "9,751M", "8,332"), ("Opus 5", "2,565M", "2,032"),
-               ("Haiku 4.5", "957M", "172"), ("Sonnet 5", "529M", "217")],
-        "d6_foot": "Haiku did <b>957 million</b> tokens for the price of a nice dinner.",
-        "foot": "Real token counts at API list rates. Actual spend: <b>one Max 20x plan</b> · gal.tidhar.org.il",
+        "d6_kicker": "where the work actually ran",
+        "d6_head": ["model", "tokens", "share"],
+        "d6": [("Opus 4.8", "9,751M", "70.0%"), ("Opus 5", "2,565M", "18.4%"),
+               ("Haiku 4.5", "957M", "6.9%"), ("Sonnet 5", "529M", "3.8%")],
+        "d6_foot": "<b>629 of 1,085</b> subagent dispatches ran Haiku. Policy, not discipline.",
+        "foot": "Measured from 59 days of my own session logs · <b>gal.tidhar.org.il</b>",
     },
     "he": {
         "dir": "rtl", "arrow": "&larr;", "align": "right",
         "top": "קלוד קוד · עלות",
         "d1_kicker": "מכל טוקן שאני שולח",
         "d1_big": "96.3%",
-        "d1_sub": "זה המודל <b>קורא מחדש</b> קונטקסט שהוא כבר ראה.",
-        "d1_chips": ["13.9 מיליארד טוקנים", "59 ימים", "מסלול Max 20x"],
-        "d2": "העברתי 13.9 מיליארד טוקנים בקלוד קוד בחודשיים.<br>ועוד לא נגעתי בלימיט של מסלול <b>Max 20x</b>.",
-        "d2_kicker": "המספר שאף אחד לא מודד",
-        "d3_kicker": "אותה עבודה, שני עולמות",
-        "d3_a_label": "לפי מחירון, בלי caching", "d3_a": "65,628",
-        "d3_b_label": "לפי מחירון, עם caching", "d3_b": "9,778",
-        "d3_foot": "אף אחד מהם הוא לא מה ששילמתי. קאשינג הוא <b>85%</b> מהפער.",
+        "d1_sub": "זה המודל <b>קורא מחדש</b> קונטקסט שכבר ראה, בתעריף מוזל.",
+        "d1_chips": ["13.9 מיליארד טוקנים", "59 ימים", "ועוד לא בלימיט"],
+        "d2": "אנשים שורפים מסלול תוך ימים.<br>אני העברתי 13.9 מיליארד טוקנים בחודשיים <b>ולא מצליח להגיע ללימיט</b>.",
+        "d2_kicker": "אותו מסלול, תוצאה אחרת",
+        "d3_kicker": "התור הכי יקר ביום שלכם",
+        "d3_a_label": "חוזרים תוך שעה", "d3_a": "מה-cache",
+        "d3_b_label": "חוזרים אחרי שעה", "d3_b": "הכל מחדש",
+        "d3_foot": "שורה אחת בסשן ישן מעבדת מחדש את <b>כל השיחה</b>.",
         "d4_kicker": "למה זה עובד",
         "d4_title": "ה-cache הוא <b>התאמת תחילית</b>",
         "d4_stable": "תחילית יציבה", "d4_stable_note": "עשירית מהמחיר",
@@ -64,12 +64,12 @@ S = {
                ("עושים compact מוקדם, בערך ב-40%", "חלון מלא ב-85% נקרא מחדש ב-85% בכל תור"),
                ("לא מעירים סשן ענק וישן", "שורה אחת משלמת על העלאה מחדש של הכל"),
                ("מדף עמוק זה בסדר. מדף שזז זה לא", "164 סקילים, 16,500 טוקנים, בעשירית מחיר כי הם קפואים")],
-        "d6_kicker": "לאן הטוקנים באמת הלכו",
-        "d6_head": ["מודל", "טוקנים", "לפי מחירון API"],
-        "d6": [("Opus 4.8", "9,751M", "8,332"), ("Opus 5", "2,565M", "2,032"),
-               ("Haiku 4.5", "957M", "172"), ("Sonnet 5", "529M", "217")],
-        "d6_foot": "הייקו עשה <b>957 מיליון</b> טוקנים במחיר של ארוחת ערב.",
-        "foot": 'ספירת טוקנים אמיתית לפי מחירון <span class="num">API</span>. בפועל: <b>מסלול <span class="num">Max 20x</span></b> · <span class="num">gal.tidhar.org.il</span>',
+        "d6_kicker": "איפה העבודה באמת רצה",
+        "d6_head": ["מודל", "טוקנים", "נתח"],
+        "d6": [("Opus 4.8", "9,751M", "70.0%"), ("Opus 5", "2,565M", "18.4%"),
+               ("Haiku 4.5", "957M", "6.9%"), ("Sonnet 5", "529M", "3.8%")],
+        "d6_foot": "<b>629 מתוך 1,085</b> סאב-אייג'נטים רצו הייקו. הגדרה, לא משמעת.",
+        "foot": 'נמדד מ-59 ימים של הלוגים שלי · <b><span class="num">gal.tidhar.org.il</span></b>',
     },
 }
 
@@ -110,8 +110,8 @@ D3 = """
 .cell.bad{border-color:rgba(248,113,113,.65)}
 .cell.good{border-color:rgba(125,211,252,.7)}
 .cell .lab{font-size:22px;color:rgba(186,230,253,.66);margin-bottom:12px}
-.cell .val{font-size:66px;font-weight:800}
-.cell.bad .val{color:#f87171;text-decoration:line-through;text-decoration-thickness:3px}
+.cell .val{font-size:46px;font-weight:800}
+.cell.bad .val{color:#f87171}
 .cell.good .val{color:#7dd3fc;text-shadow:0 0 40px rgba(125,211,252,.45)}
 .arw{font-size:52px;color:rgba(186,230,253,.5)}
 .note{font-size:34px;color:#e0f2fe;font-weight:700;margin-top:34px}
@@ -154,11 +154,6 @@ tr.hi td.n{color:#fef08a}
 """
 
 
-def money(lang, n):
-    """Currency must never be baked into an LTR run with the digits."""
-    return f"${n}" if lang == "en" else f'<span class="num">{n}</span> דולר'
-
-
 def render(lang):
     s = S[lang]
     designs = {}
@@ -174,11 +169,11 @@ def render(lang):
 
     # 3 - the concrete before/after
     designs[3] = (D3, f'<div class="kicker">{s["d3_kicker"]}</div><div class="pair">'
-                      f'<div class="cell bad"><div class="lab">{s["d3_a_label"]}</div>'
-                      f'<div class="val">{money(lang, s["d3_a"])}</div></div>'
+                      f'<div class="cell good"><div class="lab">{s["d3_a_label"]}</div>'
+                      f'<div class="val">{s["d3_a"]}</div></div>'
                       f'<div class="arw">{s["arrow"]}</div>'
-                      f'<div class="cell good"><div class="lab">{s["d3_b_label"]}</div>'
-                      f'<div class="val">{money(lang, s["d3_b"])}</div></div></div>'
+                      f'<div class="cell bad"><div class="lab">{s["d3_b_label"]}</div>'
+                      f'<div class="val">{s["d3_b"]}</div></div></div>'
                       f'<div class="note">{s["d3_foot"]}</div>')
 
     # 4 - the mechanism
@@ -200,7 +195,7 @@ def render(lang):
     head = "".join(f"<th>{h}</th>" for h in s["d6_head"])
     rows = "".join(f'<tr class="{"hi" if m.startswith("Haiku") else ""}"><td>{m}</td>'
                    f'<td class="n"><span class="num">{t}</span></td>'
-                   f'<td class="n">{money(lang, c)}</td></tr>' for m, t, c in s["d6"])
+                   f'<td class="n">{c}</td></tr>' for m, t, c in s["d6"])
     designs[6] = (D6, f'<div class="kicker">{s["d6_kicker"]}</div>'
                       f'<table><tr>{head}</tr>{rows}</table><div class="note">{s["d6_foot"]}</div>')
 
