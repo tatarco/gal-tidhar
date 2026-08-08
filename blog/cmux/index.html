@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The terminal I run 26 Claude Code sessions in, and my exact config · Gal Tidhar</title>
+  <meta name="description" content="cmux is a free, Ghostty-based macOS terminal that knows an agent is running inside it. Here is my full cmux.json and the Claude Code settings that pair with it - including the three settings that actually differ from the defaults.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/cmux/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The terminal I run 26 Claude Code sessions in, and my exact config">
+  <meta property="og:description" content="cmux is a free, Ghostty-based macOS terminal that knows an agent is running inside it. Here is my full cmux.json and the Claude Code settings that pair with it - including the three settings that actually differ from the defaults.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/cmux/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/cmux/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="26 Claude Code sessions open at once in cmux, a free macOS terminal almost nobody has heard of">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The terminal I run 26 Claude Code sessions in, and my exact config">
+  <meta name="twitter:description" content="cmux is a free, Ghostty-based macOS terminal that knows an agent is running inside it. Here is my full cmux.json and the Claude Code settings that pair with it - including the three settings that actually differ from the defaults.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/cmux/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The terminal I run 26 Claude Code sessions in, and my exact config",
+    "description": "cmux is a free, Ghostty-based macOS terminal that knows an agent is running inside it. Here is my full cmux.json and the Claude Code settings that pair with it - including the three settings that actually differ from the defaults.",
+    "image": "https://gal.tidhar.org.il/blog/cmux/og.png",
+    "datePublished": "2026-08-08",
+    "dateModified": "2026-08-08",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/cmux/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" }
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="https://github.com/manaflow-ai/cmux">cmux &nearr;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / TOOLING</span>
+          <p class="role-line">cmux &middot; Claude Code &middot; 26 panes, 7 workspaces</p>
+          <h1 class="title">The terminal I run 26 Claude Code sessions in, and my exact config</h1>
+          <p class="meta-line"><strong>2026-08-08</strong> &nbsp;·&nbsp; ~9 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">I have 26 Claude Code panes open across 7 workspaces in a single window right now. That is not a flex, it is a logistics problem, and the thing that solved it is a free terminal called <strong>cmux</strong> that almost nobody I talk to has installed. This is what it does, my full <code>cmux.json</code> line by line, and the Claude Code settings that pair with it.</p>
+        </header>
+
+        <figure>
+          <img src="hero.png" alt="26 Claude Code sessions open in one window across 7 workspaces" loading="lazy">
+          <figcaption>Counted, not estimated: 26 terminal panes across 7 workspaces in my cmux session file, and 26 live <code>claude</code> processes on the machine right now, 25 of them children of cmux.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The problem is the notification, not the terminal</h2>
+        <p>Run four agents in parallel and one of them finishes. macOS tells you <code>Claude is waiting for your input</code>. Which Claude? Out of how many? I used to go tab, tab, tab, tab hunting for it, and by the time I found the right pane I had forgotten what it asked me.</p>
+        <p>iTerm and Ghostty are excellent at being terminals. Neither of them knows an agent is running inside it. tmux gives you a status line you still have to decode yourself.</p>
+        <p>That gap is the entire pitch. cmux is a native macOS terminal built on Ghostty's rendering engine, so your existing <code>~/.config/ghostty/config</code> - theme, font, keybinds - carries over unchanged. On top of that it adds the thing that was missing: it knows about agents.</p>
+        <ul class="prose">
+          <li>The pane that needs you rings and flashes. You look, you do not hunt.</li>
+          <li>Vertical tabs in a sidebar, each showing git branch, PR status, working directory, and listening ports.</li>
+          <li>Session restore that brings scrollback and agent sessions back where they were after a quit or a reboot.</li>
+          <li>A scriptable embedded browser pane, a socket/CLI API, and SSH workspaces with native splits.</li>
+        </ul>
+        <p>It does not decide what your agents do and it does not wrap Claude Code in a UI. It also does not lock you into one agent - the same window runs Claude Code, Codex, Gemini CLI, whatever you like, and it will spawn Claude Code teammates as visible panes if you use them. What it is, underneath all of that, is a terminal that knows an agent is running in it. That turned out to be the only missing piece.</p>
+
+        <div class="snap">
+          <strong>Facts, checked:</strong> cmux is free and open source (GPL-3.0-or-later), ~25.7k stars, macOS only - the README's own words are &ldquo;macOS only, for now&rdquo;. Install with <code>brew install --cask cmux</code>. I am on <code>0.64.20</code>. There is a paid Founder's Edition for priority support and early access, and nothing in this post depends on it.
+        </div>
+
+        <h2 class="spec-head">The mechanism worth knowing: file-managed settings</h2>
+        <p>Config lives at <code>~/.config/cmux/cmux.json</code> and it is JSONC - JSON with comments. The clever part is what a comment means:</p>
+        <blockquote>An uncommented key in the file is <strong>file-managed</strong>. It overrides the in-app Settings UI, and the UI cannot change it. Comment the key out and the setting is handed back to the UI.</blockquote>
+        <p>So the file is not a dump of every option, it is a list of decisions you have deliberately taken away from yourself. Reload with <code>Cmd+Shift+,</code> (or <code>cmux reload-config</code>) without closing a single session. Point your editor at the published schema and you get completion and validation for free:</p>
+        <pre><code>"$schema": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json"</code></pre>
+
+        <h2 class="spec-head">Most of my &ldquo;tuned&rdquo; config was the defaults, written down</h2>
+        <p>Before publishing this I diffed my file against the schema's declared defaults. That was humbling. The majority of what I had carefully pinned is exactly what cmux already does out of the box. Pinning it is not useless - file-managed means the UI cannot drift it later, which is the point of pinning - but it is not tuning, and calling it tuning would be a lie.</p>
+        <table class="spec-table">
+          <tr><th>Setting</th><th>Mine</th><th>Default</th><th>Real change?</th></tr>
+          <tr><td><code>automation.suppressSubagentNotifications</code></td><td>true</td><td>true</td><td>no</td></tr>
+          <tr><td><code>automation.claudeCodeIntegration</code></td><td>true</td><td>true</td><td>no</td></tr>
+          <tr><td><code>automation.socketControlMode</code></td><td>cmuxOnly</td><td>cmuxOnly</td><td>no</td></tr>
+          <tr><td><code>terminal.autoResumeAgentSessions</code></td><td>true</td><td>true</td><td>no</td></tr>
+          <tr><td><code>terminal.agentHibernation.enabled</code></td><td>false</td><td>false</td><td>no</td></tr>
+          <tr><td><code>app.confirmQuit</code></td><td>always</td><td>always</td><td>no</td></tr>
+          <tr><td><code>app.appearance</code></td><td><strong>dark</strong></td><td>system</td><td>cosmetic</td></tr>
+          <tr><td><code>app.reorderOnNotification</code></td><td><strong>false</strong></td><td>true</td><td><strong>yes</strong></td></tr>
+          <tr><td><code>terminal.copyOnSelect</code></td><td><strong>true</strong></td><td>false</td><td><strong>yes</strong></td></tr>
+          <tr><td><code>terminal.agentHibernation.idleSeconds</code></td><td><strong>120</strong></td><td>5</td><td><strong>yes</strong></td></tr>
+          <tr><td><code>sidebar.showProgress</code></td><td><strong>false</strong></td><td>true</td><td><strong>yes</strong></td></tr>
+          <tr><td><code>browser.openTerminalLinksInCmuxBrowser</code></td><td><strong>false</strong></td><td>true</td><td><strong>yes</strong></td></tr>
+          <tr><td><code>browser.interceptTerminalOpenCommandInCmuxBrowser</code></td><td><strong>false</strong></td><td>true</td><td><strong>yes</strong></td></tr>
+        </table>
+        <p>Seven deviations out of twenty-five pinned keys, and one of the seven is <code>appearance: dark</code>. If you install cmux and change nothing, you already have most of my setup.</p>
+
+        <h2 class="spec-head">The three that matter, and why</h2>
+
+        <h3><code>app.reorderOnNotification: false</code></h3>
+        <p>The default floats a workspace with a new notification toward the top of the sidebar. With two workspaces that is helpful. With seven it means the list rearranges itself every time an agent breathes, and the position you learned five minutes ago is gone. I would reach for the third row and hit something else.</p>
+        <p>Turning it off makes position stable and lets the ring carry the signal instead. Location tells me <em>which project</em>; the flash tells me <em>who needs me</em>. Two channels, no collision.</p>
+
+        <h3><code>terminal.agentHibernation.enabled: false</code></h3>
+        <p>Hibernation kills idle agent processes to free RAM and CPU, then resumes them when you come back. Sensible on paper. The problem is the definition of idle: no terminal output or input for N seconds. An agent thinking quietly, or waiting on a slow tool call, produces no output and looks exactly like an abandoned one.</p>
+        <p>The default <code>idleSeconds</code> is 5. I raised it to 120 before I decided the whole feature was not for me and turned it off, which is why my file still carries a value that no longer does anything. I left it there deliberately - if you have less RAM than I do, that is the knob to reach for before you disable the feature. Critical-memory-pressure hibernation stays active either way, so this is not a choice between safety and nothing.</p>
+
+        <h3><code>browser.openTerminalLinksInCmuxBrowser: false</code></h3>
+        <p>cmux ships a good embedded browser and agents can drive it. I turned it off for terminal links anyway, along with <code>interceptTerminalOpenCommandInCmuxBrowser</code>, because <a href="/blog/agent-browser/">my agents already have their own browser</a>. Their browser is for them; when <em>I</em> click a link I want it in the window where I am logged into everything. Splitting those two was the whole point of that setup, and letting cmux quietly reunite them would undo it.</p>
+
+        <h2 class="spec-head">My full cmux.json</h2>
+        <p>Copy it whole, or copy the two blocks you care about. Every uncommented key here is a key the Settings UI can no longer change.</p>
+        <pre><code>{
+  "$schema": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
+  "schemaVersion": 1,
+
+  // JSONC. UNCOMMENTED keys are "file-managed": they override the Settings UI.
+  // To hand a setting back to the UI, comment it out or delete it.
+  // Reload after editing: Cmd+Shift+, (or `cmux reload-config`).
+
+  "app": {
+    "appearance": "dark",
+    "confirmQuit": "always",              // 26 panes behind one Cmd+Q
+    "workspaceInheritWorkingDirectory": true,
+    "reorderOnNotification": false        // stable position; the ring carries the signal
+  },
+
+  "terminal": {
+    "agentHibernation": {
+      "enabled": false,                   // a quiet agent is not an idle agent
+      "idleSeconds": 120,                 // if you do enable it, 5s is far too eager
+      "maxLiveTerminals": 12
+    },
+    "autoResumeAgentSessions": true,
+    "copyOnSelect": true,
+    "showScrollBar": true
+  },
+
+  "notifications": {
+    "paneFlash": true,
+    "unreadPaneRing": true,
+    "dockBadge": true,
+    "showInMenuBar": true,
+    "sound": "default"
+  },
+
+  "sidebar": {
+    "watchGitStatus": true,               // branch/PR metadata without polling git
+    "showPullRequests": true,
+    "showPorts": true,
+    "showProgress": false,                // one spinner per workspace is enough
+    "branchLayout": "vertical"
+  },
+
+  "automation": {
+    "socketControlMode": "cmuxOnly",      // scriptable, but only cmux drives the socket
+    "claudeCodeIntegration": true,
+    "suppressSubagentNotifications": true // subagents finish constantly; only the parent should ring
+  },
+
+  "browser": {
+    "openTerminalLinksInCmuxBrowser": false,
+    "interceptTerminalOpenCommandInCmuxBrowser": false
+  }
+}</code></pre>
+        <p>Two keys deserve a note even though they match the defaults, because they are the ones that stop the notification system from becoming noise:</p>
+        <ul class="prose">
+          <li><code>suppressSubagentNotifications</code> hides completion notifications from nested child agents while keeping their events in the Feed. If you use subagents or workflows at all, this is the difference between a signal and a slot machine.</li>
+          <li><code>socketControlMode: "cmuxOnly"</code> keeps the control socket usable by cmux itself and nothing else. The socket can create workspaces, split panes and drive the browser. That is a lot of blast radius to hand to any process that finds the socket path.</li>
+        </ul>
+
+        <h2 class="spec-head">The Claude Code settings that pair with it</h2>
+        <p>cmux only pays off if Claude Code is also set up to be run many-at-once. These are the keys in my <code>~/.claude/settings.json</code> that specifically matter for parallel work - the full file, with the caching rationale, is in <a href="https://github.com/tatarco/claude-code-starter">claude-code-starter</a>.</p>
+        <table class="spec-table">
+          <tr><th>Setting</th><th>Value</th><th>Why it matters with many panes</th></tr>
+          <tr><td><code>remoteControlAtStartup</code></td><td>true</td><td>Every session is reachable from the phone without typing <code>/remote-control</code>. With 26 panes you will not do it by hand.</td></tr>
+          <tr><td><code>agentPushNotifEnabled</code></td><td>true</td><td>The pane ring covers you at the desk; this covers you away from it.</td></tr>
+          <tr><td><code>CLAUDE_AUTOCOMPACT_PCT_OVERRIDE</code></td><td>40</td><td>Compact early. An 85%-full window is re-read at 85% every single turn, times however many sessions are live.</td></tr>
+          <tr><td><code>tui</code></td><td>fullscreen</td><td>One agent per pane, no scrollback ambiguity about which output is current.</td></tr>
+          <tr><td><code>statusLine</code></td><td>command</td><td>Each pane says what it is working on, so the sidebar preview is readable at a glance.</td></tr>
+          <tr><td><code>MAX_MCP_OUTPUT_TOKENS</code> / <code>BASH_MAX_OUTPUT_LENGTH</code></td><td>25000 / 50000</td><td>Caps runaway tool output. One session dumping a 200k-line log is annoying; several doing it at once is a lost afternoon.</td></tr>
+          <tr><td><code>permissions.deny</code></td><td>reads of <code>.env</code>, <code>node_modules</code>, build dirs, keys, logs</td><td>Fewer prompts to answer means fewer panes sitting blocked while you are looking elsewhere.</td></tr>
+        </table>
+        <p>The pattern in all of them: at one session these are preferences. At twenty-six they are the difference between a workspace and a switchboard.</p>
+
+        <h2 class="spec-head">What I would tell someone installing it today</h2>
+        <ul class="prose">
+          <li>Install it, change nothing, and use it for a week. The defaults are good and you will not know which knob you need until something annoys you.</li>
+          <li>The first thing that will annoy you is the sidebar rearranging itself. That is <code>reorderOnNotification</code>.</li>
+          <li>Do not treat the config file as a place to write down defaults. Write down decisions. A key in that file should answer &ldquo;why is this not what cmux ships with?&rdquo; - and if it cannot, at least know that you pinned it so the UI cannot drift it.</li>
+          <li>macOS only. If you are on Linux this post is not actionable, and I have not found an equivalent worth recommending.</li>
+        </ul>
+        <p>Three quarters of what I thought was a carefully tuned setup was the defaults. That is the normal state of a config file nobody re-reads, and it is worth diffing yours against the schema before you tell anyone it is tuned.</p>
+
+        <div class="cta">
+          <h3>Everything referenced here</h3>
+          <p>The cmux config above is complete and copy-pasteable. My Claude Code settings, status line and hooks are public and generic in the starter repo.</p>
+          <div class="link-row">
+            <a href="https://github.com/manaflow-ai/cmux" target="_blank" rel="noopener">github.com/manaflow-ai/cmux &nearr;</a>
+            <span class="sep">·</span>
+            <a href="https://github.com/tatarco/claude-code-starter" target="_blank" rel="noopener">claude-code-starter &nearr;</a>
+            <span class="sep">·</span>
+            <a href="/blog/agent-browser/">why my agents have their own browser</a>
+            <span class="sep">·</span>
+            <a href="/blog/cache-economics/">what all these sessions cost</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/">gal.tidhar.org.il</a> &nbsp;·&nbsp; field notes on agents, cost, and the boring parts that decide both
+  </footer>
+</body>
+</html>

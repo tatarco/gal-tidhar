@@ -180,6 +180,33 @@
           <tr><td>Sonnet 5</td><td>529M</td><td>$217</td></tr>
         </table>
         <p>That is three deliberate tiers: Opus in the main loop, Sonnet for agents, Haiku for anything touching a browser. <strong>1,558M tokens ran off Opus, 63% cheaper on that slice than if Opus had done it.</strong></p>
+
+        <h3>Make it a default, not a decision</h3>
+        <p>The part I would actually copy is not the tiering itself, it is that one block in <code>CLAUDE.md</code> turns it into the default so I never choose per dispatch:</p>
+        <pre><code>## Agent model selection
+
+**Default is haiku. You must explicitly justify sonnet or opus.**
+
+| Task type                                    | Model  |
+|----------------------------------------------|--------|
+| Read files, grep, ls, count, gather data     | haiku  |
+| Browser automation, UI checks, form filling  | haiku  |
+| Implementation, refactoring, debugging       | sonnet |
+| Architecture, novel debugging, cross-cutting | opus   |
+
+Rule: if you are about to write model="sonnet" for a read/search/count/
+browser task, change it to haiku.</code></pre>
+        <p>I counted what that actually produces. Over the last 30 days, across 375 session files:</p>
+        <table class="spec-table">
+          <tr><th>Subagent dispatches</th><th>Count</th><th>Share</th></tr>
+          <tr><td>Explicitly <code>haiku</code></td><td>629</td><td><strong>58.0%</strong></td></tr>
+          <tr><td>Explicitly <code>sonnet</code></td><td>410</td><td>37.8%</td></tr>
+          <tr><td>Explicitly <code>opus</code></td><td>23</td><td>2.1%</td></tr>
+          <tr><td>No model set (inherits)</td><td>23</td><td>2.1%</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>1,085</strong></td><td></td></tr>
+        </table>
+        <p>About <strong>21 Haiku subagents a day</strong>, 827 of them plain <code>general-purpose</code> one-offs, moving <strong>843M tokens</strong> of reading that never touched my main window. The number I find most telling is the last row: only 2% fall through without a model. The policy is doing the choosing.</p>
+        <p>That is the difference between a habit and a default. A habit survives a calm Tuesday; a default survives a bad week. If you copy one thing from this post, copy the block above rather than the intention behind it.</p>
         <p>Worth being precise about the size of this lever, though: it is real but third-order. Caching is worth $55,850 on the same period and tiering is worth $952. The reason to push work into subagents is not mainly the model price &mdash; it is that a subagent's context is discarded when it finishes, so the thousand pages it read never enter your window and never get re-read by it.</p>
 
         <h3>3. Compact early</h3>
