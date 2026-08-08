@@ -163,7 +163,8 @@
         </table>
         <p>Caching absorbs 85% of the difference. On a subscription you never see that as money, which is exactly why it is invisible until you hit a limit and cannot work out why. Everything below is a way of not breaking it.</p>
 
-        <h2 class="spec-head">The five levers</h2>
+        <h2 class="spec-head">One rule, five ways to keep it</h2>
+        <p>These are not five separate tips. They are five ways of not breaking the same thing. <strong>Keep the prefix stable and keep it small</strong> &mdash; everything below follows from that.</p>
 
         <h3>1. Never switch models mid-session</h3>
         <p>Caches are model-scoped. Switching the main model mid-conversation invalidates the entire prefix and rebuilds it from scratch, at write prices. Pick at session start and stay. Routing work to a cheaper model inside a <em>subagent</em> is free of this problem, because the subagent has its own context.</p>
@@ -178,7 +179,8 @@
           <tr><td>Haiku 4.5</td><td>957M</td><td>$172</td></tr>
           <tr><td>Sonnet 5</td><td>529M</td><td>$217</td></tr>
         </table>
-        <p>Haiku did nearly a billion tokens of reading, searching and browser-driving at roughly a forty-eighth of Opus 4.8's cost per token. That work does not need a frontier model, and more importantly it stayed out of my main window.</p>
+        <p>That is three deliberate tiers: Opus in the main loop, Sonnet for agents, Haiku for anything touching a browser. <strong>1,558M tokens ran off Opus, 63% cheaper on that slice than if Opus had done it.</strong></p>
+        <p>Worth being precise about the size of this lever, though: it is real but third-order. Caching is worth $55,850 on the same period and tiering is worth $952. The reason to push work into subagents is not mainly the model price &mdash; it is that a subagent's context is discarded when it finishes, so the thousand pages it read never enter your window and never get re-read by it.</p>
 
         <h3>3. Compact early</h3>
         <p>A window that has drifted to 85% full is re-read at 85% full on <em>every subsequent turn</em> for the rest of the session. Compacting early makes every later turn cheaper; it pays for itself within a few turns and keeps paying. I set <code>CLAUDE_AUTOCOMPACT_PCT_OVERRIDE</code> to compact well before the default.</p>
@@ -187,7 +189,7 @@
         <h3>4. Never wake a huge stale session with a one-line question</h3>
         <p>This is the expensive failure the whole setup exists to prevent. Leave a large session idle past the cache TTL, come back, type one line: that line pays to re-upload the entire conversation from scratch. On a session that has grown near a million tokens, a single sentence can cost several dollars. Start a new session instead.</p>
 
-        <h3>5. Audit your skill shelf</h3>
+        <h3>5. Keep the shelf deep, but frozen</h3>
         <p>Every installed skill's name and description sits in <em>every</em> session's system prompt and is re-read on every turn. Mine, measured:</p>
         <table class="spec-table">
           <tr><th>Component</th><th>Tokens</th></tr>
@@ -196,12 +198,15 @@
           <tr><td>CLAUDE.md + memory index</td><td>2,074</td></tr>
           <tr><td>Real measured session baseline</td><td><strong>51,013</strong></td></tr>
         </table>
-        <p>51k tokens before I type a word, re-read every turn. A large shelf is a permanent per-turn tax. Install what you will actually use.</p>
+        <p>51k tokens before I type a word, re-read every turn. That sounds like a permanent tax, and I assumed it was one until I priced it.</p>
+        <p>It is not. Those descriptions <strong>never change</strong>, so they sit in exactly the part of the prefix that caches, and get served at a tenth of price on every turn after the first. 16,513 tokens comes to about <strong>1,650 effective tokens per turn</strong> &mdash; roughly <strong>$16 across two thousand turns</strong>. A deep shelf is nearly free.</p>
+        <p>Which is the whole thesis in one example: <strong>size is not what bills you, movement is.</strong> A large static block is the cheapest context you can own. A small volatile one at the front of the prompt is the most expensive. The costs a deep shelf really does carry are window space (5% of mine) and selection noise &mdash; more descriptions mean more chances of reaching for the wrong one. Neither is a dollar.</p>
 
         <h2 class="spec-head">Two things that are not settings</h2>
 
         <h3>Keep sessions alive instead of restarting them</h3>
-        <p>I run <a href="https://cmux.io/" target="_blank" rel="noopener">cmux</a> with seven workspaces open at once, each holding its own live context. I switch between them rather than closing and reopening sessions, so the context stays warm and the cache stays valid. The alternative &mdash; one terminal, serially reopened &mdash; pays a cold rebuild every time you come back to a thread.</p>
+        <p>I run <a href="https://cmux.io/" target="_blank" rel="noopener">cmux</a> with seven workspaces open at once, each holding its own context. Being careful here, because it is easy to state this wrong: <strong>an open terminal does not keep a cache warm.</strong> The cache lives server-side and expires on its TTL whether or not your window is open. Claude Code runs a one-hour TTL, so cycling through several workspaces inside an hour does keep them all valid &mdash; but that is the TTL doing the work, not the terminal.</p>
+        <p>The bigger effect is structural. Seven medium contexts are cheaper than one giant one, because cost scales with how much gets re-read on every turn, and each workspace only re-reads its own thread. One session that absorbs every project drifts toward the top of the window and then re-reads all of it, forever. Splitting the work splits the re-read.</p>
 
         <h3>Put the number on screen</h3>
         <p>You cannot fix a cost you cannot see. My status line shows context fill, session cost, and the 5-hour and 7-day plan windows, always. There is one non-obvious detail worth knowing if you want to build on it:</p>
