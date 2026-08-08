@@ -59,62 +59,66 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:.9em}
 either the copy, a hero to pick, or a decision I need from you. Your picks save into the page -
 just click, no need to type codes back at me.</p>
 
-<div class="note"><b>Rewritten around the limit, money removed.</b> The spine is no longer cost, it is
-<b>why the plan never runs out</b> - which is the pain that actually moves people. Verified the mechanism
-in the official docs first, because the whole argument rests on it: cached tokens draw your plan limit
-<b>at the cached rate</b>, not the full one, and the subscription cache lifetime is <b>one hour</b>. So
-caching buys headroom, not just money. Exactly one dollar figure survives, as a one-line scale marker in
-the blog. The heroes carry no currency at all.</div>
+<div class="note"><b>Your edit, trimmed to fit.</b> Your version came to <b>3,281</b> characters
+against LinkedIn's 3,000 cap. This is <b>2,966</b> - 34 to spare. Both of your changes are kept
+verbatim: the shorter hook that drops the token count, and the impatient-reader line. <b>No beat was
+removed</b>, only wording tightened in the four longest paragraphs.</div>
 
-<div class="note"><b>New in this pass:</b> design 3 is now the cache-miss trap instead of a price
-comparison - come back inside the hour and it is cached, come back after and one line reprocesses the
-whole conversation. The cmux section is rewritten around <b>convenience</b>: when a new workspace is one
-keystroke away you actually open one, instead of pushing a third unrelated task into the window that is
-already full. And there is a new closing tip - <code>/usage</code> flags cache misses and long context
-whenever either accounts for 10%+ of recent usage, which is the fastest way for a reader to find their
-own leak.</div>
+<div class="note"><b>Where the 315 characters came from:</b>
+<ul>
+<li><b>"הכל בתגובה הראשונה" deleted (-21).</b> Your new line at the top already says it, so the closing
+one was repeating a pointer the reader has had since paragraph three.</li>
+<li><b>Lever 2 (-70).</b> Cut the sentence restating the rule ("ואם אתה עומד לכתוב סונט...") - the
+preceding clause already says haiku is the default and sonnet needs justifying.</li>
+<li><b>cmux (-95).</b> Dropped the closing "וזה קורה מעצמו כי זה פשוט יותר נוח ככה" - it restates the
+convenience point you already made two sentences earlier, and the paragraph lands harder without the
+summary. Also dropped the "seven medium contexts" arithmetic, which the reader infers.</li>
+<li><b>Statusline, lever 3, lever 5, /usage, closing (-129 total).</b> Word-level only: "הזמן שבו
+ה-cache חי" to "ה-cache חי", "סאב-אייג'נט מתחיל" to "הוא מתחיל", "נשמע נורא, ובפועל זה עולה" to "וזה
+עולה", and similar.</li>
+</ul>
+Nothing was cut from the hook, the mechanism, the cache-miss trap, or any of the five numbered levers.</div>
 
 <h2>01 · The post text</h2>
-<p class="why">3,266 characters. Named tool in line 1, TL;DR opener, the plan disclaimer as paragraph two, five numbered levers, closing question. Copy button is above the box.</p>
+<p class="why">2,966 characters (LinkedIn cap is 3,000). Named tool in line 1, TL;DR opener, the plan disclaimer as paragraph two, five numbered levers, closing question. Copy button is above the box.</p>
 <div class="copybar"><button class="copybtn" data-copy="post-text">Copy post text</button></div>
-<pre id="post-text" class="term">אמ!לק -&gt; אני משתמש כבד בקלוד קוד. בחודשיים האחרונים העברתי 13.9 מיליארד טוקנים. אני על מסלול Max 20x ואני כמעט אף פעם לא נוגע בלימיט. אנשים סביבי שורפים מסלול תוך ימים. פתחתי את הלוגים להבין מה ההבדל.
+<pre id="post-text" class="term">אמ!לק -&gt; אני משתמש כבד בקלוד קוד. אני על מסלול Max 20x ואני לא מצליח להגיע ללימיט. אנשים סביבי שורפים מסלול תוך ימים. פתחתי את הלוגים להבין מה ההבדל.
 
 מספר אחד מסביר הכל: 96.3% מהטוקנים שלי הם cache reads.
 
+יש טיפים למטה והסטאפ שלי בתגובה הראשונה אם אתם חסרי סבלנות :) -&gt; 
+
 הנה מה שקורה מתחת למכסה המנוע. קלוד לא זוכר את השיחה. ה-API הוא stateless, ולכן בכל תור נשלחת מחדש כל השיחה מההתחלה. זה נשמע נורא, אבל יש cache: אם ההתחלה זהה בייט-בייט למה שנשלח בתור הקודם, היא מוגשת מחדש בתעריף מוזל.
 
-והנקודה הקריטית, שלקח לי זמן להפנים: הלימיט שלכם נצרך לפי הטוקנים שעוברים, והתעריף המוזל הזה תקף גם עליו. כלומר cache read הוא לא רק זול יותר, הוא גם אוכל לכם פחות מהמכסה. אותה עבודה בדיוק, אם היא נשמרת ב-cache, מוציאה אתכם מהלימיט הרבה יותר לאט.
+והנקודה הקריטית, שלקח לי זמן להפנים: הלימיט נצרך לפי הטוקנים שעוברים, והתעריף המוזל תקף גם עליו. cache read הוא לא רק זול יותר, הוא אוכל לכם פחות מהמכסה. אותה עבודה בדיוק, אם היא נשמרת ב-cache, מוציאה אתכם מהלימיט הרבה יותר לאט.
 
 מכאן זה מסתדר. אני לא עושה פחות עבודה מכם. אני פשוט לא שובר את ה-cache.
 
-מה שובר אותו: cache miss. הזמן שבו ה-cache חי במסלול מנוי הוא שעה. אם תחזרו לסשן ענק אחרי שעתיים ותכתבו שורה אחת, השורה הזאת מעבדת מחדש את כל השיחה בתעריף מלא. זה התור היקר ביותר שתעשו באותו יום, והוא נראה כמו שאלה קטנה.
+מה שובר אותו: cache miss. ה-cache חי שעה במסלול מנוי. אם תחזרו לסשן ענק אחרי שעתיים ותכתבו שורה אחת, השורה הזאת מעבדת מחדש את כל השיחה בתעריף מלא. זה התור היקר ביותר שתעשו באותו יום, והוא נראה כמו שאלה קטנה.
 
 חמש הדרכים שלי לא לשבור אותו:
 
 1. לא מחליפים מודל באמצע סשן. ה-cache צמוד למודל, אז החלפה מוחקת את הכל ובונה מחדש. בוחרים בהתחלה ונשארים.
 
-2. הופכים מודל זול לברירת מחדל, לא להחלטה. יש לי בלוק ב-CLAUDE.md שאומר: ברירת המחדל היא הייקו, צריך נימוק מפורש לסונט או אופוס, ואם אתה עומד לכתוב סונט למשימה של קריאה, חיפוש, ספירה או דפדפן, תשנה להייקו. ספרתי בלוגים של החודש: 1,085 סאב-אייג&#x27;נטים יצאו, 58% מהם עם הייקו במפורש, ורק 2% נפלו בלי מודל. זה 21 סאב-אייג&#x27;נטים ביום שאני לא מחליט עליהם. משמעת לא שורדת יום עמוס, ברירת מחדל כן.
+2. הופכים מודל זול לברירת מחדל, לא להחלטה. יש לי בלוק ב-CLAUDE.md: ברירת המחדל היא הייקו, וצריך נימוק מפורש לסונט או אופוס. ספרתי בלוגים של החודש: 1,085 סאב-אייג&#x27;נטים יצאו, 58% מהם עם הייקו במפורש, ורק 2% נפלו בלי מודל. זה 21 סאב-אייג&#x27;נטים ביום שאני לא מחליט עליהם. משמעת לא שורדת יום עמוס, ברירת מחדל כן.
 
-3. דוחפים כל עבודה רועשת לסאב-אייג&#x27;נט. סאב-אייג&#x27;נט מתחיל בקונטקסט נקי, קורא מה שהוא צריך, וזורק הכל. חוזרת רק המסקנה. 843 מיליון טוקנים של קריאה עברו אצלי דרך סאב-אייג&#x27;נטים בחודש האחרון בלי להיכנס לחלון הראשי, ולכן בלי להיקרא מחדש בכל תור עד סוף היום.
+3. דוחפים כל עבודה רועשת לסאב-אייג&#x27;נט. הוא מתחיל בקונטקסט נקי, קורא מה שצריך, וזורק הכל. חוזרת רק המסקנה. 843 מיליון טוקנים של קריאה עברו אצלי ככה בחודש האחרון בלי להיכנס לחלון הראשי, ולכן בלי להיקרא מחדש בכל תור עד סוף היום.
 
 4. compact מוקדם. חלון שהתמלא ל-85% נקרא מחדש ב-85% בכל תור עד סוף הסשן. זה משתלם תוך כמה תורים.
 
-5. מדף עמוק זה בסדר. מדף שזז זה לא. יש לי 164 סקילים, 16,500 טוקנים שנקראים מחדש בכל תור. נשמע נורא, ובפועל זה עולה כמעט כלום: התיאורים האלה אף פעם לא משתנים, אז הם יושבים בדיוק בחלק שנשמר ב-cache. לא הגודל הוא הבעיה, התזוזה היא הבעיה.
+5. מדף עמוק זה בסדר. מדף שזז זה לא. יש לי 164 סקילים, 16,500 טוקנים שנקראים מחדש בכל תור, וזה עולה כמעט כלום: התיאורים האלה אף פעם לא משתנים, אז הם יושבים בדיוק בחלק שנשמר ב-cache. לא הגודל הוא הבעיה, התזוזה היא הבעיה.
 
 ושני דברים שהם לא הגדרות:
 
-cmux. במקום חלון אחד שצובר את כל הפרויקטים, יש לי שבעה workspaces, ולכל משימה נפתח אחד משלה. זה נשמע כמו סידור, אבל זה בעיקר נוחות: כשקל לפתוח workspace חדש, אתה באמת פותח אותו, במקום לדחוף עוד משימה לתוך סשן שכבר מלא בשלוש שיחות אחרות. כל workspace קורא מחדש רק את ההקשר של עצמו. שבעה קונטקסטים בינוניים זה הרבה פחות מקונטקסט אחד ענק, וזה קורה מעצמו כי זה פשוט יותר נוח ככה.
+cmux. במקום חלון אחד שצובר את כל הפרויקטים, יש לי שבעה workspaces, ולכל משימה נפתח אחד משלה. זה נשמע כמו סידור, אבל זו בעיקר נוחות: כשקל לפתוח workspace חדש, אתה באמת פותח אותו, במקום לדחוף עוד משימה לסשן שכבר מלא בשלוש שיחות אחרות. כל workspace קורא מחדש רק את ההקשר של עצמו.
 
-סטטוס בר. אחוז מילוי קונטקסט, ואחוז השימוש ב-5 שעות וב-7 ימים, כל הזמן על המסך. אי אפשר לתקן מה שאתה לא רואה. יש שם פרט לא טריוויאלי: הנתון על ניצול המכסה מגיע רק לסטטוס בר ולא לשום הוק. אז הסטטוס בר שלי כותב אותו לקובץ, והוק קורא משם ומעיר אותי כשאני מתקרב, במקום להיחתך באמצע רפקטור.
+סטטוס בר. אחוז מילוי קונטקסט ואחוז השימוש ב-5 שעות וב-7 ימים, כל הזמן על המסך. אי אפשר לתקן מה שאתה לא רואה. ויש שם פרט לא טריוויאלי: נתון המכסה מגיע רק לסטטוס בר ולא לשום הוק. אז הסטטוס בר שלי כותב אותו לקובץ, והוק קורא משם ומעיר אותי כשאני מתקרב, במקום להיחתך באמצע רפקטור.
 
-טיפ אחרון, וזה הכי מהיר לבדוק: תריצו /usage. במסלול מנוי הוא מסמן לכם התנהגויות שאוכלות 10% או יותר מהשימוש האחרון, וביניהן cache misses ו-long context. אם אתם גומרים מסלול ולא מבינים למה, התשובה בדרך כלל שם.
+טיפ אחרון, והכי מהיר לבדוק: תריצו /usage. במסלול מנוי הוא מסמן התנהגויות שאוכלות 10% או יותר מהשימוש האחרון, וביניהן cache misses ו-long context. אם אתם גומרים מסלול ולא מבינים למה, התשובה בדרך כלל שם.
 
-פתחתי את כל הקונפיג בריפו ציבורי, כולל הסטטוס בר וההוק. תוך כדי הכתיבה גיליתי שארבע הגדרות שהיו לי שם היו פשוט לא נכונות. אחת מהן, שהייתי בטוח שהיא מגבילה פלט, בעצם הגדילה אותו.
+פתחתי את כל הקונפיג בריפו ציבורי. תוך כדי הכתיבה גיליתי שארבע הגדרות שהיו לי שם היו פשוט לא נכונות. אחת מהן, שהייתי בטוח שהיא מגבילה פלט, בעצם הגדילה אותו.
 
-הכל בתגובה הראשונה.
-
-מה אחוז ה-cache reads שלכם?
-</pre>
+מה אחוז ה-cache reads שלכם?</pre>
 
 <h2>02 · Pick the hero (one image, not a carousel)</h2>
 <p class="why">Six designs, each in English and Hebrew. The full local path is printed above every

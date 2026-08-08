@@ -120,7 +120,7 @@
           <p class="role-line">cmux &middot; Claude Code &middot; 26 panes, 7 workspaces</p>
           <h1 class="title">The terminal I run 26 Claude Code sessions in, and my exact config</h1>
           <p class="meta-line"><strong>2026-08-08</strong> &nbsp;·&nbsp; ~9 min read &nbsp;·&nbsp; by Gal Tidhar</p>
-          <p class="lead">I have 26 Claude Code panes open across 7 workspaces in a single window right now. That is not a flex, it is a logistics problem, and the thing that solved it is a free terminal called <strong>cmux</strong> that almost nobody I talk to has installed. This is what it does, my full <code>cmux.json</code> line by line, and the Claude Code settings that pair with it.</p>
+          <p class="lead">I have 26 Claude Code panes open across 7 workspaces in a single window right now. That is not a flex, it is a logistics problem, and the thing that solved it is a free terminal called <strong>cmux</strong> that almost nobody I talk to has installed. This is what it does, my full <code>cmux.json</code> line by line, the Claude Code settings that pair with it, and the part I did not expect: it only fits in 24 GB because the IDE has not been open since June.</p>
         </header>
 
         <figure>
@@ -178,7 +178,7 @@
 
         <h3><code>terminal.agentHibernation.enabled: false</code></h3>
         <p>Hibernation kills idle agent processes to free RAM and CPU, then resumes them when you come back. Sensible on paper. The problem is the definition of idle: no terminal output or input for N seconds. An agent thinking quietly, or waiting on a slow tool call, produces no output and looks exactly like an abandoned one.</p>
-        <p>The default <code>idleSeconds</code> is 5. I raised it to 120 before I decided the whole feature was not for me and turned it off, which is why my file still carries a value that no longer does anything. I left it there deliberately - if you have less RAM than I do, that is the knob to reach for before you disable the feature. Critical-memory-pressure hibernation stays active either way, so this is not a choice between safety and nothing.</p>
+        <p>The default <code>idleSeconds</code> is 5. I raised it to 120 before I decided the whole feature was not for me and turned it off, which is why my file still carries a value that no longer does anything. I left it there deliberately - if you have less RAM to spare, that is the knob to reach for before you disable the feature. Critical-memory-pressure hibernation stays active either way, so this is not a choice between safety and nothing. Why I can afford to refuse it at all is a separate story, further down - it is not that 26 agents are cheap.</p>
 
         <h3><code>browser.openTerminalLinksInCmuxBrowser: false</code></h3>
         <p>cmux ships a good embedded browser and agents can drive it. I turned it off for terminal links anyway, along with <code>interceptTerminalOpenCommandInCmuxBrowser</code>, because <a href="/blog/agent-browser/">my agents already have their own browser</a>. Their browser is for them; when <em>I</em> click a link I want it in the window where I am logged into everything. Splitting those two was the whole point of that setup, and letting cmux quietly reunite them would undo it.</p>
@@ -257,6 +257,19 @@
           <tr><td><code>permissions.deny</code></td><td>reads of <code>.env</code>, <code>node_modules</code>, build dirs, keys, logs</td><td>Fewer prompts to answer means fewer panes sitting blocked while you are looking elsewhere.</td></tr>
         </table>
         <p>The pattern in all of them: at one session these are preferences. At twenty-six they are the difference between a workspace and a switchboard.</p>
+
+        <h2 class="spec-head">The memory only worked out because the IDE is gone</h2>
+        <p>Twenty-six agents is not free. Resident memory on a 24 GB machine, sampled three times a few seconds apart because it moves while agents work:</p>
+        <table class="spec-table">
+          <tr><th>What</th><th>Resident memory</th></tr>
+          <tr><td>26 Claude Code panes</td><td>2.9 - 3.3 GB</td></tr>
+          <tr><td>cmux itself, plus 174 shells and helper processes</td><td>0.76 GB</td></tr>
+          <tr><td>PyCharm</td><td>not running</td></tr>
+        </table>
+        <p>Under 4 GB for the whole thing. That last row is what makes the other two affordable. PyCharm is installed and Spotlight says I last opened it on <strong>11 June</strong> - two months ago, and the folder I keep every project in is called <code>PycharmProjects</code>.</p>
+        <p>I did not decide that. At some point I stopped reading code in an editor. I read the diff, I read what Claude says it did, I check that it runs, and I send it to review. The IDE was still sitting there indexing, holding a project model, and offering completion for a file I was not typing in. That memory moved to the agents.</p>
+        <p>Which is also why I can afford to refuse <code>agentHibernation</code>. Turning it off is a RAM decision, and the RAM came from somewhere. If you still live in an IDE, keep hibernation on and raise <code>idleSeconds</code> instead - the trade is real, it just does not apply to me any more.</p>
+        <p>I am not claiming this is how you should work. It is where I ended up, and the honest version of the story is that the terminal did not replace the IDE by being better at reading code. It replaced it by being where the work moved.</p>
 
         <h2 class="spec-head">What I would tell someone installing it today</h2>
         <ul class="prose">

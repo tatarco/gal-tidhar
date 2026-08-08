@@ -62,7 +62,7 @@ S = {
                ("browser.openTerminalLinksInCmuxBrowser: false",
                 "cmux ships a browser. My agents already have one. Links go to the browser I am logged into."),
                ("terminal.agentHibernation.enabled: false",
-                "it frees RAM by killing idle agent processes. An agent thinking quietly reads as idle.")],
+                "it frees RAM by killing idle agents. I can refuse it because the IDE is not running.")],
 
         # 6 - the receipts
         "d6_kicker": "I diffed my tuned config against the schema defaults",
@@ -73,6 +73,14 @@ S = {
                ("reorderOnNotification", "false", "true"),
                ("agentHibernation.enabled", "false", "false")],
         "d6_foot": "Most of my &ldquo;tuning&rdquo; was <b>the defaults, written down.</b>",
+
+        # 7 - the memory ledger
+        "d7_kicker": "where 24 GB of laptop actually goes",
+        "d7_head": ["what", "resident memory"],
+        "d7": [("26 Claude Code panes", "2.9 - 3.3 GB"),
+               ("cmux, plus 174 shells and helpers", "0.76 GB"),
+               ("PyCharm", "not running")],
+        "d7_foot": "Spotlight says I last opened it on <b>11 June</b>. All my projects live in a folder called PycharmProjects.",
 
         "foot": "26 panes, 7 workspaces, read out of my own session file &middot; gal.tidhar.org.il",
     },
@@ -113,7 +121,7 @@ S = {
                (n("browser.openTerminalLinksInCmuxBrowser: false"),
                 "ל-cmux יש דפדפן משלו. לאייג׳נטים שלי כבר יש אחד. הלינקים נפתחים בדפדפן שאני מחובר בו."),
                (n("terminal.agentHibernation.enabled: false"),
-                "הוא משחרר זיכרון בזה שהוא הורג אייג׳נטים בטלים. אייג׳נט שחושב בשקט נראה בדיוק כמו בטל.")],
+                "הוא משחרר זיכרון בזה שהוא הורג אייג׳נטים בטלים. אני יכול לוותר על זה כי אין לי IDE פתוח.")],
 
         "d6_kicker": "עשיתי דיף בין הקונפיג ה״מכוונן״ שלי לברירות המחדל בסכימה",
         "d6_head": ["הגדרה", "אצלי", "ברירת מחדל"],
@@ -123,6 +131,13 @@ S = {
                (n("reorderOnNotification"), n("false"), n("true")),
                (n("agentHibernation.enabled"), n("false"), n("false"))],
         "d6_foot": "רוב ה״כיוונון״ שלי היה <b>ברירות המחדל, כתובות בכתב יד.</b>",
+
+        "d7_kicker": "לאן באמת הולכים 24 ג׳יגה של לפטופ",
+        "d7_head": ["מה", "זיכרון בשימוש"],
+        "d7": [("26 פאנלים של קלוד קוד", n("2.9 - 3.3 GB")),
+               ("cmux, ועוד 174 שלים ועוזרים", n("0.76 GB")),
+               ("פייצ׳ארם", "לא רץ")],
+        "d7_foot": f'הספוטלייט אומר שפתחתי אותו לאחרונה ב-<b>11 ביוני</b>. כל הפרויקטים שלי יושבים בתיקייה שנקראת {n("PycharmProjects")}.',
 
         "foot": f'26 פאנלים, 7 מרחבי עבודה, נקראו מקובץ הסשן שלי &middot; {n("gal.tidhar.org.il")}',
     },
@@ -256,6 +271,16 @@ def render(lang):
                  f'<td>{mine}</td><td class="d">{dflt}</td></tr>')
     designs[6] = (D6, f'<div class="kicker">{s["d6_kicker"]}</div>'
                       f'<table><tr>{head}</tr>{rows}</table><div class="note">{s["d6_foot"]}</div>')
+
+    # 7 - the memory ledger: what the IDE used to hold
+    rows7 = "".join(f'<tr class="{"hi" if "PyCharm" in w or "פייצ" in w else ""}">'
+                    f'<td>{w}</td><td class="r">{v}</td></tr>' for w, v in s["d7"])
+    head7 = "".join(f"<th>{h}</th>" for h in s["d7_head"])
+    designs[7] = (D6 + ".r{color:#7dd3fc;font-weight:700}\ntable{width:820px}\n"
+                       "td{font-size:29px;padding:17px 20px}\n",
+                  f'<div class="kicker">{s["d7_kicker"]}</div>'
+                  f'<table><tr>{head7}</tr>{rows7}</table>'
+                  f'<div class="note">{s["d7_foot"]}</div>')
 
     for num, (extra, body) in designs.items():
         html = BASE % {"dir": s["dir"], "extra": extra, "top": s["top"],

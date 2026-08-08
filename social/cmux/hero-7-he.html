@@ -1,7 +1,7 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1200px;height:630px;overflow:hidden}
-body{background:#0a1628;color:#bae6fd;direction:ltr;
+body{background:#0a1628;color:#bae6fd;direction:rtl;
   font-family:'IBM Plex Mono','Arial Hebrew','Arial Unicode MS',system-ui,monospace;
   background-image:linear-gradient(rgba(125,211,252,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(125,211,252,.06) 1px,transparent 1px);
   background-size:40px 40px;display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -24,15 +24,21 @@ body{background:#0a1628;color:#bae6fd;direction:ltr;
 .foot{position:absolute;bottom:34px;font-size:20px;color:rgba(186,230,253,.6)}
 .foot b{color:#e0f2fe}
 
-.list{display:flex;flex-direction:column;gap:24px;width:1050px;margin-top:14px}
-.item{display:flex;align-items:baseline;gap:18px;border-inline-start:3px solid rgba(125,211,252,.55);
-  padding-inline-start:20px;text-align:start}
-.item .n{font-size:25px;color:#fef08a;font-weight:800;direction:ltr;min-width:26px}
-.item .t{font-size:25px;color:#7dd3fc;font-weight:700}
-.item .d{font-size:21px;color:rgba(186,230,253,.68);margin-top:7px;line-height:1.42}
+table{border-collapse:collapse;width:960px;margin-top:8px}
+th{font-size:20px;color:rgba(186,230,253,.55);font-weight:400;padding:0 20px 14px;text-align:start;
+  border-bottom:1px solid rgba(125,211,252,.3)}
+td{font-size:25px;color:#e0f2fe;padding:14px 20px;text-align:start;border-bottom:1px solid rgba(125,211,252,.12)}
+td.d{color:rgba(186,230,253,.55)}
+tr.same td{color:rgba(186,230,253,.42)}
+tr.hi td{color:#fef08a;font-weight:700}
+.note{font-size:30px;color:#e0f2fe;margin-top:32px}
+.note b{color:#fef08a}
+.r{color:#7dd3fc;font-weight:700}
+table{width:820px}
+td{font-size:29px;padding:17px 20px}
 
 </style></head><body>
-<div class="top">cmux · the terminal</div><div class="rev"><span>gal.tidhar.org.il</span></div>
-<div class="kicker">three settings that are not defaults. all three turn something off.</div><div class="list"><div class="item"><div class="n">1</div><div><div class="t">app.reorderOnNotification: false</div><div class="d">the default floats noisy workspaces to the top. At 7 workspaces that kills muscle memory.</div></div></div><div class="item"><div class="n">2</div><div><div class="t">browser.openTerminalLinksInCmuxBrowser: false</div><div class="d">cmux ships a browser. My agents already have one. Links go to the browser I am logged into.</div></div></div><div class="item"><div class="n">3</div><div><div class="t">terminal.agentHibernation.enabled: false</div><div class="d">it frees RAM by killing idle agents. I can refuse it because the IDE is not running.</div></div></div></div>
-<div class="foot">26 panes, 7 workspaces, read out of my own session file &middot; gal.tidhar.org.il</div>
+<div class="top">cmux &middot; הטרמינל</div><div class="rev"><span>gal.tidhar.org.il</span></div>
+<div class="kicker">לאן באמת הולכים 24 ג׳יגה של לפטופ</div><table><tr><th>מה</th><th>זיכרון בשימוש</th></tr><tr class=""><td>26 פאנלים של קלוד קוד</td><td class="r"><span class="num">2.9 - 3.3 GB</span></td></tr><tr class=""><td>cmux, ועוד 174 שלים ועוזרים</td><td class="r"><span class="num">0.76 GB</span></td></tr><tr class="hi"><td>פייצ׳ארם</td><td class="r">לא רץ</td></tr></table><div class="note">הספוטלייט אומר שפתחתי אותו לאחרונה ב-<b>11 ביוני</b>. כל הפרויקטים שלי יושבים בתיקייה שנקראת <span class="num">PycharmProjects</span>.</div>
+<div class="foot">26 פאנלים, 7 מרחבי עבודה, נקראו מקובץ הסשן שלי &middot; <span class="num">gal.tidhar.org.il</span></div>
 </body></html>

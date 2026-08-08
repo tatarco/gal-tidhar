@@ -18,6 +18,8 @@ DESIGNS = [
     ("4", "The mechanism", "The file-managed config bar: uncommented key vs commented out."),
     ("5", "The three real deviations", "The settings list, all three turning something off."),
     ("6", "Mine vs the schema default", "The receipts table, with the one real deviation lit up."),
+    ("7", "The memory ledger",
+     "26 agents at ~3 GB, cmux at 0.76, and PyCharm not running since 11 June. The new angle."),
 ]
 
 
@@ -112,6 +114,15 @@ DOC = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <p class="lede">Hebrew post, one single image, blog link in the first comment. Everything below is
 either the copy, a hero to pick, or a decision I need from you. Your picks save into the page -
 just click, no need to type codes back at me.</p>
+
+<div class="note"><b>New in this pass: the memory angle.</b> Added as its own beat in the post, a
+new section in the blog, and <b>hero 7</b>. The numbers are measured, not estimated: 26 Claude Code
+panes hold <b>2.9 - 3.3 GB</b> (sampled three times, it moves while agents work), cmux plus 174
+shells and helpers hold <b>0.76 GB</b>, on a 24 GB machine - under 4 GB in total.
+The row that makes it work is PyCharm - Spotlight says you last opened it on <b>11 June</b>.
+That is also what justifies turning
+<code>agentHibernation</code> off: it is a RAM decision, and the RAM came from the IDE. The post
+says plainly that you stopped reading code in an editor and now read the diff instead.</div>
 
 <div class="note"><b>The angle.</b> cmux is the subject, but <b>Claude Code is the name in line 1</b>
 - cmux is the thing nobody has heard of, so it cannot carry the hook on its own. The non-obvious
