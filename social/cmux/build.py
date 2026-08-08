@@ -77,8 +77,8 @@ S = {
         # 7 - the memory ledger
         "d7_kicker": "where 24 GB of laptop actually goes",
         "d7_head": ["what", "resident memory"],
-        "d7": [("26 Claude Code panes", "2.9 - 3.3 GB"),
-               ("cmux, plus 174 shells and helpers", "0.76 GB"),
+        "d7": [("26 Claude Code panes", "3 - 4 GB"),
+               ("cmux, plus 174 shells and helpers", "0.82 GB"),
                ("PyCharm", "not running")],
         "d7_foot": "Spotlight says I last opened it on <b>11 June</b>. All my projects live in a folder called PycharmProjects.",
 
@@ -134,8 +134,8 @@ S = {
 
         "d7_kicker": "לאן באמת הולכים 24 ג׳יגה של לפטופ",
         "d7_head": ["מה", "זיכרון בשימוש"],
-        "d7": [("26 פאנלים של קלוד קוד", n("2.9 - 3.3 GB")),
-               ("cmux, ועוד 174 שלים ועוזרים", n("0.76 GB")),
+        "d7": [("26 פאנלים של קלוד קוד", n("3 - 4 GB")),
+               ("cmux, ועוד 174 שלים ועוזרים", n("0.82 GB")),
                ("פייצ׳ארם", "לא רץ")],
         "d7_foot": f'הספוטלייט אומר שפתחתי אותו לאחרונה ב-<b>11 ביוני</b>. כל הפרויקטים שלי יושבים בתיקייה שנקראת {n("PycharmProjects")}.',
 

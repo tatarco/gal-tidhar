@@ -9,6 +9,7 @@ import base64, html, pathlib
 HERE = pathlib.Path(__file__).parent
 ABS = str(HERE)
 POST = (HERE / "post-he.txt").read_text(encoding="utf-8")
+COMMENT = (HERE / "comment-he.txt").read_text(encoding="utf-8")
 
 DESIGNS = [
     ("1", "The one big number", "26, with the workspace count under it and three chips."),
@@ -19,7 +20,7 @@ DESIGNS = [
     ("5", "The three real deviations", "The settings list, all three turning something off."),
     ("6", "Mine vs the schema default", "The receipts table, with the one real deviation lit up."),
     ("7", "The memory ledger",
-     "26 agents at ~3 GB, cmux at 0.76, and PyCharm not running since 11 June. The new angle."),
+     "26 agents at 3-4 GB, cmux at 0.82, and PyCharm not running since 11 June. The new angle."),
 ]
 
 
@@ -117,8 +118,9 @@ just click, no need to type codes back at me.</p>
 
 <div class="note"><b>New in this pass: the memory angle.</b> Added as its own beat in the post, a
 new section in the blog, and <b>hero 7</b>. The numbers are measured, not estimated: 26 Claude Code
-panes hold <b>2.9 - 3.3 GB</b> (sampled three times, it moves while agents work), cmux plus 174
-shells and helpers hold <b>0.76 GB</b>, on a 24 GB machine - under 4 GB in total.
+panes hold <b>3 - 4 GB</b> (it swings by a gigabyte depending on what they are doing at that
+instant), cmux plus 174 shells and helpers hold <b>0.82 GB</b>, on a 24 GB machine - about 5 GB at
+the top of the swing.
 The row that makes it work is PyCharm - Spotlight says you last opened it on <b>11 June</b>.
 That is also what justifies turning
 <code>agentHibernation</code> off: it is a RAM decision, and the RAM came from the IDE. The post
@@ -136,6 +138,17 @@ the file-managed mechanism taught, three settings with reasons, closing question
 above the box.</p>
 <div class="copybar"><button class="copybtn" data-copy="post-text">Copy post text</button></div>
 <pre id="post-text" class="term">{html.escape(POST)}</pre>
+
+<h2>01b &middot; The first comment</h2>
+<p class="why">The blog link never goes in the post body - LinkedIn suppresses reach on it. Post
+first, then paste this as your own first comment. The post body already ends on the question, with
+the pointer line one paragraph above it.</p>
+<div class="copybar"><button class="copybtn" data-copy="comment-text">Copy first comment</button></div>
+<pre id="comment-text" class="term">{html.escape(COMMENT)}</pre>
+<div class="note"><b>The URL is not live yet.</b> <code>gal.tidhar.org.il/blog/cmux/</code> is written
+and committed locally but not pushed - it goes live the moment I push, which I am holding until you
+pick a hero (the push also sets <code>og.png</code>). Do not post the comment before that or the link
+404s.</div>
 
 <h2>02 &middot; Pick the hero</h2>
 <p class="why">Six designs, each in English and Hebrew. The post is Hebrew, so the Hebrew version is

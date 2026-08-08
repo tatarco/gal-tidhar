@@ -125,7 +125,7 @@
 
         <figure>
           <img src="hero.png" alt="26 Claude Code sessions open in one window across 7 workspaces" loading="lazy">
-          <figcaption>Counted, not estimated: 26 terminal panes across 7 workspaces in my cmux session file, and 26 live <code>claude</code> processes on the machine right now, 25 of them children of cmux.</figcaption>
+          <figcaption>Counted, not estimated: the cmux session file records 28 panels across 7 workspaces, 26 of them tagged <code>agent.kind: claude</code>, and a live process count finds the matching 26 <code>claude</code> processes under cmux.</figcaption>
         </figure>
 
         <h2 class="spec-head">The problem is the notification, not the terminal</h2>
@@ -259,14 +259,14 @@
         <p>The pattern in all of them: at one session these are preferences. At twenty-six they are the difference between a workspace and a switchboard.</p>
 
         <h2 class="spec-head">The memory only worked out because the IDE is gone</h2>
-        <p>Twenty-six agents is not free. Resident memory on a 24 GB machine, sampled three times a few seconds apart because it moves while agents work:</p>
+        <p>Twenty-six agents is not free. Resident memory on a 24 GB machine, sampled repeatedly a few seconds apart, because the agent figure swings by a gigabyte depending on what they are doing at that instant:</p>
         <table class="spec-table">
           <tr><th>What</th><th>Resident memory</th></tr>
-          <tr><td>26 Claude Code panes</td><td>2.9 - 3.3 GB</td></tr>
-          <tr><td>cmux itself, plus 174 shells and helper processes</td><td>0.76 GB</td></tr>
+          <tr><td>26 Claude Code panes</td><td>3 - 4 GB</td></tr>
+          <tr><td>cmux itself, plus 174 shells and helper processes</td><td>0.82 GB</td></tr>
           <tr><td>PyCharm</td><td>not running</td></tr>
         </table>
-        <p>Under 4 GB for the whole thing. That last row is what makes the other two affordable. PyCharm is installed and Spotlight says I last opened it on <strong>11 June</strong> - two months ago, and the folder I keep every project in is called <code>PycharmProjects</code>.</p>
+        <p>Call it 5 GB at the top of the swing. That last row is what makes the other two affordable. PyCharm is installed and Spotlight says I last opened it on <strong>11 June</strong> - two months ago, and the folder I keep every project in is called <code>PycharmProjects</code>.</p>
         <p>I did not decide that. At some point I stopped reading code in an editor. I read the diff, I read what Claude says it did, I check that it runs, and I send it to review. The IDE was still sitting there indexing, holding a project model, and offering completion for a file I was not typing in. That memory moved to the agents.</p>
         <p>Which is also why I can afford to refuse <code>agentHibernation</code>. Turning it off is a RAM decision, and the RAM came from somewhere. If you still live in an IDE, keep hibernation on and raise <code>idleSeconds</code> instead - the trade is real, it just does not apply to me any more.</p>
         <p>I am not claiming this is how you should work. It is where I ended up, and the honest version of the story is that the terminal did not replace the IDE by being better at reading code. It replaced it by being where the work moved.</p>
