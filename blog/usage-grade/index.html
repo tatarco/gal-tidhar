@@ -142,10 +142,10 @@
 
         <h2 class="spec-head">How big is the multiplier</h2>
         <p>Weighted across all 396 sessions, the average token I add is re-read <strong>992 times</strong> before its session ends. In my largest session it is far worse:</p>
-        <p>My largest session ran <strong>7,196 turns</strong>. A single paragraph added to it
-        around turn 100 is re-read roughly <strong>seven million times</strong> before that session
-        ends. Not seven thousand. Seven million, because it is re-read on each of the remaining
-        7,096 turns.</p>
+        <p>My largest session ran <strong>7,196 turns</strong>. Something added to it around turn
+        100 is re-read on each of the <strong>7,096 turns that follow</strong>. If that something
+        is a 1,000-token paragraph, the session pays to read it <strong>7.1 million tokens</strong>
+        worth of times before it ends. The paragraph is small. The multiplier is not.</p>
         <p>This reframes every piece of advice in the original post. "Push noisy work into a subagent" is right, but not because it moves volume around. It is right because it keeps the main context small, and the main context is the thing being multiplied.</p>
 
         <h2 class="spec-head">The one-hour cliff, measured</h2>
@@ -162,7 +162,11 @@
           <tr><td>over 6 h</td><td>173</td><td>304,419</td><td>94.8%</td></tr>
         </table>
         </div>
-        <p>The cliff is exactly where the documentation says it is, and the step is about <strong>38x</strong>. A single short message typed into yesterday's session rebuilds that entire conversation at full price. It is the most expensive thing you will do that day and it looks like a small question.</p>
+        <p>The cliff is exactly where the documentation says it is. Crossing the hour takes the
+        average cache write on a turn from 8,252 tokens to 206,024 &mdash; a <strong>25x</strong>
+        step &mdash; and by the six-hour mark it is 37x. A single short message typed into
+        yesterday's session rebuilds that entire conversation at full price. It is the most
+        expensive thing you will do that day and it looks like a small question.</p>
         <p>The flip side of that table is the uncomfortable finding. <strong>92.5% of my turns arrive within 60 seconds of the previous one.</strong> Only 0.92% follow a gap over an hour. I had been telling myself that configuration and discipline were keeping me under the limit. A large part of it is just that I work in continuous bursts and rarely walk away mid-session.</p>
 
         <h2 class="spec-head">Where the money actually is</h2>
@@ -199,9 +203,10 @@
   re-read once per remaining turn.
   Close it. New task = new session.</code></pre>
         <p class="snap">That run is a few minutes later than the dataset the tables above were
-        built from, which is why the turn count differs slightly. The window is a rolling 30 days
-        and the logs grow while you work, so <strong>these numbers move</strong>. Treat the grades
-        as the stable part and the raw counts as a snapshot.</p>
+        built from, and it reports slightly <em>fewer</em> turns, which surprises people. The
+        window is a rolling 30 days, so each run drops whatever has just aged off the back as well
+        as picking up new work. <strong>These raw counts move in both directions.</strong> Treat
+        the grades as the stable part and the counts as a snapshot.</p>
         <p>The thresholds are published so you can argue with them rather than trust them:</p>
         <div class="tbl-scroll">
         <table class="spec-table">
