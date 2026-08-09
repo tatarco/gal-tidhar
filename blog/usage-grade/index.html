@@ -142,14 +142,10 @@
 
         <h2 class="spec-head">How big is the multiplier</h2>
         <p>Weighted across all 396 sessions, the average token I add is re-read <strong>992 times</strong> before its session ends. In my largest session it is far worse:</p>
-        <div class="tbl-scroll">
-        <table class="spec-table">
-          <tr><th>Session</th><th>Turns</th><th>1k tokens added at turn 100 is re-read</th></tr>
-          <tr><td>largest</td><td>7,196</td><td>7,096,000 times over</td></tr>
-          <tr><td>2nd</td><td>4,786</td><td>4,686,000</td></tr>
-          <tr><td>3rd</td><td>2,791</td><td>2,691,000</td></tr>
-        </table>
-        </div>
+        <p>My largest session ran <strong>7,196 turns</strong>. A single paragraph added to it
+        around turn 100 is re-read roughly <strong>seven million times</strong> before that session
+        ends. Not seven thousand. Seven million, because it is re-read on each of the remaining
+        7,096 turns.</p>
         <p>This reframes every piece of advice in the original post. "Push noisy work into a subagent" is right, but not because it moves volume around. It is right because it keeps the main context small, and the main context is the thing being multiplied.</p>
 
         <h2 class="spec-head">The one-hour cliff, measured</h2>
@@ -202,6 +198,10 @@
   FIX FIRST: longest session (24d / 7,196 turns) - every token in it is
   re-read once per remaining turn.
   Close it. New task = new session.</code></pre>
+        <p class="snap">That run is a few minutes later than the dataset the tables above were
+        built from, which is why the turn count differs slightly. The window is a rolling 30 days
+        and the logs grow while you work, so <strong>these numbers move</strong>. Treat the grades
+        as the stable part and the raw counts as a snapshot.</p>
         <p>The thresholds are published so you can argue with them rather than trust them:</p>
         <div class="tbl-scroll">
         <table class="spec-table">
