@@ -1,0 +1,41 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{background:#0a1628;color:#bae6fd;direction:ltr;
+  font-family:'IBM Plex Mono','Arial Hebrew','Arial Unicode MS',system-ui,monospace;
+  background-image:linear-gradient(rgba(125,211,252,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(125,211,252,.06) 1px,transparent 1px);
+  background-size:40px 40px;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:52px;position:relative}
+.top{position:absolute;top:36px;inset-inline-end:56px;font-size:19px;color:#7dd3fc;font-weight:700}
+/* direction:ltr must live on an inner span - putting it on the positioned
+   element flips its own inline-start and collides it with .top in RTL. */
+.rev{position:absolute;top:38px;inset-inline-start:56px;font-size:14px;letter-spacing:.14em;
+  color:rgba(186,230,253,.45)}
+.rev span{direction:ltr;unicode-bidi:isolate}
+.kicker{font-size:27px;color:rgba(186,230,253,.62);margin-bottom:10px}
+.num{unicode-bidi:isolate;direction:ltr}
+.big{font-size:190px;font-weight:800;line-height:.92;color:#7dd3fc;text-shadow:0 0 55px rgba(125,211,252,.5);direction:ltr}
+.sub{font-size:38px;color:#e0f2fe;font-weight:700;margin-top:14px;max-width:960px;line-height:1.34}
+.sub b,.claim b{color:#fef08a}
+.claim{font-size:56px;font-weight:800;color:#e0f2fe;line-height:1.32;max-width:1020px}
+.row{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;justify-content:center}
+.chip{border:1px solid rgba(125,211,252,.5);padding:9px 20px;color:#7dd3fc;font-size:21px}
+.foot{position:absolute;bottom:34px;font-size:20px;color:rgba(186,230,253,.6)}
+.foot b{color:#e0f2fe}
+
+table{border-collapse:collapse;width:940px;margin-top:8px}
+th{font-size:21px;color:rgba(186,230,253,.55);font-weight:400;padding:0 20px 14px;text-align:start;
+  border-bottom:1px solid rgba(125,211,252,.3)}
+td{font-size:29px;color:#e0f2fe;padding:13px 20px;text-align:start;border-bottom:1px solid rgba(125,211,252,.12)}
+td.n{color:#7dd3fc;font-weight:700}
+td .num{unicode-bidi:isolate}
+tr.hi td{color:#fef08a}
+tr.hi td.n{color:#fef08a}
+.note{font-size:27px;color:#e0f2fe;margin-top:28px}
+.note b{color:#fef08a}
+
+</style></head><body>
+<div class="top">Claude Code · limits</div><div class="rev"><span>gal.tidhar.org.il</span></div>
+<div class="kicker">8 months of my own session logs, month by month</div><table><tr><th>month</th><th>sessions</th><th>tokens/session</th><th>quality</th></tr><tr class=""><td>April</td><td class="n"><span class="num">207</span></td><td class="n"><span class="num">6.4M</span></td><td class="n"><span class="num">67</span></td></tr><tr class="hi"><td>May</td><td class="n"><span class="num">188</span></td><td class="n"><span class="num">9.0M</span></td><td class="n"><span class="num">63</span></td></tr><tr class=""><td>June</td><td class="n"><span class="num">247</span></td><td class="n"><span class="num">3.2M</span></td><td class="n"><span class="num">63</span></td></tr><tr class=""><td>July</td><td class="n"><span class="num">259</span></td><td class="n"><span class="num">6.8M</span></td><td class="n"><span class="num">67</span></td></tr><tr class="hi"><td>August</td><td class="n"><span class="num">187</span></td><td class="n"><span class="num">1.7M</span></td><td class="n"><span class="num">77</span></td></tr></table><div class="note">35% of historical sessions graded <b>D</b> - almost all 14-hour marathons. Learned, not talent.</div>
+<div class="foot">Measured from 8 months of my own session logs · <b>gal.tidhar.org.il</b></div>
+</body></html>

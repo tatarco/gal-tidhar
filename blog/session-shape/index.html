@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The comments were right: cache ratio is a symptom, session shape is the cause · Gal Tidhar</title>
+  <meta name="description" content="My cache-economics post got taken apart in the comments. I sent five subagents into 8 months of my own logs to check who was right. Mostly: the commenters. The metric that matters is tokens per finished session, and mine dropped 5x without the cache ratio moving.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/session-shape/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The comments were right: cache ratio is a symptom, session shape is the cause">
+  <meta property="og:description" content="Five subagents, 1,088 logged sessions, 8 months of transcripts. May: 9M tokens per session. August: 1.7M, same workload, cache ratio unchanged. The postmortem of my own post.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/session-shape/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/session-shape/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="May: 9M tokens per session. August: 1.7M. Cache ratio unchanged.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The comments were right: cache ratio is a symptom, session shape is the cause">
+  <meta name="twitter:description" content="Five subagents, 1,088 logged sessions, 8 months of transcripts. The postmortem of my own cache-economics post.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/session-shape/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The comments were right: cache ratio is a symptom, session shape is the cause",
+    "description": "My cache-economics post got taken apart in the comments. I sent five subagents into 8 months of my own logs to check who was right. Mostly: the commenters.",
+    "image": "https://gal.tidhar.org.il/blog/session-shape/og.png",
+    "datePublished": "2026-08-10",
+    "dateModified": "2026-08-10",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/session-shape/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" }
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; white-space: pre-wrap; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="/blog/cache-economics/">Part one &nearr;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article class="prose">
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / POSTMORTEM</span>
+          <p class="role-line">Claude Code · 1,088 sessions · 8 months of logs</p>
+          <h1 class="title">The comments were right: cache ratio is a symptom, session shape is the cause</h1>
+          <p class="meta-line">Published <strong>2026-08-10</strong> · follows <a href="/blog/cache-economics/">cache economics</a> · every number below is from my own local logs, nothing estimated</p>
+          <p class="lead">Two days ago I wrote that 96.3% of my tokens are cache reads and that this is why I cannot hit my Claude Code limit. The comments took the thesis apart from three directions. Instead of defending it, I sent five subagents into everything I have: 1,088 logged sessions since April, 2.8 GB of transcripts, every checkpoint my measurement tooling ever wrote. <strong>The commenters were mostly right, and the drilldown found a better number than the one I led with.</strong></p>
+        </header>
+
+        <h2 class="spec-head">Objection one: a ratio is not a cost</h2>
+        <blockquote>"96% is a ratio, not a cost. You can hold an excellent ratio and still burn more, simply because you did three times as many turns. What I would measure is what a finished task cost." - Omri Pitaru</blockquote>
+        <p>He is right, and my own logs prove it better than I expected. A background tool has been grading every one of my sessions since April. Here is the month-by-month picture:</p>
+        <table class="spec-table">
+          <tr><th>Month</th><th>Sessions</th><th>Avg input tokens / session</th><th>Quality score</th><th>Cache hit rate</th></tr>
+          <tr><td>April</td><td>207</td><td>6.4M</td><td>67.2</td><td>74.3%</td></tr>
+          <tr><td>May</td><td>188</td><td>9.0M</td><td>63.2</td><td>76.8%</td></tr>
+          <tr><td>June</td><td>247</td><td>3.2M</td><td>62.9</td><td>78.2%</td></tr>
+          <tr><td>July</td><td>259</td><td>6.8M</td><td>67.2</td><td>79.7%</td></tr>
+          <tr><td>August (partial)</td><td>187</td><td>1.7M</td><td>76.5</td><td>77.7%</td></tr>
+        </table>
+        <p>Look at May against August. Same session volume, same workload, a <strong>5x drop in tokens per session</strong>, best quality score in the log. And the cache hit rate between those two months barely moved: 76.8% against 77.7%. If cache ratio were the driver, May and August should have cost the same. They did not, because what changed is the shape of the sessions, not the ratio.</p>
+        <p class="snap"><strong>A note on two cache numbers.</strong> The 96.3% in the original post is the share of my input volume served as cache reads, measured from transcripts. The grader above scores cache hits per request, a stricter cut, which is why it reads in the 70s. They measure different things; the point here is only that the grader's metric is <em>flat</em> between my cheapest and most expensive months.</p>
+        <p>So the metric I led with in part one was the wrong one. A high cache ratio is what a well-shaped session <em>produces</em>, not something you optimize directly. The number worth tracking is <strong>tokens per finished session</strong>, exactly as Omri said. Mine went from 9M to 1.7M while the ratio stood still.</p>
+
+        <h2 class="spec-head">What the trend actually says: this is learnable</h2>
+        <p>Out of 1,088 graded sessions, <strong>385 (35%) got a D</strong>. Nearly all of them share one pattern: marathons. The worst three in the log ran 5.4M, 5.5M and 7.3M input tokens, two of them over 14 hours of wall time. The best sessions in the log (quality 100) are the opposite shape: under 3 minutes, ~100K tokens, 85-91% cache hits.</p>
+        <p>I was the person burning a plan, and the habits were learned inside that log - which is exactly why they are teachable and why "I just use it less" is the wrong takeaway. My session count never dropped. The shape changed, and the bill followed.</p>
+
+        <h2 class="spec-head">Objection two: subagents start cold</h2>
+        <blockquote>"Subagents keep the parent prefix stable, but each one starts cold, so you pay full price for its context. Net loss when it hands back something long that gets pasted into the parent. What I watch now is the size of what comes back, not the size of what goes in." - Roki Hasan</blockquote>
+        <p>Also right, and worth quantifying rather than arguing. The trade in my logs:</p>
+        <ul>
+          <li><strong>1,679 subagent transcripts against 418 main sessions</strong> - about four dispatches per session. The bulk of my 2.8 GB of transcripts lives in the subagents, not the main threads.</li>
+          <li>The main-thread context fill across recent checkpoints: <strong>median 14%, never above 31%</strong>. The expensive model's window stays nearly empty because file dumps land in throwaway contexts.</li>
+          <li>My input-to-output ratio across all sessions is roughly <strong>150:1</strong>. Almost everything I am billed for is context being re-read, so anything that keeps the main window small wins compound interest every turn until the session ends.</li>
+          <li>The honest cost: my own tooling flags <strong>agent dispatch overhead</strong> as the single weakest signal in otherwise good sessions - firing five-plus dispatches in one burst scores as low as 71 on that metric. The savings mechanism is also the one measured cost center.</li>
+        </ul>
+        <p>Roki's rule survives contact with the data and I have adopted it as stated: <strong>watch what comes back, not what goes in.</strong> A subagent that returns a paragraph pays for itself; one that returns a wall of text into the parent defeats the purpose.</p>
+
+        <h2 class="spec-head">Objection three: what about switching models mid-session</h2>
+        <blockquote>"If you start with Haiku you will have to shift up at some point and switch models, and then your whole cache resets. What do you do about that?" - Roy Perez</blockquote>
+        <p>The data answers this cleanly: the main thread never switches because it is <strong>always Opus</strong>. The Haiku-by-default rule in my CLAUDE.md applies to subagents, which live for minutes and die. 58% of last month's 1,085 dispatches ran Haiku explicitly. A cache reset on a context that is about to be discarded costs nothing; a cache reset on the long-lived main thread is the thing to avoid - which is rule one from part one, unchanged.</p>
+
+        <h2 class="spec-head">What survived, what fell</h2>
+        <table class="spec-table">
+          <tr><th>Claim from part one</th><th>Verdict after the drilldown</th></tr>
+          <tr><td>Never break the prefix (no model switches, no stale-session wakeups)</td><td><strong>Survived.</strong> Still the mechanism underneath everything.</td></tr>
+          <tr><td>Defaults beat discipline (Haiku-by-default in CLAUDE.md)</td><td><strong>Survived.</strong> The transcripts show the rule actually holds under load.</td></tr>
+          <tr><td>Push noisy work into subagents</td><td><strong>Survived, with Roki's amendment:</strong> meter the return payload, not the dispatch.</td></tr>
+          <tr><td>Lots of skills is fine because they are frozen prefix</td><td><strong>Survived</strong>, with Omri's caveat: a skill that loads mid-session, an edited CLAUDE.md, or an MCP server connecting all rewrite the prefix without any model switch. My mitigation, mostly by accident: almost no MCP servers, and skills usually execute inside subagents.</td></tr>
+          <tr><td>96.3% cache reads as the headline metric</td><td><strong>Fell.</strong> It is a symptom. The causal metric is tokens per finished session: mine dropped 5x while the ratio moved less than one point.</td></tr>
+        </table>
+
+        <h2 class="spec-head">Run the same audit on yourself: setup-audit</h2>
+        <p>Chaim asked for an importable skill, so the whole drilldown is now one: <a href="https://github.com/tatarco/claude-setup-audit"><strong>claude-setup-audit</strong></a>. It reads your local logs (nothing leaves your machine), scores you against the seven habits, and prints a versioned block that is comparable between people line by line. One command, no install:</p>
+        <pre><code>curl -fsSL https://raw.githubusercontent.com/tatarco/claude-setup-audit/main/setup-audit.py \
+  -o /tmp/setup-audit.py &amp;&amp; python3 /tmp/setup-audit.py --share</code></pre>
+        <p>Or as a skill, so <code>/setup-audit</code> works in any session:</p>
+        <pre><code>git clone https://github.com/tatarco/claude-setup-audit ~/.claude/skills/setup-audit</code></pre>
+        <p>Here is my real output, after everything this post describes:</p>
+        <pre><code>CLAUDE SETUP AUDIT v1 - last 30 days
+399 sessions, 1,301 subagent runs
+
+  delegation      3.2 subagents/session                   A
+  cheap models    60% of dispatches on haiku              A
+  prompt shape    median 56 chars                         A
+  main context    median 244k                             C
+  session cost    22.9M input tokens/session              F
+  marathons       longest ran 24d / 3,536 turns           F
+  setup overhead  ~6.7k tokens before turn one (3 MCP)    C
+  ----------------------------------------------------------
+  AUDIT           C
+
+  FIX FIRST: session cost - the number that drains a plan - watch
+  its trend, not your cache ratio.</code></pre>
+        <p>A C, with two F's - both caused by one session I forgot to close for 24 days. The habit metrics (delegation, routing, prompt shape) are A's because they are written defaults, not discipline; the failure metrics are exactly where no default was guarding me. That is the whole thesis in one block, and it is why the grades are worth comparing: they point at your leak, not your virtue.</p>
+        <p class="snap"><strong>Measurement note.</strong> The script counts total input volume per session including cache reads, so its "session cost" runs higher than the grader's monthly averages in the table above - different instruments, each consistent with itself. Compare script output only with script output; the thresholds are printed in the source so you can argue with them.</p>
+        <p>The config side (statusline, pre-limit warning hook, the model-routing CLAUDE.md block, deny rules) lives in the <a href="https://github.com/tatarco/claude-code-starter">starter repo</a> from part one.</p>
+
+        <div class="cta">
+          <h3>The one-line version</h3>
+          <p>Stop asking what your cache ratio is. Ask what a finished session costs you in tokens, and watch that number month over month. Everything in part one is still how you lower it - part one just measured the wrong thing while doing the right things.</p>
+          <div class="link-row">
+            <a href="https://github.com/tatarco/claude-setup-audit">claude-setup-audit</a><span class="sep">·</span>
+            <a href="/blog/cache-economics/">Part one: cache economics</a><span class="sep">·</span>
+            <a href="https://github.com/tatarco/claude-code-starter">claude-code-starter</a><span class="sep">·</span>
+            <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/">gal.tidhar.org.il</a> · field notes from the workshop
+  </footer>
+</body>
+</html>

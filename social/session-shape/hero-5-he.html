@@ -1,0 +1,37 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{background:#0a1628;color:#bae6fd;direction:rtl;
+  font-family:'IBM Plex Mono','Arial Hebrew','Arial Unicode MS',system-ui,monospace;
+  background-image:linear-gradient(rgba(125,211,252,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(125,211,252,.06) 1px,transparent 1px);
+  background-size:40px 40px;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:52px;position:relative}
+.top{position:absolute;top:36px;inset-inline-end:56px;font-size:19px;color:#7dd3fc;font-weight:700}
+/* direction:ltr must live on an inner span - putting it on the positioned
+   element flips its own inline-start and collides it with .top in RTL. */
+.rev{position:absolute;top:38px;inset-inline-start:56px;font-size:14px;letter-spacing:.14em;
+  color:rgba(186,230,253,.45)}
+.rev span{direction:ltr;unicode-bidi:isolate}
+.kicker{font-size:27px;color:rgba(186,230,253,.62);margin-bottom:10px}
+.num{unicode-bidi:isolate;direction:ltr}
+.big{font-size:190px;font-weight:800;line-height:.92;color:#7dd3fc;text-shadow:0 0 55px rgba(125,211,252,.5);direction:ltr}
+.sub{font-size:38px;color:#e0f2fe;font-weight:700;margin-top:14px;max-width:960px;line-height:1.34}
+.sub b,.claim b{color:#fef08a}
+.claim{font-size:56px;font-weight:800;color:#e0f2fe;line-height:1.32;max-width:1020px}
+.row{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;justify-content:center}
+.chip{border:1px solid rgba(125,211,252,.5);padding:9px 20px;color:#7dd3fc;font-size:21px}
+.foot{position:absolute;bottom:34px;font-size:20px;color:rgba(186,230,253,.6)}
+.foot b{color:#e0f2fe}
+
+.list{display:flex;flex-direction:column;gap:22px;width:1050px;margin-top:6px}
+.item{display:flex;align-items:baseline;gap:18px;border-inline-start:3px solid rgba(125,211,252,.55);
+  padding-inline-start:20px;text-align:start}
+.item .n{font-size:25px;color:#fef08a;font-weight:800;direction:ltr;min-width:26px}
+.item .t{font-size:28px;color:#e0f2fe;font-weight:700}
+.item .d{font-size:21px;color:rgba(186,230,253,.62);margin-top:4px}
+
+</style></head><body>
+<div class="top">קלוד קוד · לימיטים</div><div class="rev"><span>gal.tidhar.org.il</span></div>
+<div class="kicker">חמישה הרגלים שמשאירים אתכם מתחת ללימיט</div><div class="list"><div class="item"><div class="n">1</div><div><div class="t">הראשי מנווט, סאב-אייג'נטים עובדים</div><div class="d">קריאה, חיפוש ודפדפן יוצאים לקונטקסט זריק, חוזרת רק המסקנה</div></div></div><div class="item"><div class="n">2</div><div><div class="t">ניתוב מודלים כתוב ב-CLAUDE.md</div><div class="d">הייקו כברירת מחדל לקריאה ולספירה. הגדרה, לא החלטה</div></div></div><div class="item"><div class="n">3</div><div><div class="t">משימה חדשה = סשן חדש</div><div class="d">ולסגור את מה ששכחתם. אצלי אחד רץ 24 יום</div></div></div><div class="item"><div class="n">4</div><div><div class="t">היגיינה כאוטומציה</div><div class="d">compact ב-40%, חסימת env./node_modules/לוגים, ניתוק MCP שלא בשימוש</div></div></div><div class="item"><div class="n">5</div><div><div class="t">משימות חוזרות יוצאות מהצ'אט</div><div class="d">ריצות מתוזמנות ברקע עם קונטקסט טרי וקטן</div></div></div></div>
+<div class="foot">נמדד מ-8 חודשים של הלוגים שלי · <b><span class="num">gal.tidhar.org.il</span></b></div>
+</body></html>

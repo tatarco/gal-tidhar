@@ -569,6 +569,11 @@
     <section id="writing" class="spec">
       <h2 class="spec-head">Writing · field notes</h2>
       <div class="panel" style="margin-top:1.25rem">
+        <h3><a href="/blog/session-shape/">The comments were right: cache ratio is a symptom, session shape is the cause</a></h3>
+        <p class="job-desc" style="margin-top:.5rem">Five subagents dug through 8 months of my own logs: May cost me 9M tokens per session, August 1.7M - same workload, cache ratio unchanged. The habits that made the difference, and a skill (claude-setup-audit) that grades your setup against them from your local logs. I got a C.</p>
+        <p style="margin-top:1rem;font-size:.84rem"><a href="/blog/session-shape/">Read &rarr;</a> <span style="color:var(--muted)">&middot;</span> <a href="https://github.com/tatarco/claude-setup-audit" target="_blank" rel="noopener">setup-audit &nearr;</a> <span style="color:var(--muted)">&middot;</span> <a href="/blog/cache-economics/">Part one</a></p>
+      </div>
+      <div class="panel" style="margin-top:1.25rem">
         <h3><a href="/blog/usage-grade/">Four people pushed back on my cache post. I graded myself and got a C.</a></h3>
         <p class="job-desc" style="margin-top:.5rem">The comments were better than the post. One question sent me back to 58,617 turns of raw logs, where I found the thing I had missed: a token added early in a long session is re-read once per remaining turn, 992 times on average. One session I forgot to close ran 24 days and was 17% of my month. The script that grades you is in the post.</p>
         <p style="margin-top:1rem;font-size:.84rem"><a href="/blog/usage-grade/">Read &rarr;</a> <span style="color:var(--muted)">&middot;</span> <a href="/blog/cache-economics/">The original</a> <span style="color:var(--muted)">&middot;</span> <a href="https://github.com/tatarco/claude-code-starter" target="_blank" rel="noopener">repo &nearr;</a></p>
