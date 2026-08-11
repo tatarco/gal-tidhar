@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My agent cannot browse as me · Gal Tidhar</title>
+  <meta name="description" content="Every client gives me an internal email so the work stays in their scope. The browser was the last hole: a task space is born on whichever profile is active, and the option meant to control it was accepted and silently ignored. Here is the fix - email as the handle, a self-building profile map, and a hook that refuses an unscoped run.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/agent-identity/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="My agent cannot browse as me">
+  <meta property="og:description" content="Client work belongs in the client's scope - including what the agent does in the browser. An email as the handle, a profile map that builds itself, and a guard that refuses an unscoped run.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/agent-identity/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/agent-identity/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="My agent cannot browse as me">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="My agent cannot browse as me">
+  <meta name="twitter:description" content="An email as the handle, a profile map that builds itself, and a guard that refuses an unscoped run.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/agent-identity/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "My agent cannot browse as me",
+    "description": "Every client gives me an internal email so the work stays in their scope. The browser was the last hole: a task space is born on whichever profile is active, and the option meant to control it was accepted and silently ignored. Here is the fix - email as the handle, a self-building profile map, and a hook that refuses an unscoped run.",
+    "image": "https://gal.tidhar.org.il/blog/agent-identity/og.png",
+    "datePublished": "2026-08-11",
+    "dateModified": "2026-08-11",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/agent-identity/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "ego lite, browser profiles, AI agents, client scope, freelance, identity, task space, Claude Code hooks"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="/blog/agent-browser/">Part one ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / AGENT IDENTITY</span>
+          <p class="role-line">Client scope · Agents · Browser automation</p>
+          <h1 class="title">My agent cannot browse as me</h1>
+          <p class="meta-line"><strong>2026-08-11</strong> &nbsp;·&nbsp; ~8 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">The first thing I ask a new client for is <strong>an email address on their domain</strong>. Everything I build then lives inside their scope: their GitHub, their Supabase project, their Base44 app. When the engagement ends they take over one account and inherit all of it. The terminal side of that was solved. The <strong>browser</strong> was still leaking - and the leak was silent.</p>
+        </header>
+
+        <figure>
+          <img src="og.png" alt="My agent cannot browse as me" loading="lazy">
+          <figcaption>One browser, several identities, and a rule about which one is allowed here.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">Why an internal email is not a formality</h2>
+        <p class="prose">A freelance engagement leaves a trail of accounts behind it. The repo, the issues, the Supabase project, the deploy hooks, the third-party integrations, the API keys someone will need to rotate in eighteen months. If any of it is registered to my personal Gmail, the client does not own their own system - they own a system with me embedded in it.</p>
+        <p class="prose">So the rule is simple: <strong>one internal account per client, and everything happens through it.</strong> On my current engagement that is a GitHub identity the client provisioned. At handover they take that account and inherit the repo, the tickets and the automations without a migration project.</p>
+        <p class="prose">In the terminal this is enforceable. The project sets <code>GH_CONFIG_DIR</code> to a directory inside the repo, so <code>gh</code> run from that folder reads a project-local auth store. My personal login is not merely discouraged there, it is <em>unreachable</em>. A hook checks the active account before every call and explains the fix when it is wrong.</p>
+        <blockquote>The important layer is not the hook. It is that the wrong identity cannot be reached from this directory at all. The hook is a good error message.</blockquote>
+
+        <h2 class="spec-head">The hole: the browser has an identity too</h2>
+        <p class="prose">Half of modern client work does not happen in the terminal. Base44, Lovable, Supabase dashboards, GitHub UI, the client's own admin panel - the agent has to drive a real browser, signed in as someone. <a href="/blog/agent-browser/">Part one</a> covered how that works: <a href="https://lite.ego.app/">ego lite</a> gives the agent its own task space that inherits my login state, so it can operate authenticated sites without stealing my window.</p>
+        <p class="prose">What I had not thought about: <strong>which</strong> login state it inherits. A task space is pinned to a browser profile when it is created, and it is created on whichever profile happens to be active in the browser at that moment. Not the project's profile. Not a default. Whichever tab I had open an hour ago.</p>
+        <p class="prose">The failure has two shapes and both are bad. If the wrong profile is not signed in, the site bounces to a login screen and the agent reports that I am logged out - annoying, but visible. If the wrong profile <em>is</em> signed in, everything works perfectly and the agent acts as the wrong person. That one is invisible.</p>
+
+        <h2 class="spec-head">The part that cost me an hour: an option that was accepted and ignored</h2>
+        <p class="prose">The documented helper for getting a task space looks like this:</p>
+        <pre><code>const task = await useOrCreateTaskSpace('my task', { profileId: 'Profile 4' })</code></pre>
+        <p class="prose">It runs. It does not throw. It returns a task space. And the space is on whatever profile was active. I asked for the client's profile three times in a row and landed on my personal one three times in a row, while the code read as if I had chosen.</p>
+        <p class="prose">The package is open source, so I read it. <code>useOrCreateTaskSpace(nameOrId)</code> takes <strong>one parameter</strong>. There is no options object. The second argument I was passing had never existed - it was accepted by JavaScript, dropped on the floor, and the shape of the call made it look deliberate.</p>
+        <div class="snap"><strong>The general lesson:</strong> an option that is accepted and ignored is worse than an option that does not exist. A missing API fails loudly the first time. A silently dropped one fails on the day it matters, in production, as the wrong user.</div>
+        <p class="prose">Then the good news. One layer down, the capability was there the whole time:</p>
+        <pre><code>const t = await ego.createTaskSpace('my task', 'Profile 4')  // 2nd arg pins the profile
+await ego.useTaskSpace(t.id)                                 // create does not select it</code></pre>
+        <p class="prose">That genuinely pins it. With the browser sitting on a completely different profile, the space is born on <code>Profile 4</code> and pages load as that account. It is not in the shipped skill documentation, and the <a href="https://github.com/citrolabs/ego-lite/issues/176">open feature request</a> for agent-facing profile selection suggests it is not considered finished yet. It works today.</p>
+
+        <h2 class="spec-head">The design: email is the handle, not "Profile 4"</h2>
+        <p class="prose">My first attempt hardcoded profile directories, and it was wrong within an hour. Directory ids are not a human handle: I have <strong>two profiles with the identical display name</strong>, the list changes shape between calls, and I add and remove profiles as clients come and go. I also guessed one mapping from the name and got it wrong - my personal account was not on the profile whose display name matched it - it was on the next one along.</p>
+        <p class="prose">So the handle is the thing a human actually knows: <strong>the email address</strong>. Three pieces:</p>
+        <h3>1. The project declares one email</h3>
+        <pre><code>$ cat .claude/ego-profile
+me@clientdomain.com</code></pre>
+        <p class="prose">One line, in the repo, next to the other project rules. It says which identity this codebase is allowed to browse as, in a form that means something to the client too.</p>
+        <h3>2. The email-to-profile map builds itself</h3>
+        <p class="prose">Nothing is hand-written, because a hand-written mapping is exactly the failure being prevented. A resolver script opens a task space pinned to each profile in turn, loads the Google account page, reads who is signed in, and writes the result:</p>
+        <pre><code>$ bash ~/.claude/hooks/ego-resolve-profile.sh
+me@clientdomain.com              Profile 4
+me@otherclient.com               Profile 9
+you@personal.example             Profile 8
+Default      personal   -- not signed in to Google</code></pre>
+        <p class="prose">Add a client, add a profile, sign in, and the map corrects itself the next time an unknown email comes up. Note that this only became possible <em>because</em> the low-level API can pin a profile - without it, mapping every profile would mean asking a human to click through the browser seven times.</p>
+        <h3>3. A hook that refuses the unscoped run</h3>
+        <p class="prose">A <code>PreToolUse</code> hook sits in front of every browser command and denies it unless three things hold: the project declares an email, the script names that email out loud, and creation goes through the pinning API with that email's profile. It also lets read-only introspection through, because listing profiles touches nobody's data.</p>
+        <pre><code>ego profile guard: `useOrCreateTaskSpace('&lt;name&gt;')` creates the space on whichever
+profile is active - its options are ignored, there is no profileId. Create with
+`const t = await ego.createTaskSpace('&lt;name&gt;', 'Profile 4')` then
+`await ego.useTaskSpace(t.id)`. Profile 4 = me@clientdomain.com.</code></pre>
+        <p class="prose">The point of putting the email in the script text is not ceremony. It makes the intended scope a thing the agent has to state, which means a wrong intention is visible in the diff rather than in the audit log six weeks later.</p>
+
+        <h2 class="spec-head">This is not a freelancer problem</h2>
+        <p class="prose">I built it for client scope, and then noticed the shape is general. Anyone running agents in their daily browser has the same collision: the browser that buys cinema tickets and orders groceries is also the browser that QAs the app they are paid to build. Those are two different identities that happen to share a laptop.</p>
+        <p class="prose">If your agent explores your company's staging environment from the profile that is signed into your personal accounts, the boundary you rely on at work is being decided by which tab was focused. The employer version of this rule is the same as the freelance one: <strong>work tasks declare the work identity, and the run is refused otherwise.</strong></p>
+
+        <h2 class="spec-head">What I would not claim</h2>
+        <ul class="prose">
+          <li>The hook matches command text. It is a seatbelt, not a sandbox - a determined script can phrase its way around it. The real check is reading the space's profile back after creating it, which the workflow now requires.</li>
+          <li>The identity probe relies on a Google account page. Profiles that are not signed in to Google simply report nothing, which is honest but incomplete.</li>
+          <li>Pinning through <code>ego.createTaskSpace</code> is undocumented. It works in the version I am on and could change - the read-back check is what makes that survivable.</li>
+        </ul>
+
+        <h2 class="spec-head">The rule I ended up with</h2>
+        <p class="prose">Identity is not a setting, it is a precondition. If you have given an agent the ability to act as you, there has to be a point in the system where it is <strong>unable</strong> to act as someone else. In the terminal that point is a config directory the wrong account cannot reach. In the browser it is a declared email, a self-correcting map, and a command that never runs when the scope is not stated.</p>
+
+        <div class="cta">
+          <h3>The pieces</h3>
+          <p class="prose">Part one covers the browser primitive itself - task spaces, inherited logins, and the control model where the user always wins the wheel.</p>
+          <div class="link-row">
+            <a href="https://github.com/tatarco/ego-profile-guard">ego-profile-guard (the hook + the resolver, MIT)</a> <span class="sep">·</span>
+            <a href="/blog/agent-browser/">Part one: I stopped giving my agent my browser</a> <span class="sep">·</span>
+            <a href="https://lite.ego.app/">ego lite</a> <span class="sep">·</span>
+            <a href="https://github.com/citrolabs/ego-lite/issues/176">The open profile-selection request</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+<footer>
+    <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>

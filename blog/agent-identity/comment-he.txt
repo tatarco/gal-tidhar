@@ -1,0 +1,8 @@
+הסיפור המלא, עם הקוד של ההוק, המפה שבונה את עצמה, והמלכודת של הפרמטר שמתקבל ונזרק:
+https://gal.tidhar.org.il/blog/agent-identity/
+
+והכל פתוח, מוכן להתקנה אצלכם - הוק אחד, סקריפט אחד, install.sh:
+https://github.com/tatarco/ego-profile-guard
+
+הפוסט הראשון על ego lite, על מרחבי משימה והתחברויות בירושה:
+https://gal.tidhar.org.il/blog/agent-browser/
