@@ -1,0 +1,35 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{background:#0a1628;color:#bae6fd;direction:ltr;
+  font-family:'IBM Plex Mono','Arial Hebrew','Arial Unicode MS',system-ui,monospace;
+  background-image:linear-gradient(rgba(125,211,252,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(125,211,252,.06) 1px,transparent 1px);
+  background-size:40px 40px;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:52px;position:relative}
+.top{position:absolute;top:36px;inset-inline-end:56px;font-size:19px;color:#7dd3fc;font-weight:700}
+.rev{position:absolute;top:38px;inset-inline-start:56px;font-size:14px;letter-spacing:.14em;
+  color:rgba(186,230,253,.45)}
+.rev span{direction:ltr;unicode-bidi:isolate}
+.num{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.kicker{font-size:27px;color:rgba(186,230,253,.62);margin-bottom:10px;max-width:1020px;line-height:1.34}
+.big{font-size:210px;font-weight:800;line-height:.92;color:#7dd3fc;text-shadow:0 0 55px rgba(125,211,252,.5);direction:ltr}
+.sub{font-size:38px;color:#e0f2fe;font-weight:700;margin-top:14px;max-width:960px;line-height:1.34}
+.sub b,.claim b{color:#fef08a}
+.claim{font-size:52px;font-weight:800;color:#e0f2fe;line-height:1.34;max-width:1040px}
+.row{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;justify-content:center}
+.chip{border:1px solid rgba(125,211,252,.5);padding:9px 20px;color:#7dd3fc;font-size:21px}
+.foot{position:absolute;bottom:34px;font-size:20px;color:rgba(186,230,253,.6)}
+.foot b{color:#e0f2fe}
+
+.list{display:flex;flex-direction:column;gap:22px;width:1070px;margin-top:14px}
+.item{display:flex;align-items:baseline;gap:18px;border-inline-start:3px solid rgba(125,211,252,.55);
+  padding-inline-start:20px;text-align:start}
+.item .n{font-size:25px;color:#fef08a;font-weight:800;direction:ltr;min-width:26px}
+.item .t{font-size:24px;color:#7dd3fc;font-weight:700;line-height:1.36}
+.item .d{font-size:20px;color:rgba(186,230,253,.68);margin-top:7px;line-height:1.42}
+
+</style></head><body>
+<div class="top">callrec · local call recording</div><div class="rev"><span>gal.tidhar.org.il</span></div>
+<div class="kicker">the part that is not written down anywhere obvious</div><div class="list"><div class="item"><div class="n">1</div><div><div class="t">A Multi-Output Device is just an aggregate device with kAudioAggregateDeviceIsStackedKey = 1</div><div class="d">So you can create it in code instead of asking someone to click it together in Audio MIDI Setup.</div></div></div><div class="item"><div class="n">2</div><div><div class="t">Real hardware is the clock master, drift correction goes on the virtual device</div><div class="d">BlackHole has no crystal of its own and slides out of sync without it.</div></div></div><div class="item"><div class="n">3</div><div><div class="t">Selecting a Multi-Output Device kills your volume keys</div><div class="d">Which is why the script switches to it on start and switches back on stop. Otherwise you stop using it.</div></div></div></div>
+<div class="foot">350 lines, MIT &middot; gal.tidhar.org.il</div>
+</body></html>

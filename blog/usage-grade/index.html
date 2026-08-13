@@ -148,6 +148,25 @@
         worth of times before it ends. The paragraph is small. The multiplier is not.</p>
         <p>This reframes every piece of advice in the original post. "Push noisy work into a subagent" is right, but not because it moves volume around. It is right because it keeps the main context small, and the main context is the thing being multiplied.</p>
 
+        <h2 class="spec-head">What the logs vindicated</h2>
+        <p>I went in expecting to find my setup was theatre. Three quarters of it held up, and the biggest one held up for a reason I had not understood.</p>
+
+        <h3>1. Subagents, which turn out to be the whole ballgame</h3>
+        <p>In 30 days, 582 subagents consumed <strong>35.7M tokens</strong> internally and returned <strong>350k</strong> into my main window. That is a <strong>102:1</strong> compression, and 65% of them returned under 500 tokens.</p>
+        <p>The number that matters is not the 35.7M. It is that <strong>35.3M tokens never entered a main context</strong>, and so were never multiplied. Run that through the same ~992x amplifier and the reads avoided land in the tens of billions &mdash; the same order as my entire month's actual read volume of 18.0B.</p>
+        <p class="snap"><strong>Read that as an order of magnitude, not a measurement.</strong> It assumes those tokens would have entered a context at a random point in a session of typical length, and in reality compaction would have clipped some of it. The honest claim is not "it saved exactly 35 billion reads". It is that subagents are not a marginal optimisation here &mdash; they are plausibly the difference between fitting inside the plan and not.</p>
+        <p>Which is also the real answer to Roki. He asked what keeps the prefix stable. It is not a setting. It is that the expensive reading happens somewhere the prefix cannot see.</p>
+
+        <h3>2. The cheap-model default, which is real but modest</h3>
+        <p>351 of the 582 subagents (61%) resolved to Haiku, because my <code>CLAUDE.md</code> makes it the default and requires an explicit reason to escalate. Priced against the alternatives, that configuration came out <strong>18% cheaper than running every subagent on Sonnet</strong>, and 84% cheaper than running them all on Opus.</p>
+        <p>18% is worth having and is not the headline. I had been telling this story as though it were a major lever. It is a minor one that happens to be free.</p>
+
+        <h3>3. The cache genuinely stays warm</h3>
+        <p>96.4% of my input tokens are cache reads, and the prefix is rewritten on only <strong>3.58%</strong> of input volume. Only 0.92% of turns arrive after the cache has expired. That part is the config and the working rhythm doing exactly what they were supposed to.</p>
+
+        <h3>And the one that failed</h3>
+        <p>Session length, badly, which is the subject of the rest of this post. Three A's and an F.</p>
+
         <h2 class="spec-head">The one-hour cliff, measured</h2>
         <p>I claimed in the first post that the cache lives about an hour. Here is the shape of it. Each row is the average cache <em>write</em> on a turn, grouped by how long it had been since the previous turn in that same session:</p>
         <div class="tbl-scroll">

@@ -5,6 +5,7 @@ import base64, html, pathlib
 
 HERE = pathlib.Path(__file__).parent
 POST = pathlib.Path.home() / ".claude/skills/linkedin/drafts/agent-identity.txt"
+COMMENT = HERE / "comment-he.txt"
 
 DESIGNS = [
     ("7", "the 404 (the pain)", "Ask for the client's repo, get 404 - because the space loaded a "
@@ -43,6 +44,7 @@ picker = "".join(f'<span data-value="{n}-{l}">{n}-{l.upper()}</span>'
                  for n, _, _ in DESIGNS for l in ("en", "he"))
 
 post = html.escape(POST.read_text().strip())
+comment = html.escape(COMMENT.read_text().strip())
 
 DOC = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -114,6 +116,13 @@ by the active tab), the fix. Ends on a short question, then the first-comment po
 <div class="copybar"><button class="copybtn" data-copy="post-text">Copy post text</button></div>
 <pre id="post-text" class="term">{post}</pre>
 
+<h2>01b - The first comment (paste right after posting)</h2>
+<p class="why">The links never go in the body - LinkedIn suppresses reach on posts with an
+external link. The post ends on the pointer, and this goes in as the first comment: blog, repo,
+part one.</p>
+<div class="copybar"><button class="copybtn" data-copy="comment-text">Copy first comment</button></div>
+<pre id="comment-text" class="term">{comment}</pre>
+
 <h2>02 - Pick the hero</h2>
 <p class="why">Six designs, each in English and Hebrew. Hebrew post wants a Hebrew hero.
 <b>Every hero now names ego lite</b> - amber brandmark top of frame, the browser named again in
@@ -150,6 +159,16 @@ saying the API is planned. Your call, since you are also about to open a PR ther
   <span data-value="tone-hard">Keep it as written<span class="rec">RECOMMENDED</span></span>
   <span data-value="tone-soft">Soften the bug section</span>
 </div>
+
+<h2>Publishing status - one thing is blocked</h2>
+<p class="why">The blog post is written, committed and anonymized, and the repo is complete on
+disk. Neither is live yet: this session runs inside the Kollate project, where git and gh are
+pinned to the client account, so pushing to your <b>tatarco</b> repos returns 403. That is your
+own guard doing its job. Both go up from a session outside that directory - the blog is a
+<code>git push</code> of a commit that already exists, the repo is a
+<code>gh repo create</code> plus a first push.</p>
+<p class="why"><b>Do not post the LinkedIn post before those two are live</b> - the first comment
+links to both.</p>
 
 <h2>What I removed</h2>
 <ul>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Record any call - WhatsApp, Zoom, a phone on speaker - straight into Claude Code · Gal Tidhar</title>
+  <meta name="description" content="callrec is a ~350-line macOS tool that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then hands the transcript to a Claude Code skill that files facts into a private client record instead of a 40,000-character wall of text.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/callrec/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Record any call, no subscription, straight into Claude Code">
+  <meta property="og:description" content="callrec is a ~350-line macOS tool that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then hands the transcript to a Claude Code skill that files facts into a private client record instead of a 40,000-character wall of text.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/callrec/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/callrec/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="callrec: record any call on any platform, no subscription, straight into Claude Code">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Record any call, no subscription, straight into Claude Code">
+  <meta name="twitter:description" content="callrec is a ~350-line macOS tool that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then hands the transcript to a Claude Code skill that files facts into a private client record instead of a 40,000-character wall of text.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/callrec/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Record any call, no subscription, straight into Claude Code",
+    "description": "callrec is a ~350-line macOS tool that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then hands the transcript to a Claude Code skill that files facts into a private client record instead of a 40,000-character wall of text.",
+    "image": "https://gal.tidhar.org.il/blog/callrec/og.png",
+    "datePublished": "2026-08-13",
+    "dateModified": "2026-08-13",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/callrec/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" }
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="https://github.com/tatarco/callrec">callrec &nearr;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / TOOLING</span>
+          <p class="role-line">callrec &middot; BlackHole &middot; whisper.cpp &middot; Claude Code</p>
+          <h1 class="title">Record any call, no subscription, straight into Claude Code</h1>
+          <p class="meta-line"><strong>2026-08-13</strong> &nbsp;·&nbsp; ~9 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">Every meeting-bot tool I looked at wants to join your call as a participant, upload the audio to someone's cloud, and bill you monthly forever. Mine does none of that. It records whatever is making sound on the Mac - WhatsApp, Meet, Zoom, a phone held up to the laptop mic - with nothing leaving the machine and nothing to cancel, then hands the transcript to a Claude Code skill that turns it into a client record instead of a memory I half-invented afterward.</p>
+        </header>
+
+        <figure>
+          <img src="hero.png" alt="callrec: record any call on any platform, no subscription, straight into Claude Code" loading="lazy">
+          <figcaption>WhatsApp, Meet, Zoom, or a phone on speaker - if it makes sound on this Mac, it gets recorded and transcribed, nothing leaves the machine.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The category I ruled out first</h2>
+        <p>I record client calls now. I went looking for a tool and found a category instead: a bot that joins your meeting, uploads the audio to someone's cloud, sends you a summary, and charges monthly forever.</p>
+        <p>That fails in three ways at once for me. It doesn't work on WhatsApp, which is where half my calls happen. It's another subscription in a stack that already has too many. And I'd have to open a call about a client's confidential rates by telling him a third party is listening. So I built the thing that does none of that: it runs entirely on my laptop, it doesn't care what app made the sound, and there's nothing to subscribe to.</p>
+
+        <div class="snap">
+          <strong>Facts, checked:</strong> <a href="https://github.com/tatarco/callrec" target="_blank" rel="noopener">github.com/tatarco/callrec</a>, MIT, ~350 lines total - a 72-line bash script, a 160-line Swift menu bar app, and two CoreAudio utilities under 120 lines together. Nothing leaves the machine, nothing runs monthly. Apple Silicon assumed.
+        </div>
+
+        <h2 class="spec-head">The one thing macOS won't do</h2>
+        <p>Here's the wall everyone hits, and it's worth understanding because it explains the whole shape of the solution.</p>
+        <p>macOS lets you record <strong>inputs</strong>. Microphones, line-ins, anything the system classifies as a capture device. Your speakers are an <strong>output</strong>, and there is no API that hands you the audio going <em>to</em> them. This isn't an oversight - it's a deliberate boundary, and it's why every screen recorder for a decade shipped with "system audio not supported."</p>
+        <p>So you record what you can (your own microphone) and you get a transcript of a monologue. Useless. The half of the conversation worth keeping is the other person's.</p>
+        <p>The way around it is a <strong>virtual audio driver</strong>: a fake sound card that accepts output and re-presents it as an input. <a href="https://github.com/ExistentialAudio/BlackHole" target="_blank" rel="noopener">BlackHole</a> is the good free one - a 2-channel HAL driver, open source, one Homebrew cask.</p>
+        <pre><code>brew install --cask blackhole-2ch
+sudo killall coreaudiod   # it won't appear until CoreAudio restarts</code></pre>
+        <p>Now your Mac has a device that is simultaneously a place to send sound and a place to record it from. The rest is plumbing.</p>
+
+        <h2 class="spec-head">Recording is one ffmpeg command</h2>
+        <p>Two inputs, one mixed track:</p>
+        <pre><code>ffmpeg -f avfoundation -i ":$MIC" -f avfoundation -i ":$BLACKHOLE" \
+  -filter_complex "[0:a][1:a]amix=inputs=2:duration=longest:dropout_transition=0[a]" \
+  -map "[a]" -c:a aac -b:a 64k call.m4a</code></pre>
+        <p><code>amix</code> folds you and them into one mixed mono track. That's the right trade for transcription and the wrong one for editing - if you want the speakers separated, record two files and diarize afterwards. I wanted words, so: one track, 64kbps, an hour of call is about 28MB.</p>
+
+        <h2 class="spec-head">Transcription is one more</h2>
+        <p><a href="https://github.com/ggerganov/whisper.cpp" target="_blank" rel="noopener">whisper.cpp</a> is a C++ port of OpenAI's Whisper that runs on Apple Silicon's GPU through Metal:</p>
+        <pre><code>brew install whisper-cpp
+whisper-cli -m ggml-large-v3-turbo.bin -f call.wav -l auto -otxt</code></pre>
+        <p><code>-l auto</code> is the part that made this viable for me. My calls slide between Hebrew and English mid-sentence, and the large-v3-turbo model detects language <strong>per segment</strong> rather than forcing one language on the whole file. A six-second clip transcribes in about two seconds on an M4. The model is a 1.6GB download, once. After that you're offline forever.</p>
+
+        <h2 class="spec-head">The part that would have killed it</h2>
+        <p>Here's where a weekend project usually dies.</p>
+        <p>Sending audio to BlackHole means <em>making it your output device</em> - which means you can't hear anything, because the sound now goes into a virtual sink instead of your speakers. The fix is a <strong>Multi-Output Device</strong>: a fake device that fans one stream to several real ones. You build it by hand in Audio MIDI Setup, tick your speakers and BlackHole, and select it before each call.</p>
+        <p>And then you don't. Because you have to remember to select it, remember to switch back after, and while it's selected <strong>your volume keys stop working</strong> - Multi-Output Devices have no master volume. Three weeks of that and the tool is dead.</p>
+        <p>So the script owns the switch. <code>callrec start</code> sets the output device to the multi-output and <code>callrec stop</code> puts back whatever you had. Both are a dozen lines of CoreAudio.</p>
+        <p>The device itself is worth a footnote, because it isn't in the docs anywhere obvious: a Multi-Output Device is just an <strong>aggregate device</strong> with <code>kAudioAggregateDeviceIsStackedKey</code> set to 1. Which means you can create the thing programmatically instead of asking a user to click it together in Audio MIDI Setup:</p>
+        <pre><code>let desc: [String: Any] = [
+    kAudioAggregateDeviceNameKey as String: "Call Capture",
+    kAudioAggregateDeviceIsStackedKey as String: 1,          // stacked == Multi-Output
+    kAudioAggregateDeviceIsPrivateKey as String: 0,          // persists across reboots
+    kAudioAggregateDeviceMasterSubDeviceKey as String: speakersUID,
+    kAudioAggregateDeviceSubDeviceListKey as String: [
+        [kAudioSubDeviceUIDKey as String: speakersUID, kAudioSubDeviceDriftCompensationKey as String: 0],
+        [kAudioSubDeviceUIDKey as String: blackHoleUID, kAudioSubDeviceDriftCompensationKey as String: 1],
+    ],
+]
+AudioHardwareCreateAggregateDevice(desc as CFDictionary, &newID)</code></pre>
+        <p>Real hardware is the clock master; drift correction goes on the virtual device, which has no crystal of its own and will slowly slide out of sync without it.</p>
+
+        <h2 class="spec-head">A dot in the menu bar</h2>
+        <p>The CLI was enough for me and not enough for anyone else, so there's a menu bar app: click the dot, type who the call is with, talk, click again. It's one Swift file, 160 lines, built with <code>swiftc</code> - no Xcode project, no storyboard, no dependencies. An <code>.app</code> bundle is a folder with a binary and an <code>Info.plist</code>; <code>codesign -s -</code> with a fixed identifier is enough to keep the microphone permission across rebuilds.</p>
+
+        <h2 class="spec-head">Why any of this - the memory that got it wrong</h2>
+        <p>Last week I caught myself doing the thing this whole tool exists to stop. A prospect said something about his customers' setups being fragmented, and by the time I wrote it down it had become "he needs a platform-agnostic layer" - which is a thing <em>I</em> wanted to build, dressed up as a thing <em>he</em> said. The transcript would have shown me the difference. There was no transcript.</p>
+        <p>My memory of a call is not a recording of it - it's a summary written by the guy who wanted the deal to go well. That's the whole reason this exists.</p>
+
+        <h2 class="spec-head">Where the transcript actually goes: Claude Code</h2>
+        <p>The recording was never the point. The point is what you can hand to a model afterwards, and this is the part I'd expand on if the source doc I wrote for myself had said more: the transcript does not sit in a folder waiting for me to read it. It goes straight into a Claude Code skill.</p>
+        <p>I run a <code>/dealroom-record</code> skill that takes the transcript and files it into a private per-client folder - a real record, not a scattered pile of <code>.txt</code> files named after dates. Then it appends only the <strong>extracted facts</strong> to my deal record: who signs, budget signals, deadlines, and the client's own words for their problem, quoted verbatim.</p>
+        <p>Not the transcript itself. On purpose. A 40,000-character wall of text makes a deal record unreadable - if I dump the raw transcript in, the next time I or an agent opens that record, it's a wall nobody rereads, and the facts that mattered drown in filler. So the skill does the extraction once, at record time, and keeps the pointer to the source file alongside the facts, not the facts buried inside the source file.</p>
+        <p>Then when I ask for advice on the deal, the advice is fed the client's actual sentences instead of my recollection of them. That difference - his words instead of my summary of his words - is the entire return on a weekend of CoreAudio.</p>
+
+        <h2 class="spec-head">Limits, stated plainly</h2>
+        <ul class="prose">
+          <li><strong>Consent.</strong> Tell people you're recording. Some jurisdictions need every party's consent, some need one, and none of them care that the tool made it easy.</li>
+          <li><strong>One mixed mono track.</strong> You and the other party are folded into a single channel. Fine for a transcript, useless if you need to know who said which line without listening back.</li>
+          <li><strong>Bluetooth headphones will fight you.</strong> A Multi-Output Device wants a stable clock; Bluetooth's own buffering and reconnect behavior does not cooperate cleanly with an aggregate device.</li>
+          <li><strong>Apple Silicon assumed.</strong> The Metal-accelerated whisper.cpp path is what makes six-second transcription latency and offline large-v3-turbo practical. Intel Macs are not the target.</li>
+        </ul>
+
+        <h2 class="spec-head">It's 350 lines</h2>
+        <p>A 72-line bash script, a 160-line Swift file for the menu bar, and two CoreAudio utilities under 120 lines together. Nothing leaves the machine, nothing runs monthly, and it doesn't care what you're calling on - Zoom, Meet, Teams, WhatsApp, a phone on speaker, a YouTube video you want notes from. If it makes sound on this Mac, it gets recorded.</p>
+
+        <div class="cta">
+          <h3>Everything referenced here</h3>
+          <p>The bash script, the Swift menu bar app, and the CoreAudio utilities are all in the repo. The <code>/dealroom-record</code> skill is a separate, private piece of my own Claude Code setup - not published here, but the shape of it is exactly what's described above.</p>
+          <div class="link-row">
+            <a href="https://github.com/tatarco/callrec" target="_blank" rel="noopener">github.com/tatarco/callrec &nearr;</a>
+            <span class="sep">·</span>
+            <a href="https://github.com/ExistentialAudio/BlackHole" target="_blank" rel="noopener">BlackHole &nearr;</a>
+            <span class="sep">·</span>
+            <a href="https://github.com/ggerganov/whisper.cpp" target="_blank" rel="noopener">whisper.cpp &nearr;</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/">gal.tidhar.org.il</a> &nbsp;·&nbsp; field notes on agents, cost, and the boring parts that decide both
+  </footer>
+</body>
+</html>
