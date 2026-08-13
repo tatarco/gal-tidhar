@@ -8,6 +8,8 @@ BLOG = "https://gal.tidhar.org.il/blog/callrec/"
 REPO = "https://github.com/tatarco/callrec"
 
 DESIGNS = [
+    ("2c", "icon-forward (NEW)", "The row is the message: one short line, the platform icons flowing into Claude, a red REC dot on top."),
+    ("2b", "the claim, with icons (NEW)", "Design 2 exactly as you liked it, plus the REC dot and the icon flow underneath."),
     ("1", "the one big number", "0 per month, 0 bytes leaving. Platforms + straight-into-Claude in the sub-line."),
     ("2", "the claim", "Every call, any platform, transcribed locally, handed to Claude. His proven shape - four picks running."),
     ("3", "the exchange", "Mic only = a monologue. Mic + BlackHole = a conversation. Teaches the whole constraint in one look."),
@@ -28,7 +30,7 @@ def img(num, lang):
 
 opts = ""
 for num, name, why in DESIGNS:
-    rec = ' <span class="rec">RECOMMENDED</span>' if num == "2" else ""
+    rec = ' <span class="rec">RECOMMENDED</span>' if num == "2c" else ""
     for lang in ("en", "he"):
         code = f"{num}-{lang.upper()}"
         opts += (f'<div class="opt" data-value="{code}">'
@@ -61,7 +63,7 @@ BODY = f"""
 
 <section class="step">
   <h2>Hero image - pick one</h2>
-  <p class="sub">Six designs, each in English and Hebrew. Click the one you want. The full path is
+  <p class="sub">Eight designs, each in English and Hebrew. The top two are the new icon versions. Click the one you want. The full path is
   printed above every image so you can paste it straight into LinkedIn's file picker.</p>
   <div id="hero" data-persist-choice class="opts">{opts}</div>
 </section>
