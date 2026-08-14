@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Record any call on a Mac and transcribe it locally, no subscription · Gal Tidhar</title>
-  <meta name="description" content="callrec is a ~350-line macOS tool that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then transcribes it locally so you can hand a plain text transcript to Claude Code, an LLM, or your notes app instead of trusting your memory of the call.">
+  <title>Record any call on a Mac or PC and transcribe it locally, no subscription · Gal Tidhar</title>
+  <meta name="description" content="callrec is a small macOS tool (plus an untested Windows build) that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then transcribes it locally so you can hand a plain text transcript to Claude Code, an LLM, or your notes app instead of trusting your memory of the call.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/callrec/">
   <meta name="theme-color" content="#0a1628">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Record any call on a Mac and transcribe it locally, no subscription">
-  <meta property="og:description" content="callrec is a ~350-line macOS tool that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then transcribes it locally so you can hand a plain text transcript to Claude Code, an LLM, or your notes app instead of trusting your memory of the call.">
+  <meta property="og:title" content="Record any call on a Mac or PC and transcribe it locally, no subscription">
+  <meta property="og:description" content="callrec is a small macOS tool (plus an untested Windows build) that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then transcribes it locally so you can hand a plain text transcript to Claude Code, an LLM, or your notes app instead of trusting your memory of the call.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/callrec/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/callrec/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="callrec: record any call on any platform, no subscription, transcribed locally">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Record any call on a Mac and transcribe it locally, no subscription">
-  <meta name="twitter:description" content="callrec is a ~350-line macOS tool that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then transcribes it locally so you can hand a plain text transcript to Claude Code, an LLM, or your notes app instead of trusting your memory of the call.">
+  <meta name="twitter:title" content="Record any call on a Mac or PC and transcribe it locally, no subscription">
+  <meta name="twitter:description" content="callrec is a small macOS tool (plus an untested Windows build) that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then transcribes it locally so you can hand a plain text transcript to Claude Code, an LLM, or your notes app instead of trusting your memory of the call.">
   <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/callrec/og.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
   <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -29,11 +29,11 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Record any call on a Mac and transcribe it locally, no subscription",
-    "description": "callrec is a ~350-line macOS tool that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then transcribes it locally so you can hand a plain text transcript to Claude Code, an LLM, or your notes app instead of trusting your memory of the call.",
+    "headline": "Record any call on a Mac or PC and transcribe it locally, no subscription",
+    "description": "callrec is a small macOS tool (plus an untested Windows build) that records whatever is making sound - WhatsApp, Meet, Zoom, a phone held to the laptop mic - with no subscription and nothing leaving the machine, then transcribes it locally so you can hand a plain text transcript to Claude Code, an LLM, or your notes app instead of trusting your memory of the call.",
     "image": "https://gal.tidhar.org.il/blog/callrec/og.png",
     "datePublished": "2026-08-13",
-    "dateModified": "2026-08-13",
+    "dateModified": "2026-08-14",
     "inLanguage": "en",
     "mainEntityOfPage": "https://gal.tidhar.org.il/blog/callrec/",
     "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
@@ -118,9 +118,9 @@
         <header class="sheet">
           <span class="sheet-rev">FIELD NOTE / TOOLING</span>
           <p class="role-line">callrec &middot; BlackHole &middot; whisper.cpp &middot; Claude Code</p>
-          <h1 class="title">Record any call on a Mac and transcribe it locally, no subscription</h1>
+          <h1 class="title">Record any call on a Mac or PC and transcribe it locally, no subscription</h1>
           <p class="meta-line"><strong>2026-08-13</strong> &nbsp;·&nbsp; ~9 min read &nbsp;·&nbsp; by Gal Tidhar</p>
-          <p class="lead">Every meeting-bot tool I looked at wants to join your call as a participant, upload the audio to someone's cloud, and bill you monthly forever. Mine does none of that. It records whatever is making sound on the Mac - WhatsApp, Meet, Zoom, a phone held up to the laptop mic - with nothing leaving the machine and nothing to cancel, then transcribes it locally so you're left with a plain text file instead of a memory you half-invented afterward.</p>
+          <p class="lead">Every meeting-bot tool I looked at wants to join your call as a participant, upload the audio to someone's cloud, and bill you monthly forever. Mine does none of that. It records whatever is making sound on the Mac - WhatsApp, Meet, Zoom, a phone held up to the laptop mic - with nothing leaving the machine and nothing to cancel, then transcribes it locally so you're left with a plain text file instead of a memory you half-invented afterward. There's a Windows build too, and it's smaller, because most of what follows is a workaround for something Windows never broke.</p>
         </header>
 
         <figure>
@@ -133,7 +133,7 @@
         <p>That fails in three ways at once. It doesn't work on WhatsApp, or on a phone call held up to the laptop mic, or on anything that isn't a browser-based meeting. It's another subscription in a stack that already has too many. And it means telling whoever's on the other end that a third party is listening in. So I built the thing that does none of that: it runs entirely on my laptop, it doesn't care what app made the sound, and there's nothing to subscribe to.</p>
 
         <div class="snap">
-          <strong>Facts, checked:</strong> <a href="https://github.com/tatarco/callrec" target="_blank" rel="noopener">github.com/tatarco/callrec</a>, MIT, ~350 lines total - a 72-line bash script, a 160-line Swift menu bar app, and two CoreAudio utilities under 120 lines together. Nothing leaves the machine, nothing runs monthly. Apple Silicon assumed.
+          <strong>Facts, checked:</strong> <a href="https://github.com/tatarco/callrec" target="_blank" rel="noopener">github.com/tatarco/callrec</a>, MIT, ~350 lines on macOS - a 72-line bash script, a 160-line Swift menu bar app, and two CoreAudio utilities under 120 lines together. Nothing leaves the machine, nothing runs monthly. Apple Silicon assumed. There is now a Windows build in the same repo, about 250 lines, which has never been run on Windows - see <a href="#windows">below</a>.
         </div>
 
         <h2 class="spec-head">The one thing macOS won't do</h2>
@@ -189,24 +189,41 @@ AudioHardwareCreateAggregateDevice(desc as CFDictionary, &newID)</code></pre>
         <p>callrec drops each transcript in <code>~/Calls</code> as plain text, named by date and whoever you typed in when you hit record. Nothing proprietary, nothing in a database - just a text file, which means it slots into whatever you already use. Pipe it into Claude Code or another LLM and ask it to summarise action items, pull out decisions, or turn a rambling call into three bullet points. Drop it into a notes app and let full-text search do the work of remembering which call something was said on. Or just <code>grep</code> across <code>~/Calls</code> when you vaguely recall a phrase and want to find the conversation it came from.</p>
         <p>None of that needs a system. It needs the file to exist and to be searchable, and a <code>.txt</code> file already is.</p>
 
+        <h2 class="spec-head" id="windows">Windows doesn't need any of this</h2>
+        <p>Someone asked for a Windows version, and the interesting part is what disappears.</p>
+        <p>Everything above exists because macOS refuses to let a program read an output device. That single refusal is why BlackHole has to exist, why there's a Multi-Output Device, and why <code>callrec</code> has to hijack your default output on start and hand it back on stop. <strong>Windows never made that decision.</strong> <a href="https://learn.microsoft.com/en-us/windows/win32/coreaudio/loopback-recording" target="_blank" rel="noopener">WASAPI loopback</a> has let any program open a render endpoint and read what's playing through it since Vista.</p>
+        <p>So the Windows build has no driver, no virtual cable, no aggregate device, and it changes nothing about your sound settings. You keep hearing the call. The volume keys keep working - the one limitation I have to live with on the Mac just isn't there.</p>
+        <p>What surprised me was how hard the internet argues for the opposite. Nearly every "record system audio with ffmpeg on Windows" answer tells you to install a DirectShow filter called <code>virtual-audio-capturer</code> and register it system-wide. It's an unsigned COM DLL whose last real work was around 2015, with an open issue for the device simply not being found and another, from November 2025, for EasyAntiCheat flagging it as malicious. It wraps the same WASAPI call underneath. For a tool whose whole point is not needing someone else's software, registering an abandoned unsigned filter to reach an API that's already sitting there would be a strange trade.</p>
+        <p>ffmpeg can't do it alone either - it has no WASAPI input device, and the ticket asking for one is still open. Its only Windows audio input is DirectShow, which enumerates microphones, not speakers. So something has to make the call. Here that something is 70 lines of C# over <a href="https://github.com/naudio/NAudio" target="_blank" rel="noopener">NAudio</a>, compiled at install time by the C# compiler that already ships inside Windows. No SDK, no build tools, no admin rights, nothing registered system-wide. Uninstalling is deleting a folder.</p>
+        <p>One trap is worth writing down, because it's invisible until it isn't. WASAPI loopback delivers <em>nothing at all</em> while the output device is idle - not buffers of silence, nothing. A quiet minute doesn't arrive as a minute of silence, it doesn't arrive. Every word after it lands a minute early against the microphone track, and the two sides walk away from each other. You won't catch it in a ten-second test. You catch it an hour into a real call when the transcript quietly stops matching reality. The fix is to play silence through the device for as long as you're recording, so it never goes idle.</p>
+
+        <div class="snap">
+          <strong>Untested, and I'd rather say so.</strong> I wrote the Windows build on a Mac. The PowerShell parses clean and the C# compiles against the pinned NAudio assembly, so every API call in it is real - but no audio has ever been captured with it, on any Windows machine, once. It ships with <a href="https://github.com/tatarco/callrec/blob/main/TESTING-WINDOWS.md" target="_blank" rel="noopener">TESTING-WINDOWS.md</a>: what was verified and how, what wasn't, an ordered test plan, and a ranked list of where it's most likely to break with fixes to try. It's written to be handed to whoever has the machine - including another Claude Code session running on Windows, which is honestly the fastest way for this to get finished. If you run it, I want to hear what broke.
+        </div>
+
         <h2 class="spec-head">Limits, stated plainly</h2>
         <ul class="prose">
           <li><strong>Consent.</strong> Tell people you're recording. Some jurisdictions need every party's consent, some need one, and none of them care that the tool made it easy.</li>
           <li><strong>One mixed mono track.</strong> You and the other party are folded into a single channel. Fine for a transcript, useless if you need to know who said which line without listening back.</li>
           <li><strong>Bluetooth headphones will fight you.</strong> A Multi-Output Device wants a stable clock; Bluetooth's own buffering and reconnect behavior does not cooperate cleanly with an aggregate device.</li>
           <li><strong>Apple Silicon assumed.</strong> The Metal-accelerated whisper.cpp path is what makes six-second transcription latency and offline large-v3-turbo practical. Intel Macs are not the target.</li>
+          <li><strong>The Windows build is unverified.</strong> It compiles and it parses; it has never captured a single second of audio. Treat it as a design that's ready to be tested, not as a thing that works.</li>
         </ul>
 
-        <h2 class="spec-head">It's 350 lines</h2>
-        <p>A 72-line bash script, a 160-line Swift file for the menu bar, and two CoreAudio utilities under 120 lines together. Nothing leaves the machine, nothing runs monthly, and it doesn't care what you're calling on - Zoom, Meet, Teams, WhatsApp, a phone on speaker, a YouTube video you want notes from. If it makes sound on this Mac, it gets recorded.</p>
+        <h2 class="spec-head">It's 350 lines, and the Windows one is shorter</h2>
+        <p>On the Mac: a 72-line bash script, a 160-line Swift file for the menu bar, and two CoreAudio utilities under 120 lines together. On Windows it comes to about 250 lines, and it's shorter for the reason the whole post is about - most of the mac code exists to work around a restriction Windows doesn't have. Either way nothing leaves the machine, nothing runs monthly, and it doesn't care what you're calling on: Zoom, Meet, Teams, WhatsApp, a phone on speaker, a YouTube video you want notes from. If it makes sound on the machine, it gets recorded.</p>
 
         <div class="cta">
           <h3>Everything referenced here</h3>
-          <p>The bash script, the Swift menu bar app, and the CoreAudio utilities are all in the repo.</p>
+          <p>Both builds are in the same repo. If you're on Windows, start with the testing notes - they say what's verified, what isn't, and where it will most likely break.</p>
           <div class="link-row">
             <a href="https://github.com/tatarco/callrec" target="_blank" rel="noopener">github.com/tatarco/callrec &nearr;</a>
             <span class="sep">·</span>
+            <a href="https://github.com/tatarco/callrec/blob/main/TESTING-WINDOWS.md" target="_blank" rel="noopener">TESTING-WINDOWS.md &nearr;</a>
+            <span class="sep">·</span>
             <a href="https://github.com/ExistentialAudio/BlackHole" target="_blank" rel="noopener">BlackHole &nearr;</a>
+            <span class="sep">·</span>
+            <a href="https://github.com/naudio/NAudio" target="_blank" rel="noopener">NAudio &nearr;</a>
             <span class="sep">·</span>
             <a href="https://github.com/ggerganov/whisper.cpp" target="_blank" rel="noopener">whisper.cpp &nearr;</a>
           </div>
