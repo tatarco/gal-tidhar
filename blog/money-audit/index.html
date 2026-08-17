@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The bank said 350,000. It was 70,000. · Gal Tidhar</title>
-  <meta name="description" content="I connected my parents' banks and cards through open banking and asked an agent to find the leaks. The first answer would have frightened them, and it was wrong by 10x. What the data actually held: rolling interest nobody reads, PayPal billing agreements nobody remembers, and idle cash sitting next to 17% debt.">
+  <title>The most expensive thing in my parents' accounts was not a scam · Gal Tidhar</title>
+  <meta name="description" content="A year of two people's real bank data in SQLite. Four leaks, each invisible for a different reason: interest rolling since 2006 that appears on no statement line, idle cash in a bank that does not know the debt exists, PayPal billing agreements that renew with no email, and three health policies paying for one event.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/money-audit/">
   <meta name="theme-color" content="#0a1628">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="The bank said 350,000. It was 70,000.">
-  <meta property="og:description" content="I connected my parents' banks and cards through open banking and asked an agent to find the leaks. The first answer would have frightened them, and it was wrong by 10x.">
+  <meta property="og:title" content="The most expensive thing in my parents' accounts was not a scam">
+  <meta property="og:description" content="Four leaks in a year of real bank data, each invisible for a different reason. Nobody broke a law and nothing here is a scam.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/money-audit/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/money-audit/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="350,000 struck through, 70,000 in yellow on dark navy: a debt figure corrected by a verification pass">
+  <meta property="og:image:alt" content="17.69%, in yellow on dark navy: a credit card interest rate rolling since 2006">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The bank said 350,000. It was 70,000.">
-  <meta name="twitter:description" content="I connected my parents' banks and cards through open banking and asked an agent to find the leaks. The first answer would have frightened them, and it was wrong by 10x.">
+  <meta name="twitter:title" content="The most expensive thing in my parents' accounts was not a scam">
+  <meta name="twitter:description" content="Four leaks in a year of real bank data, each invisible for a different reason. Nobody broke a law and nothing here is a scam.">
   <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/money-audit/og.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
   <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -29,8 +29,8 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "The bank said 350,000. It was 70,000.",
-    "description": "I connected my parents' banks and cards through open banking and asked an agent to find the leaks. The first answer would have frightened them, and it was wrong by 10x.",
+    "headline": "The most expensive thing in my parents' accounts was not a scam",
+    "description": "Four leaks in a year of real bank data, each invisible for a different reason. Nobody broke a law and nothing here is a scam.",
     "image": "https://gal.tidhar.org.il/blog/money-audit/og.png",
     "datePublished": "2026-08-17",
     "dateModified": "2026-08-17",
@@ -38,7 +38,7 @@
     "mainEntityOfPage": "https://gal.tidhar.org.il/blog/money-audit/",
     "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
     "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
-    "keywords": "open banking, financial audit, revolving credit, PayPal billing agreements, AI agents, verification, elderly parents, SQLite"
+    "keywords": "open banking, financial audit, revolving credit, rolling interest, PayPal billing agreements, health insurance overlap, elderly parents, SQLite"
   }
   </script>
   <style>
@@ -119,83 +119,91 @@
         <header class="sheet">
           <span class="sheet-rev">FIELD NOTE / MONEY</span>
           <div class="role-line">Money audit</div>
-          <h1 class="title">The bank said 350,000. It was 70,000.</h1>
-          <div class="meta-line"><strong>17 Aug 2026</strong> · one day · open banking + SQLite + agents that argue with each other</div>
-          <p class="lead">Cancelling my father's junk app subscriptions took an evening. It also left an obvious question: if <strong>16,000 a year</strong> could sit there unnoticed, what else was? So I connected both my parents' banks and cards through open banking, put a year of transactions in a local database, and asked. The first answer was terrifying and <strong>wrong by a factor of ten</strong>. This is what it took to find that out before I said it out loud.</p>
+          <h1 class="title">The most expensive thing in my parents' accounts was not a scam</h1>
+          <div class="meta-line"><strong>17 Aug 2026</strong> · 9 institutions · 83 accounts · 2,410 transactions</div>
+          <p class="lead">Cancelling my father's junk app subscriptions took an evening and saved about ILS 900 a month. Then I connected both my parents' banks and cards through open banking, put a year of transactions in a local database, and found something more expensive than every scam app combined: <strong>interest that has been rolling since 2006 and appears on no statement line anyone reads.</strong> Four leaks, each invisible for a different reason. Nobody broke a law.</p>
         </header>
 
         <div class="prose">
 
-        <h2 class="spec-head">Statements are the wrong interface</h2>
-        <p>Nine institutions. Eighty-three accounts once you count every card, loan, savings plan and pension. Two people. A year of history is roughly <strong>2,400 transactions</strong>, arriving as one PDF per month per account.</p>
-        <p>No human reads that. Neither does a language model, usefully - paging PDFs into context is expensive and lossy, and the interesting patterns are cross-account by nature. A charge is not suspicious on its own statement. It is suspicious because it repeats every week, on a card that also carries 17% interest, while cash sits idle in a different bank.</p>
-        <p>So the shape of this is boring and that is the point: <strong>get the rows, put them in SQLite, ask in SQL.</strong></p>
+        <h2 class="spec-head">Why a statement cannot show you this</h2>
+        <p>Nine institutions. Eighty-three accounts once you count every card, loan, savings plan and pension. Two people. A year is roughly <strong>2,400 transactions</strong>, arriving as one PDF per month per account.</p>
+        <p>A charge is never suspicious on its own statement. It is suspicious next to everything else - because it repeats weekly, or because it sits on a card carrying 17% while cash does nothing in a different bank. The statement is built to show you one account at a time, which is exactly the view that hides all four of these.</p>
         <pre><code>python3 openbank.py pull              # aggregator API -> local snapshot.db
-python3 openbank.py owners            # every owner string the banks returned
-python3 openbank.py sql "SELECT ..."  # investigate</code></pre>
+python3 openbank.py sql "SELECT ..."  # ask across all of it at once</code></pre>
 
-        <h2 class="spec-head">What it costs, honestly</h2>
-        <p>Israeli open banking (חוק שירות מידע פיננסי, live since 2023) opens bank APIs only to a licensed information-service provider. There is no consumer tier. So for anyone else's accounts you are not paying for a wrapper, you are <strong>renting a licence</strong> - which is why the instinct that an aggregator is an unnecessary middleman is right for your own money and wrong for your parents'. In the EU and UK the PSD2 equivalent works the same way.</p>
-        <table class="spec-table">
-          <tr><th>Line item</th><th>Cost</th></tr>
-          <tr><td>Open-banking aggregator (Israel: Financy / Open-Finance.ai, Starter tier)</td><td>ILS 49/month, cancellable</td></tr>
-          <tr><td>Model time for the full audit - about 2,000 assistant turns in one day</td><td>~USD 1,700 at API list prices</td></tr>
-          <tr><td>What I actually paid for that model time</td><td>a USD 200/month subscription</td></tr>
-        </table>
-        <p>I am putting the API number in because the "look what AI did for free" framing is a lie. If you paid per token for this day it would have cost more than a good financial advisor charges for an hour, and the reason it was worth it anyway is that it did not stop at an hour. It also means this is <strong>not</strong> something to run casually on a whim - decide what you are looking for first.</p>
+        <h2 class="spec-head">Leak 1 · Interest that is not written anywhere</h2>
+        <p>One card at <strong>17.69%</strong>, revolving continuously since <strong>2006</strong>. Another at 13%. A third growing every month against a ILS 59,000 limit. Together about <strong>ILS 1,000 a month</strong> in interest on roughly ILS 70,000 of debt.</p>
+        <p>Here is why nobody sees it: interest is not a line item on a card statement. It is already inside the balance you are asked to pay. There is no row that says "this month you paid the bank ILS 1,000 for the privilege". Twenty years of that number has never once been written down in front of them.</p>
+        <div class="snap"><strong>Check it yourself:</strong> ask your parents how much interest they paid last month. Not what they owe - what the debt <em>cost</em> them. Almost nobody can answer, and the answer is usually the largest recurring expense in the house after rent.</div>
 
-        <h2 class="spec-head">The finding that was wrong</h2>
-        <p>The first pass came back with a number I did not want to carry into a room with two pensioners in it: <strong>26 loan accounts, about ILS 350,000 outstanding.</strong></p>
-        <p>That would have changed their lives. It was also nonsense, and the reason is a data-format detail nobody outside a card issuer would ever guess.</p>
-        <blockquote>An Israeli card issuer reports a revolving credit product as <strong>one row per monthly cycle</strong>. Same account number, a different contract start date each month. Thirteen months on file reads as thirteen separate loans.</blockquote>
-        <p>Summing them multiplied the debt by the number of cycles on record. The correct read is the <strong>latest snapshot per distinct account number</strong>:</p>
+        <h2 class="spec-head">Leak 2 · Cash sitting next to its own debt</h2>
+        <p><strong>ILS 40,000</strong> idle in a joint checking account earning nothing, while ILS 70,000 revolves at 13-18% somewhere else. The two are at different institutions, so neither app knows the other exists, and no advisor has ever seen both at once.</p>
+        <p>The fix is embarrassing: move money from one pocket to the other. It is worth around <strong>ILS 700 a month</strong> and requires no discipline, no budgeting, and no giving anything up. It simply requires a view that spans two banks, which is the one thing the banking system does not sell you.</p>
+
+        <h2 class="spec-head">Leak 3 · PayPal billing agreements, which are not subscriptions</h2>
+        <p>About <strong>ILS 11,000 over twelve months</strong>: dropshipping, supplements, small overseas suppliers. Not impulse purchases - <strong>live billing agreements</strong>, authorised once, years ago, when an order was placed.</p>
+        <p>This is the mechanism worth understanding, because it defeats every piece of standard advice:</p>
+        <ul>
+          <li>It is <strong>not</strong> in the Google Play or App Store subscription list, which is where everyone is told to look.</li>
+          <li>The merchant does not have to email you before charging. Many do not.</li>
+          <li>It lives in one place only: PayPal, under <em>Settings → Payments → Automatic payments</em>. Almost nobody has opened that page.</li>
+          <li>On the card statement it shows up as "PAYPAL", with the actual merchant name buried or absent.</li>
+        </ul>
+        <p>Three of the agreements still active pointed at Chinese suppliers for orders placed years ago and long forgotten.</p>
+
+        <h2 class="spec-head">Leak 4 · Three private health policies for one event</h2>
+        <p>On top of the public health fund: three private policies from three insurers, about <strong>ILS 1,500 a month</strong> of overlapping cover. You cannot claim the same event three times, so two of them are paying for a benefit that can never be collected.</p>
+        <p>Nobody was defrauded. Each policy was sold separately, in a different year, by someone reassuring, at a moment when buying more protection felt responsible. The overlap only exists when you put the three documents on one table, which had never happened in twenty years.</p>
+
+        <h2 class="spec-head">Nobody here broke a law</h2>
+        <p>That is the part that got under my skin. There is no villain to shout at. A product sold over the phone nineteen years ago, one bank that does not talk to another, a card issuer reporting exactly what regulation requires, three insurance agents each doing their job. And at the end of it, two people who count every shekel at the supermarket are paying roughly <strong>ILS 3,000 a month for nothing</strong>, without a single illegal act anywhere in the chain.</p>
+        <p>The scam apps were the easy part. They are theft and they are obvious once you look. This is worse, because it is all working as designed.</p>
+
+        <h2 class="spec-head">Two traps if you run this yourself</h2>
+        <p>Both produce confidently wrong numbers, and both are worth knowing before you tell a pensioner anything about their money.</p>
+        <h3>1. A revolving card reports as many snapshots of itself</h3>
+        <p>An Israeli card issuer reports a rolling credit product as <strong>one row per monthly cycle</strong>: same account number, a different contract start date each month. Thirteen months on file look exactly like thirteen separate loans. Sum them and you multiply the debt by the number of cycles on record - a 10x error, in my case, on the single most frightening number in the whole audit.</p>
         <pre><code>-- WRONG
 SELECT SUM(balance) FROM accounts WHERE account_type='loan';
 
--- RIGHT
+-- RIGHT: latest snapshot per distinct account number
 WITH latest AS (
   SELECT account_number, MAX(reference_date) rd FROM accounts
   WHERE account_type='loan' GROUP BY 1)
 SELECT a.person, a.account_number, a.balance FROM accounts a
 JOIN latest l ON l.account_number = a.account_number
              AND l.rd = a.reference_date;</code></pre>
-        <p>Real figure: <strong>ILS 70,307</strong> across both of them. Serious, fixable, not a catastrophe.</p>
-        <p>The second error was quieter and would have survived a casual review. A verification agent disagreed with my total and, on inspection, <em>it</em> was the one that was wrong: it had filtered by the owner's name in Hebrew, and two of her cards carry her name in Latin characters. Whole accounts vanished from the total because of a spelling. That is why the rule in the skill is: <strong>always filter on the resolved person, never on the raw owner string the bank gives you.</strong></p>
-        <div class="snap"><strong>The actual lesson:</strong> not "AI gets things wrong". It is that I could afford to run three independent skeptics against my own conclusion, for cents, before it reached a frightened 83-year-old. Most people never get a second opinion on their money. Here the second, third and fourth cost less than the coffee I drank reading them.</div>
+        <h3>2. The same person has two spellings</h3>
+        <p>One bank holds her name in Hebrew, another in Latin characters. Filter a total by the owner string the bank gives you and entire cards vanish from it silently. Resolve every owner string to a person first, then filter on the person.</p>
+        <p>And one rule that is not technical: <strong>the transaction data cannot tell a fraud from a supplier.</strong> Two merchants I had flagged as scams turned out to be legitimate - one is my father's actual e-cigarette supplier, with real order confirmations sitting in his mailbox. Check the mailbox before you accuse anyone of anything.</p>
 
-        <h2 class="spec-head">Then it also cleared two people I had accused</h2>
-        <p>The same pass ran in the other direction. Two merchants I had confidently flagged as scams came back clean: one is his real e-cigarette supplier, with genuine order confirmations in his mailbox; the other is a legitimate wellness service for seniors that he may well have signed up for on purpose. Both were one dispute letter away from being sent.</p>
-        <p>The transaction data alone cannot tell a scam from a supplier. <strong>The mailbox settles it.</strong> Check the ground truth before you accuse anyone of anything - especially when the person you are about to embarrass in front of their own family is your parent.</p>
-
-        <h2 class="spec-head">What was actually there</h2>
-        <p>Anonymised, rounded, and none of it visible from any single statement:</p>
+        <h2 class="spec-head">What it costs, honestly</h2>
+        <p>Israeli open banking (חוק שירות מידע פיננסי, live since 2023) opens bank APIs only to a licensed information-service provider. There is no consumer tier, so for anyone else's accounts you are <strong>renting a licence</strong>, not paying for a wrapper. The EU/UK PSD2 equivalent works the same way.</p>
         <table class="spec-table">
-          <tr><th>Finding</th><th>Why nobody saw it</th></tr>
-          <tr><td><strong>ILS 70k of card debt at 13-18%</strong>, one revolving line running since <strong>2006</strong></td><td>Interest arrives as a fee line on a card statement, never as a number anyone is shown. The monthly cost of that debt is around ILS 1,000 and it has never been written down anywhere they would read it.</td></tr>
-          <tr><td><strong>ILS 40k sitting idle</strong> in a joint checking account, earning nothing</td><td>It is in a different institution from the debt. Nothing in either app knows the other exists. The fix is to move money from one pocket to another and it is worth about ILS 700 a month.</td></tr>
-          <tr><td><strong>Live PayPal billing agreements</strong> with overseas suppliers, ~ILS 11k over twelve months</td><td>A billing agreement is not a subscription. It renews without a merchant email, and it does not appear anywhere in the app-store subscription list people are told to check. It only shows up as a PayPal line on a card.</td></tr>
-          <tr><td><strong>Three private health policies</strong> stacked on top of the public fund, ~ILS 1,500/month of overlap</td><td>Each was sold separately, years apart, each by someone reassuring. You cannot claim the same event three times. Nobody ever compared the three documents side by side.</td></tr>
-          <tr><td>Weekly app-store fleeceware, ~ILS 900/month, still billing</td><td><a href="/blog/subscription-audit/">The previous field note.</a> The bank data is how you find out it is <em>still</em> billing after you thought you killed it.</td></tr>
+          <tr><th>Line item</th><th>Cost</th></tr>
+          <tr><td>Open-banking aggregator (Israel: Financy / Open-Finance.ai, Starter tier)</td><td>ILS 49/month, cancellable</td></tr>
+          <tr><td>Model time for the audit - about 2,000 assistant turns in one day</td><td>~USD 1,700 at API list prices</td></tr>
+          <tr><td>What I actually paid for that model time</td><td>a USD 200/month subscription</td></tr>
         </table>
-        <p>Total recoverable, without cutting a single thing they enjoy: <strong>ILS 3,000-4,500 a month.</strong> That is a trip abroad every year, funded entirely by things that were taking money for nothing.</p>
+        <p>I am printing the API number because "look what AI did for free" is a lie. Paid per token, this day costs more than a financial advisor charges for an hour. It was worth it because it did not stop after an hour, and because an advisor would not have opened PayPal's automatic-payments page either.</p>
 
-        <h2 class="spec-head">Findings do not change anything. Actions do.</h2>
-        <p>The part I would have skipped a year ago: after the report, agents drove their own browsers and mailboxes, with them present and approving each item, to actually do it. Every junk subscription cancelled with the cancellation date recorded, <strong>40+ refund requests filed</strong> and confirmed in writing, cancellation emails sent to the services with no cancel button, and one live Hebrew page with a tick-box list of what is left - the items that need their password, their phone, or a visit to the bank.</p>
-        <p>A PDF of findings handed to two people in their eighties changes nothing at all. Sorted by monthly recovery, in their language, with the things I can do already done, is a different object.</p>
-        <div class="snap"><strong>The rule I would not bend:</strong> nothing gets cancelled without an item-by-item yes. "Clean it all up" is not consent for a specific cancellation, and being right about the money does not make you entitled to make decisions about someone else's.</div>
+        <h2 class="spec-head">Findings change nothing. Actions do.</h2>
+        <p>After the report, with them present and approving item by item: every junk subscription cancelled with its end date recorded, <strong>40+ refund requests filed</strong> and confirmed in writing, cancellation emails sent to the services with no cancel button, and one Hebrew page with a tick-box list of what is left - the items that need their password, their phone, or a visit to the bank.</p>
+        <p>Recoverable without giving up a single thing they enjoy: <strong>ILS 3,000-4,500 a month.</strong> A trip abroad every year, funded entirely by things that were taking money for nothing.</p>
+        <div class="snap"><strong>The rule I would not bend:</strong> nothing gets cancelled without an item-by-item yes. Being right about someone's money does not entitle you to make decisions with it.</div>
 
-        <h2 class="spec-head">If you want to do this for your own family</h2>
+        <h2 class="spec-head">Three things you can check tonight, with no tools at all</h2>
         <ol>
-          <li>They link their accounts themselves, in the aggregator's UI. There is no API for that, and there should not be.</li>
-          <li>Pull it into SQLite. Query it. Never state a number you did not get from a query.</li>
-          <li>Before you tell them anything, make something independent re-derive it. Ask specifically: <em>could one thing be counted twice, and could one thing be missing because of a name?</em> Those two questions caught both of my errors.</li>
-          <li>Check the mailbox before calling any merchant a fraud.</li>
-          <li>Present decisions, not a report, sorted by what it saves a month.</li>
+          <li><strong>How much interest did they pay last month?</strong> Not the balance. The cost.</li>
+          <li><strong>PayPal → Settings → Payments → Automatic payments.</strong> Everything listed there can charge them tomorrow.</li>
+          <li><strong>How many private health policies do they hold?</strong> If it is more than one, put them side by side.</li>
         </ol>
+        <p>Most people cannot answer any of the three about their own accounts, let alone their parents'.</p>
 
         <div class="cta">
           <h3>The skill</h3>
-          <p>The whole pipeline is packaged as an installable agent skill - the aggregator pull, the per-person ownership resolver, the query playbook, both traps written down so they cost you nothing, and the verification protocol.</p>
+          <p>The whole pipeline is packaged as an installable agent skill - the aggregator pull, the per-person ownership resolver, the query playbook, both traps written down so they cost you nothing, and the rule about checking the mailbox before accusing a merchant.</p>
           <div class="link-row">
             <a href="https://github.com/tatarco/agent-skills/tree/main/skills/money-audit">money-audit on GitHub ↗</a>
             <span class="sep">·</span>
