@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The most expensive thing in my parents' accounts was not a scam · Gal Tidhar</title>
-  <meta name="description" content="A year of two people's real bank data in SQLite. Four leaks, each invisible for a different reason: interest rolling since 2006 that appears on no statement line, idle cash in a bank that does not know the debt exists, PayPal billing agreements that renew with no email, and three health policies paying for one event.">
+  <title>The debt with no end date · Gal Tidhar</title>
+  <meta name="description" content="A credit card rolling at 17.69% since 2006. If nobody ever added a shekel, ILS 232 back then is ILS 6,028 today, doubling every 4.3 years with no schedule and no end date. It is not a line on any statement, it is not a charge you can search for, and it is the most profitable debt a card issuer holds.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/money-audit/">
   <meta name="theme-color" content="#0a1628">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="The most expensive thing in my parents' accounts was not a scam">
-  <meta property="og:description" content="Four leaks in a year of real bank data, each invisible for a different reason. Nobody broke a law and nothing here is a scam.">
+  <meta property="og:title" content="The debt with no end date">
+  <meta property="og:description" content="ILS 232 in 2006 is ILS 6,028 today at 17.69%, and nobody bought anything. Why revolving credit is invisible, and how I found it in a year of real bank data.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/money-audit/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/money-audit/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="17.69%, in yellow on dark navy: a credit card interest rate rolling since 2006">
+  <meta property="og:image:alt" content="232 to 6,028 in yellow on dark navy: the same credit card debt, 2006 to today, at 17.69%">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The most expensive thing in my parents' accounts was not a scam">
-  <meta name="twitter:description" content="Four leaks in a year of real bank data, each invisible for a different reason. Nobody broke a law and nothing here is a scam.">
+  <meta name="twitter:title" content="The debt with no end date">
+  <meta name="twitter:description" content="ILS 232 in 2006 is ILS 6,028 today at 17.69%, and nobody bought anything. Why revolving credit is invisible, and how I found it in a year of real bank data.">
   <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/money-audit/og.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
   <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -29,8 +29,8 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "The most expensive thing in my parents' accounts was not a scam",
-    "description": "Four leaks in a year of real bank data, each invisible for a different reason. Nobody broke a law and nothing here is a scam.",
+    "headline": "The debt with no end date",
+    "description": "ILS 232 in 2006 is ILS 6,028 today at 17.69%, and nobody bought anything. Why revolving credit is invisible, and how I found it in a year of real bank data.",
     "image": "https://gal.tidhar.org.il/blog/money-audit/og.png",
     "datePublished": "2026-08-17",
     "dateModified": "2026-08-17",
@@ -119,9 +119,9 @@
         <header class="sheet">
           <span class="sheet-rev">FIELD NOTE / MONEY</span>
           <div class="role-line">Money audit</div>
-          <h1 class="title">The most expensive thing in my parents' accounts was not a scam</h1>
+          <h1 class="title">The debt with no end date</h1>
           <div class="meta-line"><strong>17 Aug 2026</strong> · 9 institutions · 83 accounts · 2,410 transactions</div>
-          <p class="lead">Cancelling my father's junk app subscriptions took an evening and saved about ILS 900 a month. Then I connected both my parents' banks and cards through open banking, put a year of transactions in a local database, and found something more expensive than every scam app combined: <strong>interest that has been rolling since 2006 and appears on no statement line anyone reads.</strong> Four leaks, each invisible for a different reason. Nobody broke a law.</p>
+          <p class="lead">Cancelling my father's junk app subscriptions took an evening. Then I connected both my parents' banks and cards through open banking and found something far more expensive and far quieter: a credit card that has been <strong>revolving at 17.69% since 2006</strong>. If not another shekel was ever added to it, a <strong>ILS 232</strong> purchase back then is a <strong>ILS 6,028</strong> debt today. Nobody bought anything. It just sat there, doubling every 4.3 years, with no schedule and no date it ends.</p>
         </header>
 
         <div class="prose">
@@ -132,16 +132,37 @@
         <pre><code>python3 openbank.py pull              # aggregator API -> local snapshot.db
 python3 openbank.py sql "SELECT ..."  # ask across all of it at once</code></pre>
 
-        <h2 class="spec-head">Leak 1 · Interest that is not written anywhere</h2>
-        <p>One card at <strong>17.69%</strong>, revolving continuously since <strong>2006</strong>. Another at 13%. A third growing every month against a ILS 59,000 limit. Together about <strong>ILS 1,000 a month</strong> in interest on roughly ILS 70,000 of debt.</p>
-        <p>Here is why nobody sees it: interest is not a line item on a card statement. It is already inside the balance you are asked to pay. There is no row that says "this month you paid the bank ILS 1,000 for the privilege". Twenty years of that number has never once been written down in front of them.</p>
-        <div class="snap"><strong>Check it yourself:</strong> ask your parents how much interest they paid last month. Not what they owe - what the debt <em>cost</em> them. Almost nobody can answer, and the answer is usually the largest recurring expense in the house after rent.</div>
+        <h2 class="spec-head">A loan ends. This does not.</h2>
+        <p>Everyone knows what a loan is: an amount, a schedule, a rate, and a date on which it is gone. Revolving credit is sold in the same aisle and is a different object entirely. It starts when one month's card bill is not paid in full. From then on there is <strong>no schedule and no end date</strong>. The balance is simply carried, interest is applied to it, and the arrangement continues for as long as the minimum payment keeps arriving.</p>
+        <p>At 17.69%, the balance doubles every <strong>4.3 years</strong>. Compounded across twenty years that is a factor of about <strong>26</strong>:</p>
+        <table class="spec-table">
+          <tr><th>Year</th><th>Balance, if nothing is ever added</th></tr>
+          <tr><td>2006</td><td>ILS 232</td></tr>
+          <tr><td>2010</td><td>ILS 448</td></tr>
+          <tr><td>2014</td><td>ILS 866</td></tr>
+          <tr><td>2018</td><td>ILS 1,673</td></tr>
+          <tr><td>2022</td><td>ILS 3,232</td></tr>
+          <tr><td>2026</td><td><strong>ILS 6,028</strong></td></tr>
+        </table>
+        <p>The real card was not static, of course - things were bought and payments were made. The point of the table is the shape: whatever went on that card in 2006 was small, and the number sitting there now is not.</p>
 
-        <h2 class="spec-head">Leak 2 · Cash sitting next to its own debt</h2>
+        <h2 class="spec-head">Five reasons nobody ever sees it</h2>
+        <p>This is the part worth internalising, because every one of these is structural rather than accidental.</p>
+        <ol>
+          <li><strong>The interest is not a line on the statement.</strong> It is already inside the balance you are asked to pay. No row anywhere says "this month the debt cost you ILS 900". Twenty years, and that number has never once been written in front of the two people paying it.</li>
+          <li><strong>It is not a charge, so it cannot be searched for.</strong> Every instinct - and every budgeting app - looks at transactions. This lives in the fields of the account itself, a place nobody opens.</li>
+          <li><strong>The minimum payment looks like responsible behaviour.</strong> It is paid on time, every month, and it is precisely the mechanism keeping the balance alive.</li>
+          <li><strong>There is no end date to notice passing.</strong> A loan that never finished would be alarming. This never had a finish line to miss.</li>
+          <li><strong>It is the most profitable debt a card issuer holds.</strong> Nobody is going to call and point it out. Nothing about that is illegal.</li>
+        </ol>
+        <p>Together with a second card at 13%, that is roughly <strong>ILS 70,000 at 13-18%</strong>, costing about <strong>ILS 1,000 a month</strong> in interest alone.</p>
+        <div class="snap"><strong>Check it yourself:</strong> ask your parents two questions. How much interest did they pay last month - not what they owe, what the debt <em>cost</em>. And is any card set to revolving or minimum payment. Most people cannot answer either one, which is exactly why it works.</div>
+
+        <h2 class="spec-head">And a bank away, the money that could kill it</h2>
         <p><strong>ILS 40,000</strong> idle in a joint checking account earning nothing, while ILS 70,000 revolves at 13-18% somewhere else. The two are at different institutions, so neither app knows the other exists, and no advisor has ever seen both at once.</p>
         <p>The fix is embarrassing: move money from one pocket to the other. It is worth around <strong>ILS 700 a month</strong> and requires no discipline, no budgeting, and no giving anything up. It simply requires a view that spans two banks, which is the one thing the banking system does not sell you.</p>
 
-        <h2 class="spec-head">Leak 3 · PayPal billing agreements, which are not subscriptions</h2>
+        <h2 class="spec-head">The same query also found: PayPal billing agreements</h2>
         <p>About <strong>ILS 11,000 over twelve months</strong>: dropshipping, supplements, small overseas suppliers. Not impulse purchases - <strong>live billing agreements</strong>, authorised once, years ago, when an order was placed.</p>
         <p>This is the mechanism worth understanding, because it defeats every piece of standard advice:</p>
         <ul>
@@ -152,12 +173,16 @@ python3 openbank.py sql "SELECT ..."  # ask across all of it at once</code></pre
         </ul>
         <p>Three of the agreements still active pointed at Chinese suppliers for orders placed years ago and long forgotten.</p>
 
-        <h2 class="spec-head">Leak 4 · Three private health policies for one event</h2>
-        <p>On top of the public health fund: three private policies from three insurers, about <strong>ILS 1,500 a month</strong> of overlapping cover. You cannot claim the same event three times, so two of them are paying for a benefit that can never be collected.</p>
-        <p>Nobody was defrauded. Each policy was sold separately, in a different year, by someone reassuring, at a moment when buying more protection felt responsible. The overlap only exists when you put the three documents on one table, which had never happened in twenty years.</p>
+        <h2 class="spec-head">And three health policies - with a correction</h2>
+        <p>Three private policies from three insurers on top of the public fund, about ILS 1,500 a month. My first read was "you cannot claim the same event three times, so two of these are waste". That is <strong>only half right</strong>, and the half that is wrong matters:</p>
+        <ul>
+          <li><strong>Reimbursement cover (שיפוי)</strong> - surgery, medication, treatment abroad - pays back an expense you actually incurred, against receipts. Hold three of those and one event still gets reimbursed once. That overlap is real waste.</li>
+          <li><strong>Compensation cover (פיצוי)</strong> - long-term care (סיעודי), critical illness - pays a fixed agreed sum with no receipts. Those <strong>do</strong> pay in parallel, from every insurer holding one. Cancelling a second סיעודי policy because it "duplicates" throws away money you would genuinely have received.</li>
+        </ul>
+        <p>So the correct action is not "cancel the duplicates". It is: sort the three policies into שיפוי and פיצוי clauses first, and only then decide. I had this wrong before someone who knows the market pushed back, and the correction is worth more than the original finding.</p>
 
         <h2 class="spec-head">Nobody here broke a law</h2>
-        <p>That is the part that got under my skin. There is no villain to shout at. A product sold over the phone nineteen years ago, one bank that does not talk to another, a card issuer reporting exactly what regulation requires, three insurance agents each doing their job. And at the end of it, two people who count every shekel at the supermarket are paying roughly <strong>ILS 3,000 a month for nothing</strong>, without a single illegal act anywhere in the chain.</p>
+        <p>That is the part that got under my skin. There is no villain to shout at. One month in 2006 where a card bill was not paid in full, one bank that does not talk to another, a card issuer reporting exactly what regulation requires, three insurance agents each doing their job. And at the end of it, two people who count every shekel at the supermarket are paying roughly <strong>ILS 3,000 a month for nothing</strong>, without a single illegal act anywhere in the chain.</p>
         <p>The scam apps were the easy part. They are theft and they are obvious once you look. This is worse, because it is all working as designed.</p>
 
         <h2 class="spec-head">Two traps if you run this yourself</h2>
@@ -196,8 +221,8 @@ JOIN latest l ON l.account_number = a.account_number
         <h2 class="spec-head">Three things you can check tonight, with no tools at all</h2>
         <ol>
           <li><strong>How much interest did they pay last month?</strong> Not the balance. The cost.</li>
-          <li><strong>PayPal → Settings → Payments → Automatic payments.</strong> Everything listed there can charge them tomorrow.</li>
-          <li><strong>How many private health policies do they hold?</strong> If it is more than one, put them side by side.</li>
+          <li><strong>PayPal → Settings → Payments → Automatic payments.</strong> Everything listed there can charge them tomorrow, with no email first.</li>
+          <li><strong>Is any card set to revolving or minimum payment?</strong> That is the switch that turns a bill into a permanent debt.</li>
         </ol>
         <p>Most people cannot answer any of the three about their own accounts, let alone their parents'.</p>
 

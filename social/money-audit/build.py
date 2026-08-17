@@ -8,55 +8,55 @@ S = {
  'en': {
    'dir':'ltr','lang':'en',
    'eyebrow':'FIELD NOTE / MONEY AUDIT',
-   'big':'17.69%',
-   'big_unit':'rolling since 2006',
-   'big_sub':"the most expensive thing in my parents' accounts<br>was not a scam app. it was interest nobody ever sees.",
-   'claim':'The interest is not a line<br>on the statement.<br><span class="hi">It is already inside<br>the balance.</span>',
-   'claim_foot':'ILS 1,000 a month, running since 2006. Nobody ever showed them that number.',
-   'before_l':'WHAT THEY OWE<br>AT 13-18%',
-   'before_v':'ILS 70,000',
-   'after_l':'WHAT SITS IDLE<br>IN A DIFFERENT BANK',
-   'after_v':'ILS 40,000<br><span class="sm">earning nothing</span>',
-   'grid_title':'FOUR LEAKS, EACH INVISIBLE FOR A DIFFERENT REASON',
-   'grid': [('Interest rolling since 2006','ILS 1,000/mo'),
-            ('Idle cash next to that debt','ILS 700/mo'),
-            ('PayPal billing agreements','ILS 900/mo'),
-            ('Three health policies, one event','ILS 1,500/mo'),
-            ('App-store junk, still billing','ILS 900/mo')],
-   'grid_foot':'Nobody broke a law. Nothing here is a scam. It is all just invisible.',
-   'quote':'"A billing agreement<br>is not a subscription."',
-   'quote_sub':'It renews with no email from the merchant,<br>and it appears in no subscription list you are told to check.',
-   'arch':[('CHECK 1','how much interest<br>are they paying<br>this month?'),
-           ('CHECK 2','PayPal, under<br>automatic payments'),
-           ('CHECK 3','how many private<br>health policies<br>do they hold?')],
-   'arch_foot':'Three questions, no tooling. Most people cannot answer one of them.',
+   'big':'232 &rarr; 6,028',
+   'big_unit':'ILS. same debt. 2006 to today.',
+   'big_sub':'one card, 17.69%, never paid off.<br>nobody bought anything. it just sat there.',
+   'claim':'A loan has an end date.<br><span class="hi">Revolving credit<br>has none.</span><br>It doubles every 4.3 years.',
+   'claim_foot':'Rolling on my parents\u2019 card since 2006. Nobody ever showed them the number.',
+   'before_l':'WHAT A LOAN<br>GIVES YOU',
+   'before_v':'a schedule<br><span class="sm">and a date it ends</span>',
+   'after_l':'WHAT REVOLVING<br>CREDIT GIVES YOU',
+   'after_v':'neither<br><span class="sm">it just keeps doubling</span>',
+   'grid_title':'WHY NOBODY EVER SEES THIS DEBT',
+   'grid': [('Interest is not a statement line','it is inside the balance'),
+            ('It is not a charge','so searching transactions misses it'),
+            ('The minimum payment looks responsible','it is what keeps it alive'),
+            ('A loan ends, this does not','no schedule, no end date'),
+            ('It is the most profitable debt there is','nobody will call to tell you')],
+   'grid_foot':'ILS 70,000 at 13-18%, costing about ILS 1,000 a month. Legal, quiet, permanent.',
+   'quote':'"The interest is<br>not a line you read.<br>It is already inside<br>the balance."',
+   'quote_sub':'Twenty years of it, never once written<br>in front of the two people paying it.',
+   'arch':[('ASK 1','how much interest<br>did they pay<br>last month?'),
+           ('ASK 2','is any card set to<br>minimum payment<br>or revolving?'),
+           ('THAT IS IT','most people cannot<br>answer either one')],
+   'arch_foot':'Two questions, no tooling, tonight.',
    'foot':'gal.tidhar.org.il',
  },
  'he': {
    'dir':'rtl','lang':'he',
    'eyebrow':'',
-   'big':'17.69%',
-   'big_unit':'מתגלגל מ-2006',
-   'big_sub':'הדבר הכי יקר בחשבונות של ההורים שלי<br>לא היה אפליקציית סקאם. זו ריבית שאף אחד לא רואה.',
-   'claim':'הריבית היא לא שורה<br>בדף החשבון.<br><span class="hi">היא כבר בתוך<br>היתרה.</span>',
-   'claim_foot':'בערך 1,000 ש"ח בחודש, מ-2006. אף אחד מעולם לא הראה להם את המספר הזה.',
-   'before_l':'החוב שלהם<br>בריבית 13-18 אחוז',
-   'before_v':'70,000 ש"ח',
-   'after_l':'הכסף ששוכב<br>בבנק אחר',
-   'after_v':'40,000 ש"ח<br><span class="sm">בלי לעשות כלום</span>',
-   'grid_title':'ארבע נזילות, כל אחת בלתי נראית מסיבה אחרת',
-   'grid': [('ריבית שמתגלגלת מ-2006','1,000 בחודש'),
-            ('כסף שוכב ליד אותו חוב','700 בחודש'),
-            ('הסכמי חיוב בפייפאל','900 בחודש'),
-            ('שלוש פוליסות, אירוע אחד','1,500 בחודש'),
-            ('זבל מחנות האפליקציות','900 בחודש')],
-   'grid_foot':'אף אחד לא עבר על החוק. שום דבר פה הוא לא הונאה. הכל פשוט בלתי נראה.',
-   'quote':'"הסכם חיוב<br>הוא לא מנוי."',
-   'quote_sub':'הוא מתחדש בלי מייל מהסוחר,<br>ולא מופיע באף רשימת מנויים שאומרים לכם לבדוק.',
-   'arch':[('בדיקה 1','כמה ריבית הם<br>משלמים החודש?'),
-           ('בדיקה 2','פייפאל,<br>תשלומים אוטומטיים'),
-           ('בדיקה 3','כמה פוליסות בריאות<br>פרטיות יש להם?')],
-   'arch_foot':'שלוש שאלות, בלי שום כלי. רוב האנשים לא יודעים לענות על אחת מהן.',
+   'big':'232 &larr; 6,028',
+   'big_unit':'ש"ח. אותו חוב. מ-2006 עד היום.',
+   'big_sub':'כרטיס אחד, 17.69%, שאף פעם לא נסגר.<br>אף אחד לא קנה כלום. הוא פשוט ישב שם.',
+   'claim':'להלוואה יש תאריך סיום.<br><span class="hi">לחוב מתגלגל<br>אין.</span><br>הוא מכפיל את עצמו כל 4.3 שנים.',
+   'claim_foot':'מתגלגל על הכרטיס של ההורים שלי מ-2006. אף אחד לא הראה להם את המספר.',
+   'before_l':'מה שהלוואה<br>נותנת לך',
+   'before_v':'לוח סילוקין<br><span class="sm">ותאריך שבו זה נגמר</span>',
+   'after_l':'מה שחוב מתגלגל<br>נותן לך',
+   'after_v':'שום דבר מזה<br><span class="sm">הוא פשוט ממשיך להכפיל</span>',
+   'grid_title':'למה אף אחד לא רואה את החוב הזה',
+   'grid': [('הריבית היא לא שורה בדף החשבון','היא בתוך היתרה'),
+            ('זה לא נראה כמו חיוב','אז חיפוש בתנועות לא ימצא'),
+            ('התשלום המינימלי נראה אחראי','הוא מה שמשאיר את זה בחיים'),
+            ('הלוואה נגמרת, זה לא','בלי לוח סילוקין, בלי תאריך'),
+            ('זה החוב הכי רווחי שיש','אף אחד לא יתקשר להגיד לך')],
+   'grid_foot':'70 אלף ש"ח בריבית 13-18 אחוז, בערך 1,000 ש"ח בחודש. חוקי, שקט, בלי סוף.',
+   'quote':'"הריבית היא לא שורה<br>שקוראים.<br>היא כבר בתוך<br>היתרה."',
+   'quote_sub':'עשרים שנה של זה, ואף פעם היא לא נכתבה<br>מול העיניים של שני האנשים שמשלמים אותה.',
+   'arch':[('שאלה 1','כמה ריבית הם<br>שילמו החודש?'),
+           ('שאלה 2','יש כרטיס שמוגדר<br>בקרדיט או בתשלום<br>מינימלי?'),
+           ('זהו','רוב האנשים לא יודעים<br>לענות על אף אחת')],
+   'arch_foot':'שתי שאלות, בלי שום כלי, הערב.',
    'foot':'gal.tidhar.org.il',
  },
 }
@@ -89,7 +89,7 @@ TPL = """<!doctype html><html dir="{dir}" lang="{lang}"><meta charset="utf-8">
 
 def design1(s):  # the one big number
     extra = """
-    .num{font-size:180px;font-weight:700;color:#fef08a;line-height:.95;letter-spacing:-.02em}
+    .num{font-size:132px;font-weight:700;color:#fef08a;line-height:.95;letter-spacing:-.02em}
     .unit{font-size:34px;color:#7dd3fc;margin-top:10px}
     .sub{font-size:28px;color:#cbd5e1;margin-top:30px;max-width:960px;line-height:1.5}
     .mid{margin-bottom:auto}"""
@@ -129,8 +129,8 @@ def design4(s):  # the breakdown grid
     extra = """
     .gt{font-size:20px;letter-spacing:.16em;color:#7dd3fc;margin:6px 0 22px}
     .row{display:flex;justify-content:space-between;align-items:baseline;gap:24px;
-     padding:12px 0;border-block-end:1px solid #16304f;font-size:27px}
-    .row .amt{color:#fef08a;font-weight:700;white-space:nowrap}
+     padding:11px 0;border-block-end:1px solid #16304f;font-size:23px;line-height:1.35}
+    .row .amt{color:#fef08a;font-weight:600;text-align:end;max-width:46%}
     .gf{font-size:24px;color:#94a3b8;margin-top:22px;margin-bottom:auto}"""
     rows = "".join(f'<div class="row"><span>{n}</span><span class="amt">{v}</span></div>'
                    for n, v in s['grid'])
