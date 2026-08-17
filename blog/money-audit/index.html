@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The bank said 350,000. It was 70,000. · Gal Tidhar</title>
+  <meta name="description" content="I connected my parents' banks and cards through open banking and asked an agent to find the leaks. The first answer would have frightened them, and it was wrong by 10x. What the data actually held: rolling interest nobody reads, PayPal billing agreements nobody remembers, and idle cash sitting next to 17% debt.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/money-audit/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The bank said 350,000. It was 70,000.">
+  <meta property="og:description" content="I connected my parents' banks and cards through open banking and asked an agent to find the leaks. The first answer would have frightened them, and it was wrong by 10x.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/money-audit/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/money-audit/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="350,000 struck through, 70,000 in yellow on dark navy: a debt figure corrected by a verification pass">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The bank said 350,000. It was 70,000.">
+  <meta name="twitter:description" content="I connected my parents' banks and cards through open banking and asked an agent to find the leaks. The first answer would have frightened them, and it was wrong by 10x.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/money-audit/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The bank said 350,000. It was 70,000.",
+    "description": "I connected my parents' banks and cards through open banking and asked an agent to find the leaks. The first answer would have frightened them, and it was wrong by 10x.",
+    "image": "https://gal.tidhar.org.il/blog/money-audit/og.png",
+    "datePublished": "2026-08-17",
+    "dateModified": "2026-08-17",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/money-audit/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "open banking, financial audit, revolving credit, PayPal billing agreements, AI agents, verification, elderly parents, SQLite"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / MONEY</span>
+          <div class="role-line">Money audit</div>
+          <h1 class="title">The bank said 350,000. It was 70,000.</h1>
+          <div class="meta-line"><strong>17 Aug 2026</strong> · one day · open banking + SQLite + agents that argue with each other</div>
+          <p class="lead">Cancelling my father's junk app subscriptions took an evening. It also left an obvious question: if <strong>16,000 a year</strong> could sit there unnoticed, what else was? So I connected both my parents' banks and cards through open banking, put a year of transactions in a local database, and asked. The first answer was terrifying and <strong>wrong by a factor of ten</strong>. This is what it took to find that out before I said it out loud.</p>
+        </header>
+
+        <div class="prose">
+
+        <h2 class="spec-head">Statements are the wrong interface</h2>
+        <p>Nine institutions. Eighty-three accounts once you count every card, loan, savings plan and pension. Two people. A year of history is roughly <strong>2,400 transactions</strong>, arriving as one PDF per month per account.</p>
+        <p>No human reads that. Neither does a language model, usefully - paging PDFs into context is expensive and lossy, and the interesting patterns are cross-account by nature. A charge is not suspicious on its own statement. It is suspicious because it repeats every week, on a card that also carries 17% interest, while cash sits idle in a different bank.</p>
+        <p>So the shape of this is boring and that is the point: <strong>get the rows, put them in SQLite, ask in SQL.</strong></p>
+        <pre><code>python3 openbank.py pull              # aggregator API -> local snapshot.db
+python3 openbank.py owners            # every owner string the banks returned
+python3 openbank.py sql "SELECT ..."  # investigate</code></pre>
+
+        <h2 class="spec-head">What it costs, honestly</h2>
+        <p>Israeli open banking (חוק שירות מידע פיננסי, live since 2023) opens bank APIs only to a licensed information-service provider. There is no consumer tier. So for anyone else's accounts you are not paying for a wrapper, you are <strong>renting a licence</strong> - which is why the instinct that an aggregator is an unnecessary middleman is right for your own money and wrong for your parents'. In the EU and UK the PSD2 equivalent works the same way.</p>
+        <table class="spec-table">
+          <tr><th>Line item</th><th>Cost</th></tr>
+          <tr><td>Open-banking aggregator (Israel: Financy / Open-Finance.ai, Starter tier)</td><td>ILS 49/month, cancellable</td></tr>
+          <tr><td>Model time for the full audit - about 2,000 assistant turns in one day</td><td>~USD 1,700 at API list prices</td></tr>
+          <tr><td>What I actually paid for that model time</td><td>a USD 200/month subscription</td></tr>
+        </table>
+        <p>I am putting the API number in because the "look what AI did for free" framing is a lie. If you paid per token for this day it would have cost more than a good financial advisor charges for an hour, and the reason it was worth it anyway is that it did not stop at an hour. It also means this is <strong>not</strong> something to run casually on a whim - decide what you are looking for first.</p>
+
+        <h2 class="spec-head">The finding that was wrong</h2>
+        <p>The first pass came back with a number I did not want to carry into a room with two pensioners in it: <strong>26 loan accounts, about ILS 350,000 outstanding.</strong></p>
+        <p>That would have changed their lives. It was also nonsense, and the reason is a data-format detail nobody outside a card issuer would ever guess.</p>
+        <blockquote>An Israeli card issuer reports a revolving credit product as <strong>one row per monthly cycle</strong>. Same account number, a different contract start date each month. Thirteen months on file reads as thirteen separate loans.</blockquote>
+        <p>Summing them multiplied the debt by the number of cycles on record. The correct read is the <strong>latest snapshot per distinct account number</strong>:</p>
+        <pre><code>-- WRONG
+SELECT SUM(balance) FROM accounts WHERE account_type='loan';
+
+-- RIGHT
+WITH latest AS (
+  SELECT account_number, MAX(reference_date) rd FROM accounts
+  WHERE account_type='loan' GROUP BY 1)
+SELECT a.person, a.account_number, a.balance FROM accounts a
+JOIN latest l ON l.account_number = a.account_number
+             AND l.rd = a.reference_date;</code></pre>
+        <p>Real figure: <strong>ILS 70,307</strong> across both of them. Serious, fixable, not a catastrophe.</p>
+        <p>The second error was quieter and would have survived a casual review. A verification agent disagreed with my total and, on inspection, <em>it</em> was the one that was wrong: it had filtered by the owner's name in Hebrew, and two of her cards carry her name in Latin characters. Whole accounts vanished from the total because of a spelling. That is why the rule in the skill is: <strong>always filter on the resolved person, never on the raw owner string the bank gives you.</strong></p>
+        <div class="snap"><strong>The actual lesson:</strong> not "AI gets things wrong". It is that I could afford to run three independent skeptics against my own conclusion, for cents, before it reached a frightened 83-year-old. Most people never get a second opinion on their money. Here the second, third and fourth cost less than the coffee I drank reading them.</div>
+
+        <h2 class="spec-head">Then it also cleared two people I had accused</h2>
+        <p>The same pass ran in the other direction. Two merchants I had confidently flagged as scams came back clean: one is his real e-cigarette supplier, with genuine order confirmations in his mailbox; the other is a legitimate wellness service for seniors that he may well have signed up for on purpose. Both were one dispute letter away from being sent.</p>
+        <p>The transaction data alone cannot tell a scam from a supplier. <strong>The mailbox settles it.</strong> Check the ground truth before you accuse anyone of anything - especially when the person you are about to embarrass in front of their own family is your parent.</p>
+
+        <h2 class="spec-head">What was actually there</h2>
+        <p>Anonymised, rounded, and none of it visible from any single statement:</p>
+        <table class="spec-table">
+          <tr><th>Finding</th><th>Why nobody saw it</th></tr>
+          <tr><td><strong>ILS 70k of card debt at 13-18%</strong>, one revolving line running since <strong>2006</strong></td><td>Interest arrives as a fee line on a card statement, never as a number anyone is shown. The monthly cost of that debt is around ILS 1,000 and it has never been written down anywhere they would read it.</td></tr>
+          <tr><td><strong>ILS 40k sitting idle</strong> in a joint checking account, earning nothing</td><td>It is in a different institution from the debt. Nothing in either app knows the other exists. The fix is to move money from one pocket to another and it is worth about ILS 700 a month.</td></tr>
+          <tr><td><strong>Live PayPal billing agreements</strong> with overseas suppliers, ~ILS 11k over twelve months</td><td>A billing agreement is not a subscription. It renews without a merchant email, and it does not appear anywhere in the app-store subscription list people are told to check. It only shows up as a PayPal line on a card.</td></tr>
+          <tr><td><strong>Three private health policies</strong> stacked on top of the public fund, ~ILS 1,500/month of overlap</td><td>Each was sold separately, years apart, each by someone reassuring. You cannot claim the same event three times. Nobody ever compared the three documents side by side.</td></tr>
+          <tr><td>Weekly app-store fleeceware, ~ILS 900/month, still billing</td><td><a href="/blog/subscription-audit/">The previous field note.</a> The bank data is how you find out it is <em>still</em> billing after you thought you killed it.</td></tr>
+        </table>
+        <p>Total recoverable, without cutting a single thing they enjoy: <strong>ILS 3,000-4,500 a month.</strong> That is a trip abroad every year, funded entirely by things that were taking money for nothing.</p>
+
+        <h2 class="spec-head">Findings do not change anything. Actions do.</h2>
+        <p>The part I would have skipped a year ago: after the report, agents drove their own browsers and mailboxes, with them present and approving each item, to actually do it. Every junk subscription cancelled with the cancellation date recorded, <strong>40+ refund requests filed</strong> and confirmed in writing, cancellation emails sent to the services with no cancel button, and one live Hebrew page with a tick-box list of what is left - the items that need their password, their phone, or a visit to the bank.</p>
+        <p>A PDF of findings handed to two people in their eighties changes nothing at all. Sorted by monthly recovery, in their language, with the things I can do already done, is a different object.</p>
+        <div class="snap"><strong>The rule I would not bend:</strong> nothing gets cancelled without an item-by-item yes. "Clean it all up" is not consent for a specific cancellation, and being right about the money does not make you entitled to make decisions about someone else's.</div>
+
+        <h2 class="spec-head">If you want to do this for your own family</h2>
+        <ol>
+          <li>They link their accounts themselves, in the aggregator's UI. There is no API for that, and there should not be.</li>
+          <li>Pull it into SQLite. Query it. Never state a number you did not get from a query.</li>
+          <li>Before you tell them anything, make something independent re-derive it. Ask specifically: <em>could one thing be counted twice, and could one thing be missing because of a name?</em> Those two questions caught both of my errors.</li>
+          <li>Check the mailbox before calling any merchant a fraud.</li>
+          <li>Present decisions, not a report, sorted by what it saves a month.</li>
+        </ol>
+
+        <div class="cta">
+          <h3>The skill</h3>
+          <p>The whole pipeline is packaged as an installable agent skill - the aggregator pull, the per-person ownership resolver, the query playbook, both traps written down so they cost you nothing, and the verification protocol.</p>
+          <div class="link-row">
+            <a href="https://github.com/tatarco/agent-skills/tree/main/skills/money-audit">money-audit on GitHub ↗</a>
+            <span class="sep">·</span>
+            <a href="/blog/subscription-audit/">Part one: the subscriptions ←</a>
+            <span class="sep">·</span>
+            <a href="/">All field notes</a>
+            <span class="sep">·</span>
+            <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn ↗</a>
+          </div>
+        </div>
+
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/">gal.tidhar.org.il</a> · field notes
+  </footer>
+</body>
+</html>

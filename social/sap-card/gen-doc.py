@@ -9,6 +9,9 @@ HERE = pathlib.Path(__file__).parent
 POST = pathlib.Path.home() / ".claude/skills/linkedin/drafts/sap-card.txt"
 
 DESIGNS = [
+    ("7", "the card + the quote", "Your ask: design 2's full-bleed card carrying design 4's text. "
+     "The artifact and the sentence that changed things, in one frame, no attribution needed "
+     "beyond the card itself."),
     ("1", "the claim", "Bold-claim shape - the one he picked five times running. Whole story in a "
      "sentence, with the card as a small artifact underneath."),
     ("2", "the card, full bleed", "The photo IS the hook. A worn 2013 SAP card in a hand, one line "
@@ -22,13 +25,10 @@ DESIGNS = [
      "question, demo on their hand. The useful half, no story."),
 ]
 
-BLOG = "https://gal.tidhar.org.il/blog/sap-card/"
-
 post = POST.read_text(encoding="utf-8").strip()
 chars = len(post)
 
-comment = f"""הסיפור המלא, כולל כלל שלישי מהעגלה שלא נכנס לפוסט ומה שהייתי אומר לעצמי ב-2013:
-{BLOG}"""
+comment = ""
 
 
 def img(num, lang):
@@ -48,9 +48,9 @@ for num, name, why in DESIGNS:
     for lang in ("en", "he"):
         code = f"{num}-{lang.upper()}"
         tag = ""
-        if code == "2-HE":
+        if code == "7-HE":
             tag = ' <span class="rec">RECOMMENDED</span>'
-        elif code == "1-HE":
+        elif code == "2-HE":
             tag = ' <span class="rec">RUNNER-UP</span>'
         opts += (f'<div class="opt" data-value="{code}">'
                  f'<div class="opt-head"><span class="dot"></span>'
@@ -60,27 +60,25 @@ for num, name, why in DESIGNS:
 BODY = f"""
 <div class="title">
   <p class="eyebrow">LinkedIn &middot; origin story</p>
-  <h1>The SAP business card. Post, heroes, and three calls that are yours.</h1>
+  <h1>The SAP business card. Post, heroes, and two calls that are yours.</h1>
   <p class="lede">Pulled from your WhatsApp thread with the founder. The card photo is the hero, redacted.
-  Pick an image, answer the three questions at the bottom, and I will finish the blog post and
-  push it. Your picks save in this page.</p>
+  Pick an image and answer the two questions at the bottom. No companion blog post and no link
+  in the first comment - it does not need one. Your picks save in this page.</p>
 </div>
 
 <section class="step">
   <h2>The post</h2>
   <p class="sub">{chars:,} characters, well under LinkedIn's 3,000 cap. Hebrew, plain hyphens,
-  link in the first comment.</p>
+  no link and no first comment - it ends on the line to Husain.</p>
   <div class="copybar"><button class="copybtn" data-copy="post-text">Copy post text</button></div>
   <pre id="post-text" class="term" style="direction:rtl;text-align:right;white-space:pre-wrap"
     >{html.escape(post)}</pre>
-  <div class="copybar"><button class="copybtn" data-copy="comment-text">Copy first comment</button></div>
-  <pre id="comment-text" class="term" style="direction:rtl;text-align:right;white-space:pre-wrap"
-    >{html.escape(comment)}</pre>
 </section>
 
 <section class="step">
   <h2>Hero image - pick one</h2>
-  <p class="sub">Six designs, each in English and Hebrew. Click the one you want. The full local
+  <p class="sub">Seven designs, each in English and Hebrew. <b>7 is the one you asked for</b> -
+  design 2's full-bleed card layout carrying design 4's quote - and it is listed first. Click the one you want. The full local
   path is printed above every image so you can paste it straight into LinkedIn's file picker.</p>
   <p class="sub"><b>The recommendation breaks the usual advice on purpose.</b> The ledger says the
   bold-claim shape wins, but your single biggest post ever (133k) was an image that WAS the thing
@@ -101,11 +99,10 @@ BODY = f"""
       thirteen years, not fourteen.</li>
     <li><b>"12 hours a day" is gone.</b> A verification pass caught that I had invented it - your
       message says full-time, not a number of hours. It now says full time, everywhere.</li>
-    <li><b>Husain's quote is marked as a reconstruction.</b> The Hebrew now says
-      "אמר לי משהו בסגנון" and the blog says outright that the wording is yours and the content is
-      his. What you actually wrote in the thread was a paraphrase, and presenting a paraphrase inside
-      quotation marks thirteen years later is the one thing in this post that could be called
-      out.</li>
+    <li><b>Husain's quote is marked as a reconstruction.</b> It now reads
+      "אמר לי משהו בסגנון" rather than sitting in bare quotation marks. What you wrote in the thread
+      was a paraphrase, and presenting a paraphrase as a verbatim quote thirteen years later is the
+      one thing in this post that could be called out.</li>
     <li><b>The founder and his company stay anonymous.</b> "מייסד של חברה שעדיין בסטלת׳" - no name,
       no product name, no URL to the site it built. It is in stealth and you said you would post
       about it anonymously.</li>
@@ -113,7 +110,7 @@ BODY = f"""
 </section>
 
 <section class="step">
-  <h2>Three calls I did not want to make for you</h2>
+  <h2>Two calls I did not want to make for you</h2>
 
   <p class="q">1. How much of the founder story goes in?</p>
   <p class="sub">Right now the post carries it in three beats: he is trying to recruit you for GTM,
@@ -156,23 +153,6 @@ BODY = f"""
       puts a real person on the spot without asking him first.</p></div>
   </div>
 
-  <p class="q">3. Where does the first comment point?</p>
-  <p class="sub">The companion post is written and staged at <code>{BLOG}</code>. It is on your
-  personal site with a ZaZet call-to-action at the bottom, same as the rest of your field notes.
-  You raised on the last post that you want the series feeding zazet-solutions.hr instead.</p>
-  <div id="linktarget" data-persist-choice class="opts small">
-    <div class="opt" data-value="gal-blog"><div class="opt-head"><span class="dot"></span>
-      <b>gal.tidhar.org.il, as written</b> <span class="rec">RECOMMENDED</span></div>
-      <p class="why">This one is a personal story, not a ZaZet capability piece. It belongs on the
-      personal site, and the ZaZet link at the bottom does the handoff. Zero extra build.</p></div>
-    <div class="opt" data-value="zazet"><div class="opt-head"><span class="dot"></span>
-      <b>Move it to a public page on zazet-solutions.hr</b></div>
-      <p class="why">Feeds the business site, but a founder origin story on a company site reads
-      as an About page, and it needs the public blog build you have not done yet.</p></div>
-    <div class="opt" data-value="none"><div class="opt-head"><span class="dot"></span>
-      <b>No link at all</b></div>
-      <p class="why">Pure story post, nothing to click. Cleanest read, and it wastes the traffic.</p></div>
-  </div>
 </section>
 
 <section class="step">
@@ -184,8 +164,9 @@ BODY = f"""
       scroll-stop, and the two cart rules are the useful half - but it is a story, and the ledger
       cannot tell you a story post will travel. Worth posting because it is true and it is
       yours, not because the numbers predict it.</li>
-    <li><b>The blog post is written and staged but not pushed.</b> It goes live the moment you
-      pick a hero, so the first-comment link is never dead.</li>
+    <li><b>There is no link and no first comment.</b> You called the blog post idiotic and you are
+      right - a story post that ends by selling you a longer version of the story undercuts itself.
+      It ends on the line to Husain.</li>
   </ul>
 </section>
 

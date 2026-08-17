@@ -211,6 +211,22 @@ body{padding:0;justify-content:flex-end}
 """, (
         f'<div class="kicker">{s["d6_kicker"]}</div><div class="rules">{rules}</div>'))
 
+    # 7 - design 2's layout (card full bleed) carrying design 4's text (the quote)
+    out[7] = page(lang, """
+body{padding:0;justify-content:flex-end}
+.bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,22,40,.97) 0%,rgba(10,22,40,.62) 46%,rgba(10,22,40,.15) 100%)}
+.q{position:relative;font-size:35px;font-weight:800;color:#e0f2fe;line-height:1.42;
+  max-width:1010px;padding:0 52px;text-shadow:0 2px 18px rgba(10,22,40,.95)}
+.by{position:relative;font-size:20px;color:#7dd3fc;margin:18px 0 74px;padding:0 52px;
+  text-shadow:0 2px 12px rgba(10,22,40,.95)}
+.top,.rev{z-index:2;text-shadow:0 2px 10px rgba(10,22,40,.9)}
+""", (
+        f'<div class="bg" style="background-image:url({card})"></div>'
+        f'<div class="scrim"></div>'
+        f'<div class="q">{s["d4_quote"]}</div>'
+        f'<div class="by">{s["d4_by"]}</div>'))
+
     for i, html in out.items():
         (OUT / f"hero-{i}-{lang}.html").write_text(html, encoding="utf-8")
 
