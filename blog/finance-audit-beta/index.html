@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The audit, as software you run yourself · Gal Tidhar</title>
+  <meta name="description" content="Four household finance audits done by hand, turned into a local-first tool. No API exists in Israel, so it drives a real browser on your machine. The product is not the scraping - it is the checklist of six ways to be confidently wrong, four of which pass an arithmetic review. Looking for 5-10 beta testers.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/finance-audit-beta/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The audit, as software you run yourself">
+  <meta property="og:description" content="Four family audits, turned into software that runs on your machine. Built on israeli-bank-scrapers. The real product is the traps checklist. Beta testers wanted.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/finance-audit-beta/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/finance-audit-beta/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="4 of 6, in yellow on dark navy: four of the six ways to get a family finance audit wrong are interpretation errors, not arithmetic">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The audit, as software you run yourself">
+  <meta name="twitter:description" content="Four family audits, turned into software that runs on your machine. Built on israeli-bank-scrapers. The real product is the traps checklist. Beta testers wanted.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/finance-audit-beta/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The audit, as software you run yourself",
+    "description": "Four family audits, turned into software that runs on your machine. Built on israeli-bank-scrapers. The real product is the traps checklist. Beta testers wanted.",
+    "image": "https://gal.tidhar.org.il/blog/finance-audit-beta/og.png",
+    "datePublished": "2026-08-21",
+    "dateModified": "2026-08-21",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/finance-audit-beta/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "local-first, financial audit, israeli-bank-scrapers, Caspion, Claude Code, Puppeteer, SQLite, Israel Securities Authority, beta"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code, td code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / TOOLING</span>
+          <div class="role-line">Finance audit &middot; beta</div>
+          <h1 class="title">The audit, as software you run yourself</h1>
+          <div class="meta-line"><strong>21 Aug 2026</strong> &middot; 4 audits by hand &middot; 1 bank verified &middot; 14 wired, untested</div>
+          <p class="lead">I have now run this audit four times by hand - my parents, my sister, my wife's family. Every one of them found real money, and <strong>two of them shipped wrong numbers to the family before I caught them myself</strong>. Those two corrections are the reason there is now a tool instead of a habit. It runs entirely on your machine, it is built on other people's excellent open-source work, and the part that actually matters is not the code.</p>
+        </header>
+
+        <div class="prose">
+
+        <h2 class="spec-head">Credit where it belongs</h2>
+        <p>The hard, unglamorous problem - logging into an Israeli bank and getting a year of transactions out of it - was solved a decade ago by people who are not me:</p>
+        <ul>
+          <li><strong><a href="https://github.com/eshaham/israeli-bank-scrapers">israeli-bank-scrapers</a></strong> by Eshed Shaham. MIT, public since 2017, and the reason this project is a weekend of wiring rather than a year of reverse engineering.</li>
+          <li><strong><a href="https://github.com/brafdlog/caspion">Caspion</a></strong> by Brafdlog. MIT, built on top of the scrapers, and the prior art that shows this shape of tool has existed openly in Israel for years.</li>
+          <li><strong>Puppeteer</strong> for the browser, and <strong>Node 22's built-in <code>node:sqlite</code></strong> so nothing compiles at install time.</li>
+        </ul>
+        <p>What I added is a wrapper, a UI an adult child can drive on a parent's behalf, a Gmail pass, and a checklist. The checklist is the valuable half.</p>
+
+        <h2 class="spec-head">Why it is software you install, and not a website</h2>
+        <p>Israel sits outside PSD2, so no global aggregator - Plaid, Tink, TrueLayer, GoCardless, Enable Banking - covers Israeli banks. The licensed Israeli aggregators are all paid, and none of them has a free tier with API access. There is no back door here: the only free path to your own bank data is a browser doing what you would do by hand.</p>
+        <p>The regulation matters more than the pricing. Israel's Financial Information Service Law puts financial-data aggregation under the <strong>Israel Securities Authority</strong> - not the Capital Market Authority, a distinction that cost me a research cycle. The law has <strong>no "for consideration" qualifier and no "by way of business" qualifier</strong>. Being free does not exempt you. There is no nonprofit carve-out and no de-minimis threshold. A website where strangers type their bank credentials would need a licence.</p>
+        <p>Software that a person installs and runs on their own machine, with their own credentials, where I never receive a byte, is a different legal object: I am distributing software, not collecting data. Both libraries above have been public and Israeli-made for years on that same basis.</p>
+        <div class="snap"><strong>The useful way to hold this:</strong> the regulation did not kill the idea. It chose the architecture.</div>
+
+        <h2 class="spec-head">Say the uncomfortable part out loud</h2>
+        <p>This tool asks someone to type a bank password into something that is not the bank. That is the exact pattern every fraud department spends its budget fighting, and pretending otherwise would be worse than the risk. So, plainly:</p>
+        <ul>
+          <li>Everything runs on your machine. Nothing is sent anywhere. I do not receive a byte and there is no server to receive it.</li>
+          <li>The password is <strong>never written to disk</strong> - not encrypted, simply never stored. It goes from the field to the browser and is gone when the process exits.</li>
+          <li>Access is <strong>read-only</strong>. There is no code path that moves money.</li>
+          <li>The Chrome window is <strong>visible</strong>. You watch the login happen, exactly as you would if you did it yourself.</li>
+          <li>It is <strong>not</strong> open banking, and I will not call it that. It is a scraper with your consent and your credentials, on your hardware.</li>
+        </ul>
+
+        <h2 class="spec-head">The six ways to be confidently wrong</h2>
+        <p>This is the actual product. It is a checklist distilled from four real audits, including the two that shipped wrong numbers, and it is what gets pushed into the model's context before it looks at a single shekel. <strong>Four of these six are interpretation errors, not arithmetic</strong> - which means a careful review of the maths passes every one of them.</p>
+        <ol>
+          <li><strong>Inflow is not income.</strong> A savings drawdown, a loan landing, and a cash advance on a credit card all look identical to money arriving. One audit reported a deficit <strong>three times too small</strong> because of this, and note the direction: the error <em>hid</em> the problem rather than exaggerating it.</li>
+          <li><strong>Co-occurrence is not concurrency.</strong> Two insurers billing in the same months can be a clean handover, not a duplicate policy. This one was caught publicly, by the person whose money it was.</li>
+          <li><strong>A data feed that starts late looks exactly like a new expense.</strong> One audit claimed a charge "jumped 18x" when the card's history simply began nine days earlier than the comparison window.</li>
+          <li><strong>Partial boundary months.</strong> Salary lands once a month and spending happens daily, so half a month at the edge of the window reads as a deficit in a perfectly healthy household.</li>
+          <li><strong>One person, two spellings.</strong> One bank holds a name in Hebrew, another in Latin characters. Filter by the owner string and whole cards vanish from the total, silently.</li>
+          <li><strong>A revolving card reports one row per monthly cycle.</strong> Thirteen months on file look like thirteen loans. Sum them and you multiply the debt by the number of cycles - a 10x error on the most frightening number in the report.</li>
+        </ol>
+        <p>Items 1 through 4 are the interpretation half. No amount of double-checking the sums catches any of them, because the sums are right and the meaning is wrong.</p>
+
+        <h2 class="spec-head">Four engineering notes, from real bugs</h2>
+        <h3>1. A bank that refuses in silence</h3>
+        <p>With a fresh browser profile on every run, the bank sees a brand-new device and <strong>silently declines to submit the form</strong>. No error, no OTP challenge, no failed-login message - nothing at all. A persistent profile is not a convenience here, it is the difference between working and not.</p>
+        <h3>2. A race that settles on the first rejection</h3>
+        <p>A <code>Promise.race</code> over four selectors reported a failure for a login that had <strong>already succeeded in six seconds</strong>, because a race settles on the first rejection just as happily as on the first resolution. One of those four had also inherited Puppeteer's 30-second default while its three siblings had 60, so on a slow login it lost a race it was never given time to win. Patched at runtime rather than by editing <code>node_modules</code>, so <code>npm update</code> cannot quietly drop the fix.</p>
+        <h3>3. A 448KB Chrome that exits 0</h3>
+        <p>The browser download produced a <strong>448KB</strong> Chrome instead of roughly <strong>340MB</strong>, left a plausible-looking executable in place, and <strong>exited zero</strong>. The <code>.app</code> had no <code>Frameworks</code> directory, so it died mid-scrape with an unreadable <code>dlopen</code> error. The zip was fine; the library's own extractor was failing silently where the system <code>unzip</code> succeeded.</p>
+        <div class="snap"><strong>The lesson worth stealing:</strong> a health check that <code>stat</code>s a file proves nothing. It has to launch the thing.</div>
+        <h3>4. Your global config is not neutral when you shell out to an agent</h3>
+        <p>The analysis runs through <code>claude -p</code> with <code>--output-format stream-json</code>, so you watch each query and each conclusion arrive instead of staring at a spinner. It also runs <code>--safe-mode</code>, and that flag is not paranoia. Without it the subprocess <strong>inherits the operator's own <code>CLAUDE.md</code>, hooks and output styles</strong>. On my machine that meant a "be terse, one-sentence answers" instruction and a "you are a lazy senior developer" hook were being injected into the agent writing a household financial report.</p>
+
+        <h2 class="spec-head">What actually works today</h2>
+        <p>Being precise about this is the whole point of a beta.</p>
+        <table class="spec-table">
+          <tr><th>Piece</th><th>Status</th></tr>
+          <tr><td>Bank Leumi: 1 account, 152 transactions, 12 months</td><td>verified end to end</td></tr>
+          <tr><td>Local SQLite, idempotent resync (content-hashed keys)</td><td>verified - re-running a period upserts, never duplicates</td></tr>
+          <tr><td>Gmail harvest: 260 message headers, no OAuth, no cloud project</td><td>verified, and the most fragile code in the repo</td></tr>
+          <tr><td>Streamed analysis through <code>claude -p</code></td><td>verified</td></tr>
+          <tr><td>The other 14 institutions</td><td><strong>wired, ids validate, never run against a live account</strong></td></tr>
+        </table>
+        <p>I would rather say that plainly than imply coverage I have not earned. Finding out which of the fourteen break, and where a non-technical operator gets stuck, is the entire purpose of the cohort.</p>
+
+        <h2 class="spec-head">What a beta tester needs</h2>
+        <ul>
+          <li>macOS or Linux, and Node 22 or newer.</li>
+          <li>A Claude Code subscription - the analysis runs through your account, not mine.</li>
+          <li><strong>The account owner sitting next to you</strong> to type the code from the SMS. This is built for an adult child helping a parent, not for a parent alone.</li>
+          <li>A willingness to tell me exactly where it broke, including the parts that are embarrassing for me.</li>
+        </ul>
+        <p>Five to ten people. Not public yet, deliberately - a tool that touches a pensioner's bank account should meet a handful of careful users before it meets everyone.</p>
+
+        <div class="cta">
+          <h3>Want in?</h3>
+          <p>Message me on LinkedIn and tell me which bank you would point it at. That is the single most useful thing you can put in the first message, because bank coverage is the open question.</p>
+          <div class="link-row">
+            <a href="https://www.linkedin.com/in/galtidhar/">Message me on LinkedIn &#8599;</a>
+            <span class="sep">&middot;</span>
+            <a href="/blog/money-audit/">The audit this came from &larr;</a>
+            <span class="sep">&middot;</span>
+            <a href="/blog/subscription-audit/">Where it started &larr;</a>
+            <span class="sep">&middot;</span>
+            <a href="/">All field notes</a>
+          </div>
+        </div>
+
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <a href="/">gal.tidhar.org.il</a> &middot; field notes
+  </footer>
+</body>
+</html>
