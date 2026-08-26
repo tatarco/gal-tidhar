@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The agent fills the cart, I press Pay · Gal Tidhar</title>
+  <meta name="description" content="I gave my AI agent a real Chrome in the cloud. When it hits a password, 2FA or a Pay button, it hands the browser to my phone, waits, and carries on with the login intact. The build, the security model, and the four failures that all looked like something they weren't.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/agent-handoff/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The agent fills the cart, I press Pay">
+  <meta property="og:description" content="A real Chrome for the agent - and a live handoff to my phone for the password, the 2FA code and the Pay button. It never sees a credential.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/agent-handoff/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/agent-handoff/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="I gave my agent a real browser. When it hits a password - it hands the browser to my phone.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The agent fills the cart, I press Pay">
+  <meta name="twitter:description" content="A real Chrome for the agent - and a live handoff to my phone for the password, the 2FA code and the Pay button.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/agent-handoff/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The agent fills the cart, I press Pay",
+    "description": "A real Chrome for the agent, a live handoff to my phone for the password, the 2FA code and the Pay button. The build, the security model, and the failures that all looked like something they weren't.",
+    "image": "https://gal.tidhar.org.il/blog/agent-handoff/og.png",
+    "datePublished": "2026-08-25",
+    "dateModified": "2026-08-25",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/agent-handoff/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "AI agents, browser automation, human in the loop, handoff, Cloudflare Browser Run, CDP, security, allowlist"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">← Home</a> <a href="/blog/agent-browser/">Part 1: the browser ↗</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / AGENTS</span>
+          <p class="role-line">Agents · Human-in-the-loop · Security</p>
+          <h1 class="title">The agent fills the cart, I press Pay</h1>
+          <p class="meta-line"><strong>2026-08-25</strong> &nbsp;·&nbsp; ~9 min read &nbsp;·&nbsp; by Gal Tidhar</p>
+          <p class="lead">I sent my agent to buy toilet paper on Amazon. When it hit the login screen it did not get stuck - it sent a link to my phone, and I was looking at <strong>its browser, live, in my hand</strong>. I typed the password, handed it back, and it carried on with the login intact. It never saw a single character. This post is how that works, why the security model is the interesting half, and the four failures along the way that each looked like something they weren't.</p>
+        </header>
+
+        <figure>
+          <img src="og.png" alt="I gave my agent a real browser. When it hits a password - it hands the browser to my phone." loading="lazy">
+          <figcaption>The whole idea in one frame: the agent works, the human part comes to my phone.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The shape of the thing</h2>
+        <p class="prose">On a desktop this problem is mostly solved: a local agent can borrow your own browser, your own logins, your own screen, with you in the chair next to it. The hard version is the remote one. My personal agent runs on <a href="https://github.com/nanocoai/nanoclaw">NanoClaw</a> (open source, MIT) on a small VPS and talks to me over Telegram - there is no shared screen, no shared browser, and no sane way to type a password for it from the street. It now has a real Chrome it can drive - not a headless scraper, a full browser running on <a href="https://developers.cloudflare.com/browser-rendering/">Cloudflare's Browser Run</a>, spoken to over raw CDP by a ~460-line Node service on my own box. No Worker, no deployment target: Browser Run accepts a plain WebSocket with a Bearer token from anywhere, so the whole integration is an ordinary host service.</p>
+        <p class="prose">The agent browses, searches, compares, fills a cart. And when it reaches something it must not touch - a password, a 2FA code, a CAPTCHA, a Pay button - it does not fail and it does not ask me to paste a credential into chat. It requests a <strong>handoff</strong>: Cloudflare mints a live-view URL for the session, the agent sends it to me in its own voice, and my phone becomes the browser. I do the human part. The agent polls, sees the page change, and continues in the same session, cookies and all.</p>
+        <div class="snap"><strong>Why Cloudflare:</strong> I compared before spending anything - Browserbase ($20/mo), Steel.dev ($29/mo), Anchor ($50/mo). Cloudflare is $5/mo with 10 browser-hours included, and it is the only one where handoff is a <strong>protocol-level CDP primitive</strong> (<code>Cloudflare.getLiveView</code> / <code>handoff</code> / <code>getHandoffState</code>) rather than a live view you build the agent-signals-for-help protocol on top of.</div>
+        <p class="prose">Two details people always ask about. The live-view URL is ~580 characters, so nobody types it - it arrives as a chat message my phone can tap. And the login is a <strong>one-time cost</strong>: the session's cookies persist, so the next task on that site goes straight in.</p>
+
+        <h2 class="spec-head">The failure that looked like a bug: waiting is the expensive operation</h2>
+        <p class="prose">The hard question the docs never answer: does a cloud browser session survive a human taking fifteen minutes to find their phone? My first two attempts said no. One cut out at 456 seconds with the live view showing <em>"Disconnected from browser"</em> - which reads exactly like a broken keep-alive. I debugged the heartbeat. The heartbeat was fine.</p>
+        <p class="prose">The free tier allows <strong>10 minutes of browser time per day</strong>. Holding a session open while a human ambles over costs browser time - so the 30-second heartbeat that carries a session through a slow handoff was spending the very quota it needed to keep the session alive. The mechanism and its own failure mode, in one loop. <strong>The code was right the whole time; the plan was the bug.</strong></p>
+        <p class="prose">Confirmed by upgrading to the $5/month paid plan and re-running: a <strong>925-second handoff</strong> completed with the session alive on the other side. The general lesson generalises well beyond browsers: a resource limit and a logic error produce the same symptom, and the resource limit is the one with no stack trace.</p>
+
+        <h2 class="spec-head">Three smaller finds, each worth its line</h2>
+        <h3>The panel that covered the login</h3>
+        <p class="prose">Cloudflare's handoff panel is fixed to the top-right corner of the live view and cannot be dismissed. That is precisely where every site on earth puts "Sign in". The first real handoff landed me on a cart page hunting for a link underneath the panel, swearing. The fix is a rule, not code: <strong>the agent navigates to the login form before handing over.</strong> The form is centre-page; nothing covers it.</p>
+        <h3>The Done button nobody needed</h3>
+        <p class="prose">The flow originally asked me to press Done to return control. I asked myself the obvious question - do I have to? - and probed it: the agent can read and navigate the page <em>while the handoff is still active</em>. So it just watches for the outcome (the account page becoming reachable) and carries on. The button is now a shortcut for the impatient. We had asked a human to tell the computer something the computer could already see.</p>
+        <h3>The browser has a geography</h3>
+        <p class="prose">Prices came back in SEK and delivery defaulted to Sweden, because a datacentre browser geolocates to wherever the datacentre is. Obvious in hindsight, invisible until a real basket total looked wrong. Unresolved for now, and worth knowing before you trust any localized number a cloud browser shows you.</p>
+
+        <h2 class="spec-head">The security model - the half that generalises</h2>
+        <p class="prose">A logged-in browser <em>is</em> private data, and an agent browsing the web reads attacker-controlled content all day. Add the ability to communicate outward and you have all three parts of the <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">lethal trifecta</a>. So the boundaries are structural, not behavioral:</p>
+        <ul class="prose">
+          <li><strong>A fail-closed host allowlist.</strong> One file on the host, one hostname per line, HTTPS only. Empty or missing file means the agent reaches nothing. It lives on the host specifically so the agent cannot widen its own reach - because if the agent could, a poisoned page could talk it into it.</li>
+          <li><strong>The agent may ask, never grant.</strong> It can request a new host; the request arrives on my phone with the hostname, the agent's stated reason, and approve/deny buttons. The agent gets back a request id and nothing else. The approval endpoint is a separate listener on loopback, reachable only through a tunnel - nothing on the container networks can answer it. Authority arrives from outside the chat, or not at all.</li>
+          <li><strong>Credentials never enter the container.</strong> A gateway injects them per request at the egress proxy, scoped per agent by policy. Verified live: the intended agent gets <code>200</code>; every other agent gets <code>credential_not_found</code>; an agent not on any list gets <code>blocked_by_policy</code>.</li>
+          <li><strong>Deny-by-default beats enumeration.</strong> The blocking rule names no identity, so it also refuses agents that do not exist yet - which matters, because agents here are created lazily on first use, and a hand-written list would have missed them.</li>
+          <li><strong>Payment is the hard floor.</strong> The agent fills the cart and stops. The handoff exists so that stopping there is a feature, not a dead end.</li>
+        </ul>
+        <p class="prose">One honest caveat: the phone-approval flow <strong>weakens</strong> the boundary it replaced. It moves the decision from "the human edits a file, offline, in their own time" to "the human taps yes on a phone", and the agent is the one proposing the host. That was a deliberate trade for usability - the mechanism that keeps it honest is that I read the hostname before tapping. Saying that plainly beats pretending the new flow is strictly better.</p>
+        <p class="prose">And a scoping rule that costs nothing: keep the browser's logins to accounts you would accept losing. Not the bank, not your primary Google. For anything the agent might one day complete alone, a low-limit virtual card is the right shape of paranoia.</p>
+
+        <h2 class="spec-head">One more misdiagnosis, as a bonus</h2>
+        <p class="prose">Mid-test, I restarted the agent daemon to load a new skill. The restart SIGTERMs the running container - killing, silently, the turn the agent was in the middle of. Its progress log at that moment read:</p>
+        <pre><code>Progress: Dismiss cookie banner and search for toilet paper</code></pre>
+        <p class="prose">From my side of the chat: the agent stopped typing and nothing ever arrived. I reported it as the browser being broken. It wasn't - the deploy had destroyed the in-flight reasoning, and the user experience of that is indistinguishable from a bug in whatever you just shipped. If you run long-lived agents: <strong>check for a live container before restarting</strong>, and if a person is mid-conversation, wait or tell them.</p>
+        <p class="prose">That was the fourth failure of the evening that looked like something it wasn't. A quota looked like a broken heartbeat. A deploy looked like a hung agent. An approved request looked like an expired one (the first version deleted approval records 60 seconds after the decision, so an agent polling slightly late was told the request never existed - immediately after I had approved it; verdicts now outlive their tokens by ten minutes). And a stale display name nearly granted the browser - and my logged-in sessions - to an entirely different agent that happened to share the name.</p>
+
+        <h2 class="spec-head">The numbers</h2>
+        <table class="spec-table">
+          <tr><th>Item</th><th>Value</th></tr>
+          <tr><td>Cloudflare Workers Paid</td><td>$5/month, 10 browser-hours included, $0.09/hr after</td></tr>
+          <tr><td>Free tier that bit me</td><td>10 minutes of browser time per day</td></tr>
+          <tr><td>Longest verified handoff</td><td>925 seconds, session alive after</td></tr>
+          <tr><td>Live-view URL length</td><td>~580 characters - goes as a chat link, never typed</td></tr>
+          <tr><td>Whole evening's testing</td><td>a few cents of the included allowance</td></tr>
+        </table>
+        <p class="prose">Nothing was ordered, by the way. We proved the flow to the edge of the Pay button and stopped - there was toilet paper at home.</p>
+
+        <div class="cta">
+          <h3>What it is actually for</h3>
+          <p class="prose" style="margin-bottom:.4rem">Proven: shopping with a human-in-the-loop payment, and persistent logins that make authentication a one-time cost. Designed for but not yet exercised: anything behind a login with no API - order histories, bookings, account pages - and 2FA flows generally, where the agent reaches the code prompt and the human supplies the code. Not a bot-evasion story: a datacentre browser is still fingerprintable, and the honest claim is "a real browser plus a nearby human gets further than a scraper", nothing more.</p>
+          <div class="link-row">
+            <a href="/blog/agent-browser/">Part 1: I stopped giving my agent my browser</a><span class="sep">·</span>
+            <a href="/blog/household-agent/">The household agent</a><span class="sep">·</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
