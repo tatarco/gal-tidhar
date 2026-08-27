@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Run the Hebrew e-signature yourself &middot; Gal Tidhar</title>
+  <meta name="description" content="Self-host the Hebrew/RTL Documenso fork: the licence question answered, every feature on the branch, the v1 and v2 APIs, HTML-to-PDF, recipient upload slots, and how to deploy it.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/hebrew-esign-selfhost/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Run the Hebrew e-signature yourself">
+  <meta property="og:description" content="The fork is public and AGPL, so you can run it. Here is the licence answer, the full feature list, the APIs, and the deploy.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/hebrew-esign-selfhost/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/hebrew-esign/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A free Hebrew e-signature - open source, on your own server.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Run the Hebrew e-signature yourself">
+  <meta name="twitter:description" content="The licence answer, every feature on the branch, the v1 and v2 APIs, and the deploy.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/hebrew-esign/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Run the Hebrew e-signature yourself",
+    "description": "Self-hosting the Hebrew/RTL Documenso fork: licensing, features, the v1 and v2 APIs, HTML-to-PDF, upload slots, and deployment.",
+    "image": "https://gal.tidhar.org.il/blog/hebrew-esign/og.png",
+    "datePublished": "2026-08-27",
+    "dateModified": "2026-08-27",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/hebrew-esign-selfhost/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "Documenso, self-hosting, AGPL, e-signature API, Hebrew, RTL, PDF, Docker"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="/blog/hebrew-esign/">The build story</a> <a href="https://sign.zazet-solutions.hr/try101">Live demo &#8599;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / SELF-HOSTING</span>
+          <p class="role-line">Documenso &middot; AGPL &middot; Hebrew &middot; RTL &middot; API</p>
+          <h1 class="title">Run the Hebrew e-signature yourself</h1>
+          <p class="meta-line"><strong>2026-08-27</strong> &nbsp;&middot;&nbsp; ~10 min read &nbsp;&middot;&nbsp; by Gal Tidhar</p>
+          <p class="lead">The companion to <a href="/blog/hebrew-esign/">the build story</a>. This one is the manual: <strong>the licence question answered first</strong>, then every feature that is actually on the branch, the two API surfaces, the HTML-to-PDF path, the recipient upload slots, and how to deploy it. The fork is <a href="https://github.com/tatarco/documenso">github.com/tatarco/documenso</a>, branch <code>he-locale</code>.</p>
+        </header>
+
+        <h2 class="spec-head">First: is this legal to run?</h2>
+        <p class="prose">Short answer: <strong>yes, and the reason matters.</strong> Documenso is licensed AGPL-3.0 - one licence file at the repository root, no separately-licensed enterprise directory. My fork is public and stays AGPL, which is exactly what the licence asks of anyone who modifies it and runs it as a network service.</p>
+        <p class="prose">Documenso publishes its own guidance on when the Community Edition is enough, and it is worth reading before you start, because the trap is not obvious:</p>
+        <table class="spec-table">
+          <tr><th>What you are doing</th><th>Licence you need</th></tr>
+          <tr><td>Running it internally, unmodified</td><td>Community (AGPL)</td></tr>
+          <tr><td>Running it with modifications you publish under AGPL</td><td>Community (AGPL)</td></tr>
+          <tr><td>Running it with <strong>private</strong> modifications</td><td>Enterprise</td></tr>
+          <tr><td>A SaaS product built on modified Documenso code</td><td>Enterprise</td></tr>
+          <tr><td>A SaaS product using the Documenso API only</td><td>Community (AGPL)</td></tr>
+          <tr><td>White-label with proprietary changes</td><td>Enterprise</td></tr>
+        </table>
+        <p class="prose">So: <strong>fork publicly and you are fine. Fork privately and change things, and you are the case the Enterprise licence exists for.</strong> The AGPL's network clause is the whole point - if your users interact with your modified version over a network, they are entitled to your source. Keeping my fork public was not generosity, it was the licence working as designed.</p>
+        <p class="prose">One runtime consequence worth knowing: exactly one feature is hard-gated behind a licence key in the code - the <strong>CSC (Cloud Signature Consortium) signing transport</strong>. Everything below runs without a key. The local signing transport, which is what most self-hosters use, is not gated.</p>
+        <div class="snap"><strong>Not legal advice, and separately:</strong> a self-hosted instance produces an advanced electronic signature with an audit trail and a sealed PDF. It is <strong>not</strong> a certified signature issued under Israel's Electronic Signature Law, and nothing here claims legal equivalence. Fine for ordinary business documents; not the tool where a statute names a certified signature.</div>
+
+        <h2 class="spec-head">What the engine does</h2>
+        <p class="prose">Everything in this section is on the <code>he-locale</code> branch today, not planned.</p>
+        <h3>Hebrew and RTL</h3>
+        <ul class="prose">
+          <li>Hebrew catalog for the signer-facing UI (the admin UI still falls back to English).</li>
+          <li><code>?lang=he</code> pins the signer language per link, regardless of browser settings.</li>
+          <li><code>dir="rtl"</code> on the document root when the locale is Hebrew, with same-row fields sorting right-to-left.</li>
+          <li>RTL-aware alignment for values inserted into the PDF, so a Hebrew value does not hang off the wrong edge of its box.</li>
+          <li>A Hebrew font inside the sealing renderer, so typed Hebrew seals as glyphs rather than empty squares. This is the fix that made the whole thing possible.</li>
+        </ul>
+        <h3>Form mode - <code>?view=form</code></h3>
+        <ul class="prose">
+          <li><strong>Read-first wizard:</strong> step one is the full document, read-only, with no interactive boxes on the PDF at all. Step two is the form.</li>
+          <li><strong>Side-by-side on desktop</strong> - form on the document's start side (right in RTL), read-only preview beside it, independent column scrolling. On mobile the form stands alone with a view-document toggle.</li>
+          <li><strong>Live field placeholders in the preview</strong> - what you type appears on the page as you type it.</li>
+          <li><strong>Grouped sections and repeating groups</strong> - add and remove instances (the dependants table), with the remove button clearing that instance's fields.</li>
+          <li>Checkbox fallback control when a field carries no options, compact checkbox overlay fit, and inline field-commit errors instead of silent failures.</li>
+          <li>Next-field navigation that targets the form and reveals collapsed groups.</li>
+        </ul>
+        <h3>Documents out</h3>
+        <ul class="prose">
+          <li>The recipient can download the <strong>filled but still pending</strong> PDF, not only the sealed one.</li>
+          <li>The completion page shows an inline preview of the sealed document on desktop, with live status on the Download button.</li>
+          <li>The sealed PDF ships with its audit certificate.</li>
+        </ul>
+        <h3>Recipient upload slots</h3>
+        <p class="prose">The newest feature on the branch, and the one I would look at first if you are building anything beyond signatures: a recipient can be given <strong>upload slots</strong> - places to attach supporting documents as part of signing. It is a full vertical slice, not a UI stub:</p>
+        <ul class="prose">
+          <li>Schema and database migration for the slots.</li>
+          <li>Server-only CRUD, plus tRPC routes for create / find / delete.</li>
+          <li>Slots accepted per recipient at envelope-create time.</li>
+          <li>Signer-side slots inside form mode, with completion gating so a required attachment blocks completion.</li>
+          <li><strong>The uploads are packaged into the sealed PDF</strong>, and the attachment is recorded in the audit trail.</li>
+        </ul>
+        <p class="prose">Honest note on maturity: this landed most recently, the last commit on it is a typecheck fix, and it has had far less real-world use than form mode. Treat it as working-but-young.</p>
+        <h3>HTML to PDF</h3>
+        <p class="prose">The engine renders PDFs from HTML through Playwright-driven Chromium - <code>packages/lib/server-only/htmltopdf/</code> - and uses it for the signing certificate and the audit-log PDF. If you want those, you need the Chromium image variant: <code>docker/Dockerfile.chromium</code>, which layers <code>@playwright/browser-chromium</code> on top of the base image. The plain image is smaller and skips them.</p>
+
+        <h2 class="spec-head">The APIs</h2>
+        <p class="prose">Two surfaces, both live on the same instance.</p>
+        <h3>v1 - stable REST</h3>
+        <p class="prose">A ts-rest contract mounted under <code>/api/v1</code>. The full route list:</p>
+        <pre><code>GET    /api/v1/documents
+POST   /api/v1/documents
+GET    /api/v1/documents/:id
+DELETE /api/v1/documents/:id
+GET    /api/v1/documents/:id/download
+POST   /api/v1/documents/:id/fields
+PATCH  /api/v1/documents/:id/fields/:fieldId
+POST   /api/v1/documents/:id/recipients
+PATCH  /api/v1/documents/:id/recipients/:recipientId
+POST   /api/v1/documents/:id/send
+POST   /api/v1/documents/:id/resend
+GET    /api/v1/templates
+GET    /api/v1/templates/:id
+POST   /api/v1/templates/:templateId/create-document
+POST   /api/v1/templates/:templateId/generate-document
+
+GET    /api/v1/openapi.json     &#8592; the machine-readable spec
+GET    /api/v1/me               &#8592; test your credentials
+</code></pre>
+        <p class="prose">Method-by-route varies; take <code>/api/v1/openapi.json</code> from your own instance as the source of truth rather than this list. There are also Zapier endpoints (<code>/api/v1/zapier/list-documents</code>, <code>subscribe</code>, <code>unsubscribe</code>) if you want the no-code path.</p>
+        <p class="prose"><strong>This is the API that made the 173-field mapping possible.</strong> The field-creation endpoint takes coordinates, so a script can emit an entire form's field map in one run - which is the whole trick behind <a href="/blog/hebrew-esign/">the Tofes 101 build</a>.</p>
+        <h3>v2 - the newer surface</h3>
+        <p class="prose">A tRPC-derived OpenAPI surface served at <code>/api/v2</code> (and <code>/api/v2-beta</code>), with CORS and its own rate-limit middleware, and its spec at <code>/api/v2/openapi.json</code>. It covers considerably more of the product than v1 - envelopes, documents, fields, recipients, templates, folders, teams, organisations, webhooks, API tokens, embedding. If you are starting fresh, start here; v1 is the one with the stable contract and the wider blast radius of existing integrations.</p>
+        <p class="prose"><strong>One gap to know about:</strong> the upload-slot routes are tRPC-only right now. They are reachable from the app, not from the v1 REST contract. If you need slots over plain HTTP, that is the piece to add.</p>
+
+        <h2 class="spec-head">Deploying it</h2>
+        <p class="prose">The repository ships a production Docker Compose at <code>docker/production/compose.yml</code>: Postgres 15 with a healthcheck, plus the app. Two things you must change from the stock file.</p>
+        <p class="prose"><strong>1. Point the image at your own build.</strong> The stock compose pulls <code>documenso/documenso:latest</code> - upstream, without any of this. The branch's CI builds a GHCR image from the branch and also exports the image as a tar artifact, specifically so you can deploy without a registry. Use one of those, or build <code>docker/Dockerfile</code> yourself.</p>
+        <p class="prose"><strong>2. Mount the Hebrew font.</strong> The sealing renderer resolves <code>noto-sans.ttf</code> from more than one location depending on the code path - <code>packages/assets/fonts/</code> and <code>apps/remix/public/fonts/</code> among them. Bind-mount a Noto font with Hebrew coverage over each of them. Miss one and you get squares from whichever path you missed, which is a genuinely confusing bug to hit in production.</p>
+        <p class="prose">Then the environment. Copy <code>.env.example</code> and fill in at minimum:</p>
+        <pre><code>NEXTAUTH_SECRET
+NEXT_PRIVATE_ENCRYPTION_KEY
+NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY
+NEXT_PUBLIC_WEBAPP_URL           # your real external URL
+NEXT_PRIVATE_DATABASE_URL
+NEXT_PRIVATE_SMTP_TRANSPORT      # + host/port/user/pass
+NEXT_PRIVATE_SMTP_FROM_NAME
+NEXT_PRIVATE_SMTP_FROM_ADDRESS
+NEXT_PRIVATE_SIGNING_TRANSPORT=local
+NEXT_PRIVATE_SIGNING_LOCAL_FILE_PATH   # or _CONTENTS
+NEXT_PRIVATE_SIGNING_PASSPHRASE
+</code></pre>
+        <p class="prose">The signing transport is the one people get stuck on. <code>local</code> means the instance seals with a certificate you supply as a P12 file (path or base64 contents). It costs nothing and it is not licence-gated. Upload transport defaults to <code>database</code>, which is the simplest thing that works; S3-compatible storage is configured through the <code>NEXT_PRIVATE_UPLOAD_*</code> variables if you outgrow it.</p>
+        <p class="prose">Mine runs as Docker on a small VPS behind a Cloudflare tunnel, with GitHub Actions building the image. Nothing about that is required - it is one boring shape that works.</p>
+        <div class="snap"><strong>Straight about what I have and have not verified:</strong> the routes, environment variables, file paths, licence gates and features above were read off the <code>he-locale</code> branch and Documenso's own docs while writing this. What I have <strong>not</strong> done is a clean-room install from these instructions on a fresh machine - my deployment grew rather than being built from this page. Expect to adapt, and read <code>docker/production/compose.yml</code> and <code>.env.example</code> in the repo as the real source of truth.</div>
+
+        <h2 class="spec-head">If you want to contribute back</h2>
+        <p class="prose">The Hebrew and RTL work is being prepared as pull requests to upstream Documenso, where an open issue asks for exactly this plumbing - and the same changes unlock Arabic and Persian, because RTL is one problem, not three.</p>
+        <p class="prose">Worth knowing before you open a PR there: Documenso has a <strong>Contributor License Agreement</strong>. Contributing grants Documenso Inc. a perpetual, worldwide, non-exclusive, royalty-free, sublicensable licence over your contribution. That is common for open-core companies and it is not a reason not to contribute, but it is a thing you agree to, so read <code>CLA.md</code> rather than clicking past it.</p>
+
+        <div class="cta">
+          <h3>Start here</h3>
+          <p class="prose" style="margin-bottom:.4rem">Try the live demo first - it mints you your own private Tofes 101, nobody shares a link, and I am not a party to your document. It is rate-limited and it is a demo, so please do not enter real personal data. Then clone the branch and read <code>docker/production/compose.yml</code>.</p>
+          <div class="link-row">
+            <a href="https://sign.zazet-solutions.hr/try101">Live demo: mint your own 101</a><span class="sep">&middot;</span>
+            <a href="https://github.com/tatarco/documenso">The fork (branch he-locale)</a><span class="sep">&middot;</span>
+            <a href="/blog/hebrew-esign/">The build story</a><span class="sep">&middot;</span>
+            <a href="https://zazet-solutions.hr">ZaZet Solutions</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Gal Tidhar &middot; <a href="/">gal.tidhar.org.il</a> &middot; <a href="https://github.com/tatarco">GitHub</a> &middot; <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>

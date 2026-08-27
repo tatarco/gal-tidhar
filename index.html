@@ -569,6 +569,16 @@
     <section id="writing" class="spec">
       <h2 class="spec-head">Writing · field notes</h2>
       <div class="panel" style="margin-top:1.25rem">
+        <h3><a href="/blog/hebrew-esign-selfhost/">Run the Hebrew e-signature yourself</a></h3>
+        <p class="job-desc" style="margin-top:.5rem">The manual for the fork. The licence question answered first - public fork under AGPL and you are fine, private modifications and you are the case the Enterprise licence exists for. Then every feature on the branch (RTL, form mode with repeating groups, recipient upload slots packaged into the sealed PDF), both API surfaces with the full v1 route list, the Playwright HTML-to-PDF path, and the two things you must change in the stock docker-compose.</p>
+        <p style="margin-top:1rem;font-size:.84rem"><a href="/blog/hebrew-esign-selfhost/">Read &rarr;</a> <span style="color:var(--muted)">&middot;</span> <a href="https://github.com/tatarco/documenso" target="_blank" rel="noopener">The fork &nearr;</a></p>
+      </div>
+      <div class="panel" style="margin-top:1.25rem">
+        <h3><a href="/blog/hebrew-esign/">A free Hebrew e-signature, proven on Israel's worst form</a></h3>
+        <p class="job-desc" style="margin-top:.5rem">DocuSign costs per envelope, DocuSeal puts the API behind the paid tier, and Documenso sealed my Hebrew as empty squares. So I forked it: real RTL, a Hebrew font inside the PDF sealing engine, and a form-style signing mode where the signer fills a labeled Hebrew form with the document updating live beside it. Proven on Tofes 101 - all 173 fields, none of them placed by hand: code reads the PDF text layer and measures, the agent looks at the render and corrects. 0.14% off. Live demo mints you your own private copy.</p>
+        <p style="margin-top:1rem;font-size:.84rem"><a href="/blog/hebrew-esign/">Read &rarr;</a> <span style="color:var(--muted)">&middot;</span> <a href="https://sign.zazet-solutions.hr/try101" target="_blank" rel="noopener">Try it &nearr;</a></p>
+      </div>
+      <div class="panel" style="margin-top:1.25rem">
         <h3><a href="/blog/agent-handoff/">The agent fills the cart, I press Pay</a></h3>
         <p class="job-desc" style="margin-top:.5rem">My agent got a real Chrome in the cloud - and a way to hand it back. When it hits a password, a 2FA code or a Pay button, it sends its browser live to my phone, waits (a verified 925 seconds), and carries on with the login intact. It never sees a credential. Also: the free-tier quota that impersonated a keep-alive bug, the panel that covered every login form, and the Done button nobody needed.</p>
         <p style="margin-top:1rem;font-size:.84rem"><a href="/blog/agent-handoff/">Read &rarr;</a> <span style="color:var(--muted)">&middot;</span> <a href="/blog/agent-browser/">Part 1</a></p>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A free Hebrew e-signature, proven on Israel's worst form &middot; Gal Tidhar</title>
+  <meta name="description" content="I forked Documenso to make it speak Hebrew - real RTL, a Hebrew font inside the sealing engine, and a form-style signing mode - then proved it on Tofes 101, all 173 fields, placed by code rather than by hand.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/hebrew-esign/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="A free Hebrew e-signature, proven on Israel's worst form">
+  <meta property="og:description" content="Documenso sealed my Hebrew as empty squares. So I fixed the font, built a form-style signing mode, and mapped all 173 fields of Tofes 101 without placing one by hand.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/hebrew-esign/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/hebrew-esign/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="I built a free e-signature that speaks Hebrew - and ran it on Tofes 101.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="A free Hebrew e-signature, proven on Israel's worst form">
+  <meta name="twitter:description" content="Real RTL, a Hebrew font inside the sealing engine, a form-style signing mode, and 173 fields placed by code.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/hebrew-esign/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "A free Hebrew e-signature, proven on Israel's worst form",
+    "description": "Forking Documenso for Hebrew and RTL, a form-style signing mode, and mapping 173 fields of Tofes 101 with code instead of by hand.",
+    "image": "https://gal.tidhar.org.il/blog/hebrew-esign/og.png",
+    "datePublished": "2026-08-27",
+    "dateModified": "2026-08-27",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/hebrew-esign/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "e-signature, Documenso, Hebrew, RTL, PDF, Tofes 101, self-hosted, open source, AGPL"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="/blog/hebrew-esign-selfhost/">Run it yourself</a> <a href="https://sign.zazet-solutions.hr/try101">Try it &#8599;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / DOCUMENTS</span>
+          <p class="role-line">E-signature &middot; Hebrew &middot; RTL &middot; Self-hosted</p>
+          <h1 class="title">A free Hebrew e-signature, proven on Israel's worst form</h1>
+          <p class="meta-line"><strong>2026-08-27</strong> &nbsp;&middot;&nbsp; ~8 min read &nbsp;&middot;&nbsp; by Gal Tidhar</p>
+          <p class="lead">I needed e-signatures for my business, went down the usual list, and ended up forking an open-source one because <strong>none of them could seal a Hebrew character</strong>. This is the build: real RTL, a Hebrew font inside the PDF sealing engine, a form-style signing mode that replaces clicking boxes onto a PDF, and <strong>Tofes 101</strong> - 173 fields - mapped without placing a single one by hand. Software cost: zero. There is a live demo at the end that mints you your own private copy.</p>
+        </header>
+
+        <figure>
+          <img src="og.png" alt="I built a free e-signature that speaks Hebrew - and ran it on Tofes 101." loading="lazy">
+          <figcaption>The whole thing in one frame.</figcaption>
+        </figure>
+
+        <h2 class="spec-head">The boring beginning</h2>
+        <p class="prose">ZaZet needs signed documents. Proposals, engagement letters, the occasional form. The options, in the order I actually tried them:</p>
+        <ul class="prose">
+          <li><strong>DocuSign.</strong> Works, costs money per envelope, and the documents live on someone else's server.</li>
+          <li><strong>FillFaster.</strong> A client's project. Not mine to use for my own business.</li>
+          <li><strong>DocuSeal.</strong> Self-hostable and good, but the API I needed sits behind the paid tier.</li>
+          <li><strong>Documenso.</strong> Open source (AGPL), self-hostable, a real product. This was the one.</li>
+        </ul>
+        <p class="prose">So I stood it up, uploaded a Hebrew document, signed it, and opened the sealed PDF:</p>
+        <pre><code>&#9633;&#9633;&#9633;&#9633; &#9633;&#9633;&#9633;&#9633;</code></pre>
+        <p class="prose">Empty boxes. The sealing renderer - the part that burns the signer's values permanently into the PDF - carried no Hebrew font at all. Everything upstream was fine: the value was correct in the database, correct in the browser, correct in the preview. It became squares at the last step, which is the step that produces the legal artifact.</p>
+        <p class="prose">And the font was only the visible symptom. The whole signer experience was left-to-right English. I was not going to send that to an Israeli client and ask them to figure it out.</p>
+
+        <h2 class="spec-head">The fork</h2>
+        <p class="prose">The work lives in <a href="https://github.com/tatarco/documenso">tatarco/documenso</a>, branch <code>he-locale</code>, forked from v2.17.0. AGPL, so the fork is public - which is the licence working exactly as intended rather than a favour I am doing anyone. Twenty-four commits ahead of <code>main</code>, in three groups.</p>
+        <h3>1. Hebrew, properly</h3>
+        <p class="prose">A full Hebrew catalog for the signer UI, a <code>?lang=he</code> override so a link can force the language regardless of browser settings, and <code>dir="rtl"</code> plumbed through the signing surfaces. Then the parts nobody thinks about until they are wrong: text alignment <em>inside the sealed PDF values</em> has to be RTL-aware too, or a Hebrew name lands hanging off the left edge of its box.</p>
+        <h3>2. The font, in the right place</h3>
+        <p class="prose">The fix for the squares is unglamorous: bind-mount a Noto Hebrew font over the three paths the sealing renderer looks in, and make the renderer choose it for Hebrew text. That is it. It is the kind of bug that takes twenty minutes to fix and four hours to find, because every layer above it looked correct.</p>
+        <h3>3. Form mode</h3>
+        <p class="prose">This is the part I would keep even if Hebrew were never a problem. Every e-signature tool works the same way: you drag boxes onto a PDF, and the signer clicks the boxes. It is a metaphor built for a desktop mouse and a paper mental model, and on a phone it is miserable.</p>
+        <p class="prose"><code>?view=form</code> gives the signer a labeled vertical form instead - real field labels, in Hebrew - with the document as a <strong>live preview beside it</strong>: the value appears on the PDF as you type. Around it: a read-the-document-first step, collapsible sections so a two-page form is not a wall, repeating groups (an "add a child" row for the dependants table, with plus and minus), and required-field gating with Hebrew messages.</p>
+
+        <h2 class="spec-head">173 fields, and none of them placed by hand</h2>
+        <p class="prose">Tofes 101 is the annual Israeli employee tax form. Every employee fills one, every year, and nobody enjoys it. As a test case it is close to worst-case: <strong>173 fields</strong> - 90 text, 79 checkboxes, one dropdown, one email, one date, one signature - packed into a dense two-page government layout.</p>
+        <p class="prose">Placing those by dragging boxes is a long, dull job and a permanent maintenance liability. Asking a model for coordinates is worse: language models are genuinely bad at "put this box at these exact coordinates", and they are bad in a way that looks fine until you render it.</p>
+        <p class="prose">So I inverted the roles:</p>
+        <ul class="prose">
+          <li><strong>Deterministic code measures.</strong> A Python script reads the PDF's own text layer - the printed labels and the checkbox glyphs are real text objects with real coordinates - and anchors each field to the label it belongs to. Nothing is guessed; every position is derived from something already on the page.</li>
+          <li><strong>The agent looks.</strong> The script renders the page with every field box drawn on top, as an image. The agent reviews the image and says which boxes are wrong and in which direction. It never emits a coordinate; it emits a correction.</li>
+          <li><strong>The loop closes into an artifact.</strong> The script emits the API payload that creates the document with all 173 fields. Re-runnable, diffable, and re-derivable if the form ever changes.</li>
+        </ul>
+        <p class="prose">Measured position error in the final seal: <strong>0.14%</strong>.</p>
+        <p class="prose">The general rule that came out of it, and the reason I think this matters beyond one form: <strong>do not ask a model to measure, and do not ask code to judge.</strong> Code is exact and blind; the model is approximate and sighted. Give each one the job it is actually good at and the loop converges fast.</p>
+
+        <h2 class="spec-head">What it stops being</h2>
+        <p class="prose">The non-obvious result of form mode plus a real field map is that the PDF stops being the document. The fields are named data with types; the PDF is an output format. Once that is true, the same form can render as a mobile form, be pre-filled from another system, and produce JSON on submission instead of a scan that a person retypes into payroll by hand.</p>
+        <p class="prose">The version of Tofes 101 most Israelis fill today is printed, marked with a mouse in a PDF reader or a pen, photographed, emailed as a crooked JPEG, and typed back in at the other end. Every step of that exists because the PDF was treated as the thing itself.</p>
+
+        <h2 class="spec-head">Deployment, and what it costs</h2>
+        <table class="spec-table">
+          <tr><th>Item</th><th>Value</th></tr>
+          <tr><td>Software cost</td><td>Zero. Documenso is AGPL; the fork is public.</td></tr>
+          <tr><td>Hosting</td><td>Docker on a small Hetzner VPS I already had, behind a Cloudflare tunnel</td></tr>
+          <tr><td>Builds</td><td>GitHub Actions builds the image</td></tr>
+          <tr><td>Per-envelope fee</td><td>None. No page limits, no seat count.</td></tr>
+          <tr><td>Where documents live</td><td>My server. They never leave it.</td></tr>
+        </table>
+        <p class="prose"><strong>One honest limit, stated plainly:</strong> this is an advanced electronic signature with an audit trail and a sealed PDF. It is not a certified/qualified signature issued under Israel's Electronic Signature Law, and I am not claiming legal equivalence for it. For ordinary business documents that is fine and it is what most people using DocuSign are getting too. For anything where a statute names a certified signature, it is not the tool.</p>
+
+        <h2 class="spec-head">Going back upstream</h2>
+        <p class="prose">The Hebrew and RTL work is being prepared as pull requests back to Documenso. There is an open issue asking for exactly this plumbing, and the same changes that make Hebrew work unlock Arabic and Persian - the RTL problem is one problem, not three. Keeping the fix in a private fork would have been the faster path and the worse one.</p>
+
+        <h2 class="spec-head">Two things worth knowing before you copy this</h2>
+        <ul class="prose">
+          <li><strong>When a value is correct everywhere except the final artifact, start at the artifact.</strong> The Hebrew was right in the database, right in the API response, right in the browser and right in the preview. It only became squares in the sealing renderer - the one layer that produces the thing you actually keep.</li>
+          <li><strong>Write the mapper before you place the second field.</strong> Hand-placing is seductive because the first few are quick. 173 of them is a lost day and a result nobody can regenerate when the form changes.</li>
+        </ul>
+
+        <div class="cta">
+          <h3>Try it - you get your own private copy</h3>
+          <p class="prose" style="margin-bottom:.4rem">The demo mints a fresh, private Tofes 101 for every visitor: nobody shares a link, and I am not a party to your document. Fill it as a Hebrew form, sign it, download the sealed PDF with its audit certificate. It is rate-limited and it is a demo - <strong>please do not enter real personal data.</strong></p>
+          <div class="link-row">
+            <a href="https://sign.zazet-solutions.hr/try101">Live demo: mint your own 101</a><span class="sep">&middot;</span>
+            <a href="/blog/hebrew-esign-selfhost/">Run it yourself: features, APIs, deploy</a><span class="sep">&middot;</span>
+            <a href="https://github.com/tatarco/documenso">The fork (branch he-locale)</a><span class="sep">&middot;</span>
+            <a href="https://zazet-solutions.hr">ZaZet Solutions</a><span class="sep">&middot;</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Gal Tidhar &middot; <a href="/">gal.tidhar.org.il</a> &middot; <a href="https://github.com/tatarco">GitHub</a> &middot; <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
