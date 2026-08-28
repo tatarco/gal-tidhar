@@ -1,0 +1,37 @@
+<!doctype html><html dir="ltr" lang="en"><meta charset="utf-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1200px;height:630px;background:#0a1628;color:#e2e8f0;
+ font-family:"IBM Plex Mono","Arial Hebrew","Arial Unicode MS",monospace;
+ overflow:hidden;position:relative}
+body::before{content:"";position:absolute;inset:0;
+ background-image:linear-gradient(rgba(125,211,252,.055) 1px,transparent 1px),
+                  linear-gradient(90deg,rgba(125,211,252,.055) 1px,transparent 1px);
+ background-size:44px 44px}
+.wrap{position:relative;height:100%;padding:56px 68px;display:flex;flex-direction:column}
+.eyebrow{font-size:15px;letter-spacing:.22em;color:#7dd3fc;opacity:.85;margin-bottom:auto}
+.foot{position:absolute;inset-block-end:34px;inset-inline-start:68px;
+ font-size:15px;color:#64748b;direction:ltr}
+.hi{color:#fef08a}
+.cy{color:#7dd3fc}
+.sm{font-size:.55em;color:#94a3b8;font-weight:400}
+.ltr{direction:ltr;unicode-bidi:isolate}
+
+    .c8{font-size:44px;font-weight:700;line-height:1.28;max-width:1040px;margin-bottom:22px}
+    .pill{display:flex;gap:12px;margin-bottom:30px;flex-wrap:wrap}
+    .pill span{border:1px solid #7dd3fc;color:#7dd3fc;border-radius:999px;
+     padding:8px 20px;font-size:20px;font-weight:600;letter-spacing:.04em}
+    .fix{display:flex;align-items:center;gap:24px;margin-bottom:18px}
+    .fcell{border:1px solid #1e3a5f;border-radius:12px;padding:16px 24px;background:rgba(125,211,252,.04)}
+    .fcell.hot{border-color:#fef08a;background:rgba(254,240,138,.07)}
+    .flbl{font-size:13px;letter-spacing:.14em;color:#7dd3fc;margin-bottom:8px}
+    .fcell.hot .flbl{color:#fef08a}
+    .fval{font-size:36px;font-weight:700;color:#94a3b8;line-height:1.15;white-space:nowrap}
+    .fcell.hot .fval{color:#fef08a}
+    .arw{font-size:36px;color:#7dd3fc;flex:none}
+    .c8f{font-size:21px;color:#94a3b8;max-width:1010px;line-height:1.5;margin-bottom:auto}
+    .mid{margin-bottom:auto}</style><body><div class="wrap">
+<div class="eyebrow">FIELD NOTE / WHATSAPP WENT SILENT</div>
+<div class="mid"><div class="c8">I found it, traced it,<br>and shipped the fix upstream.</div><div class="pill"><span>ONE-LINE GUARD</span><span>REGRESSION TEST</span><span>410 TESTS PASS</span></div><div class="fix"><div class="fcell"><div class="flbl">BEFORE</div><div class="fval">silence</div></div><div class="arw">→</div><div class="fcell hot"><div class="flbl">AFTER</div><div class="fval">notifications</div></div></div><div class="c8f">The same fix was proposed in an earlier PR and closed by a stale bot with nothing changed. It had no test. That is the part I added.</div></div>
+<div class="foot">gal.tidhar.org.il/blog/whatsapp-presence</div>
+</div></body></html>

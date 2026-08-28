@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp went silent for two weeks. The bug was mine. &middot; Gal Tidhar</title>
+  <meta name="description" content="Notifications died, calls kept ringing. Two weeks of dead ends later, the cause was my own self-hosted WhatsApp bridge announcing me online on every message - a one-line assumption bug in Baileys itself, filed upstream with a regression test.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/whatsapp-presence/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="WhatsApp went silent for two weeks. The bug was mine.">
+  <meta property="og:description" content="Calls rang, messages didn't. The culprit was a self-hosted bridge I built to read my own WhatsApp - it was quietly telling the network I was always online. Traced into Baileys' source, filed upstream, with a regression test.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/whatsapp-presence/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/whatsapp-presence/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="WhatsApp went silent for two weeks. The bug was mine.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WhatsApp went silent for two weeks. The bug was mine.">
+  <meta name="twitter:description" content="A self-hosted WhatsApp bridge I built to read my own messages was announcing me online 24/7, suppressing every push notification. Traced to a one-line assumption in Baileys, fixed upstream with a regression test.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/whatsapp-presence/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "WhatsApp went silent for two weeks. The bug was mine.",
+    "description": "Two weeks of dead notifications traced past every iOS setting into a self-hosted WhatsApp bridge that was announcing presence on every incoming message - a one-line assumption bug in Baileys, filed upstream with a regression test.",
+    "image": "https://gal.tidhar.org.il/blog/whatsapp-presence/og.png",
+    "datePublished": "2026-08-28",
+    "dateModified": "2026-08-28",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/whatsapp-presence/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "WhatsApp, Baileys, notifications, presence, self-hosted, Node.js, open source, debugging"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="https://github.com/WhiskeySockets/Baileys/pull/2789" target="_blank" rel="noopener">The PR &#8599;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / DEBUGGING</span>
+          <p class="role-line">WhatsApp &middot; Baileys &middot; Presence &middot; Self-hosted</p>
+          <h1 class="title">WhatsApp went silent for two weeks. The bug was mine.</h1>
+          <p class="meta-line"><strong>2026-08-28</strong> &nbsp;&middot;&nbsp; ~7 min read &nbsp;&middot;&nbsp; by Gal Tidhar</p>
+          <p class="lead">WhatsApp on my iPhone stopped showing message notifications - no banner, no sound, locked or unlocked. Voice calls still rang fine. It lasted two weeks, I checked every setting Apple exposes, and I was one tap from deleting and reinstalling the app. The actual cause was <strong>a bridge I had built myself</strong>, quietly telling WhatsApp's servers I was online around the clock. The root cause underneath that was a one-line assumption bug in the open-source library the bridge runs on, which I've now filed upstream with a regression test.</p>
+        </header>
+
+        <h2 class="spec-head">The symptom, and the dead ends</h2>
+        <p class="prose">No notifications, at all, from WhatsApp. Not muted, not delayed - just absent. I went through Settings &gt; Notifications &gt; WhatsApp: every toggle on, Lock Screen ticked. Focus modes: off, and checked anyway. Per-chat mutes: none set. WhatsApp's own in-app "Reset Notification Settings": no change. Show Previews: on. Background App Refresh: on. Face ID &amp; Passcode &gt; Allow Access When Locked &gt; Notification Center: allowed. I was one click from deleting the app and reinstalling it, which is usually where this kind of thing ends - a shrug and a fresh install that happens to fix it without ever explaining why.</p>
+        <p class="prose">The detail that stopped me: <strong>voice calls kept ringing normally</strong> the entire two weeks.</p>
+
+        <h2 class="spec-head">The clue that actually mattered</h2>
+        <p class="prose">Calls on WhatsApp arrive over CallKit, a separate VoIP push path that doesn't care about presence. If calls ring and messages don't, the network path to my phone is fine and the OS-level permissions are fine. Something else was telling WhatsApp that I was already reading my messages. WhatsApp suppresses push notifications to the phone whenever any linked device reports the account as online - if a device says you're already looking at the chat, there's no need to buzz your pocket.</p>
+        <p class="prose">I run a self-hosted, read-only WhatsApp bridge, linked as a device, built on <a href="https://github.com/WhiskeySockets/Baileys" target="_blank" rel="noopener">Baileys</a> (Node, version 7.0.0-rc14). That bridge was a linked device. That was the thread to pull.</p>
+
+        <h2 class="spec-head">Root cause, part one: a default nobody unsets</h2>
+        <p class="prose">My bridge calls <code>makeWASocket</code> without setting <code>markOnlineOnConnect</code>. Baileys defaults that option to <code>true</code> (<code>Defaults/index.js:62</code>), and on connect, <code>Socket/chats.js:1065</code> sends a presence update of <code>'available'</code>. So from the day I stood the bridge up, it had been announcing me online 24 hours a day. Setting <code>markOnlineOnConnect: false</code> restored notifications within seconds of restarting the bridge.</p>
+        <p class="prose">To be fair to the library: this is documented. The Baileys README says outright, "If you want to receive notifications in whatsapp app, set markOnlineOnConnect to false." The footgun here is the default value, not a missing page in the docs.</p>
+
+        <h2 class="spec-head">Root cause, part two: the one that actually explains two weeks</h2>
+        <p class="prose">That fix alone regresses. <code>Socket/socket.ts</code> announces the account's push name on every <code>creds.update</code> event:</p>
+        <pre><code>const name = update.me?.name
+if (creds.me?.name !== name) {
+    sendNode({ tag: 'presence', attrs: { name: name! } })
+}</code></pre>
+        <p class="prose">Three things stack up here. First, a partial credential update carries no <code>me</code> field at all, so <code>name</code> is <code>undefined</code> - and the comparison is true for any session that already has a stored push name, because <code>undefined</code> never equals a real string. The <code>name!</code> non-null assertion is exactly the assumption that fails. Second, <code>WABinary/encode.ts:226</code> strips undefined attributes during serialisation, so <code>attrs: { name: undefined }</code> goes out on the wire as a bare <code>&lt;presence/&gt;</code> node with no attributes at all. Third, Baileys' own inbound presence reader, <code>Socket/chats.ts:885</code>, treats a presence node with no <code>type</code> attribute as <code>available</code> rather than as nothing (<code>attrs.type === 'unavailable' ? 'unavailable' : 'available'</code>).</p>
+        <p class="prose">Chain those together: a partial <code>creds.update</code> with no <code>me</code> field produces a bare presence node, and that bare node reads as "online." And <code>creds.update</code> fires constantly from ordinary key churn, including from <code>Socket/messages-recv.ts</code> on incoming traffic - so this fires again on every message received, even with <code>markOnlineOnConnect</code> set to <code>false</code>. The net effect: the account goes back online with every message it gets. I confirmed this is present in both the rc14 release my bridge runs and current <code>master</code>.</p>
+
+        <h2 class="spec-head">The fix, and proving it</h2>
+        <p class="prose">I forked the repo and added a one-line guard, dropping the now-unnecessary <code>name!</code> assertion along with it:</p>
+        <pre><code>if (typeof name === 'string' && name.length > 0 && creds.me?.name !== name) {</code></pre>
+        <p class="prose">Then a regression test, <code>src/__tests__/binary/presence-on-creds-update.test.ts</code>, with three cases: a partial update carrying no <code>me</code> sends nothing (this one fails on unpatched <code>master</code>); an update with an unchanged push name sends nothing; a genuinely new push name is still announced, because that's a real behaviour change that should still fire. I verified this by stashing my own source fix and running the suite both ways: 1 failed / 2 passed without the fix, 3 passed with it. The full suite is 410 tests across 29 suites, all passing. <code>tsc --noEmit</code> is clean, eslint is clean on the changed file, and prettier reports it unchanged.</p>
+        <p class="prose">One thing worth flagging honestly rather than fixing quietly: the repo's existing <code>mockWebSocket()</code> helper, in <code>src/__tests__/TestUtils/session.ts</code>, calls <code>jest.mock</code> inside a function body - which is not hoisted, so under ESM it's currently a no-op. The existing test suite has been running against the real websocket client without anyone noticing. I left that alone for this PR to keep it to one behaviour change, and wrote the new test with <code>jest.unstable_mockModule</code> instead, which does work correctly under ESM.</p>
+
+        <h2 class="spec-head">Upstream</h2>
+        <p class="prose">The PR is <a href="https://github.com/WhiskeySockets/Baileys/pull/2789" target="_blank" rel="noopener">#2789</a>, open, CI green. The underlying issue is <a href="https://github.com/WhiskeySockets/Baileys/issues/2553" target="_blank" rel="noopener">#2553</a>, open since 12 May 2026. The exact same one-line guard was proposed earlier, in #2627, and closed by a stale-bot with state reason "completed" on 21 July - nothing was actually changed, and <code>master</code> still carries the bug today. The difference this time is the regression test: a fix with no test attached to a low-traffic issue is easy for a bot to file away as stale, whether or not it was ever applied.</p>
+
+        <h2 class="spec-head">If you can't wait for the merge</h2>
+        <p class="prose">A workaround that normalises the payload before the library's own listener sees it, using only the public event surface - no fork required:</p>
+        <pre><code>const _emit = sock.ev.emit.bind(sock.ev)
+sock.ev.emit = (event, data) => {
+  if (event === 'creds.update' && data && data.me === undefined && state.creds?.me) {
+    return _emit(event, { ...data, me: state.creds.me })
+  }
+  return _emit(event, data)
+}</code></pre>
+
+        <h2 class="spec-head">What I would not do again</h2>
+        <ul class="prose">
+          <li><strong>I didn't suspect my own linked devices for two weeks.</strong> The symptom was account-wide, not device-specific, and I kept looking at iOS settings instead of asking what else was attached to the account.</li>
+          <li><strong>I treated "the README documents it" as the end of the investigation instead of the start.</strong> Finding <code>markOnlineOnConnect</code> in the docs felt like the answer. It was the first half of one.</li>
+          <li><strong>I nearly stopped at the first fix that appeared to work.</strong> <code>markOnlineOnConnect: false</code> silenced the symptom immediately, and if I hadn't kept watching, I would have shipped that as the fix and left the real bug - the bare presence node on every message - live in my own bridge and everyone else's.</li>
+        </ul>
+
+        <h2 class="spec-head">The actual point</h2>
+        <p class="prose">An always-on client attached to a live system is not an observer, it's a participant. I built a bridge to read WhatsApp, and the bridge changed how WhatsApp behaved toward me. The reason it took two weeks to find is the oldest reason there is: self-built infrastructure is the last place anyone looks.</p>
+
+        <div class="cta">
+          <h3>Links</h3>
+          <div class="link-row">
+            <a href="https://github.com/WhiskeySockets/Baileys/pull/2789" target="_blank" rel="noopener">PR #2789: the fix + regression test</a><span class="sep">&middot;</span>
+            <a href="https://github.com/WhiskeySockets/Baileys/issues/2553" target="_blank" rel="noopener">Issue #2553</a><span class="sep">&middot;</span>
+            <a href="https://github.com/WhiskeySockets/Baileys/pull/2627" target="_blank" rel="noopener">The earlier, closed PR #2627</a><span class="sep">&middot;</span>
+            <a href="/">More about me</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Gal Tidhar &middot; <a href="/">gal.tidhar.org.il</a> &middot; <a href="https://github.com/tatarco">GitHub</a> &middot; <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>

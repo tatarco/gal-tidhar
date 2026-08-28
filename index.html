@@ -569,6 +569,11 @@
     <section id="writing" class="spec">
       <h2 class="spec-head">Writing · field notes</h2>
       <div class="panel" style="margin-top:1.25rem">
+        <h3><a href="/blog/whatsapp-presence/">WhatsApp went silent for two weeks. The bug was mine.</a></h3>
+        <p class="job-desc" style="margin-top:.5rem">Notifications died, calls kept ringing. Two weeks through every iOS setting led to my own self-hosted WhatsApp bridge, quietly announcing me online 24/7 - traced into a one-line assumption bug in Baileys itself: a bare presence node sent on every incoming message, even after the documented fix. Forked it, added a regression test, filed it upstream. The identical fix was proposed once before and closed by a stale bot.</p>
+        <p style="margin-top:1rem;font-size:.84rem"><a href="/blog/whatsapp-presence/">Read &rarr;</a> <span style="color:var(--muted)">&middot;</span> <a href="https://github.com/WhiskeySockets/Baileys/pull/2789" target="_blank" rel="noopener">The PR &nearr;</a></p>
+      </div>
+      <div class="panel" style="margin-top:1.25rem">
         <h3><a href="/blog/hebrew-esign-selfhost/">Run the Hebrew e-signature yourself</a></h3>
         <p class="job-desc" style="margin-top:.5rem">The manual for the fork. The licence question answered first - public fork under AGPL and you are fine, private modifications and you are the case the Enterprise licence exists for. Then every feature on the branch (RTL, form mode with repeating groups, recipient upload slots packaged into the sealed PDF), both API surfaces with the full v1 route list, the Playwright HTML-to-PDF path, and the two things you must change in the stock docker-compose.</p>
         <p style="margin-top:1rem;font-size:.84rem"><a href="/blog/hebrew-esign-selfhost/">Read &rarr;</a> <span style="color:var(--muted)">&middot;</span> <a href="https://github.com/tatarco/documenso" target="_blank" rel="noopener">The fork &nearr;</a></p>
