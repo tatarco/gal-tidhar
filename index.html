@@ -858,7 +858,8 @@
     if(!GA_ID&&!CLARITY_ID)return;                 // nothing to load → no banner
     try{ if(localStorage.getItem('analyticsConsent')==='granted'){grantConsent();return;} }catch(e){}
     try{ if(localStorage.getItem('analyticsConsent')==='denied')return; }catch(e){}
-    var bar=document.getElementById('consent-bar'); if(bar)bar.style.display='flex';
+    function showBar(){var bar=document.getElementById('consent-bar'); if(bar)bar.style.display='flex';}
+    if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',showBar);}else{showBar();}
   })();
   document.addEventListener('click',function(e){
     var a=e.target.closest('#consent-accept'), r=e.target.closest('#consent-reject');
