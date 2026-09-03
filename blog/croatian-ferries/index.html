@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I was done decrypting PDFs to find my next ferry &middot; Gal Tidhar</title>
+  <meta name="description" content="Every car-ferry timetable in Croatia is a PDF: three seasons side by side, asterisks, footnotes on page 2. croatianferries.com reads all 23 of them once and answers the only question that matters at the port: your next ferry, in 23 min. How the timetables were read, what went wrong, and what is still missing.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/croatian-ferries/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="I was done decrypting PDFs to find my next ferry">
+  <meta property="og:description" content="Every car-ferry timetable in Croatia is a PDF: three seasons side by side, asterisks, footnotes on page 2. croatianferries.com reads all 23 of them once and answers the only question that matters at the port: your next ferry, in 23 min. How the timetables were read, what went wrong, and what is still missing.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/croatian-ferries/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/croatian-ferries/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="I was done decrypting PDFs to find my next ferry">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="I was done decrypting PDFs to find my next ferry">
+  <meta name="twitter:description" content="Every car-ferry timetable in Croatia is a PDF: three seasons side by side, asterisks, footnotes on page 2. croatianferries.com reads all 23 of them once and answers the only question that matters at the port: your next ferry, in 23 min. How the timetables were read, what went wrong, and what is still missing.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/croatian-ferries/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "I was done decrypting PDFs to find my next ferry",
+    "description": "Every car-ferry timetable in Croatia is a PDF: three seasons side by side, asterisks, footnotes on page 2. croatianferries.com reads all 23 of them once and answers the only question that matters at the port: your next ferry, in 23 min. How the timetables were read, what went wrong, and what is still missing.",
+    "image": "https://gal.tidhar.org.il/blog/croatian-ferries/og.png",
+    "datePublished": "2026-09-03",
+    "dateModified": "2026-09-03",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/croatian-ferries/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "Croatia, ferries, Jadrolinija, timetable, PDF, croatianferries.com, HAK cameras, static site"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="https://croatianferries.com/" target="_blank" rel="noopener">The site &#8599;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / BUILDING</span>
+          <p class="role-line">Croatia &middot; Ferries &middot; Timetables &middot; croatianferries.com</p>
+          <h1 class="title">I was done decrypting PDFs to find my next ferry</h1>
+          <p class="meta-line"><strong>2026-09-03</strong> &nbsp;&middot;&nbsp; ~8 min read &nbsp;&middot;&nbsp; by Gal Tidhar</p>
+          <p class="lead">Every car-ferry timetable in Croatia is a PDF. Three seasons side by side, asterisks next to half the times, and the footnotes that decide whether your 14:30 exists today are on page 2. I read all 23 of them once so that nobody sitting in a car at the port has to. The result is <a href="https://croatianferries.com/" target="_blank" rel="noopener">croatianferries.com</a>: open the port, get the next departure and the minutes until it. This is how the timetables were read, where it went wrong, and what is still missing.</p>
+        </header>
+
+        <h2 class="spec-head">The moment</h2>
+        <p class="prose">You are in the car, in the lane at the port, and you want to know whether the 14:30 sails today. The operator, Jadrolinija, publishes each line as a PDF. It is a printed table: columns for the low season and the high season, sometimes a third for a shoulder week, times with asterisks after them, and below the table the footnotes. A real one, from line 332 Valbiska - Merag:</p>
+        <pre><code>* Sails 20.06. &amp; 27.06.
+** 20.06. &amp; 27.06. departs at 18:00.
+Does not sail on Sundays and holidays.</code></pre>
+        <p class="prose">Others from the same set of 23 files: <em>"Does not operate on Sat, Sun &amp; Hol. until 30.03."</em>, <em>"On mondays departs from Valbiska at 21:00."</em>, <em>"From 01.01. to 22.02. &amp; from 06.12. to 31.12. on Sundays and holidays..."</em>. Now answer, on a phone screen, from the car: is there a ferry in ten minutes?</p>
+        <p class="prose">This is not a Croatian-only problem. The families who drive down from Germany and Italy every summer hit exactly the same page 2, in a language they cannot read. That is who the site is for: locals with a car, and the tourist who is at the port for the first time.</p>
+
+        <h2 class="spec-head">What the site does</h2>
+        <p class="prose">Open a port and the page answers, in order: when the next ferry leaves and in how many minutes, how long the crossing takes, whether the line takes a reservation at all, and the live port camera from HAK so you see the actual queue and not only the timetable. Every car-ferry line the operator runs: 23 lines, 52 departure ports, four languages (Croatian, English, German, Italian; the German and Italian were reviewed by native speakers). No cookies, no third-party requests of any kind, no consent banner because there is nothing to consent to. The "in 23 min" is computed in the browser from the timetable that is already on the page; with scripting off the page still answers, just without the minutes.</p>
+
+        <h2 class="spec-head">How the PDFs were read</h2>
+        <p class="prose">This is the part that took the longest, and the part I would defend. Reading one of these tables is judgment: which column belongs to which season, which port a column belongs to, what each asterisk restricts, whether a footnote means "this departure does not exist in this season" or "this departure exists but at a different time on two days". Copying six hundred times out of it is not judgment, and copying by hand is exactly where transcription errors come from.</p>
+        <p class="prose">So each line has a small spec file that records only the judgment. For 332 it says: two seasons, these date ranges, the table body is lines 12 to 24 of the PDF text, column 0 is Merag and column 1 is Valbiska, and here is what the footnote markers mean. The code then copies the times straight out of the PDF's own text, never from a human retyping. The judgment is 30 lines a person can review. The copying is mechanical and tested.</p>
+        <pre><code>"seasons": [
+  {"label": "LOW SEASON 01.01. - 02.07. &amp; 01.10. - 31.12.",
+   "ranges": [("2026-01-01", "2026-07-02"), ("2026-10-01", "2026-12-31")],
+   "lines": range(12, 24),
+   "legs": _legs(0, 1),
+   "note": "Does not sail on Sundays and holidays. * from 01.01. until 22.03. ..."},
+  {"label": "HIGH SEASON 03.07. - 30.09.", ...}
+]</code></pre>
+        <p class="prose">The output of all 23 specs is a validated spine: 1,076 sailings across 105 seasons, in SQLite, with a deterministic validator that quarantines anything that does not fit (a departure after its own arrival, a port that appears under two spellings, a season with no dates). The site is generated from that spine, statically, so a page is a file and nothing is computed per request.</p>
+        <p class="prose">The PDFs themselves are watched. Each operator route page is crawled daily, the PDF is fetched only when its hash changes, and a change lands as a new snapshot that has to pass the same validator before it replaces anything. When Jadrolinija quietly publishes a new file in June, we know.</p>
+
+        <h2 class="spec-head">Where it went wrong</h2>
+        <p class="prose">Crossing durations are derived, not scraped: the timetable prints arrival times on most lines, so the duration is arrival minus departure from the PDF itself. Where the PDF only prints departures, a prose fallback reads the operator's route page, which says things like "the crossing takes 25 minutes".</p>
+        <p class="prose">That fallback matched only "N minutes". So "1 hour and 40 minutes" became <strong>40</strong>, and line 434 Zadar - Brbinj shipped, for a moment, with a 40-minute crossing for a trip that takes an hour and forty. On a ferry site a wrong number is worse than a missing one: a missing duration makes you check, a wrong one makes you miss the boat. It is fixed, and every hour phrasing the operator uses is now a test case. Two lines still have no duration, correctly: 634 Orebić - Dominče states none anywhere, and 431 Zadar - Ošljak - Preko quotes 25 minutes on the route page, which is the direct line's number and cannot be right for a line that calls at Ošljak on the way. The multi-stop guard refuses it, which is the right call.</p>
+
+        <h2 class="spec-head">What is deliberately not there</h2>
+        <p class="prose">No analytics script unless the environment says so, and the only one that fits is Cloudflare's cookieless beacon. No map tiles from a third party, which is why the pick-a-port map is not built yet: it will be an inline SVG coastline, not a tile CDN. No ad network, because Croatia enforces prior opt-in consent for ad cookies and a consent wall on a page whose whole promise is "open, read, close" would be self-defeating.</p>
+        <p class="prose">And no queue number yet. The project actually started from the other end, in June, with the HAK traffic cameras at Merag: count the cars in the lane, watch the berth, and tell you whether you will make this ferry or the next one. That is still the real product, and it needs the first always-on piece of infrastructure. Every port page with a camera says "queue reading coming", and the code path self-heals: the moment capture produces readings the verdict appears with no site change. The timetable was the thing I could give people this week.</p>
+
+        <h2 class="spec-head">Honest numbers</h2>
+        <p class="prose">The site is days old. In the last seven days it had 20 real visits, and most of them were me checking it. Nobody knows it exists yet. If you are on the Croatian coast this summer, or know someone who drives there, that is what the link is for.</p>
+
+        <div class="cta">
+          <div class="link-row">
+            <a href="https://croatianferries.com/" target="_blank" rel="noopener">croatianferries.com</a><span class="sep">&middot;</span>
+            <a href="https://croatianferries.com/en/port/valbiska/" target="_blank" rel="noopener">A port page: Valbiska (Krk)</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Gal Tidhar &middot; <a href="/">gal.tidhar.org.il</a> &middot; <a href="https://github.com/tatarco">GitHub</a> &middot; <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
