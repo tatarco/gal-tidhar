@@ -20,7 +20,7 @@ PORT_NAMES = {"split": "Split", "zadar": "Zadar", "valbiska": "Valbiska (Krk)", 
 FOR_GROUP = {"en": "For this group", "hr": "Za ovu grupu", "de": "Für diese Gruppe", "it": "Per questo gruppo"}
 
 
-def img(port, lang):
+def img(port, lang, n=0):
     p = HERE / f"hero-{port}-{lang}.png"
     if not p.exists():
         return ""
@@ -29,7 +29,9 @@ def img(port, lang):
         subprocess.run(["sips", "-Z", "620", "-s", "format", "jpeg", "-s", "formatOptions", "55",
                         str(p), "--out", str(prev)], check=True, capture_output=True)
     b64 = base64.b64encode(prev.read_bytes()).decode()
-    return (f'<p class="pathline"><code>{p}</code></p>'
+    pid = f"path-{n}-{port}-{lang}"
+    return (f'<p class="pathline"><button class="copybtn small" data-copy="{pid}">Copy path</button> '
+            f'<code id="{pid}">{p}</code></p>'
             f'<img src="data:image/jpeg;base64,{b64}" alt="hero {port} {lang}">')
 
 
@@ -48,7 +50,7 @@ for i, g in enumerate(GROUPS, 1):
     key = (lang, port)
     pid = f"p-{i}"
     text = post_for(lang, port)
-    hero = img(port, lang) if port else img("split", lang)
+    hero = img(port, lang, i) if port else img("split", lang, i)
     cards += f"""
 <section class="step">
   <h2>{i:02d} &middot; {html.escape(g["name"])}</h2>
@@ -93,7 +95,7 @@ BODY = f"""
 .opt.chosen .dot{{background:#012169;box-shadow:inset 0 0 0 2px #fff}}
 .opt.chosen .opt-head::after{{content:"CHOSEN";margin-inline-start:auto;font-size:11px;letter-spacing:.12em;color:#012169;font-weight:700}}
 .why{{color:#4a5e78;font-size:14px;margin:6px 0 12px}}
-.pathline{{margin:14px 0 6px}} .pathline code{{font-size:12px;word-break:break-all}}
+.pathline{{margin:14px 0 6px;display:flex;align-items:center;gap:10px}} .copybtn.small{{padding:4px 10px;font-size:12px;flex:none}} .pathline code{{font-size:12px;word-break:break-all}}
 .step img{{width:100%;display:block;border:1px solid rgba(10,22,40,.12)}}
 </style>
 <script src="/copy.js"></script>
