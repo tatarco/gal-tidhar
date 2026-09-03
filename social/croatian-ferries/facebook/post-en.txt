@@ -1,0 +1,9 @@
+I got tired of decoding the Jadrolinija PDF to find out when the next ferry leaves, so I built a small site that just answers it.
+
+croatianferries.com
+
+Open a port and you get the next departure and "in 23 min" above it, the crossing time, whether the line takes a reservation, and the live HAK camera of the port so you can see the actual queue, not only the timetable. Every car-ferry line in Croatia, 52 ports, in English, Croatian, German and Italian. No app, no cookies, no ads. Open, read, close.
+
+For this group: {PORT_LINK}
+
+It is brand new and I read all 23 timetables myself, so if you spot a wrong time please tell me and I will fix it the same day. I keep them updated whenever Jadrolinija changes a PDF.

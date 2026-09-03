@@ -1,0 +1,9 @@
+Dosta mi je bilo dešifrirati Jadrolinijin PDF da saznam kad ide sljedeći trajekt, pa sam napravio malu stranicu koja na to jednostavno odgovara.
+
+croatianferries.com
+
+Otvorite luku i dobijete sljedeći polazak i "za 23 min" iznad njega, trajanje plovidbe, ide li linija s rezervacijom, i HAK kameru luke uživo, pa vidite stvarni red, a ne samo vozni red. Sve trajektne linije za vozila u Hrvatskoj, 52 luke, na hrvatskom, engleskom, njemačkom i talijanskom. Bez aplikacije, bez kolačića, bez reklama. Otvoriš, pročitaš, zatvoriš.
+
+Za ovu grupu: {PORT_LINK}
+
+Stranica je potpuno nova i svih 23 vozna reda sam čitao sam, pa ako uočite krivo vrijeme, javite i ispravit ću isti dan. Vozne redove ažuriram svaki put kad Jadrolinija promijeni PDF.

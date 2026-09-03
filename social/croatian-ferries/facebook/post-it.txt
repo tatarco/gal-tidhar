@@ -1,0 +1,9 @@
+Ero stufo di decifrare il PDF di Jadrolinija per sapere quando parte il prossimo traghetto, così ho fatto un piccolo sito che risponde solo a quello.
+
+croatianferries.com
+
+Apri il porto e vedi la prossima partenza con "tra 23 min" sopra, la durata della traversata, se la linea accetta prenotazioni, e la telecamera live del porto dell'HAK, così vedi la coda vera e non solo l'orario. Tutte le linee di traghetti per auto in Croazia, 52 porti, in italiano, inglese, croato e tedesco. Niente app, niente cookie, niente pubblicità.
+
+Per questo gruppo: {PORT_LINK}
+
+Il sito è nuovissimo e ho letto tutti i 23 orari io stesso: se notate un orario sbagliato ditemelo e lo correggo lo stesso giorno. Tengo gli orari aggiornati ogni volta che Jadrolinija cambia un PDF.

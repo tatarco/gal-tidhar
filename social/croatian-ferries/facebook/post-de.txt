@@ -1,0 +1,9 @@
+Ich hatte genug davon, das Jadrolinija-PDF zu entziffern, um zu wissen, wann die nächste Fähre geht. Also habe ich eine kleine Seite gebaut, die das einfach beantwortet.
+
+croatianferries.com
+
+Hafen öffnen, und man sieht die nächste Abfahrt mit "in 23 Min." darüber, die Überfahrtsdauer, ob die Linie reservierbar ist, und die Live-Kamera des Hafens vom kroatischen Autoklub HAK, damit man die echte Warteschlange sieht und nicht nur den Fahrplan. Alle Autofähren in Kroatien, 52 Häfen, auf Deutsch, Englisch, Kroatisch und Italienisch. Keine App, keine Cookies, keine Werbung.
+
+Für diese Gruppe: {PORT_LINK}
+
+Die Seite ist ganz neu und ich habe alle 23 Fahrpläne selbst gelesen. Wenn euch eine falsche Zeit auffällt, sagt Bescheid, ich korrigiere sie am selben Tag. Die Fahrpläne halte ich aktuell, sobald Jadrolinija ein PDF ändert.
