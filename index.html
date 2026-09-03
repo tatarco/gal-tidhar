@@ -821,5 +821,55 @@
 <script>
   document.getElementById('nav').classList.add('scrolled');
 </script>
+
+<!-- ── consent-gated analytics (GA4 + Microsoft Clarity) ── -->
+<style>
+  #consent-bar{position:fixed;inset-inline:0;bottom:0;z-index:9999;display:none;
+    gap:.9rem;align-items:center;justify-content:center;flex-wrap:wrap;
+    padding:.75rem 1rem;background:rgba(10,22,40,.96);border-top:1px solid var(--border);
+    color:var(--text);font-family:'IBM Plex Mono','Courier New',monospace;font-size:.8rem;
+    backdrop-filter:blur(6px);}
+  #consent-bar p{margin:0;max-width:52ch;color:var(--muted);}
+  #consent-bar button{font-family:inherit;font-size:.78rem;font-weight:600;cursor:pointer;
+    padding:.4rem .9rem;border-radius:3px;border:1px solid var(--border);background:transparent;
+    color:var(--text);transition:all .15s;white-space:nowrap;}
+  #consent-bar button.accept{background:var(--accent);color:#0a1628;border-color:var(--accent);}
+  #consent-bar button:hover{opacity:.85;}
+</style>
+<script>
+  var GA_ID='';        /* GA4 measurement ID (G-XXXX) — empty = disabled */
+  var CLARITY_ID='';   /* Microsoft Clarity project ID — empty = disabled */
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});
+  window.__consent=false; window.__loaded=false;
+  function loadClarity(){
+    if(!CLARITY_ID||window.__cl)return; window.__cl=true;
+    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,'clarity','script',CLARITY_ID);
+  }
+  function loadAnalytics(){
+    if(window.__loaded)return; window.__loaded=true;
+    if(GA_ID){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;document.head.appendChild(s);
+      s.onload=function(){gtag('js',new Date());gtag('config',GA_ID);};}
+    loadClarity();
+  }
+  function grantConsent(){window.__consent=true;gtag('consent','update',{analytics_storage:'granted'});loadAnalytics();}
+  (function(){
+    if(!GA_ID&&!CLARITY_ID)return;                 // nothing to load → no banner
+    try{ if(localStorage.getItem('analyticsConsent')==='granted'){grantConsent();return;} }catch(e){}
+    try{ if(localStorage.getItem('analyticsConsent')==='denied')return; }catch(e){}
+    var bar=document.getElementById('consent-bar'); if(bar)bar.style.display='flex';
+  })();
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('#consent-accept'), r=e.target.closest('#consent-reject');
+    if(a){try{localStorage.setItem('analyticsConsent','granted')}catch(e){};grantConsent();document.getElementById('consent-bar').style.display='none';}
+    if(r){try{localStorage.setItem('analyticsConsent','denied')}catch(e){};document.getElementById('consent-bar').style.display='none';}
+  });
+</script>
+<div id="consent-bar" role="dialog" aria-label="Analytics consent">
+  <p>This site uses privacy-friendly analytics to understand usage. No ads, no selling data.</p>
+  <button id="consent-accept" class="accept" type="button">Accept</button>
+  <button id="consent-reject" type="button">Decline</button>
+</div>
 </body>
 </html>
