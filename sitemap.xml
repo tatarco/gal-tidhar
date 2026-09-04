@@ -1,51 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gal.tidhar.org.il/blog/hebrew-esign/</loc>
-    <lastmod>2026-08-27T06:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://gal.tidhar.org.il/blog/hebrew-esign-selfhost/</loc>
-    <lastmod>2026-08-27T06:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://gal.tidhar.org.il/</loc>
-    <lastmod>2026-06-04T06:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-09-04T06:00:00+00:00</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://gal.tidhar.org.il/blog/gmail-skill/</loc>
-    <lastmod>2026-07-23T06:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://gal.tidhar.org.il/blog/agent-browser/</loc>
+    <lastmod>2026-08-02T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gal.tidhar.org.il/blog/hdr-glow-logo/</loc>
-    <lastmod>2026-07-23T06:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://gal.tidhar.org.il/blog/agent-handoff/</loc>
+    <lastmod>2026-08-26T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/agent-identity/</loc>
+    <lastmod>2026-08-12T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://gal.tidhar.org.il/blog/awakebar/</loc>
     <lastmod>2026-07-16T06:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/browser-audit/</loc>
+    <lastmod>2026-08-03T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/cache-economics/</loc>
+    <lastmod>2026-08-08T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/callrec/</loc>
+    <lastmod>2026-08-14T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/cmux/</loc>
+    <lastmod>2026-08-08T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/croatian-ferries/</loc>
+    <lastmod>2026-09-03T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/dont-punt/</loc>
+    <lastmod>2026-09-04T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/finance-audit-beta/</loc>
+    <lastmod>2026-08-21T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/free-dictation/</loc>
+    <lastmod>2026-07-28T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/glarebar/</loc>
+    <lastmod>2026-07-24T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/gmail-skill/</loc>
+    <lastmod>2026-07-23T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/hdr-glow-logo/</loc>
+    <lastmod>2026-07-23T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/hebrew-esign/</loc>
+    <lastmod>2026-08-27T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/hebrew-esign-selfhost/</loc>
+    <lastmod>2026-08-27T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://gal.tidhar.org.il/blog/hebrew-terminal/</loc>
     <lastmod>2026-06-12T06:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/household-agent/</loc>
+    <lastmod>2026-07-29T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/money-audit/</loc>
+    <lastmod>2026-08-17T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/remote-control/</loc>
+    <lastmod>2026-08-03T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/session-shape/</loc>
+    <lastmod>2026-08-10T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/silent-failures/</loc>
+    <lastmod>2026-08-02T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/subscription-audit/</loc>
+    <lastmod>2026-08-17T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/usage-grade/</loc>
+    <lastmod>2026-08-13T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gal.tidhar.org.il/blog/whatsapp-presence/</loc>
+    <lastmod>2026-08-28T06:00:00+00:00</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://gal.tidhar.org.il/gal-tidhar-cv.pdf</loc>
     <lastmod>2026-06-04T06:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
   </url>
 </urlset>
