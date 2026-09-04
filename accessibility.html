@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessibility · Gal Tidhar</title>
+<meta name="description" content="Accessibility statement for gal.tidhar.org.il — conformance, known limitations, and how to report a barrier.">
+<link rel="canonical" href="https://gal.tidhar.org.il/accessibility.html">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0a1628">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+<style>
+  :root{--bg:#0a1628;--cyan:#7dd3fc;--text:#bae6fd;--ink:#e0f2fe;--muted:rgba(186,230,253,.62);--accent:#fef08a;--border:rgba(125,211,252,.4)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);line-height:1.65;
+    font-family:'IBM Plex Mono','Courier New',monospace;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:46rem;margin:0 auto;padding:3rem 1.5rem 5rem}
+  a{color:var(--cyan)}
+  a.back{font-size:.85rem;text-decoration:none;color:var(--muted)}
+  a.back:hover{color:var(--cyan)}
+  h1{color:var(--ink);font-size:1.9rem;font-weight:600;letter-spacing:.02em;margin:1.4rem 0 .3rem}
+  .meta{color:var(--muted);font-size:.82rem;margin:0 0 2rem}
+  h2{color:var(--ink);font-size:1.05rem;font-weight:600;margin:2.2rem 0 .5rem;
+    border-top:1px solid var(--border);padding-top:1.4rem}
+  p,li{color:var(--text);font-size:.92rem}
+  ul{padding-inline-start:1.2rem}
+  li{margin:.35rem 0}
+  strong{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">← gal.tidhar.org.il</a>
+  <h1>Accessibility statement</h1>
+  <p class="meta">gal.tidhar.org.il · Last updated: 4 September 2026</p>
+
+  <h2>Commitment</h2>
+  <p>This site aims to be usable by everyone, including people who rely on a keyboard, a screen reader, or magnification. It targets conformance with <strong>WCAG 2.1/2.2 level AA</strong>.</p>
+
+  <h2>What's in place</h2>
+  <ul>
+    <li>Semantic HTML with a single <code>&lt;main&gt;</code> landmark, headings in order, and a "skip to content" link.</li>
+    <li>Keyboard-operable navigation with visible focus indicators.</li>
+    <li>Text contrast checked against AA, and layout that reflows without horizontal scrolling down to small screens.</li>
+    <li>Images carry alternative text; the site works with JavaScript limited.</li>
+  </ul>
+
+  <h2>Known limitations</h2>
+  <p>Some blog posts contain code samples and technical diagrams whose fine detail may not fully translate to a screen reader; the surrounding text explains them. If you hit a barrier anywhere on the site, it is treated as a bug, not an edge case.</p>
+
+  <h2>Report a barrier</h2>
+  <p>Found something that blocks you? Email <a href="mailto:gal@tidhar.org.il">gal@tidhar.org.il</a> with the page and what happened, and it gets fixed. In the EU you may also raise accessibility concerns with the relevant national authority.</p>
+</div>
+</body>
+</html>
