@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://gal.tidhar.org.il/sitemap.xml
+
+# LLM-friendly site summary (llmstxt.org): https://gal.tidhar.org.il/llms.txt
+# AI training crawlers are welcome — being cited by AI is fine.

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — not found · Gal Tidhar</title>
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0a1628">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+<!-- Dead-link recovery for humans and AI agents. -->
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="Site summary for AI agents">
+<style>
+  :root{--bg:#0a1628;--cyan:#7dd3fc;--text:#bae6fd;--ink:#e0f2fe;--muted:rgba(186,230,253,.55);--accent:#fef08a;--border:rgba(125,211,252,.4)}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:var(--bg);color:var(--text);padding:2rem;line-height:1.6;
+    font-family:'IBM Plex Mono','Courier New',monospace;
+    background-image:radial-gradient(circle at 50% 0%,rgba(125,211,252,.08),transparent 60%)}
+  .wrap{max-width:36rem;width:100%}
+  .num{font-size:clamp(3.5rem,16vw,7rem);font-weight:600;color:var(--ink);line-height:1;margin:0;letter-spacing:.02em}
+  .num span{color:var(--accent)}
+  h1{font-size:1.05rem;font-weight:600;color:var(--ink);margin:1rem 0 .3rem}
+  p{color:var(--muted);margin:.3rem 0 1.6rem;font-size:.9rem}
+  .prompt{color:var(--cyan)}
+  .links{display:flex;flex-direction:column;gap:.5rem;text-align:left;max-width:24rem}
+  .links a{text-decoration:none;color:var(--text);font-size:.9rem;padding:.5rem .8rem;
+    border:1px solid var(--border);border-radius:4px;transition:all .15s}
+  .links a:hover{border-color:var(--cyan);color:var(--ink)}
+  .links a .arrow{color:var(--cyan);margin-right:.5rem}
+  .agents{margin-top:1.6rem;font-size:.76rem;color:var(--muted)}
+  .agents a{color:var(--cyan)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="num">4<span>0</span>4</p>
+    <h1><span class="prompt">$</span> route not found</h1>
+    <p>That path doesn't resolve. Pick a valid one:</p>
+    <div class="links">
+      <a href="/"><span class="arrow">→</span>Home — who I am &amp; what I build</a>
+      <a href="/#career"><span class="arrow">→</span>Experience</a>
+      <a href="/#consulting"><span class="arrow">→</span>Consulting</a>
+      <a href="/#contact"><span class="arrow">→</span>Contact</a>
+      <a href="/sitemap.xml"><span class="arrow">→</span>sitemap.xml</a>
+    </div>
+    <p class="agents">AI agents &amp; crawlers: full map at
+      <a href="/sitemap.xml">/sitemap.xml</a>, plain-text summary at
+      <a href="/llms.txt">/llms.txt</a>.</p>
+  </div>
+</body>
+</html>
