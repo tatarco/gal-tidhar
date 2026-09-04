@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The logo that burned a hole in my feed · Gal Tidhar</title>
-  <meta name="description" content="That glowing Wiz logo on LinkedIn wasn't a filter — it's an HDR colour trick (Rec.2020 + PQ) that makes white pixels burn. Here's how it works and a one-command tool to do it.">
+  <title>How to make a glowing HDR logo on LinkedIn (the Wiz trick, step by step) · Gal Tidhar</title>
+  <meta name="description" content="Step by step: why the Wiz logo glows on LinkedIn (an HDR trick, Rec.2020 + PQ) and a one-command tool that makes any logo, including yours, burn the same way.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/hdr-glow-logo/">
   <meta name="theme-color" content="#0a1628">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="The logo that burned a hole in my feed">
+  <meta property="og:title" content="How to make a glowing HDR logo on LinkedIn (the Wiz trick, step by step)">
   <meta property="og:description" content="The HDR trick behind that glowing Wiz logo on LinkedIn — reverse-engineered, rebuilt, and packaged as a one-command tool and Claude skill.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/hdr-glow-logo/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/hdr-glow-logo/og.png">
@@ -19,7 +19,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Port + Wiz + Claude = ZaZet, white logos glowing on a dark background">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The logo that burned a hole in my feed">
+  <meta name="twitter:title" content="How to make a glowing HDR logo on LinkedIn (the Wiz trick, step by step)">
   <meta name="twitter:description" content="The HDR trick behind that glowing Wiz logo on LinkedIn — reverse-engineered and packaged as a one-command tool + Claude skill.">
   <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/hdr-glow-logo/og.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
@@ -29,7 +29,7 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "The logo that burned a hole in my feed",
+    "headline": "How to make a glowing HDR logo on LinkedIn (the Wiz trick, step by step)",
     "description": "The HDR trick behind that glowing Wiz logo on LinkedIn (Rec.2020 + PQ), reverse-engineered and packaged as a one-command tool and Claude skill.",
     "image": "https://gal.tidhar.org.il/blog/hdr-glow-logo/og.png",
     "datePublished": "2026-07-23",
@@ -90,6 +90,7 @@
     .meta-line strong { color: var(--text); font-weight: 600; }
     .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
     .lead strong { color: var(--ink); font-weight: 600; }
+    .lead-note { font-size: .85rem; color: var(--muted); line-height: 1.6; margin-top: .75rem; }
     h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
     h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
     h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
@@ -137,6 +138,7 @@
           <h1 class="title">The logo that burned a hole in my feed</h1>
           <p class="meta-line"><strong>2026-07-23</strong> &nbsp;·&nbsp; ~5 min read &nbsp;·&nbsp; by Gal Tidhar</p>
           <p class="lead">I scrolled past a logo that was physically <strong>brighter than the screen around it</strong>. Not "bright" — emitting light, like a bulb behind the glass. I sat down for an hour to figure out how, rebuilt it, and packaged it into one command and a Claude skill. This is the how — and the half of the story nobody tells.</p>
+          <p class="lead-note">Here for the Wiz logo itself? It is Wiz's trademark and lives on <a href="https://www.wiz.io/" rel="nofollow noopener" target="_blank">wiz.io</a>. This page is about the glow, and the glow works on any logo, including yours.</p>
         </header>
 
         <figure>
