@@ -10,17 +10,19 @@ WRAP_SRC = HERE.parent / "croatian-ferries" / "out-choices.html"
 WRAP_BODY = HERE.parent / "croatian-ferries" / "choices-body.html"
 
 DESIGNS = [
-    ("2", "the claim", "RECOMMENDED. 'The comments in Facebook are my bug tracker. 52 groups, 153 comments, "
-     "11 issues opened by strangers.' The bold-claim shape, your most-picked design by a distance, and it carries "
-     "the whole post in one line for a cold reader."),
-    ("5", "the hate comment", "STRONG CONTENDER, and the riskiest. 'Do you need an app to cross the road too?' huge "
-     "in yellow, with the payoff underneath: the rudest comment was the most useful one. Highest scroll-stop of the "
-     "six. It leads with someone insulting you, which is either the best hook here or a thing you do not want on "
-     "your feed."),
-    ("1", "the one big number", "31 minutes, from a stranger correcting my Croatian to the fix live. Closest shape "
-     "to cache-economics (25k with no famous logo): one checkable number a reader instantly understands."),
-    ("4", "comment to issue", "The five real comments and what each became, with the minutes. The most useful frame "
-     "and the most credible, but it is a table, and tables read as reports."),
+    ("5", "the hate comment", "RECOMMENDED. 'Do you need an app to cross the road too?' huge in yellow, with the "
+     "payoff underneath: the rudest comment was also the most useful one. This is the shape that carried your 133k "
+     "post - there the image WAS the subject (the Wiz logo itself), here it IS the artifact (the actual comment). It "
+     "is also the only hero of the six that opens a loop on its own: a cold reader has to know who said that and what "
+     "you did about it. And it does not duplicate the post, because line 1 already spends the numbers."),
+    ("1", "the one big number", "STRONG CONTENDER. 31 minutes, from a stranger correcting my Croatian to the fix "
+     "live. This is the cache-economics shape (25,185 impressions with no famous logo, on a measured number). The "
+     "cost: line 1 of the post now carries 52 groups and 11 issues, so the number hero says a second number instead "
+     "of adding something new, and '31 minutes' needs its subtitle before it means anything."),
+    ("2", "the claim", "The bold-claim shape, your most-picked design across the ledger. Carries the whole post in "
+     "one line for a cold reader, but it states the conclusion rather than showing the evidence."),
+    ("4", "comment to issue", "The five real comments and what each became, with the minutes. The most credible "
+     "frame and the most useful, but it is a table, and tables read as reports."),
     ("3", "the exchange", "The real Croatian comment about 'vozni red' next to what shipped 31 minutes later. Your "
      "pick on phase-is-a-function. Teaches the whole mechanism without the post, but needs a second of reading."),
     ("6", "the pipeline", "Sweep -> triage -> reply, with the honest numbers underneath. The frame a technical "
@@ -48,7 +50,7 @@ def option(num, name, why, lang, tag=""):
             f'<p class="why">{html.escape(why)}</p>{img(num, lang)}</div>')
 
 
-TAGS = {"2-HE": "RECOMMENDED", "5-HE": "CONTENDER", "2-EN": "IF ENGLISH POST", "5-EN": "IF ENGLISH POST"}
+TAGS = {"5-HE": "RECOMMENDED", "1-HE": "CONTENDER", "5-EN": "IF ENGLISH POST", "1-EN": "IF ENGLISH POST"}
 opts = ""
 for num, name, why in DESIGNS:
     for lang in ("he", "en"):
@@ -123,8 +125,23 @@ BODY = f"""
 
 <section class="step">
   <h2>02 &middot; Hero image - pick one</h2>
-  <p class="sub">Six designs, Hebrew and English. Click one; your pick saves in this page. The full local path above
-  each image pastes straight into LinkedIn's file picker. Match the hero language to decision 01.</p>
+  <p class="sub">You shortlisted <b>5-HE</b> (the hate comment) and <b>1-HE</b> (the 31 minutes), so those two are
+  first. Both map onto a shape that has already worked for you, which is why it is a real question and not an obvious
+  one.</p>
+  <p class="sub"><b>What your own numbers say.</b> Your 133,171-impression post carried a single image that WAS its
+  subject - the Wiz logo, the actual thing being discussed, not a description of it. Your 25,185 post had no famous
+  name at all and ran on one measured number a reader could check against their own account. So the feed has rewarded
+  you twice, for two different images: <i>the artifact</i>, and <i>the number</i>. That is exactly 5-HE versus 1-HE.</p>
+  <p class="sub"><b>Which one here.</b> I would take 5-HE, on one tiebreaker: line 1 of the post now opens with the
+  episode frame and both numbers, so the number hero repeats the hook while the quote hero adds the one thing the
+  text has not spent yet. A cold reader seeing "do you need an app to cross the road too?" has to find out who said
+  it. A cold reader seeing "31 minutes" has to read the subtitle before it means anything. The Wiz post did not
+  explain the logo either - it showed it.</p>
+  <p class="sub"><b>The honest risk.</b> 5-HE puts a stranger insulting your work at the top of your own feed, at
+  poster size, with no context until someone reads on. If that is not a trade you want, 1-HE is not a consolation
+  prize - it is the shape of your number-two post of all time.</p>
+  <p class="sub">Click one; your pick saves in this page. The full local path above each image pastes straight into
+  LinkedIn's file picker. Match the hero language to decision 01.</p>
   <div id="hero" data-persist-choice class="opts">{opts}</div>
 </section>
 
@@ -235,6 +252,14 @@ BODY = f"""
     <li><b>Privacy pass:</b> no full names of critics, no group member counts that identify a specific group as the
       one that ignored you, no personal circumstances anywhere. The helpful commenters are first-name-only and are
       being credited, publicly, for a public comment.</li>
+    <li><b>The LinkedIn skill bundle you remembered from /ideas</b> is idea-backlog #230, and I identified the repo:
+      <code>sergebulaev/linkedin-skills</code>, 11 skills - post writer with 20 hook formulas, comment drafter, reply
+      handler, post audit, humanizer, hook extractor, content planner, engagement monitor, profile optimizer,
+      employee advocacy, repurposer. <b>It has nothing on hero design.</b> Its only visual guidance is a paid
+      illustration API (Pixfaro) that composites your handle and brand colour onto a generated image, plus one idea
+      worth noting: a "quote-card of your hook", which is precisely what 5-HE is. The hook-formula library and the
+      humanizer are worth mining into /linkedin separately; neither helps this decision. Your own two outliers are
+      much stronger evidence than that repo, which is what decision 02 is argued from.</li>
     <li><b>Known weakness:</b> no famous company in line 1. The checkable things are 52 groups and 11 of 25 issues.
       Facebook is the only recognizable name available and it is not a scroll-stop on its own.</li>
     <li><b>Blog is live at</b> gal.tidhar.org.il/blog/ferry-outreach/ once pushed, with the machinery table, the full

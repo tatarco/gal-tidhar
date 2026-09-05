@@ -9,12 +9,12 @@ L = '<span class="ltr">{}</span>'.format
 S = {
  'en': {
    'dir':'ltr','lang':'en',
-   'eyebrow':'FIELD NOTE / CROATIANFERRIES.COM',
+   'eyebrow':'THE BEST MARITIME PORTAL IN CROATIA / EPISODE 1',
    'big':'31 minutes',
    'big_unit':'From a stranger correcting my Croatian to the fix live in production.',
    'big_sub':'I posted a ferry site into <span class="cy">52 Facebook groups</span> in Croatia and treated<br>'
-             'the comments as my issue tracker. <span class="hi">11 of the 25 issues in the repo were<br>'
-             'opened by people I have never met.</span> All 11 are closed.',
+             'the comments as my issue tracker. <span class="hi">11 issues in the repo were opened<br>'
+             'by people I have never met.</span> All 11 are closed.',
    'claim':'The comments are<br>my bug tracker.<br>'
            '<span class="hi">52 groups, 153 comments,<br>11 issues opened by strangers.</span>',
    'claim_foot':'One script sweeps all 52 posts and prints every comment I have not seen. I translate it. Anything that is a real complaint becomes an issue, gets fixed, and I reply on the thread in the language the person wrote in.',
@@ -30,7 +30,7 @@ S = {
             ('“I cannot find Stinica - Mišnjak”','whole operator added, 58 min'),
             ('“the Prizna camera misses the queue”','he was right, I checked'),
             ('“Or just download their app????”','the competitor issue')],
-   'grid_foot':'11 of the 25 issues in the repo were opened by strangers in the comments. All 11 are closed.',
+   'grid_foot':'11 issues in the repo were opened by strangers in the comments. All 11 are closed.',
    'quote':'“Do you need an app<br>to cross the road too?”',
    'quote_sub':'The rudest comment I got was also the most useful one.<br>'
                'My first instinct was to write him a long reasoned reply.<br>'
@@ -44,11 +44,11 @@ S = {
  },
  'he': {
    'dir':'rtl','lang':'he',
-   'eyebrow':'',
+   'eyebrow':'הפורטל הימי הכי טוב בקרואטיה / פרק 1',
    'big':'31 דקות',
    'big_unit':'מהרגע שזר תיקן לי את הקרואטית ועד שהתיקון עלה לאוויר.',
    'big_sub':'פרסמתי אתר מעבורות ב<span class="cy">-52 קבוצות פייסבוק</span> בקרואטיה, והפכתי את<br>'
-             'התגובות לבאג טראקר. <span class="hi">11 מתוך 25 האישיוז בריפו נפתחו על ידי<br>'
+             'התגובות לבאג טראקר. <span class="hi">11 אישיוז בריפו נפתחו על ידי<br>'
              'אנשים שלא פגשתי מעולם.</span> כל ה-11 סגורים.',
    'claim':'התגובות בפייסבוק<br>הן הבאג טראקר שלי.<br>'
            '<span class="hi">52 קבוצות, 153 תגובות,<br>11 אישיוז שזרים פתחו לי.</span>',
@@ -65,7 +65,7 @@ S = {
             ('"אני לא מוצאת את '+L('Stinica - Mišnjak')+'"','מפעיל שלם נוסף, 58 דקות'),
             ('"המצלמה בפריזנה לא מכסה את התור"','הוא צדק, הלכתי לבדוק'),
             ('"'+L('Or just download their app????')+'"','האישיו של המתחרים')],
-   'grid_foot':'11 מתוך 25 האישיוז בריפו נפתחו על ידי זרים בתגובות. כל ה-11 סגורים.',
+   'grid_foot':'11 אישיוז בריפו נפתחו על ידי זרים בתגובות. כל ה-11 סגורים.',
    'quote':'"אתה צריך אפליקציה<br>גם כדי לחצות את הכביש?"',
    'quote_sub':'התגובה הכי גסה שקיבלתי הייתה גם הכי שימושית.<br>'
                'התגובה הראשונה שלי הייתה לכתוב לו תשובה ארוכה ומנומקת.<br>'
