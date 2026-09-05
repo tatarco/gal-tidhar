@@ -19,7 +19,7 @@ HERE = Path(__file__).parent
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 FONT = base64.b64encode((FW / "src/ferry_watch/site/fonts/archivo.woff2").read_bytes()).decode()
 ZG = ZoneInfo("Europe/Zagreb")
-TODAY = dt.datetime.now(ZG)
+TODAY = dt.datetime.fromisoformat(os.environ["HERO_DATE"]).replace(tzinfo=ZG) if os.environ.get("HERO_DATE") else dt.datetime.now(ZG)
 
 # ponytail: the popular line per port is the busiest one out of it; override where a
 # group cares about a different island than the busiest boat.
@@ -79,9 +79,9 @@ def pick(conn, port_id, port_names, routes):
         for w in svc.windows:
             if not any((not a or a <= today) and (not b or today <= b) for a, b in w.ranges):
                 continue
-            times = sorted({dep for mask, ts in w.days if mask & (1 << wd) for dep, _ in ts})
-            spans = [(int(a[:2])*60+int(a[3:])) - (int(d[:2])*60+int(d[3:]))
-                     for mask, ts in w.days for d, a in ts if a]
+            times = sorted({x[0] for mask, ts in w.days if mask & (1 << wd) for x in ts})
+            spans = [(int(x[1][:2])*60+int(x[1][3:])) - (int(x[0][:2])*60+int(x[0][3:]))
+                     for mask, ts in w.days for x in ts if x[1]]
             spans = sorted(s + (1440 if s < 0 else 0) for s in spans)
             cand = dict(svc=svc, window=w, times=times, dur=spans[len(spans)//2] if spans else None)
             if best is None or len(times) > len(best["times"]):

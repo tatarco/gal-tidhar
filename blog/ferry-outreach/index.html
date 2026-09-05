@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I posted a ferry site into 52 Facebook groups and used the comments as my issue tracker &middot; Gal Tidhar</title>
+  <meta name="description" content="52 posts in Croatian, German and English island groups. 37 I can measure: 1,211 likes, 153 comments. 15 I cannot measure at all. And 11 of the 25 issues in the repo were opened by strangers in the comments - a wrong Croatian word, a footnote parsing bug, a missing operator, a camera that does not cover the queue. The machinery, the honest numbers, the hostile comments, and the measurement bug that reported a stranger's engagement as mine.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/ferry-outreach/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="I posted a ferry site into 52 Facebook groups and used the comments as my issue tracker">
+  <meta property="og:description" content="52 posts in Croatian, German and English island groups. 37 I can measure: 1,211 likes, 153 comments. 15 I cannot measure at all. And 11 of the 25 issues in the repo were opened by strangers in the comments - a wrong Croatian word, a footnote parsing bug, a missing operator, a camera that does not cover the queue. The machinery, the honest numbers, the hostile comments, and the measurement bug that reported a stranger's engagement as mine.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/ferry-outreach/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/ferry-outreach/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="I posted a ferry site into 52 Facebook groups and used the comments as my issue tracker">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="I posted a ferry site into 52 Facebook groups and used the comments as my issue tracker">
+  <meta name="twitter:description" content="52 posts in Croatian, German and English island groups. 37 I can measure: 1,211 likes, 153 comments. 15 I cannot measure at all. And 11 of the 25 issues in the repo were opened by strangers in the comments - a wrong Croatian word, a footnote parsing bug, a missing operator, a camera that does not cover the queue. The machinery, the honest numbers, the hostile comments, and the measurement bug that reported a stranger's engagement as mine.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/ferry-outreach/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "I posted a ferry site into 52 Facebook groups and used the comments as my issue tracker",
+    "description": "52 posts in Croatian, German and English island groups. 37 I can measure: 1,211 likes, 153 comments. 15 I cannot measure at all. And 11 of the 25 issues in the repo were opened by strangers in the comments - a wrong Croatian word, a footnote parsing bug, a missing operator, a camera that does not cover the queue. The machinery, the honest numbers, the hostile comments, and the measurement bug that reported a stranger's engagement as mine.",
+    "image": "https://gal.tidhar.org.il/blog/ferry-outreach/og.png",
+    "datePublished": "2026-09-05",
+    "dateModified": "2026-09-05",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/ferry-outreach/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "distribution, Facebook groups, user feedback, bug tracker, croatianferries.com, Croatia, ferries, outreach"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="https://croatianferries.com/" target="_blank" rel="noopener">The site &#8599;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / DISTRIBUTION</span>
+          <p class="role-line">Croatia &middot; Distribution &middot; Feedback loops &middot; croatianferries.com</p>
+          <h1 class="title">I posted a ferry site into 52 Facebook groups and used the comments as my issue tracker</h1>
+          <p class="meta-line"><strong>2026-09-05</strong> &nbsp;&middot;&nbsp; ~9 min read &nbsp;&middot;&nbsp; by Gal Tidhar</p>
+          <p class="lead">There is no marketing budget for a free project. So distribution for <a href="https://croatianferries.com/" target="_blank" rel="noopener">croatianferries.com</a> is 52 posts into Croatian, German and English island groups, and then a loop: sweep the comments, translate them, file the real complaints as issues, fix, deploy, and reply on the thread in the language the person wrote in. <strong>11 of the 25 issues in the repo were opened by people I have never met.</strong> This is the machinery, the numbers including the part nobody measures, the comments that were rude and useful at the same time, and the measurement bug that spent a week reporting a stranger's engagement as mine.</p>
+        </header>
+
+        <h2 class="spec-head">The machinery</h2>
+        <p class="prose">Three files in <code>ops/fb/</code>, all driven from a browser session on my own account. Nothing here is clever; the point is that it is a loop rather than a launch.</p>
+        <table class="spec-table">
+          <tr><th>File</th><th>Job</th></tr>
+          <tr><td><code>outreach.py</code></td><td>stateful ten-a-day group outreach: plan, join, post. Groups move through <code>planned &rarr; joined &rarr; posted</code>, so a run can die halfway and the next one picks up.</td></tr>
+          <tr><td><code>collect.sh</code></td><td>walks every post in <code>posts.json</code> and prints every comment not already in the ledger.</td></tr>
+          <tr><td><code>measure.sh</code></td><td>reads likes, comments and shares per post into <code>metrics.json</code>.</td></tr>
+          <tr><td><code>seen.json</code></td><td>the dedup ledger, keyed on permalink + author + text. Skip the marking step and the next sweep files your own reply as fresh user feedback.</td></tr>
+          <tr><td><code>answers.json</code></td><td>truthful answers to group-membership questionnaires. Most island groups ask three.</td></tr>
+        </table>
+        <p class="prose">A full comment sweep takes about 13 minutes; a full metrics run about 25. Both drive a real browser, which means memory is the actual constraint, not rate limits: the collector gets killed under roughly 2&nbsp;GB free.</p>
+
+        <h2 class="spec-head">The numbers, including the part nobody measures</h2>
+        <p class="prose">52 posts. On 37 of them I can read the counters at all:</p>
+        <div class="snap"><strong>1,211</strong> likes &nbsp;&middot;&nbsp; <strong>153</strong> comments &nbsp;&middot;&nbsp; <strong>39</strong> shares &nbsp;&middot;&nbsp; across 37 measurable posts</div>
+        <p class="prose">Then the honest part. <strong>8 of those 37 sit at a flat zero.</strong> And 15 posts I cannot measure at all: <strong>6 are still held for admin approval</strong> and may never appear, and 9 do not render their own toolbar so there is no number to read. Nearly a third of the outreach either did not happen or cannot be proven to have happened. Every marketing report I have ever seen counts the posts that ran.</p>
+        <p class="prose">The top of the table, and the pattern in it:</p>
+        <table class="spec-table">
+          <tr><th>Group</th><th>Likes</th><th>Comments</th><th>Shares</th></tr>
+          <tr><td>OTOK HVAR</td><td>194</td><td>15</td><td>4</td></tr>
+          <tr><td>Oglasnik otoka Kor&#269;ule</td><td>193</td><td>10</td><td>5</td></tr>
+          <tr><td>Pag Portal</td><td>139</td><td>14</td><td>2</td></tr>
+          <tr><td>Croatia Travel - 2026</td><td>100</td><td>25</td><td>0</td></tr>
+          <tr><td>Otok CRES</td><td>90</td><td>15</td><td>0</td></tr>
+          <tr><td>Tu&#382;ibaba Cres - Lo&#353;inj</td><td>74</td><td>6</td><td>7</td></tr>
+        </table>
+        <p class="prose">Five of those six are a single island. The large pan-Croatia travel groups, the ones with tens of thousands of members that look like the prize when you are picking where to post, mostly returned nothing - and they are also where the six posts are sitting in a moderation queue. A group about one island is a group of people who take one ferry. A group about "Croatia travel" is a group of people who might, someday, take any ferry.</p>
+
+        <h2 class="spec-head">Comments as a bug tracker</h2>
+        <p class="prose">This is the part I would keep if I had to throw the rest away. Praise is noise - <em>Svaka &#269;ast</em>, <em>Bravo</em>, <em>Hvala</em>, dozens of them, and they tell you nothing you can act on. A complaint is a free bug report from someone standing at the port. Every one that survives triage becomes a GitHub issue with the original quote pasted into it, so the fix is checkable against what the person actually said.</p>
+        <table class="spec-table">
+          <tr><th>The comment</th><th>What it became</th><th>Open &rarr; deployed</th></tr>
+          <tr><td>"<em>Samo pls prominite u Plovidbeni red, bokun vozni para u&#353;i. Nije primjereno.</em>" - the word <em>vozni red</em> grates on the ear, that is what a bus timetable is called; a ferry has a <em>plovidbeni red</em></td><td>issue #11, wording fixed site-wide in Croatian</td><td><strong>31 min</strong></td></tr>
+          <tr><td>"<em>ovo vrijedi do 6.9. ne 27.9.</em>"</td><td>issue #14 - a real parsing bug in the footnote that narrows a season's validity</td><td><strong>34 min</strong></td></tr>
+          <tr><td>"<em>A Stinica - Mi&#353;njak-Stinica ne najdem?</em>"</td><td>issue #13 - the operator Rapska plovidba was not on the site at all; added with its full annual schedule</td><td><strong>58 min</strong></td></tr>
+          <tr><td>"<em>Broj vozila u redu po kameri na Prizni se ne mo&#382;e procijeniti, kamera ne pokriva...</em>" - you cannot estimate the queue from the Prizna camera, it does not cover it</td><td>issue #3 - he is right, I went and looked. A person who physically stands there beats my camera survey</td><td>same day</td></tr>
+          <tr><td>"<em>Jeli to samo Jadrolinija?</em>"</td><td>issue #12 - operator coverage made explicit: 64 lines, 13 operators, stated on the page</td><td>3 h</td></tr>
+          <tr><td>"<em>any chance for all the catamaran routes under one roof?</em>" and then, unprompted, a full argument for keeping car and foot traffic separate</td><td>issues #9 and #22 - the by-car / on-foot toggle on the home page</td><td>next day</td></tr>
+          <tr><td>"<em>found some small styling issues on mobile phone if you are interested</em>"</td><td>issue #16</td><td>next day</td></tr>
+        </table>
+        <p class="prose">The <em>plovidbeni red</em> one is the one I think about. No amount of research would have handed me that word. It is not in a dictionary lookup, it is not in a competitor's page, it is the difference between a site written by someone from there and a site written by someone with a translation. A stranger gave it to me for free, in public, thirty-one minutes before it was live.</p>
+        <p class="prose">And every one of these got a reply on the thread itself - in Croatian, German or English, whichever they wrote in - naming what changed. That reply is not politeness. It is the only signal a person gets that commenting on a stranger's post did something.</p>
+
+        <h2 class="spec-head">The rude ones</h2>
+        <p class="prose">Not everything was warm.</p>
+        <blockquote>"Ti treba app i da predes cestu?" - do you need an app to cross the road too?<br>
+        "Or just download their app????"<br>
+        "Really dont understand what is here hard to understand"<br>
+        "What PDF? They have a regular search on their site."<br>
+        "Hvala na trudu ali bezpotrebno jer na stranicama putovnica.hr imate apsolutno..." - thanks for the effort but it is unnecessary</blockquote>
+        <p class="prose">My first instinct was to argue. I wrote one of them a long, reasoned reply about what he had missed and how bad the alternative he was recommending is, and then deleted the whole thing. A person who bothers to tell you your thing is pointless is the exact user you have to win, and he has just told you, for free and in public, where the bar is. Arguing wins the thread and loses the user.</p>
+        <p class="prose">So it became issue #10, a standing competitor issue, and the rule that every "you already have X" comment goes there as a comment rather than becoming a new issue. That thread is now the best competitive research I have, and I did not do any of it:</p>
+        <div class="snap">putovnica.net &middot; the Vapor app &middot; pickapp.hr &middot; ferryrab.com &middot; pagferry.com &middot; qr.vapor-dalmatia.com &middot; the operator's own app &middot; a "Supetar ferry" page for Bra&#269;</div>
+        <p class="prose">I had not heard of a single one. A consultant would have charged me for that list and produced a worse version of it.</p>
+
+        <h2 class="spec-head">The measurement bug I only found because the numbers were too tidy</h2>
+        <p class="prose">Twelve posts, in twelve different groups, all reported exactly <strong>12 likes and 7 comments</strong>. The run before that, ten posts all reported <strong>1 and 13</strong>. Plausible-looking numbers, identical across unrelated groups, which is the only reason I looked.</p>
+        <p class="prose">Two failures were stacked. First, Facebook navigates in-app, so <code>document.title</code> updated to the new post while the counters did not: one German group's value stuck to the next ten reads. Second, and worse, the DOM anchor climbed out of the post entirely and settled on a container that was the whole page - navigation, stories, sidebar. That container had exactly one comment toolbar, belonging to an unrelated post Facebook had rendered into the sidebar feed. <strong>The tool was reporting a stranger's engagement as mine.</strong> The real post, further down the same DOM dump, had one reaction.</p>
+        <p class="prose">Five guards before the right one, each of them reasonable, each defeated by the page in a different way:</p>
+        <table class="spec-table">
+          <tr><th>#</th><th>The guard</th><th>How the page beat it</th></tr>
+          <tr><td>1</td><td>reject a container holding another post's permalink id</td><td>two ids appear on every group page - site chrome, not neighbours</td></tr>
+          <tr><td>2</td><td>require exactly one comment toolbar</td><td>the page-level container had exactly one: the foreign post's</td></tr>
+          <tr><td>3</td><td>detect the "pending admin approval" banner</td><td>correct for 6 posts, but the banner renders after the wait and races the read</td></tr>
+          <tr><td>4</td><td>require our own croatianferries.com text in the container</td><td>the whole page contains our post too, so it passed</td></tr>
+          <tr><td>5</td><td>reject a container holding nav, banner or sidebar landmarks</td><td><strong>held.</strong> A post never contains page chrome</td></tr>
+        </table>
+        <p class="prose">The fix that actually matters is not any of those five. It is the rule underneath them: <strong>never write a reading that could not be anchored.</strong> Record <code>pending admin approval</code> or <code>unreadable</code> as a status instead of inventing a number. That is why the honest section above can say "15 posts I cannot measure" rather than quietly averaging them in at zero - a metric that cannot fail loudly will fail quietly, and it will look completely normal while it does.</p>
+        <p class="prose">The comment collector had the same class of bug. Its bleed filter only caught the same author and text under two permalinks; eleven different people commenting on an unrelated giveaway post that Facebook rendered into one group's page all had a single permalink, so they sailed through and were filed as feedback on my ferry site. Same containment rule fixed it: a comment is mine only if some ancestor holds my own post text before the climb reaches page level.</p>
+
+        <h2 class="spec-head">What I would do differently</h2>
+        <div class="prose">
+        <ul>
+          <li><strong>Start small and local, not big and general.</strong> The instinct is to chase the 70,000-member group. It returned nothing, and it is where posts go to sit in a moderation queue.</li>
+          <li><strong>Record a status, never a zero.</strong> Any measurement that cannot distinguish "nobody engaged" from "I could not read it" is worse than no measurement, because you will trust it.</li>
+          <li><strong>Reply on the thread, not in a changelog.</strong> The fix is cheap; being visibly answered is what makes someone comment a second time.</li>
+          <li><strong>Keep the quote in the issue.</strong> Nine of the eleven comment-born issues carry the original sentence in the person's own language. It stops the fix drifting into what I would rather they had meant.</li>
+        </ul>
+        </div>
+        <p class="prose">Still open: the 6 posts held for admin approval. Chasing a moderator is a cold DM to a volunteer, and the honest expected value is low. The 10 groups sitting at <code>planned</code> in <code>outreach.json</code> are the next batch, and the queue-camera work - the thing this project actually started from - is what the next post in this series is about.</p>
+
+        <div class="cta">
+          <h3>The site</h3>
+          <p class="prose">croatianferries.com is free, has no cookies and no third-party requests, and answers one question: when does the next ferry leave, and in how many minutes. If you are on the Croatian coast, or know someone who drives there, that is what it is for. If you find something wrong with it, the fastest way to get it fixed is still to tell me rudely in public.</p>
+          <div class="link-row">
+            <a href="https://croatianferries.com/" target="_blank" rel="noopener">croatianferries.com</a><span class="sep">&middot;</span>
+            <a href="https://croatianferries.com/en/port/valbiska/" target="_blank" rel="noopener">A port page: Valbiska (Krk)</a><span class="sep">&middot;</span>
+            <a href="/blog/croatian-ferries/">How the 23 PDFs were read</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Gal Tidhar &middot; <a href="/">gal.tidhar.org.il</a> &middot; <a href="https://github.com/tatarco">GitHub</a> &middot; <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+</body>
+</html>
