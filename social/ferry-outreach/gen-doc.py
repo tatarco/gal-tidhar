@@ -110,8 +110,8 @@ BODY = f"""
 <section class="step">
   <h2>The post, Hebrew</h2>
   <p class="sub">{len(POST_HE):,} characters (cap 3,000). אמ!לק opener with the number in line 1, the honest numbers
-  block, five real comments with the minutes, the hate block, the paragraph where you delete your own rebuttal, and
-  the small-beats-big payoff.</p>
+  block, five real comments with the minutes, the hate block, the paragraph where you delete your own rebuttal, the small-beats-big payoff, and the series line
+  you liked, kept at the end as well as in the hook.</p>
   <div class="copybar"><button class="copybtn" data-copy="post-he">Copy Hebrew post</button></div>
   {pre("post-he", POST_HE, True)}
 </section>
@@ -189,7 +189,9 @@ BODY = f"""
   <div id="series" data-persist-choice class="opts small">
     <div class="opt" data-value="keep"><div class="opt-head"><span class="dot"></span>
       <b>Keep the series line</b> <span class="rec">RECOMMENDED</span></div>
-      <p class="why">The freelance series worked with the same device. Proposed run: 2. the queue camera (computer
+      <p class="why">It now runs in BOTH places, as you asked: the episode frame opens line 1 (מנסה לבנות את הפורטל
+      הימי הכי טוב בקרואטיה, פרק 1) and the sentence you liked closes the post unchanged. It reads as a bookend
+      rather than a repeat because the opener is an ambition and the closer is a promise. Proposed run: 2. the queue camera (computer
       vision on the HAK cameras, the thing this actually started from) &middot; 3. the verification oracle, where the
       site is checked against a competitor and loses 7 times &middot; 4. the 64-line state register and why operators
       are hand-kept &middot; 5. four languages and what the German and Italian reviewers changed.</p></div>
