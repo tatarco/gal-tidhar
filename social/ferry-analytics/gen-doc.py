@@ -16,13 +16,16 @@ DESIGNS = [
      "sentence chopped mid-word and has to know whose site that is."),
     ("1", "position 5", "STRONG CONTENDER. One measured number, which is the shape of your 25,185 post. The cost: "
      "line 1 of the post already says position 5 at Merag, so the hero repeats the hook instead of adding to it."),
+    ("6", "3,164 / 7 a day / 110 of 180", "THE ON-BRIEF ONE. The week-one funnel: the sitemap jumped from 316 to "
+     "3,164 in a single deploy, the API reports index status but cannot request it, and the tally is counted every "
+     "morning at 09:40. Now that the spine is the SEO edge from day one, this is the hero that matches the post "
+     "best - and it is also the least dramatic of the six."),
     ("3", "aimed at / actually ranks", "The two columns side by side: 49, 57, 67 against 5, 8, 6, 9. It teaches the "
-     "whole post in one look and it is the most useful frame for a technical reader. Needs two seconds of reading."),
+     "whole payoff in one look and it is the strongest frame for a technical reader. Needs two seconds of reading."),
     ("2", "the claim", "The bold-claim shape, your most-picked design across the ledger. Carries the post for a cold "
      "reader, but states the conclusion instead of showing the evidence."),
     ("4", "the ranking table", "All six queries with their positions, the four nobody aimed at on top. The most "
      "credible of the six and the most boring - it is a table, and tables read as reports."),
-    ("6", "99 / 16 / 83", "Why only 16 ports claim a camera. The discipline frame. Good idea, weakest scroll-stop."),
 ]
 
 
@@ -73,13 +76,15 @@ def pre(id_, text, rtl):
 BODY = f"""
 <div class="title">
   <p class="eyebrow">LinkedIn &middot; croatianferries.com &middot; series post 2</p>
-  <h1>Position 5 for a port camera nobody aimed at. Pick the language, the hero, and four lines.</h1>
-  <p class="lede">Episode 2, ferry only. The spine is one mechanism taken all the way down: <b>Google told me which
-  of my pages work, and they are not the ones I would have chosen</b> - the live port cameras and the pages named
-  for one specific pair of ports. Every number is recomputed from today's Search Console snapshot, not from the
-  handoff. The GA4 story from the same session is out entirely, because it happened on zazet-solutions and cannot
-  carry an episode about the ferry site. Line 1 carries the episode frame, as you asked on post 1, and episode 1 is
-  named in the second paragraph and again in the first comment.</p>
+  <h1>Week one: 3,164 pages to get indexed, 7 requests a day, and position 5 for a camera nobody aimed at.</h1>
+  <p class="lede">Episode 2, ferry only, and rebuilt around your steer: <b>the SEO edge from the beginning</b>. The
+  site has been live under a week, so the post now opens on the week-one problem - the sitemap going from 316 pages
+  to 3,164 in one deploy, the fact that Google's API reports index status but cannot request indexing, the roughly
+  7-a-day manual quota and the priority order it gets spent in, and the 09:40 job that reads the live sitemap and
+  writes the tally onto the issue (en 0/45 to 43/45). The rankings are now the payoff rather than the subject: the
+  cameras and the named port pairs are what a site with no authority actually wins. Every number is from today's
+  snapshot, issue #23 and commit 273a48b - nothing reused from the handoff. The GA4 story is out entirely: it
+  happened on zazet-solutions and cannot carry an episode about the ferry site.</p>
 </div>
 
 <section class="step">
@@ -102,9 +107,10 @@ BODY = f"""
 
 <section class="step">
   <h2>The post, Hebrew</h2>
-  <p class="sub">{len(POST_HE):,} characters (cap 3,000). אמ!לק opener with the episode frame and the camera number in
-  line 1, episode 1 named in paragraph 2, the embarrassing baseline, the head terms that are nowhere, the eight
-  phrases that rank, the cameras, the truncated titles, and the 16-of-99 discipline.</p>
+  <p class="sub">{len(POST_HE):,} characters (cap 3,000). אמ!לק opener with the episode frame, the age of the site and
+  the camera number in line 1; episode 1 named in paragraph 2; then 316 to 3,164, the 7-a-day quota, the daily job
+  and the 0/45 to 43/45 line, the embarrassing baseline, the head terms that are nowhere, what does rank, the
+  cameras, the truncated titles, and the 16-of-99 discipline.</p>
   <div class="copybar"><button class="copybtn" data-copy="post-he">Copy Hebrew post</button></div>
   {pre("post-he", POST_HE, True)}
 </section>
@@ -135,13 +141,35 @@ BODY = f"""
 </section>
 
 <section class="step">
-  <h2>03 &middot; The truncated-titles section</h2>
+  <h2>03 &middot; How much indexing plumbing stays in the post?</h2>
+  <p class="q">The 3,164 pages, the 7-a-day quota and the 09:40 job are now the first half. It is the most useful
+  material for anyone else launching a site, and it is also the least dramatic thing in the post.</p>
+  <div id="plumbing" data-persist-choice class="opts small">
+    <div class="opt" data-value="keep"><div class="opt-head"><span class="dot"></span>
+      <b>Keep all of it</b> <span class="rec">RECOMMENDED</span></div>
+      <p class="why">This is what you asked for and it is the part nobody writes down: that the API will tell you
+      the status but will not ask for the crawl, that the ask is a manual click capped at 7 a day, and that the
+      answer is therefore the sitemap plus a priority queue. The 0/45 to 43/45 line is the only real result in the
+      whole post.</p></div>
+    <div class="opt" data-value="tighter"><div class="opt-head"><span class="dot"></span>
+      <b>Keep it, drop the priority order</b></div>
+      <p class="why">Cuts the "English first, then Italian, German, Croatian, pairs last" sentence. Saves about 150
+      characters and loses the one detail that shows it was thought about rather than fired off.</p></div>
+    <div class="opt" data-value="short"><div class="opt-head"><span class="dot"></span>
+      <b>Two lines, then straight to the rankings</b></div>
+      <p class="why">"3,164 pages, 7 requests a day, a job that counts every morning." Faster to the cameras, but
+      then the post is a rankings post again and the week-one angle is gone.</p></div>
+  </div>
+</section>
+
+<section class="step">
+  <h2>04 &middot; The truncated-titles section</h2>
   <p class="q">278 of 396 of your own pages were broken in search results for two months. It is the strongest
   material in the post and it is also a bug in your own product, which the ledger says you cut.</p>
   <div id="titles" data-persist-choice class="opts small">
     <div class="opt" data-value="keep"><div class="opt-head"><span class="dot"></span>
       <b>Keep as drafted</b> <span class="rec">RECOMMENDED</span></div>
-      <p class="why">The croatian-ferries rule was about a <i>launch</i> post, where an unfixed bug is a reason not to
+      <p class="why">It is now the second half rather than the spine, which lowers the risk. The croatian-ferries rule was about a <i>launch</i> post, where an unfixed bug is a reason not to
       click. This is fixed, shipped and tested, and finding it is the payoff of the whole post. Without it the post
       is only "the long tail ranks", which everyone already knows.</p></div>
     <div class="opt" data-value="one-line"><div class="opt-head"><span class="dot"></span>
@@ -156,7 +184,7 @@ BODY = f"""
 </section>
 
 <section class="step">
-  <h2>04 &middot; The one click</h2>
+  <h2>05 &middot; The one click</h2>
   <p class="q">"One click. 172 impressions. A full month." Fourth consecutive post with a drafted-in embarrassing
   number, and the first three all survived your edit untouched.</p>
   <div id="baseline" data-persist-choice class="opts small">
@@ -174,7 +202,7 @@ BODY = f"""
 </section>
 
 <section class="step">
-  <h2>05 &middot; The takeaway line near the end</h2>
+  <h2>06 &middot; The takeaway line near the end</h2>
   <p class="q">"I stopped trying to rank for Croatia ferries and started building around what already works." On
   episode 1 you rewrote every generalisation back into first person - this one already is first person, but it is
   still the closest thing in the post to advice.</p>
@@ -193,7 +221,7 @@ BODY = f"""
 </section>
 
 <section class="step">
-  <h2>06 &middot; Episode 3</h2>
+  <h2>07 &middot; Episode 3</h2>
   <p class="q">Episode 1 promised the queue camera as the next one, and this post is about cameras in search rather
   than counting cars in the queue. Worth deciding what episode 3 is before someone asks.</p>
   <div id="next" data-persist-choice class="opts small">
@@ -221,6 +249,15 @@ BODY = f"""
 <section class="step">
   <h2>Honest notes, and what I checked</h2>
   <ul>
+    <li><b>The indexing numbers are from issue #23 and <code>ops/gsc/indexed.py</code>:</b> sitemap 316 &rarr; 3,164
+      discovered, reported Success on 5 Sept; first day's inspection requests all rejected on quota; the launchd job
+      <code>com.ferry-watch.gsc</code> runs 09:40 daily, pulls island URLs from the live sitemap and posts the tally.
+      Day one en 0/45 · it 0/45 · de 0/45 · hr 0/45; today en 43/45 · it 20/45 · de 32/45 · hr 15/45. The post says
+      "about 7-8 a day" because that is what the quota actually behaves like, and the script's own docstring is the
+      source for "the API cannot request indexing".</li>
+    <li><b>The site's age:</b> the post says under a week, which matches the public launch. The GSC window
+      (7 Aug &ndash; 3 Sept) predates that - the domain was crawlable before the launch post - so the 172 impressions
+      are the pre-launch trickle. If you would rather not blur those two, say so and I will time-box the sentence.</li>
     <li><b>Every query and position is read from the snapshot,</b> not from the handoff:
       <code>~/.claude/skills/analytics/ledger/snapshots/2026-09-06.json</code>, GSC 2026-08-07 to 2026-09-03.
       1 click, 172 impressions, CTR 0.58%, average position 20.7. hak merag 5 (2 impressions), hak kamera porozina 8,

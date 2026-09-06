@@ -21,7 +21,7 @@ S = {
    'before_v':'<div class="r">“fähre kroatien” <span class="hi">49</span></div>'
               '<div class="r">“fähre split supetar” <span class="hi">57</span></div>'
               '<div class="r">“dubrovnik to split ferry” <span class="hi">67</span></div>'
-              '<span class="sm">The head terms. A two month old site is not winning these.</span>',
+              '<span class="sm">The head terms. A week old site is not winning these.</span>',
    'after_l':'WHAT ACTUALLY RANKS',
    'after_v':'<div class="r">“hak merag” <span class="hi">5</span></div>'
              '<div class="r">“hak kamera porozina” <span class="hi">8</span></div>'
@@ -42,10 +42,10 @@ S = {
    'fix_l':'WHAT IT SHOWS NOW',
    'fix_v':'Fähren ab Merag (Cres) · Fahrplan und Live-Kamera',
    'fix_n':'Under 60, and it finally says the thing nobody else has.',
-   'arch':[('99 PORTS','every port page on<br>the site, in four<br>languages'),
-           ('16 WITH A CAMERA','checked against the<br>camera map, one by<br>one, not asserted'),
-           ('83 SAY NOTHING','a port with no camera<br>promises no camera.<br>That is the whole rule')],
-   'arch_foot':'The temptation was to put "live camera" on all 99 and let Google sort it out. That is how you teach a search engine that your titles lie.',
+   'arch':[('3,164 IN THE SITEMAP','up from 316 in one<br>deploy. Google finds<br>them on its own<br>schedule'),
+           ('7 A DAY','the API reports<br>index status but<br>cannot request it.<br>That is a manual click'),
+           ('110 OF 180 INDEXED','island pages, four<br>languages, counted<br>every morning at 09:40<br>from the live sitemap')],
+   'arch_foot':'en 43/45 &middot; it 20/45 &middot; de 32/45 &middot; hr 15/45. It was 0/45 across the board when the pages shipped.',
    'foot':'croatianferries.com',
  },
  'he': {
@@ -63,7 +63,7 @@ S = {
    'before_v':'<div class="r">'+L('"fähre kroatien"')+' <span class="hi">49</span></div>'
               '<div class="r">'+L('"fähre split supetar"')+' <span class="hi">57</span></div>'
               '<div class="r">'+L('"dubrovnik to split ferry"')+' <span class="hi">67</span></div>'
-              '<span class="sm">ביטויי הראש. אתר בן חודשיים לא מנצח עליהם.</span>',
+              '<span class="sm">ביטויי הראש. אתר בן שבוע לא מנצח עליהם.</span>',
    'after_l':'מה באמת מדורג',
    'after_v':'<div class="r">'+L('"hak merag"')+' <span class="hi">5</span></div>'
              '<div class="r">'+L('"hak kamera porozina"')+' <span class="hi">8</span></div>'
@@ -84,10 +84,10 @@ S = {
    'fix_l':'מה מוצג עכשיו',
    'fix_v':'Trajekti iz luke Merag (Cres) · red plovidbe i kamera uživo',
    'fix_n':'מתחת ל-60, וסוף סוף אומר את הדבר שאין לאף אחד אחר: '+L('kamera uživo')+', מצלמה חיה.',
-   'arch':[('99 נמלים','כל עמודי הנמלים<br>באתר, בארבע<br>שפות'),
-           ('16 עם מצלמה','נבדקו מול מפת<br>המצלמות, אחד אחד,<br>ולא הוכרזו'),
-           ('83 לא אומרים כלום','נמל בלי מצלמה לא<br>מבטיח מצלמה. זה<br>כל הכלל')],
-   'arch_foot':'הפיתוי היה לכתוב "מצלמה חיה" על כל ה-99 ולתת לגוגל לסדר את זה. ככה מלמדים מנוע חיפוש שהכותרות שלך משקרות.',
+   'arch':[('3,164 בסייטמאפ','עלה מ-316 בדיפלוי<br>אחד. גוגל מוצא<br>אותם בקצב שלו'),
+           ('7 ביום','ה-'+L('API')+' יודע להגיד<br>אם עמוד מאונדקס,<br>אבל לא לבקש. הבקשה<br>היא קליק ידני'),
+           ('110 מתוך 180','עמודי איים, ארבע<br>שפות, נספרים כל בוקר<br>ב-9:40 מהסייטמאפ החי')],
+   'arch_foot':L('en 43/45')+' &middot; '+L('it 20/45')+' &middot; '+L('de 32/45')+' &middot; '+L('hr 15/45')+'. ביום שהעמודים עלו זה היה 0/45 בכל השפות.',
    'foot':'croatianferries.com',
  },
 }
