@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How to make a glowing HDR logo on LinkedIn (the Wiz trick, step by step) · Gal Tidhar</title>
-  <meta name="description" content="Step by step: why the Wiz logo glows on LinkedIn (an HDR trick, Rec.2020 + PQ) and a one-command tool that makes any logo, including yours, burn the same way.">
+  <title>Glowing LinkedIn logo: the HDR trick, and how to make your own · Gal Tidhar</title>
+  <meta name="description" content="Why some LinkedIn logos glow: an HDR trick (Rec.2020 + PQ) that makes white burn brighter than the feed around it. How it works, and a one-command tool to make any logo do it.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/hdr-glow-logo/">
   <meta name="theme-color" content="#0a1628">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="How to make a glowing HDR logo on LinkedIn (the Wiz trick, step by step)">
-  <meta property="og:description" content="The HDR trick behind that glowing Wiz logo on LinkedIn — reverse-engineered, rebuilt, and packaged as a one-command tool and Claude skill.">
+  <meta property="og:title" content="Glowing LinkedIn logo: the HDR trick, and how to make your own">
+  <meta property="og:description" content="The HDR trick behind glowing logos on LinkedIn — reverse-engineered, rebuilt, and packaged as a one-command tool and Claude skill.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/hdr-glow-logo/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/hdr-glow-logo/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Port + Wiz + Claude = ZaZet, white logos glowing on a dark background">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="How to make a glowing HDR logo on LinkedIn (the Wiz trick, step by step)">
-  <meta name="twitter:description" content="The HDR trick behind that glowing Wiz logo on LinkedIn — reverse-engineered and packaged as a one-command tool + Claude skill.">
+  <meta name="twitter:title" content="Glowing LinkedIn logo: the HDR trick, and how to make your own">
+  <meta name="twitter:description" content="The HDR trick behind glowing logos on LinkedIn — reverse-engineered and packaged as a one-command tool + Claude skill.">
   <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/hdr-glow-logo/og.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
   <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -29,8 +29,8 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "How to make a glowing HDR logo on LinkedIn (the Wiz trick, step by step)",
-    "description": "The HDR trick behind that glowing Wiz logo on LinkedIn (Rec.2020 + PQ), reverse-engineered and packaged as a one-command tool and Claude skill.",
+    "headline": "Glowing LinkedIn logo: the HDR trick, and how to make your own",
+    "description": "The HDR trick behind glowing logos on LinkedIn (Rec.2020 + PQ), reverse-engineered and packaged as a one-command tool and Claude skill.",
     "image": "https://gal.tidhar.org.il/blog/hdr-glow-logo/og.png",
     "datePublished": "2026-07-23",
     "dateModified": "2026-07-23",
@@ -159,7 +159,7 @@
         </figure>
         <blockquote>Engineers think about performance. Designers think about aesthetics. Someone at Wiz thought about the physics of light — and went around both.</blockquote>
 
-        <h2 class="spec-head">I rebuilt it</h2>
+        <h2 class="spec-head">How to make a LinkedIn HDR logo yourself</h2>
         <p class="prose">It took an hour, but I reproduced it — then turned it into a tiny tool and an installable skill, so you don't need the hour. The mechanism, in code, is small: tag a PNG with a <code>cICP</code> chunk declaring BT.2020 primaries + PQ transfer, strip the colour tags that would contradict it, and rescale the pixel values so white lands on a brightness you choose (the calibration knob — 10,000 nits clips and sears the eye, so the default is a saner 1,000).</p>
         <pre><code># make any logo glow — one command
 python3 hdr_glow.py your-logo.png your-logo-hdr.png --nits 4000
@@ -211,5 +211,6 @@ python3 hdr_glow.py your-logo.png your-logo-hdr.png --nits 4000</code></pre>
   <footer>
     <p>© 2026 Gal Tidhar · <a href="/">gal.tidhar.org.il</a> · <a href="https://github.com/tatarco">GitHub</a> · <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
   </footer>
+<script src="/analytics.js" defer></script>
 </body>
 </html>
