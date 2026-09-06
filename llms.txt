@@ -21,6 +21,8 @@ Gal Tidhar is a hands-on staff engineer who builds backend and platform systems 
 
 Deep, first-person write-ups on AI coding agents, developer tooling, self-hosting, and AI cost. All 26 posts, each with a plain-text `.md` twin next to the HTML page for clean extraction:
 
+- [I rank 5th for a port camera I never tried to rank for](https://gal.tidhar.org.il/blog/ferry-analytics/) — plain text: [index.md](https://gal.tidhar.org.il/blog/ferry-analytics/index.md) — 2026-09-06
+- [I posted a ferry site into 52 Facebook groups and used the comments as my issue tracker](https://gal.tidhar.org.il/blog/ferry-outreach/) — plain text: [index.md](https://gal.tidhar.org.il/blog/ferry-outreach/index.md) — 2026-09-05
 - [don't punt: two words that stop Claude Code handing work back](https://gal.tidhar.org.il/blog/dont-punt/) — plain text: [index.md](https://gal.tidhar.org.il/blog/dont-punt/index.md) — 2026-09-04
 - [I was done decrypting PDFs to find my next ferry](https://gal.tidhar.org.il/blog/croatian-ferries/) — plain text: [index.md](https://gal.tidhar.org.il/blog/croatian-ferries/index.md) — 2026-09-03
 - [WhatsApp went silent for two weeks. The bug was mine.](https://gal.tidhar.org.il/blog/whatsapp-presence/) — plain text: [index.md](https://gal.tidhar.org.il/blog/whatsapp-presence/index.md) — 2026-08-28
