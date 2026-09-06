@@ -222,6 +222,11 @@ en/supetar   Supetar (Bra&#269;) ferry timetable and live camera
 en/bol       Bol (Bra&#269;) ferry timetable &middot; Croatian Ferries      &lt;- no camera, no claim</code></pre>
         <p class="prose"><strong>16 of the 99 ports have a camera.</strong> The tempting version is to put "live camera" on all 99 and let the click-through sort it out. That is how you teach a search engine, and a person, that your titles are not to be trusted - and the whole value of this site over an operator PDF is that it does not waste your time. So the 16 are resolved against the camera map at build time rather than asserted, and the other 83 promise nothing they do not have.</p>
 
+        <h2 class="spec-head">Postscript: two of the best-ranking pages were 404s</h2>
+        <p class="prose">After this was written I ran Cloudflare's agent-readiness scan on the domain, and its <em>demand signals</em> panel - paths AI assistants ask for and do not get - was the most useful thing in the whole exercise. The dead paths were route URLs without their disambiguating suffix. When a second operator or a second line with the same endpoints appeared, the slug gained a suffix (<code>split-supetar-brac</code> became <code>split-supetar-brac-631</code> and <code>split-supetar-brac-krilo</code>) and the original URL was left to die.</p>
+        <p class="prose">Search Console was still serving those old URLs. <code>de/ferry/zadar-gazenica-preko-ugljan/</code>, <strong>position 9</strong>. <code>de/ferry/zadar-gazenica-brbinj-dugi-otok/</code>, <strong>position 11</strong>. Both 404. Two of the best-ranking pages on the site, in the table I had just finished celebrating three paragraphs earlier, were dead links - and the ranking table cannot tell you that, because it reports the URL Google shows, not the status code it gets. Every superseded slug now 301s to a real page in all four languages, 124 rules generated from the route list.</p>
+        <p class="prose">The other number from that scan puts the whole post in proportion. In 24 hours: <strong>596 AI answer retrievals</strong> - ChatGPT-User 363, Applebot 213, PerplexityBot 20 - against <strong>1 Google click in a month</strong>. The audience that has actually found this site is not human yet.</p>
+
         <h2 class="spec-head">What is still open</h2>
         <div class="prose">
         <ul>
