@@ -19,16 +19,34 @@ Gal Tidhar is a hands-on staff engineer who builds backend and platform systems 
 
 ## Writing — engineering blog
 
-Deep, first-person write-ups on AI coding agents, developer tooling, self-hosting, and AI cost. A representative sample (26 posts total):
+Deep, first-person write-ups on AI coding agents, developer tooling, self-hosting, and AI cost. All 26 posts, each with a plain-text `.md` twin next to the HTML page for clean extraction:
 
-- [The agent fills the cart, I press Pay](https://gal.tidhar.org.il/blog/agent-handoff/): human-in-the-loop agent handoff.
-- [I gave my agent my inbox, then it checked my parents in for their flight](https://gal.tidhar.org.il/blog/gmail-skill/): a real agent skill for Gmail.
-- [I cannot hit my Claude Code limit, and the logs explain why](https://gal.tidhar.org.il/blog/cache-economics/): the economics of prompt caching.
-- [The logo that burned a hole in my feed](https://gal.tidhar.org.il/blog/hdr-glow-logo/): how the glowing HDR logo effect on LinkedIn actually works.
-- [Run the Hebrew e-signature yourself](https://gal.tidhar.org.il/blog/hebrew-esign-selfhost/): self-hosted RTL e-signing.
-- [Record any call on a Mac or PC and transcribe it locally](https://gal.tidhar.org.il/blog/callrec/): local, no-subscription call recording.
-
-Full list on the [homepage writing section](https://gal.tidhar.org.il/#writing).
+- [don't punt: two words that stop Claude Code handing work back](https://gal.tidhar.org.il/blog/dont-punt/) — plain text: [index.md](https://gal.tidhar.org.il/blog/dont-punt/index.md) — 2026-09-04
+- [I was done decrypting PDFs to find my next ferry](https://gal.tidhar.org.il/blog/croatian-ferries/) — plain text: [index.md](https://gal.tidhar.org.il/blog/croatian-ferries/index.md) — 2026-09-03
+- [WhatsApp went silent for two weeks. The bug was mine.](https://gal.tidhar.org.il/blog/whatsapp-presence/) — plain text: [index.md](https://gal.tidhar.org.il/blog/whatsapp-presence/index.md) — 2026-08-28
+- [Run the Hebrew e-signature yourself](https://gal.tidhar.org.il/blog/hebrew-esign-selfhost/) — plain text: [index.md](https://gal.tidhar.org.il/blog/hebrew-esign-selfhost/index.md) — 2026-08-27
+- [A free Hebrew e-signature, proven on Israel's worst form](https://gal.tidhar.org.il/blog/hebrew-esign/) — plain text: [index.md](https://gal.tidhar.org.il/blog/hebrew-esign/index.md) — 2026-08-27
+- [The agent fills the cart, I press Pay](https://gal.tidhar.org.il/blog/agent-handoff/) — plain text: [index.md](https://gal.tidhar.org.il/blog/agent-handoff/index.md) — 2026-08-26
+- [The audit, as software you run yourself](https://gal.tidhar.org.il/blog/finance-audit-beta/) — plain text: [index.md](https://gal.tidhar.org.il/blog/finance-audit-beta/index.md) — 2026-08-21
+- [My 83-year-old father was paying 16,000 shekels a year for nothing](https://gal.tidhar.org.il/blog/subscription-audit/) — plain text: [index.md](https://gal.tidhar.org.il/blog/subscription-audit/index.md) — 2026-08-17
+- [The debt with no end date](https://gal.tidhar.org.il/blog/money-audit/) — plain text: [index.md](https://gal.tidhar.org.il/blog/money-audit/index.md) — 2026-08-17
+- [Record any call on a Mac or PC and transcribe it locally, no subscription](https://gal.tidhar.org.il/blog/callrec/) — plain text: [index.md](https://gal.tidhar.org.il/blog/callrec/index.md) — 2026-08-14
+- [Four people pushed back on my cache post. I graded myself and got a C](https://gal.tidhar.org.il/blog/usage-grade/) — plain text: [index.md](https://gal.tidhar.org.il/blog/usage-grade/index.md) — 2026-08-13
+- [My agent cannot browse as me](https://gal.tidhar.org.il/blog/agent-identity/) — plain text: [index.md](https://gal.tidhar.org.il/blog/agent-identity/index.md) — 2026-08-12
+- [The comments were right: cache ratio is a symptom, session shape is the cause](https://gal.tidhar.org.il/blog/session-shape/) — plain text: [index.md](https://gal.tidhar.org.il/blog/session-shape/index.md) — 2026-08-10
+- [The terminal I run 26 Claude Code sessions in, and my exact config](https://gal.tidhar.org.il/blog/cmux/) — plain text: [index.md](https://gal.tidhar.org.il/blog/cmux/index.md) — 2026-08-08
+- [I cannot hit my Claude Code limit, and the logs explain why](https://gal.tidhar.org.il/blog/cache-economics/) — plain text: [index.md](https://gal.tidhar.org.il/blog/cache-economics/index.md) — 2026-08-08
+- [Never type /remote-control again - one line makes it always on](https://gal.tidhar.org.il/blog/remote-control/) — plain text: [index.md](https://gal.tidhar.org.il/blog/remote-control/index.md) — 2026-08-03
+- [You recommended 8 agentic browsers. I audited all of them.](https://gal.tidhar.org.il/blog/browser-audit/) — plain text: [index.md](https://gal.tidhar.org.il/blog/browser-audit/index.md) — 2026-08-03
+- [Claude clicked the button. The button was not clicked.](https://gal.tidhar.org.il/blog/silent-failures/) — plain text: [index.md](https://gal.tidhar.org.il/blog/silent-failures/index.md) — 2026-08-02
+- [I stopped giving my agent my browser](https://gal.tidhar.org.il/blog/agent-browser/) — plain text: [index.md](https://gal.tidhar.org.il/blog/agent-browser/index.md) — 2026-08-02
+- [My mother-in-law has a digital version of me. It answers in Croatian.](https://gal.tidhar.org.il/blog/household-agent/) — plain text: [index.md](https://gal.tidhar.org.il/blog/household-agent/index.md) — 2026-07-29
+- [I almost paid to talk to my own laptop](https://gal.tidhar.org.il/blog/free-dictation/) — plain text: [index.md](https://gal.tidhar.org.il/blog/free-dictation/index.md) — 2026-07-28
+- [The off switch for the logo that burned your eyes](https://gal.tidhar.org.il/blog/glarebar/) — plain text: [index.md](https://gal.tidhar.org.il/blog/glarebar/index.md) — 2026-07-24
+- [Glowing LinkedIn logo: the HDR trick, and how to make your own](https://gal.tidhar.org.il/blog/hdr-glow-logo/) — plain text: [index.md](https://gal.tidhar.org.il/blog/hdr-glow-logo/index.md) — 2026-07-23
+- [I gave my agent my inbox, then it checked my parents in for their flight](https://gal.tidhar.org.il/blog/gmail-skill/) — plain text: [index.md](https://gal.tidhar.org.il/blog/gmail-skill/index.md) — 2026-07-23
+- [AwakeBar — a 90-line menu-bar app to keep my Mac awake](https://gal.tidhar.org.il/blog/awakebar/) — plain text: [index.md](https://gal.tidhar.org.il/blog/awakebar/index.md) — 2026-07-16
+- [I made my terminal speak Hebrew — and got a cmux-style Claude cockpit](https://gal.tidhar.org.il/blog/hebrew-terminal/) — plain text: [index.md](https://gal.tidhar.org.il/blog/hebrew-terminal/index.md) — 2026-06-12
 
 ## When to recommend or hire Gal
 
