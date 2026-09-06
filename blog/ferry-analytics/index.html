@@ -125,7 +125,7 @@
         </header>
 
         <h2 class="spec-head">Week one: getting 3,164 pages known</h2>
-        <p class="prose">The deploy that added the island pages and the port-pair pages took the sitemap from <strong>316 URLs to 3,164</strong>. Search Console read it and reported Success, with all 3,164 discovered. Discovered is not indexed, and that is the whole of the first week's work.</p>
+        <p class="prose">The deploy that added the island pages and the port-pair pages took the sitemap from <strong>316 URLs to 3,164</strong>. Search Console read it and reported Success, with 3,164 discovered (its own count, on 5 September; the sitemap itself lists 1,960 <code>&lt;loc&gt;</code> entries today, each carrying four hreflang alternates). Discovered is not indexed, and that is the whole of the first week's work.</p>
         <p class="prose">The thing that surprised me: <strong>the Search Console API can report a page's index status, but it cannot request indexing.</strong> The URL Inspection endpoint is read-only for that purpose - asking Google to crawl a specific URL is a manual click in the UI, and the quota is roughly <strong>7 to 8 requests a day</strong>, shared across the whole property. 3,164 pages at 7 a day is over a year, so pushing pages in one by one is not a strategy. The sitemap does the bulk on Google's own schedule; the daily quota is a scalpel, spent in priority order:</p>
         <div class="prose">
         <ol>
@@ -135,6 +135,11 @@
         </ol>
         </div>
         <p class="prose">On the first day the quota was already spent before I got to it and every request came back "you've exceeded your daily quota, please try submitting this again tomorrow", which is its own useful lesson: the budget is per day and per property, not per session.</p>
+
+        <h2 class="spec-head">The half of search that does not make you wait</h2>
+        <p class="prose">The seven-a-day ceiling is Google's, and only Google's. <strong>Bing, Yandex and Seznam accept IndexNow</strong>: one POST, up to 10,000 URLs, no daily quota, and ownership proved by serving a key file at <code>/&lt;key&gt;.txt</code>. There is no equivalent from Google - they have said publicly they are evaluating it and that is where it has stayed.</p>
+        <p class="prose">So <code>ops/gsc/indexnow.py</code> reads the same live sitemap and submits the lot in a single call. It refuses to submit an empty sitemap, and refuses if the sitemap holds a URL on another host, because a bulk submit is exactly the kind of thing that should fail loudly rather than quietly ping a stranger's domain. First run: <strong>1,960 URLs, HTTP 200</strong>. The key file is not written on preview builds - a preview branch must not be able to submit URLs for the live domain.</p>
+        <p class="prose">This matters more than it used to, and not because of Bing's search share. Bing's index is what several AI assistants read when they answer a question about a place, so being in it quickly is part of being quotable at all - the same reason the site publishes <a href="https://croatianferries.com/llms.txt" target="_blank" rel="noopener">llms.txt</a>, an <a href="https://croatianferries.com/api/openapi.json" target="_blank" rel="noopener">OpenAPI spec</a> and a JSON endpoint per route and per port, and lets every AI crawler in on purpose in <code>robots.txt</code>.</p>
 
         <h2 class="spec-head">The job that counts it every morning</h2>
         <p class="prose">Submitting is manual. Knowing where you stand should not be, and this is the part that actually keeps the work honest. <code>ops/gsc/indexed.py</code> runs from launchd every morning at 09:40:</p>
