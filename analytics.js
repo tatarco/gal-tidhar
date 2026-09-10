@@ -1,4 +1,4 @@
-/* Consent-gated GA4 + Clarity, self-contained.
+/* GA4 in consent mode (cookieless until Accept) + consent-gated Clarity, self-contained.
    Injects its own consent bar, so any page gets tracking with one script tag.
    Blog posts had no tag at all: 76 GSC clicks reported as 2 GA4 sessions. */
 (function(){
@@ -15,13 +15,12 @@
     if(!CLARITY_ID||window.__cl)return; window.__cl=true;
     (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,'clarity','script',CLARITY_ID);
   }
-  function loadAnalytics(){
-    if(window.__loaded)return; window.__loaded=true;
-    if(GA_ID){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;document.head.appendChild(s);
-      s.onload=function(){gtag('js',new Date());gtag('config',GA_ID);};}
-    loadClarity();
-  }
-  function grantConsent(){window.__consent=true;gtag('consent','update',{analytics_storage:'granted'});loadAnalytics();}
+  /* GA4 boots at once in consent mode: analytics_storage denied means no cookie
+     and a cookieless ping only. Gated behind Accept it saw 4 sessions against
+     67 GSC clicks in a month; nobody taps Accept. Clarity still waits for it. */
+  if(GA_ID){var g=document.createElement('script');g.async=true;g.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;document.head.appendChild(g);
+    gtag('js',new Date());gtag('config',GA_ID);}
+  function grantConsent(){window.__consent=true;gtag('consent','update',{analytics_storage:'granted'});loadClarity();}
 
   var CSS="#consent-bar{position:fixed;inset-inline:0;bottom:0;z-index:9999;display:none;"+
     "gap:.9rem;align-items:center;justify-content:center;flex-wrap:wrap;"+
