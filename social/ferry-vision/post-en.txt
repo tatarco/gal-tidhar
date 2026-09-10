@@ -1,0 +1,25 @@
+TL;DR -> trying to build the best maritime portal in Croatia, episode 3: I turned public traffic cameras into a traffic light for the ferry queue. And the part that is hard to copy is not the model, it is the picture of that road empty at seven in the morning.
+
+A local from Krk who sends me feedback on the site said something I could not get out of my head: "I know exactly where the last car is, and I know whether I have a place or not." He does not count cars. He looks at where the queue ends.
+
+So I stopped counting. The rule I work by now is: I do not care about the word car, only whether this patch of road is still road.
+
+How that is measured. Every square I marked has a reference of what it looks like empty at that hour of the day, a per-pixel median across nine days at the same hour. A car does not survive a median like that, because it stands somewhere different every day, while tarmac, paint and shadows do. Then the brightness is levelled (a passing cloud moves the whole square together, a car moves only part of it), and I count what fraction of the pixels moved more than 22 grey levels.
+
+A whole day of readings comes out with two humps: empty road 0-10 percent, occupied 30-60, and a valley between them. The threshold sits in the valley. I did not pick it by hand.
+
+Three such squares on two cameras are green, yellow and red. Red is the far bend, and that is where this method dies - a car there is a handful of pixels and the foliage moves more than it does - so the bend keeps a detector. And a colour only counts if it holds for two consecutive minutes, because a car driving down to the restaurant shows in one frame and not the next.
+
+Out of this comes the thing I actually wanted: how long until the port is full. Green to full is a median of 18 minutes, yellow to full 14. It is not a model predicting anything, it is what 16 cycles over nine days measured.
+
+The ferry itself is read completely differently, by edge density rather than colour or brightness: a ship is railings, windows and a hull line, and the sea stays smooth however the light falls on it. Empty ramp 0.05-0.14, ship alongside 0.21-0.28. That is how every arrival and departure gets logged, and on 8 Sept the camera saw 16 departures at Merag against 13 printed in the timetable. The camera corrected the schedule.
+
+And yesterday the thing that changed the page most. At 17:17 the light went red, the queue had reached the bend. At 17:33 one ferry left and took all of it. At 18:07 the road was green. So the page no longer writes your sailing off when the road is full. It says the two measured things - the port has been full since X, the ship is on the ramp - and leaves you the photograph.
+
+I do not print a vehicle count. A ferry here takes 100+ vehicles, the camera sees a small part of them, and any number I write there would be falsely precise.
+
+Before all of this I spent weeks on a beautiful physical explanation of why "the camera cannot see that far". It sees fine. YOLO-World returned 2 cars on a frame with fifteen cars in a line. Plain yolov8 found 15 inside the counting square alone. Every conclusion I built about a resolution wall was a model's miss that I dressed up as optics.
+
+And here is the moat: a detector is a five-minute pip install. What you cannot download is what this road looks like empty at 06:00, at 13:00 and at 21:00. I have 311,537 frames, five cameras, one frame every 20 seconds, since 29 August. It is not clever, it just accumulates, and the clock only starts on the day you begin keeping them.
+
+Code, numbers and frames in the first comment, and you can go and watch the light live.

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I stopped counting cars. I ask whether that patch is still road. &middot; Gal Tidhar</title>
+  <meta name="description" content="A ferry queue read from public traffic cameras without detecting anything: every marked square keeps a reference of what it looks like empty at that hour, a per-pixel median across nine days, and a reading is the fraction of pixels that no longer match. Two humps, a threshold in the valley, green/yellow/red, and time-to-full measured from the archive rather than predicted. Plus the ship on the ramp read by edge density, which found three sailings the timetable does not print.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/ferry-vision/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="I stopped counting cars. I ask whether that patch is still road.">
+  <meta property="og:description" content="A ferry queue read from public traffic cameras without detecting anything: every marked square keeps a reference of what it looks like empty at that hour, a per-pixel median across nine days, and a reading is the fraction of pixels that no longer match. Two humps, a threshold in the valley, green/yellow/red, and time-to-full measured from the archive rather than predicted. Plus the ship on the ramp read by edge density, which found three sailings the timetable does not print.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/ferry-vision/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/ferry-vision/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="I stopped counting cars. I ask whether that patch is still road.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="I stopped counting cars. I ask whether that patch is still road.">
+  <meta name="twitter:description" content="A ferry queue read from public traffic cameras without detecting anything: every marked square keeps a reference of what it looks like empty at that hour, a per-pixel median across nine days, and a reading is the fraction of pixels that no longer match. Two humps, a threshold in the valley, green/yellow/red, and time-to-full measured from the archive rather than predicted. Plus the ship on the ramp read by edge density, which found three sailings the timetable does not print.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/ferry-vision/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "I stopped counting cars. I ask whether that patch is still road.",
+    "description": "A ferry queue read from public traffic cameras without detecting anything: every marked square keeps a reference of what it looks like empty at that hour, a per-pixel median across nine days, and a reading is the fraction of pixels that no longer match. Two humps, a threshold in the valley, green/yellow/red, and time-to-full measured from the archive rather than predicted. Plus the ship on the ramp read by edge density, which found three sailings the timetable does not print.: the sitemap goes from 316 pages to 3,164, Google's API will report index status but will not request indexing, and the quota for asking is about 7 a day. A job counts the tally every morning at 09:40 - en 0/45 to 43/45 in a few days. Then the first data: 1 click, 172 impressions, the head terms nowhere, and the only pages ranking are the live port cameras and the named port pairs nobody aimed at.",
+    "image": "https://gal.tidhar.org.il/blog/ferry-vision/og.png",
+    "datePublished": "2026-09-10",
+    "dateModified": "2026-09-10",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/ferry-vision/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "computer vision, background subtraction, traffic cameras, YOLOv8, ferry queue, edge density, croatianferries.com, Croatia, ferries"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="https://croatianferries.com/" target="_blank" rel="noopener">The site &#8599;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / COMPUTER VISION</span>
+          <p class="role-line">Croatia &middot; Traffic cameras &middot; Ferry queues &middot; croatianferries.com</p>
+          <h1 class="title">I stopped counting cars. I ask whether that patch is still road.</h1>
+          <p class="meta-line"><strong>2026-09-10</strong> &nbsp;&middot;&nbsp; ~12 min read &nbsp;&middot;&nbsp; by Gal Tidhar</p>
+          <p class="lead">Episode 1 of this series was distribution: <a href="/blog/ferry-outreach/">52 Facebook groups and the comments as my issue tracker</a>. Episode 2 was <a href="/blog/ferry-analytics/">week one in search</a>. This one is the piece episode 1 promised: <strong>a live ferry queue read from public traffic cameras</strong>. It works, it is on the site, and the part of it that is genuinely hard to copy is not the model. It is the picture of that road empty at seven in the morning, which you can only get by having watched the road for nine days first.</p>
+        </header>
+
+        <h2 class="spec-head">The sentence that changed the design</h2>
+        <p class="prose">Dennis lives on Krk and uses Valbiska&ndash;Merag regularly. He sends me feedback on the site, and in a voice note he said this:</p>
+        <blockquote class="prose"><p>&ldquo;On Valbiska I need to just check how many, I would say, <strong>rows</strong> - I know when I see it, I know if I can get on or not. It's hard to explain in English. And also on Merag, I know exactly where <strong>the last car</strong> is, if I have a place or not.&rdquo;</p></blockquote>
+        <p class="prose">He does not count cars. Nobody counts cars. He looks at <em>where the queue ends</em> and compares it to a landmark he has in his head. That is a completely different computer-vision problem from the one I had been solving, and a much easier one.</p>
+
+        <h2 class="spec-head">What I had been doing wrong, for weeks</h2>
+        <p class="prose">The project ran for a long time on an object detector, counting vehicles in a region of interest. Every time the number came out too small I produced a physical explanation: the camera is 300 metres from the bend, a car there is eight pixels tall, there is a resolution wall, tiled inference will not save it, upscaling will not save it. All of that sounded right and all of it was wrong.</p>
+        <p class="prose">The detector was YOLO-World, open-vocabulary, prompted with &ldquo;car&rdquo;, &ldquo;van&rdquo;, &ldquo;camper van&rdquo;. On <code>merag/488/2026-09-06/073003.jpg</code> - a frame with a visible line of about fifteen cars up the road - it returned <strong>2 boxes for the entire frame</strong>. Plain pretrained <code>yolov8s.pt</code> on COCO classes, confidence 0.10, <code>imgsz=1280</code>, found <strong>15 inside the counting region alone</strong>. Across one Sunday at Merag: mean 2.2 against 8.0, max 6 against 15.</p>
+        <p class="prose">The tell had been sitting in my own code comment for a fortnight: a threshold change &ldquo;cut the 08:08 peak from 5 vehicles to 2&rdquo;. A dozen cars being seen as five, read as a threshold nuance. <strong>When a detector disagrees with a human looking at the same frame, swap the model before theorising about optics.</strong> Everything calibrated through the old detector had to be thrown away and re-measured.</p>
+
+        <h2 class="spec-head">Not road</h2>
+        <p class="prose">Even with a working detector, counting is the wrong quantity. A ferry on this coast takes 100+ vehicles and the camera resolves a fraction of them; &ldquo;at least 12 waiting&rdquo; is both too small to inform a decision and falsely precise about what a traffic camera can see. So the rule became: <strong>I do not care about the word car. I care whether this patch of road is still road.</strong></p>
+        <p class="prose">Which is background subtraction, with one detail that makes it work outdoors:</p>
+        <div class="prose">
+        <ol>
+          <li><strong>A reference per zone, per hour of day.</strong> The per-pixel median of the same zone at the same hour across nine days. A vehicle stands somewhere different every day, so it does not survive a median of ~36 frames. Tarmac, lane paint, the guardrail and the hour's own shadows do.</li>
+          <li><strong>Level the brightness before comparing.</strong> Subtract each patch's own median inside the polygon, on both the frame and the reference. A passing cloud moves the whole square together and must not read as a car; a vehicle moves only part of it.</li>
+          <li><strong>Count what moved.</strong> The fraction of polygon pixels whose grey value differs by more than 22 levels.</li>
+        </ol>
+        </div>
+        <p class="prose">That is the whole method - about 70 lines in <code>src/ferry_watch/notroad.py</code>, OpenCV and NumPy, no training, no labels, no GPU.</p>
+
+        <h2 class="spec-head">The threshold picks itself</h2>
+        <p class="prose">Sampled every five minutes across three days of daylight (576 readings) the yellow zone's distribution comes out with two clean humps: a mass at 0&ndash;10% changed, which is empty tarmac, and a mass at 30&ndash;60%, which is occupied. Between them, a valley at 20&ndash;25% with almost nothing in it. <strong>The threshold sits in the valley - 0.20 - and it was not chosen by hand.</strong> If a zone does not produce two humps, that zone does not get to ship.</p>
+
+        <h2 class="spec-head">Green, yellow, red - and where the method dies</h2>
+        <p class="prose">Gal's three squares (marked 8 Sept) are read in order, because the road fills from the port outwards:</p>
+        <div class="prose">
+        <ul>
+          <li><strong>green</strong> - the first stretch of approach road the queue reaches, camera 487, appearance.</li>
+          <li><strong>yellow</strong> - the stretch further out, camera 487, appearance.</li>
+          <li><strong>red</strong> - the far bend, camera 488. A vehicle standing there means this sailing is full. That is a domain definition, not a tuned threshold.</li>
+        </ul>
+        </div>
+        <p class="prose">The appearance method <strong>fails completely on the bend</strong>. It reads a flat 17&ndash;22% changed whether the bend is empty, holding a car or holding a queue: at that distance a vehicle is a handful of pixels while the permanent mismatch from foliage and camera jitter is already a fifth of the patch. Eroding the polygon to exclude the greenery made it worse. So the bend keeps the detector, which works there fine (7 boxes on the busiest frame, 0 on an empty one). <strong>Two different methods, chosen per zone by which one separates.</strong></p>
+        <p class="prose">One more guard: a colour is only taken when it holds across two consecutive minutes. A car driving down to the restaurant below the port appears in one frame and not the next, and a traffic light that flickers is worse than no traffic light.</p>
+
+        <h2 class="spec-head">Time to full, measured rather than predicted</h2>
+        <p class="prose">The question a driver actually has is not &ldquo;what colour is it&rdquo;, it is &ldquo;do I have time&rdquo;. That number comes out of the archive, not out of a model: replaying nine days and timing each cycle from the moment a zone lights to the moment the bend is occupied gives <strong>green &rarr; full, median 18 minutes</strong> (16 daytime cycles, range 4&ndash;34) and <strong>yellow &rarr; full, median 14</strong> (range 2&ndash;24). Dawn sailings are a separate population, 26&ndash;60 minutes, and are excluded rather than averaged in.</p>
+        <p class="prose">The page prints the median with its range, and calls it what it is: what this port did on the days we watched it.</p>
+
+        <h2 class="spec-head">The ship: edges, not colour</h2>
+        <p class="prose">The other half of the picture is whether a boat is actually on the ramp, from camera 37. Colour fails - a hazy morning sea saturates it. Brightness fails - at night the lit ship is brighter than anything else in frame. What works is <strong>edge density</strong> in a fixed rectangle: a ship is railings, windows and a hull line, and the sea stays smooth however the light falls on it.</p>
+        <p class="prose">Measured a frame a minute across 8 September: empty 0.05&ndash;0.14, alongside 0.21&ndash;0.28 (0.26&ndash;0.28 lit at night). Threshold 0.16, in the valley again, with 1.8% of frames landing inside it - which are the arriving and departing minutes themselves.</p>
+        <p class="prose">Two things fell out of replaying that against the timetable, both non-obvious:</p>
+        <div class="prose">
+        <ul>
+          <li>The boat is alongside from about <strong>25 minutes before</strong> a departure to about <strong>5 minutes after</strong> it, not the flat &ldquo;30 minutes before&rdquo; a timetable window assumes.</li>
+          <li>On 8 September it was alongside <strong>three more times than the printed timetable lists</strong>. 16 departures seen against 13 printed. Either a second vessel or sailings Jadrolinija adds and publishes nowhere. The detector was right each time; the timetable was short.</li>
+        </ul>
+        </div>
+        <p class="prose">So the page now logs every arrival and every departure the ramp camera saw, and draws the day on a single rule: printed sailings as ticks above it, sailings actually observed as ticks below it. Twelve ticks under eight is the entire argument in one glance. No tick is paired with another - whether the 13:35 was the 13:00 running late or a boat nobody printed is not knowable from a ramp camera, and guessing would be the one dishonest thing in the picture.</p>
+
+        <h2 class="spec-head">One boat clears a full queue</h2>
+        <p class="prose">The page used to strike out the next sailing whenever the port read full, and promote the one after it. On 10 September, measured end to end, that would have been wrong for every car in the queue:</p>
+        <div class="prose">
+        <ul>
+          <li><strong>17:17</strong> - the light goes red, the queue has reached the bend, a lorry standing in the polygon.</li>
+          <li><strong>17:33</strong> - one ferry leaves, with the whole line aboard.</li>
+          <li><strong>18:07</strong> - the road is green again.</li>
+        </ul>
+        </div>
+        <p class="prose">Fifty minutes from &ldquo;you have no chance&rdquo; back to an empty road, on one sailing. <strong>Whether a full road costs you a departure is a capacity question, and no camera here measures capacity.</strong> So the page says the two things it actually measured - the port has been full since X, and the ship is on the ramp - and leaves the judgement to the person looking at the photograph beside those words. The promotion comes back only when the colour log shows red surviving a sailing; that log started the same evening.</p>
+
+        <h2 class="spec-head">Two mistakes worth more than the method</h2>
+        <div class="prose">
+        <ul>
+          <li><strong>A validation set sorted by the thing you are detecting cannot fail.</strong> An earlier lane-occupancy number was checked on five frames, four of which were the week's busiest, and the readings came out neatly ordered 0, 1, 3, 4. That felt like confirmation. It was an artefact: any measure monotone in traffic would have passed. Replayed every 20 minutes across a whole Sunday, the same number read zero on 24 of 43 daytime frames and swung 0-4-0 between neighbours. It is not on the site.</li>
+          <li><strong>Do not report a conclusion while the replays are still running.</strong> Twice in one week I sent a confident read drawn from whichever slice had finished. The signals at Valbiska were declared fine (quiet week), then misaimed and due for retirement (one Sunday), and Saturday refuted both: the vehicle counts are reachable, the sustained durations are not. The failing condition was never the count.</li>
+        </ul>
+        </div>
+
+        <h2 class="spec-head">The moat, honestly</h2>
+        <p class="prose">None of the code here is clever. A detector is <code>pip install ultralytics</code>. Background subtraction is in every textbook. What is not downloadable is <strong>what this specific road looks like empty at 06:00, at 13:00 and at 21:00, in this season, with this camera's jitter and this hillside's shadows</strong>. That reference exists because a small box in Falkenstein has been pulling a frame every twenty seconds since 29 August.</p>
+        <p class="prose">Today that is <strong>311,537 frames</strong> across five cameras - 13 days at the three Merag cameras, 10 at the two Valbiska ones. It is not a smart asset. It is a boring one that only starts accruing on the day you begin keeping it, which is exactly what makes it awkward to copy.</p>
+
+        <h2 class="spec-head">What is still not working</h2>
+        <div class="prose">
+        <ul>
+          <li><strong>Valbiska has no equivalent yet.</strong> It is a marshalling lot, not a linear road, so &ldquo;where does the queue end&rdquo; becomes &ldquo;how many lanes are full&rdquo;. Ten lanes, filling in a contiguous run that starts anywhere and wraps, and the far lanes sit 6&ndash;10 px apart - narrower than a car - so a vehicle there cannot be attributed to one lane. Built, gated behind a flag, not printed.</li>
+          <li><strong>The text lags the picture.</strong> Frames reload every 15 s, the detector runs every 10 min, and a deploy takes 3&ndash;6 min, so the sentence can sit up to ~19 minutes behind the photograph next to it. Boarding lasts about twenty minutes, so a state that only exists during boarding is mostly invisible at that lag. The page now polls a small JSON file instead of waiting for a rebuild; moving the snapshot to object storage closes the rest.</li>
+          <li><strong>Nobody can label these frames but the people standing in the queue.</strong> So the page asks: three buttons - &ldquo;doesn't match the picture?&rdquo;, &ldquo;I'm here&rdquo;, and did you get on. Those reports are re-measured against their own frame every night at 04:40, and a routine at 05:30 makes exactly <em>one</em> change, because two changes cannot be told apart in the next day's digest.</li>
+        </ul>
+        </div>
+
+        <h2 class="spec-head">What I would not do again</h2>
+        <div class="prose">
+        <ul>
+          <li><strong>Explain a bad number with physics before trying a second model.</strong> Weeks.</li>
+          <li><strong>Validate on the interesting frames.</strong> The boring middle is where a measure is actually asked to discriminate, and it is exactly what gets dropped when frames are picked by eye.</li>
+          <li><strong>Publish a quantity because it is easy to compute.</strong> The vehicle count was never wrong in an interesting way. It was the wrong question, and the hedge underneath it did not rescue it.</li>
+          <li><strong>Assume one camera holds both ends of a measurement.</strong> Building two stages inside one frame produced a green&rarr;yellow interval of exactly one minute in almost every cycle - two halves of one short stretch of road, lit at once by a single car crossing it.</li>
+        </ul>
+        </div>
+
+        <div class="cta">
+          <h3>The site</h3>
+          <p class="prose">croatianferries.com is free, has no cookies and no third-party requests, and answers one question: when does the next ferry leave, and in how many minutes. On Merag it also shows you the light, the frame it was read from, and the time it has been that colour.</p>
+          <div class="link-row">
+            <a href="https://croatianferries.com/" target="_blank" rel="noopener">croatianferries.com</a><span class="sep">&middot;</span>
+            <a href="https://croatianferries.com/en/port/merag/" target="_blank" rel="noopener">The live queue: Merag (Cres)</a><span class="sep">&middot;</span>
+            <a href="/blog/ferry-outreach/">Episode 1: 52 Facebook groups</a><span class="sep">&middot;</span>
+            <a href="/blog/ferry-analytics/">Episode 2: week one in search</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Gal Tidhar &middot; <a href="/">gal.tidhar.org.il</a> &middot; <a href="https://github.com/tatarco">GitHub</a> &middot; <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+<script src="/analytics.js" defer></script>
+</body>
+</html>
