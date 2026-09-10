@@ -1,0 +1,15 @@
+Ok I am far too excited about this, but I finally fixed the thing that has been annoying me for years.
+
+Every single time we drive back from Lošinj it is the same conversation in the car. When do we actually need to be at the ferry? Is it running all the time right now, or are we about to sit in Merag for two hours? And if we get there, is there already a queue we are not getting on?
+
+Every time, the answer was: find a PDF, squint at the little stars and footnotes, guess, then drive up and look with our own eyes.
+
+So I built the page I wanted.
+
+It tells me the next boat out of Merag is 20:30, and that I should be there by 20:06. It shows the live camera at the port right now, so I can see whether a queue is starting. And my favourite part: it shows how the boats have ACTUALLY run today, not what somebody printed back in June. 13 departures since 05:04, about one every 67 minutes, against 8 printed for that stretch. Tonight the last one left 18:57 on its printed 19:00, so the timetable is holding. Some days it really is not, and now you can just see that instead of guessing.
+
+Free, no ads, no cookies, nothing to install, and it works on your phone while you are sitting in the queue.
+
+croatianferries.com
+
+If you live on Krk, Cres or Lošinj, or you are coming over at some point, have a look and tell me what is missing or wrong. I fix whatever people complain about, usually the same day. 🚢
