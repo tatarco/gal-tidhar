@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A helmet clip designed by something that cannot see &middot; Gal Tidhar</title>
+  <meta name="description" content="My son rides ahead and turns around every twenty seconds. A Sena BiKom 20 intercom fixes that, but its clip is made for a cap, not a thick woom kids helmet. So Claude Code designed a clip in OpenSCAD: a Thingiverse plate imported as-is, two concentric curved arms into a vent hole with J-teeth that latch, leaf-spring buttons cut into the arm walls (from a Slant 3D video), zip-tie holes and a snap-off seam as plan B. Twenty versions in two days, every one a one-line parameter diff, and the model never saw the helmet. The SCAD, every STL, and what I would not do again.">
+  <meta name="author" content="Gal Tidhar">
+  <link rel="canonical" href="https://gal.tidhar.org.il/blog/helmet-clip/">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Gal Tidhar">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="A helmet clip designed by something that cannot see">
+  <meta property="og:description" content="My son rides ahead and turns around every twenty seconds. A Sena BiKom 20 intercom fixes that, but its clip is made for a cap, not a thick woom kids helmet. So Claude Code designed a clip in OpenSCAD: a Thingiverse plate imported as-is, two concentric curved arms into a vent hole with J-teeth that latch, leaf-spring buttons cut into the arm walls (from a Slant 3D video), zip-tie holes and a snap-off seam as plan B. Twenty versions in two days, every one a one-line parameter diff, and the model never saw the helmet. The SCAD, every STL, and what I would not do again.">
+  <meta property="og:url" content="https://gal.tidhar.org.il/blog/helmet-clip/">
+  <meta property="og:image" content="https://gal.tidhar.org.il/blog/helmet-clip/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A helmet clip designed by something that cannot see">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="A helmet clip designed by something that cannot see">
+  <meta name="twitter:description" content="My son rides ahead and turns around every twenty seconds. A Sena BiKom 20 intercom fixes that, but its clip is made for a cap, not a thick woom kids helmet. So Claude Code designed a clip in OpenSCAD: a Thingiverse plate imported as-is, two concentric curved arms into a vent hole with J-teeth that latch, leaf-spring buttons cut into the arm walls (from a Slant 3D video), zip-tie holes and a snap-off seam as plan B. Twenty versions in two days, every one a one-line parameter diff, and the model never saw the helmet. The SCAD, every STL, and what I would not do again.">
+  <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/helmet-clip/og.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
+  <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "A helmet clip designed by something that cannot see",
+    "description": "My son rides ahead and turns around every twenty seconds. A Sena BiKom 20 intercom fixes that, but its clip is made for a cap, not a thick woom kids helmet. So Claude Code designed a clip in OpenSCAD: a Thingiverse plate imported as-is, two concentric curved arms into a vent hole with J-teeth that latch, leaf-spring buttons cut into the arm walls (from a Slant 3D video), zip-tie holes and a snap-off seam as plan B. Twenty versions in two days, every one a one-line parameter diff, and the model never saw the helmet. The SCAD, every STL, and what I would not do again.",
+    "image": "https://gal.tidhar.org.il/blog/helmet-clip/og.png",
+    "datePublished": "2026-09-18",
+    "dateModified": "2026-09-18",
+    "inLanguage": "en",
+    "mainEntityOfPage": "https://gal.tidhar.org.il/blog/helmet-clip/",
+    "author": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "publisher": { "@type": "Person", "name": "Gal Tidhar", "url": "https://gal.tidhar.org.il/" },
+    "keywords": "OpenSCAD, Claude Code, 3D printing, PETG, snap fit, compliant mechanism, Sena BiKom 20, woom helmet, Thingiverse, parametric design"
+  }
+  </script>
+  <style>
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2'); }
+    @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2'); }
+    :root {
+      --bg: #0a1628; --grid: rgba(125,211,252,0.06); --cyan: #7dd3fc; --text: #bae6fd;
+      --ink: #e0f2fe; --muted: rgba(186,230,253,0.5); --accent: #fef08a;
+      --border: rgba(125,211,252,0.45); --panel: rgba(15,40,71,0.55); --navh: 52px; --max: 820px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--navh) + 1rem); }
+    body {
+      font-family: 'IBM Plex Mono', 'Courier New', monospace; background: var(--bg); color: var(--text);
+      font-size: 15px; line-height: 1.75; min-height: 100vh;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--navh); display: flex; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.94); }
+    .nav .inner { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { font-weight: 600; font-size: .9rem; color: var(--ink); letter-spacing: .02em; text-decoration: none; }
+    .nav-links a { font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--cyan); }
+    main { padding-top: calc(var(--navh) + 2rem); }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .sheet { border: 1px solid var(--border); padding: 2rem 1.75rem; position: relative; background: var(--panel); margin-bottom: 2.5rem; }
+    .sheet-rev { position: absolute; top: .75rem; right: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--muted); }
+    .role-line { font-size: .8rem; color: var(--cyan); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .6rem; }
+    h1.title { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 600; color: var(--ink); letter-spacing: .04em; line-height: 1.25; border-bottom: 1px dashed var(--border); padding-bottom: .85rem; margin-bottom: .75rem; }
+    .meta-line { font-size: .75rem; color: var(--muted); letter-spacing: .05em; }
+    .meta-line strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: .98rem; color: var(--text); line-height: 1.78; margin-top: 1.25rem; }
+    .lead strong { color: var(--ink); font-weight: 600; }
+    h2.spec-head { font-size: .8rem; font-weight: 600; letter-spacing: .12em; color: var(--cyan); margin: 2.75rem 0 1.1rem; display: flex; align-items: center; gap: .75rem; text-transform: uppercase; }
+    h2.spec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h3 { font-size: 1rem; color: var(--ink); font-weight: 600; margin: 1.75rem 0 .6rem; letter-spacing: .02em; }
+    p { margin: 0 0 1.05rem; max-width: 68ch; }
+    strong { color: var(--ink); font-weight: 600; }
+    .prose ul, .prose ol { margin: 0 0 1.1rem 1.2rem; max-width: 68ch; }
+    .prose li { margin-bottom: .35rem; }
+    figure { margin: 1.75rem 0; }
+    figure img { width: 100%; border: 1px solid var(--border); display: block; }
+    figcaption { font-size: .72rem; color: var(--muted); letter-spacing: .03em; margin-top: .55rem; text-align: center; }
+    pre { border: 1px solid var(--border); background: rgba(0,0,0,.22); padding: 1rem 1.15rem; overflow-x: auto; margin: 0 0 1.2rem; font-size: .82rem; line-height: 1.65; }
+    pre code { color: var(--text); }
+    code { font-family: inherit; }
+    p code, li code { color: var(--accent); background: rgba(125,211,252,.07); padding: .05rem .3rem; border-radius: 2px; font-size: .9em; }
+    blockquote { border-left: 2px solid var(--cyan); background: rgba(125,211,252,.05); padding: 1rem 1.25rem; margin: 0 0 1.25rem; font-size: .92rem; color: var(--ink); }
+    .snap { border: 1px dashed var(--border); padding: .9rem 1.1rem; margin: 0 0 1.3rem; font-size: .85rem; color: var(--text); }
+    .snap strong { color: var(--cyan); }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 0 0 1.3rem; }
+    .spec-table th, .spec-table td { border: 1px solid var(--border); padding: .6rem .8rem; text-align: left; vertical-align: top; }
+    .spec-table th { color: var(--muted); font-weight: 600; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.15); }
+    .cta { border: 1px solid var(--border); background: rgba(125,211,252,.04); padding: 1.4rem 1.5rem; margin-top: 2.5rem; }
+    .cta h3 { margin-top: 0; }
+    .link-row { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin-top: 1rem; font-size: .82rem; }
+    .link-row a { color: var(--cyan); text-decoration: none; }
+    .link-row a:hover { color: var(--accent); text-decoration: underline; }
+    .link-row .sep { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; font-size: .72rem; color: var(--muted); margin-top: 1rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="/" class="nav-logo">GAL TIDHAR</a>
+      <div class="nav-links"><a href="/">&larr; Home</a> <a href="files/woom_clip_v20.scad">The SCAD &#8599;</a></div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <article>
+        <header class="sheet">
+          <span class="sheet-rev">FIELD NOTE / 3D PRINTING</span>
+          <p class="role-line">OpenSCAD &middot; Claude Code &middot; PETG &middot; a kids helmet</p>
+          <h1 class="title">A helmet clip designed by something that cannot see</h1>
+          <p class="meta-line"><strong>2026-09-18</strong> &nbsp;&middot;&nbsp; ~10 min read &nbsp;&middot;&nbsp; by Gal Tidhar</p>
+          <p class="lead">My son rides ahead of me and turns around every twenty seconds to check I am still there. I bought us a pair of <strong>Sena BiKom 20</strong> bike intercoms so he can keep his eyes on the road and hear me in his ear, and I can let him ride further. The clip Sena ships is made for the brim of a cap; a woom kids helmet has a rim about 24 mm thick. So I had <strong>Claude Code design a clip in OpenSCAD</strong>. It never saw the helmet. Twenty versions in two days, and it sits. This is the whole thing: the tools, every iteration, the two ideas that came from a YouTube timestamp and from me, and what I would not do again.</p>
+        </header>
+
+        <figure><img src="helmet.jpg" alt="The beige printed clip hooked over the rim of a mint woom helmet, the black Sena unit hanging under the rim by the ear"><figcaption>Version 18 on the helmet. The unit clicks onto a Thingiverse plate that hangs under the rim, right at the ear.</figcaption></figure>
+
+        <h2 class="spec-head">Why OpenSCAD and not a CAD program</h2>
+        <p class="prose">OpenSCAD is CAD written as text. There is no mouse and no dragging; a part is a script of <code>cylinder()</code>, <code>polygon()</code>, <code>linear_extrude()</code> and boolean operations, with numbers at the top. That is exactly the shape of thing a language model is good at. Every request I made in plain words became a named parameter, every version is a one-line diff, and the model can render the result headless (<code>openscad -o part.stl part.scad</code>) and check it without ever opening a window.</p>
+        <pre><code>rim_t   = 24;    // rim thickness at the ear (mm)
+hook_o  = 140;   // outside: rim edge -> vent, along the shell
+hook_i  = 120;   // inside:  rim edge -> vent, along the foam
+shell_r = 130;   // shell curvature radius
+over    = 5;     // extension past the vent edge
+tip_r   = 65;    // radius of that extension
+hook_d  = 13;    // tooth radial length
+hook_b  = 3;     // J-hook depth
+tab_l   = 22;    // leaf-spring tongue length
+btn_out = 1.2;   // button stands proud of the arm
+zip_at  = 0.80;  // zip-tie holes at 80% of each arm
+seam_at = 0.85;  // snap-off seam at 85%</code></pre>
+        <p class="prose">The important consequence: the model does not need to see. It needs numbers, and a human to say whether the print matched what the numbers meant.</p>
+
+        <h2 class="spec-head">Do not design the hard part</h2>
+        <p class="prose">The part that has to fit the Sena unit precisely is the mounting plate with its four rail hooks. I did not want to reverse-engineer that. Thingiverse has a replacement strap mount for the BiKom 20 by <a href="https://www.thingiverse.com/thing:7354158" target="_blank" rel="noopener">HenryHase</a> (CC BY-NC), 54 x 27 x 3 mm. Claude read the binary STL with numpy to get its bounding box and which face carries the hooks, then <code>import("HelmetClip.stl")</code> in OpenSCAD, rotated so the device face points away from the head, and sunk 0.5 mm into the clip's wall so the union is solid. A proven plate; we only build it a body.</p>
+        <p class="prose">This went wrong once, in version 15: the plate's top edge sat at the rim line, and the bridge under the rim overlapped the top 2.5 mm of the oval and filled the rail slot. The unit would not click in. One screenshot from Bambu Studio, and the fix was <code>drop = wall + 1</code>.</p>
+
+        <h2 class="spec-head">I am the eyes</h2>
+        <p class="prose">The model cannot see a helmet, so the measurements came from the iPhone Measure app: 7 cm from the rim edge to the nearest vent hole on the outside of the shell, 6 cm on the inside. Two photos. Both arms are arcs concentric with the shell, with the same centre and different radii, so the inner one is naturally shorter, and each got its own measured length plus 5 mm of overshoot so the tooth lands inside the hole rather than on its lip. The first print at those lengths was too short in practice (arc length is not rise), so the arms doubled to 140 / 120 mm. That is the kind of thing only the person holding the part knows.</p>
+        <figure><img src="profile-v20.png" alt="OpenSCAD side profile of version 20: two long concentric curved arms rising from a bridge, J-teeth at the tips, the rail plate hanging below"><figcaption>Version 20 in profile. Outer arm on the shell, inner arm on the foam, the plate under the rim.</figcaption></figure>
+
+        <h2 class="spec-head">YouTube as the reference book</h2>
+        <p class="prose">I wanted something compliant at the base so the clip grips a range of rim thicknesses instead of one exact number. I sent the model a Slant 3D video on snap fits with a timestamp (<a href="https://www.youtube.com/watch?v=rsfZgT3ZEI8&amp;t=356s" target="_blank" rel="noopener">5:56</a>). The video download was blocked, so it worked from the captions alone, and pulled the right idea out: a horizontal cantilever leaf cut out of the wall itself, lying in the print plane, with a round button at the tip. Printed on its side, the leaf flexes within the layer plane and never tries to pull layers apart.</p>
+        <p class="prose">In the part that became a U-slot through each arm near the base, leaving a 12 x 22 mm tongue rooted at the bottom, with a 1.6 mm radius button standing 1.2 mm proud on the helmet side. Two of them, one on the shell, one on the foam, so the rim is pinched from both sides.</p>
+        <p class="prose">The buttons came out pointing the wrong way twice. Version 18 had both pointing out; version 19's first cut had one in and one out. The reason is the honest technical lesson of the whole build: the arms are built as arcs around a centre inside the helmet, so on the outer arm "toward the helmet" means a smaller radius and on the inner arm it means a larger one. Looking at the render did not settle it; what settled it was slicing the exported STL in numpy and printing the X extent of the button against the arm's face. Measure the mesh, not the picture.</p>
+
+        <h2 class="spec-head">The ideas that were mine</h2>
+        <ul class="prose">
+          <li><strong>Both arms into the vent hole.</strong> The first curved design only hooked from the outside. Going in from both sides, closing on the hole, turns the hole into a locator: the clip cannot be pulled back down.</li>
+          <li><strong>J-teeth that latch.</strong> Each tooth is 13 mm long, so both cross past the shell midline; the outer one sits 3 mm above the vent line and curls down, the inner one 3 mm below and curls up. Squeeze the arms together and the rounded ends slide past each other and hook with ~2 mm of overlap, held in tension by the arms' preload. In version 16 the outer tooth was rooted 3 mm past the end of its arm, floating in air; version 17 anchors both inside the arm.</li>
+          <li><strong>Plan B built in.</strong> If the latch does not hold, two 4 mm zip-tie holes at 80% of each arm, drilled along the arm normal so a tie goes straight through both, and a snap-off seam at 85%: a 0.6 mm groove on each face leaves 0.8 mm of PETG. Bend the tip back and forth and it goes, and the zip ties take over.</li>
+        </ul>
+        <figure><img src="iso-v20.png" alt="OpenSCAD isometric render of version 20 showing the U-slot leaf springs, the zip-tie holes and the seam grooves on both arms"><figcaption>The leaf-spring slots, the zip-tie holes and the seam grooves, version 20.</figcaption></figure>
+
+        <h2 class="spec-head">All twenty, in order</h2>
+        <table class="spec-table">
+          <tr><th>v</th><th>What changed</th></tr>
+          <tr><td>1</td><td>A C-clip over the rim with a shelf inward carrying the plate. Wrong direction entirely: the unit should hang under the rim at the ear, like the hat clip does.</td></tr>
+          <tr><td>2-4</td><td>Plate moved to the outer face under the rim, then flipped so the correct face meets the unit, then rotated 90 degrees so it slides on top-to-bottom like the hat clip.</td></tr>
+          <tr><td>5-6</td><td>A tapered 1.6 mm spring arm with a round bump for tolerance; then 50% deeper jaws with a bump on both sides.</td></tr>
+          <tr><td>7-8</td><td>The outer arm becomes a long curve up the shell with a tooth into the vent; then both arms curve, concentric, closing on the hole.</td></tr>
+          <tr><td>9</td><td>The plate hangs from the inner edge of the rim, device face out, so the unit sits right under the rim.</td></tr>
+          <tr><td>10-14</td><td>Measured arm lengths 70 / 60 mm; a tighter-radius tip extension; teeth doubled; then the whole arms doubled to 140 / 120 mm.</td></tr>
+          <tr><td>15</td><td>J-teeth that latch; compliant wings at the base.</td></tr>
+          <tr><td>16-17</td><td>The bridge had filled the rail slot (fixed with <code>drop</code>); a tooth was floating past the arm end (anchored).</td></tr>
+          <tr><td>18-19</td><td>Wings out so the part lies flat; leaf-spring tongues with buttons cut into each arm; buttons made to point inward, verified on the mesh.</td></tr>
+          <tr><td>20</td><td>Zip-tie holes at 80% and a snap-off seam at 85%.</td></tr>
+        </table>
+        <p class="prose">Every one of those was one message from me, usually with a slicer screenshot, and a new STL within a minute. I was QA; it was the modeller.</p>
+
+        <h2 class="spec-head">Print settings</h2>
+        <p class="prose">PETG, not PLA: the leaf springs and the long arms creep and crack in PLA. Printed lying on its side (the Y axis up), 4 walls, 100% infill on a part this thin anyway. That orientation is what makes the tongues flex in the layer plane. Both arms are 2 mm thick, which gives a light spring; the arms sit 1 mm closer to the helmet than the measured surface (<code>preload</code>) so they clamp gently even before the teeth engage.</p>
+
+        <h2 class="spec-head">What I would not do again</h2>
+        <ul class="prose">
+          <li>Trust a render to tell me which way a feature points. Slice the STL and print numbers.</li>
+          <li>Give "inward" and "outward" as instructions without a frame. The SCAD file now states its frame at the top: X into the helmet, Y along the rim, Z up. Every later message was in those terms.</li>
+          <li>Measure along the surface and assume it is the rise. Arc length on a 130 mm radius is not height; the arms had to double.</li>
+          <li>Skip the plan B. The zip-tie holes and the seam cost nothing and mean the twentieth print is the last one whatever the latch does.</li>
+        </ul>
+
+        <h2 class="spec-head">Files</h2>
+        <ul class="prose">
+          <li><a href="files/woom_clip_v20.scad">woom_clip_v20.scad</a> - the parametric source. Needs the Thingiverse plate next to it as <code>files/HelmetClip.stl</code>.</li>
+          <li><a href="files/woom_clip_v20.stl">woom_clip_v20.stl</a> - print-ready, my helmet's numbers.</li>
+          <li><a href="files/HelmetClip-HenryHase-CC-BY-NC.stl">HelmetClip.stl</a> - the Sena BiKom 20 strap-mount plate by HenryHase, <a href="https://www.thingiverse.com/thing:7354158" target="_blank" rel="noopener">Thingiverse thing 7354158</a>, CC BY-NC. So is this clip, by inheritance: not for sale.</li>
+          <li><a href="files/all-20-versions.zip">all-20-versions.zip</a> - every SCAD and STL from v1 to v20, if you want to watch it happen.</li>
+        </ul>
+        <div class="cta">
+          <h3>Want one for a different helmet?</h3>
+          <p>Measure the rim thickness, the rim-to-vent distance outside and inside, and guess the shell radius. Those are the first six lines of the SCAD. Everything else follows.</p>
+          <div class="link-row">
+            <a href="files/woom_clip_v20.scad">The SCAD</a><span class="sep">&middot;</span>
+            <a href="https://www.thingiverse.com/thing:7354158" target="_blank" rel="noopener">The plate on Thingiverse</a><span class="sep">&middot;</span>
+            <a href="https://www.youtube.com/watch?v=rsfZgT3ZEI8&amp;t=356s" target="_blank" rel="noopener">Slant 3D on snap fits, 5:56</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Gal Tidhar &middot; <a href="/">gal.tidhar.org.il</a> &middot; <a href="https://github.com/tatarco">GitHub</a> &middot; <a href="https://www.linkedin.com/in/galtidhar/">LinkedIn</a></p>
+  </footer>
+<script src="/analytics.js" defer></script>
+</body>
+</html>
