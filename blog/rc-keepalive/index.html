@@ -118,11 +118,11 @@
           <p class="role-line">Claude Code · Remote Control · macOS</p>
           <h1 class="title">claude rc gives up after 10 minutes. launchd does not.</h1>
           <p class="meta-line"><strong>2026-10-01</strong> &nbsp;·&nbsp; ~5 min read &nbsp;·&nbsp; by Gal Tidhar</p>
-          <p class="lead">I leave <code>claude rc</code> running in a terminal on my Mac so I can start new Claude Code sessions from my phone. It ran for almost three days, reconnected itself thirteen times without me touching it, and then one morning it printed <code>Persistent errors for 10 minutes, giving up.</code> and quit. Nothing on the phone, nobody at the desk. There is no setting to make it keep trying. There is a small launchd file that does.</p>
+          <p class="lead">One of the best things in Claude Code is the one I almost never see people use: <code>claude rc</code>. Leave it running in a folder on your Mac, start a new session from the Claude app on your phone, and a real session starts on the Mac with your files, MCP servers and settings. Two things ruined it for me. It needs a terminal window left open forever, and close it once by accident and the Mac goes offline for your phone. And it dies: mine reconnected itself thirteen times over 2 days 20 hours, then printed <code>Persistent errors for 10 minutes, giving up.</code> and quit. There is no setting for either. A small launchd file fixes both: no window, and it comes back every time it exits.</p>
         </header>
 
         <figure>
-          <img src="log.png" alt="claude rc log: thirteen reconnects over three days, then Persistent errors for 10 minutes, giving up" loading="lazy">
+          <img src="log.png" alt="claude rc log: thirteen reconnects over nearly three days, then Persistent errors for 10 minutes, giving up" loading="lazy">
           <figcaption>2 days 20 hours, thirteen reconnects, one exit.</figcaption>
         </figure>
 
@@ -174,13 +174,13 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.me.claude-rc.plist</
 kill 94945; sleep 35
 launchctl print gui/$(id -u)/com.me.claude-rc | grep -E "state|pid|runs"
 #   state = running   runs = 2   pid = 96157</code></pre>
-        <p class="prose">New pid and <code>runs = 2</code>: launchd restarted it.</p>
+        <p class="prose">New pid and <code>runs = 2</code>: launchd restarted it. And there is no terminal window anywhere: you can close every one of them.</p>
 
         <h2 class="spec-head">Things to know</h2>
         <ol class="prose">
           <li><strong>Close the terminal one.</strong> If you also run <code>claude rc</code> by hand in the same folder, you get two servers.</li>
           <li><strong>One job per folder.</strong> Need a second folder? Copy the plist with a new <code>Label</code> and <code>WorkingDirectory</code>. I started by writing a wrapper script that looped over a list of folders, and launchd kept exiting it silently. One plist per folder has nothing to debug.</li>
-          <li><strong>A restart is a new server.</strong> Sessions that were alive keep their history on claude.ai, but the server itself starts fresh. If a spawned session crashes, the docs say to send it a message from the app and the server serves it again (Claude Code v2.1.238 or later).</li>
+          <li><strong>A restart is a new server.</strong> The server itself starts fresh; the docs say a stopped session can be picked up again for roughly 4 hours. If a spawned session crashes, the docs say to send it a message from the app and the server serves it again (Claude Code v2.1.238 or later).</li>
           <li><strong>Turning it off:</strong> <code>launchctl bootout gui/$(id -u)/com.me.claude-rc</code>, then delete the plist so it does not come back at login.</li>
           <li><strong>Linux:</strong> not covered by the Remote Control docs, but a systemd user unit with <code>Restart=always</code> is the standard equivalent.</li>
         </ol>

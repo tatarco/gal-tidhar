@@ -1,5 +1,4 @@
 <!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><style>
-  @font-face { font-family:'IBM Plex Mono'; src:local('IBM Plex Mono'); }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html,body{width:1200px;height:630px}
   body{
@@ -12,33 +11,39 @@
   .frame{position:absolute;inset:28px;border:1px solid rgba(125,211,252,.45);padding:38px 44px;display:flex;flex-direction:column}
   .eyebrow{font-size:14px;letter-spacing:.16em;color:#7dd3fc;text-transform:uppercase}
   .foot{position:absolute;bottom:44px;inset-inline-start:74px;font-size:13px;color:rgba(186,230,253,.5);direction:ltr;letter-spacing:.04em}
-  .cyan{color:#7dd3fc} .ink{color:#e0f2fe} .amber{color:#fef08a}
-  .muted{color:rgba(186,230,253,.55)}
+  .amber{color:#fef08a}
   .cmd{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .g{color:#86efac} .r{color:#f87171}
 
-    .cols{flex:1;display:flex;align-items:center;gap:26px;margin-top:8px}
-    .col{flex:1;border:1px solid rgba(125,211,252,.28);padding:26px 24px;min-height:300px}
-    .col.new{border-color:#7dd3fc;background:rgba(125,211,252,.06)}
-    .col-label{font-size:16px;letter-spacing:.12em;color:rgba(186,230,253,.55);margin-bottom:20px;text-transform:uppercase}
-    .new-label{color:#fef08a}
-    .li{font-size:22px;line-height:1.6;margin-bottom:14px;padding-inline-start:26px;position:relative;color:#bae6fd}
-    .li::before{position:absolute;inset-inline-start:0}
-    .li.x::before{content:'x';color:#f87171}
-    .li.ok::before{content:'+';color:#7dd3fc}
-    .col.new .li{color:#e0f2fe}
-    .mid{font-size:40px;color:#fef08a}
-  </style></head><body><div class="frame">
-    <div class="eyebrow">הערת שטח / קלוד קוד</div>
-    <div class="cols">
-      <div class="col old">
-        <div class="col-label">בטרמינל</div>
-        <div class="li x">13 התחברויות מחדש ביומיים ו-20 שעות</div><div class="li x">10 דקות של שגיאות = נסגר</div><div class="li x">בנייד לא רואים כלום</div>
-      </div>
-      <div class="mid">&larr;</div>
-      <div class="col new">
-        <div class="col-label new-label">תחת launchd</div>
-        <div class="li ok">KeepAlive מרים אותו שוב</div><div class="li ok">חוזר תוך פחות מדקה</div><div class="li ok">עולה גם בכניסה למחשב</div>
-      </div>
+    .frame.row{flex-direction:row;align-items:center;gap:56px;padding:30px 56px}
+    .phone{flex:none;width:270px;height:500px;border:3px solid #7dd3fc;border-radius:38px;background:#0f2847;padding:40px 18px 18px;position:relative;box-shadow:0 0 60px rgba(125,211,252,.18)}
+    .notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:84px;height:18px;border-radius:10px;background:#0a1628}
+    .app{font-size:20px;color:#e0f2fe;font-weight:600;margin-bottom:16px}
+    .env{display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(125,211,252,.35);padding:12px;font-size:14px;color:#bae6fd;border-radius:10px}
+    .on{color:#86efac;display:flex;align-items:center;gap:6px}
+    .on i,.run-s i{width:9px;height:9px;border-radius:50%;background:#86efac;display:inline-block;box-shadow:0 0 10px #86efac}
+    .btn{margin:16px 0;background:#fef08a;color:#0a1628;text-align:center;padding:14px;font-size:18px;font-weight:600;border-radius:10px}
+    .run{border:1px solid rgba(125,211,252,.25);padding:12px;border-radius:10px;margin-bottom:10px;min-height:66px}
+    .run-t{font-size:15px;color:#e0f2fe}
+    .run-s{margin-top:6px;font-size:13px;color:#86efac;display:flex;align-items:center;gap:6px}
+    .run.dim{opacity:.35}
+    .side{flex:1;display:flex;flex-direction:column;gap:26px;padding-bottom:30px}
+    .pclaim{font-size:58px;line-height:1.18;font-weight:600;color:#e0f2fe}
+    .psub{font-size:24px;color:#7dd3fc;line-height:1.5}
+    [dir=ltr] .foot{left:auto;right:84px}
+  </style></head><body><div class="frame row">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="app">קלוד קוד</div>
+      <div class="env"><span>המק · פרויקטים</span><span class="on"><i></i>מחובר</span></div>
+      <div class="btn">+ סשן חדש</div>
+      <div class="run"><div class="run-t">לסדר את סקריפט הייצוא</div><div class="run-s"><i></i>רץ על המק</div></div>
+      <div class="run dim"></div>
+    </div>
+    <div class="side">
+      <div class="eyebrow">הערת שטח / קלוד קוד</div>
+      <div class="pclaim">אני פותח קלוד קוד<br>על המק<br><span class="amber">מהנייד.</span></div>
+      <div class="psub">בלי טרמינל פתוח. וכשהוא מת, הוא קם לבד.</div>
     </div>
     <div class="foot">Claude Code - claude rc + launchd - gal.tidhar.org.il</div>
   </div></body></html>

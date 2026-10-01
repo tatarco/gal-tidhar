@@ -1,5 +1,4 @@
 <!doctype html><html lang="en" dir="ltr"><head><meta charset="utf-8"><style>
-  @font-face { font-family:'IBM Plex Mono'; src:local('IBM Plex Mono'); }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html,body{width:1200px;height:630px}
   body{
@@ -12,18 +11,15 @@
   .frame{position:absolute;inset:28px;border:1px solid rgba(125,211,252,.45);padding:38px 44px;display:flex;flex-direction:column}
   .eyebrow{font-size:14px;letter-spacing:.16em;color:#7dd3fc;text-transform:uppercase}
   .foot{position:absolute;bottom:44px;inset-inline-start:74px;font-size:13px;color:rgba(186,230,253,.5);direction:ltr;letter-spacing:.04em}
-  .cyan{color:#7dd3fc} .ink{color:#e0f2fe} .amber{color:#fef08a}
-  .muted{color:rgba(186,230,253,.55)}
+  .amber{color:#fef08a}
   .cmd{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .g{color:#86efac} .r{color:#f87171}
 
     .claim-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:40px}
-    .claim{font-size:62px;line-height:1.22;font-weight:600;color:#e0f2fe;letter-spacing:.01em}
-    .claim-sub{margin-top:30px;font-size:24px;color:#7dd3fc;line-height:1.6;max-width:22em}
+    .claim{font-size:64px;line-height:1.2;font-weight:600;color:#e0f2fe}
+    .claim-sub{margin-top:28px;font-size:24px;color:#7dd3fc;line-height:1.6;max-width:24em}
   </style></head><body><div class="frame">
     <div class="eyebrow">FIELD NOTE / CLAUDE CODE</div>
-    <div class="claim-wrap">
-      <div class="claim">claude rc gives up<br>after 10 minutes.<br><span class="amber">launchd does not.</span></div>
-      <div class="claim-sub">Remote Control server mode exits for good after a long outage. No keep-alive setting. A small launchd file fixes it.</div>
-    </div>
+    <div class="claim-wrap"><div class="claim">Claude Code on my Mac.<br>Started from my phone.<br><span class="amber">Always online.</span></div><div class="claim-sub">No terminal window to babysit. When claude rc dies, launchd brings it back.</div></div>
     <div class="foot">Claude Code - claude rc + launchd - gal.tidhar.org.il</div>
   </div></body></html>
