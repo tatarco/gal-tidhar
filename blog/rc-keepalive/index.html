@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>claude rc gives up after 10 minutes. launchd does not. · Gal Tidhar</title>
-  <meta name="description" content="Claude Code server mode (claude rc) retries through sleep and Wi-Fi drops, then after 10 minutes of errors it exits for good. There is no keep-alive setting. A 15-line launchd job brings it back every time.">
+  <meta name="description" content="Claude Code server mode (claude rc) retries through sleep and Wi-Fi drops, then after 10 minutes of errors it exits for good. There is no keep-alive setting. A small launchd job brings it back every time.">
   <meta name="author" content="Gal Tidhar">
   <link rel="canonical" href="https://gal.tidhar.org.il/blog/rc-keepalive/">
   <meta name="theme-color" content="#0a1628">
@@ -12,7 +12,7 @@
   <meta property="og:site_name" content="Gal Tidhar">
   <meta property="og:type" content="article">
   <meta property="og:title" content="claude rc gives up after 10 minutes. launchd does not.">
-  <meta property="og:description" content="Claude Code server mode (claude rc) retries through sleep and Wi-Fi drops, then after 10 minutes of errors it exits for good. There is no keep-alive setting. A 15-line launchd job brings it back every time.">
+  <meta property="og:description" content="Claude Code server mode (claude rc) retries through sleep and Wi-Fi drops, then after 10 minutes of errors it exits for good. There is no keep-alive setting. A small launchd job brings it back every time.">
   <meta property="og:url" content="https://gal.tidhar.org.il/blog/rc-keepalive/">
   <meta property="og:image" content="https://gal.tidhar.org.il/blog/rc-keepalive/og.png">
   <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
   <meta property="og:image:alt" content="claude rc gives up after 10 minutes. launchd does not.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="claude rc gives up after 10 minutes. launchd does not.">
-  <meta name="twitter:description" content="Claude Code server mode (claude rc) retries through sleep and Wi-Fi drops, then after 10 minutes of errors it exits for good. There is no keep-alive setting. A 15-line launchd job brings it back every time.">
+  <meta name="twitter:description" content="Claude Code server mode (claude rc) retries through sleep and Wi-Fi drops, then after 10 minutes of errors it exits for good. There is no keep-alive setting. A small launchd job brings it back every time.">
   <meta name="twitter:image" content="https://gal.tidhar.org.il/blog/rc-keepalive/og.png">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a1628'/><text x='4' y='24' font-size='18' font-weight='900' font-family='monospace' fill='%237dd3fc'>G</text></svg>">
   <link rel="preload" href="/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -30,7 +30,7 @@
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "claude rc gives up after 10 minutes. launchd does not.",
-    "description": "Claude Code server mode (claude rc) retries through sleep and Wi-Fi drops, then after 10 minutes of errors it exits for good. There is no keep-alive setting. A 15-line launchd job brings it back every time.",
+    "description": "Claude Code server mode (claude rc) retries through sleep and Wi-Fi drops, then after 10 minutes of errors it exits for good. There is no keep-alive setting. A small launchd job brings it back every time.",
     "image": "https://gal.tidhar.org.il/blog/rc-keepalive/og.png",
     "datePublished": "2026-10-01",
     "dateModified": "2026-10-01",
@@ -118,12 +118,12 @@
           <p class="role-line">Claude Code · Remote Control · macOS</p>
           <h1 class="title">claude rc gives up after 10 minutes. launchd does not.</h1>
           <p class="meta-line"><strong>2026-10-01</strong> &nbsp;·&nbsp; ~5 min read &nbsp;·&nbsp; by Gal Tidhar</p>
-          <p class="lead">I leave <code>claude rc</code> running in a terminal on my Mac so I can start new Claude Code sessions from my phone. It ran for almost three days, reconnected itself fifteen times through sleep and Wi-Fi drops, and then one morning it printed <code>Persistent errors for 10 minutes, giving up.</code> and quit. Nothing on the phone, nobody at the desk. There is no setting to make it keep trying. There is a 15-line launchd file that does.</p>
+          <p class="lead">I leave <code>claude rc</code> running in a terminal on my Mac so I can start new Claude Code sessions from my phone. It ran for almost three days, reconnected itself thirteen times through sleep and Wi-Fi drops, and then one morning it printed <code>Persistent errors for 10 minutes, giving up.</code> and quit. Nothing on the phone, nobody at the desk. There is no setting to make it keep trying. There is a small launchd file that does.</p>
         </header>
 
         <figure>
-          <img src="log.png" alt="claude rc log: fifteen reconnects over three days, then Persistent errors for 10 minutes, giving up" loading="lazy">
-          <figcaption>2 days 20 hours, fifteen reconnects, one exit.</figcaption>
+          <img src="log.png" alt="claude rc log: thirteen reconnects over three days, then Persistent errors for 10 minutes, giving up" loading="lazy">
+          <figcaption>2 days 20 hours, thirteen reconnects, one exit.</figcaption>
         </figure>
 
         <h2 class="spec-head">Two different Remote Controls</h2>
@@ -180,9 +180,9 @@ launchctl print gui/$(id -u)/com.me.claude-rc | grep -E "state|pid|runs"
         <ol class="prose">
           <li><strong>Close the terminal one.</strong> If you also run <code>claude rc</code> by hand in the same folder, you get two servers.</li>
           <li><strong>One job per folder.</strong> Need a second folder? Copy the plist with a new <code>Label</code> and <code>WorkingDirectory</code>. I started by writing a wrapper script that looped over a list of folders, and launchd kept exiting it silently. One plist per folder has nothing to debug.</li>
-          <li><strong>A restart is a new server.</strong> Sessions that were alive keep their history on claude.ai, but the server itself starts fresh. If a spawned session crashes, the docs say to send it a message from the app and the server serves it again.</li>
+          <li><strong>A restart is a new server.</strong> Sessions that were alive keep their history on claude.ai, but the server itself starts fresh. If a spawned session crashes, the docs say to send it a message from the app and the server serves it again (Claude Code v2.1.238 or later).</li>
           <li><strong>Turning it off:</strong> <code>launchctl bootout gui/$(id -u)/com.me.claude-rc</code>, then delete the plist so it does not come back at login.</li>
-          <li><strong>Linux:</strong> a systemd user unit with <code>Restart=always</code> does the same job.</li>
+          <li><strong>Linux:</strong> not covered by the Remote Control docs, but a systemd user unit with <code>Restart=always</code> is the standard equivalent.</li>
         </ol>
 
         <div class="cta">
