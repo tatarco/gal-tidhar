@@ -118,7 +118,7 @@
           <p class="role-line">Claude Code · Remote Control · macOS</p>
           <h1 class="title">claude rc gives up after 10 minutes. launchd does not.</h1>
           <p class="meta-line"><strong>2026-10-01</strong> &nbsp;·&nbsp; ~5 min read &nbsp;·&nbsp; by Gal Tidhar</p>
-          <p class="lead">I leave <code>claude rc</code> running in a terminal on my Mac so I can start new Claude Code sessions from my phone. It ran for almost three days, reconnected itself thirteen times through sleep and Wi-Fi drops, and then one morning it printed <code>Persistent errors for 10 minutes, giving up.</code> and quit. Nothing on the phone, nobody at the desk. There is no setting to make it keep trying. There is a small launchd file that does.</p>
+          <p class="lead">I leave <code>claude rc</code> running in a terminal on my Mac so I can start new Claude Code sessions from my phone. It ran for almost three days, reconnected itself thirteen times without me touching it, and then one morning it printed <code>Persistent errors for 10 minutes, giving up.</code> and quit. Nothing on the phone, nobody at the desk. There is no setting to make it keep trying. There is a small launchd file that does.</p>
         </header>
 
         <figure>
@@ -174,7 +174,7 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.me.claude-rc.plist</
 kill 94945; sleep 35
 launchctl print gui/$(id -u)/com.me.claude-rc | grep -E "state|pid|runs"
 #   state = running   runs = 2   pid = 96157</code></pre>
-        <p class="prose">New pid and <code>runs = 2</code>: launchd restarted it. Open the Claude app and your machine shows up as an environment again.</p>
+        <p class="prose">New pid and <code>runs = 2</code>: launchd restarted it.</p>
 
         <h2 class="spec-head">Things to know</h2>
         <ol class="prose">

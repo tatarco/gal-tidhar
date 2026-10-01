@@ -25,7 +25,7 @@
     <div class="eyebrow">FIELD NOTE / CLAUDE CODE</div>
     <div class="grid-title">claude rc, kept alive</div>
     <div class="grid">
-      <div class="cell"><div class="cell-h">THE PROBLEM</div><div class="cell-b">Server mode exits after ~10 minutes of errors. By design.</div></div><div class="cell"><div class="cell-h">THE GAP</div><div class="cell-b">No flag, no setting. The docs say: run it again.</div></div><div class="cell"><div class="cell-h">THE FIX</div><div class="cell-b">A launchd plist: RunAtLoad + KeepAlive + ThrottleInterval 30.</div></div><div class="cell"><div class="cell-h">THE PROOF</div><div class="cell-b">kill the pid. runs = 2, new pid, phone reconnects.</div></div>
+      <div class="cell"><div class="cell-h">THE PROBLEM</div><div class="cell-b">Server mode exits after ~10 minutes of errors. By design.</div></div><div class="cell"><div class="cell-h">THE GAP</div><div class="cell-b">No flag, no setting. The docs say: run it again.</div></div><div class="cell"><div class="cell-h">THE FIX</div><div class="cell-b">A launchd plist: RunAtLoad + KeepAlive + ThrottleInterval 30.</div></div><div class="cell"><div class="cell-h">THE PROOF</div><div class="cell-b">kill the pid. runs = 2, new pid.</div></div>
     </div>
     <div class="foot">Claude Code - claude rc + launchd - gal.tidhar.org.il</div>
   </div></body></html>
